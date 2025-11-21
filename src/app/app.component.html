@@ -51,26 +51,48 @@
 
         <!-- 右侧：功能区 -->
         <div class="header-right">
-          <div class="header-item">
-            <span nz-icon nzType="search"></span>
-          </div>
-          <div class="header-item">
-            <span nz-icon nzType="bell"></span>
+          
+          <div class="header-item" nz-dropdown [nzDropdownMenu]="cihui">
+            <span nz-icon nzType="read"></span>
+            <span class="username">词汇</span>
           </div>
           
-          <!-- 用户下拉菜单 -->
-          <div class="header-item" nz-dropdown [nzDropdownMenu]="menu">
-            <span class="username">Admin User</span>
-          </div>
-          
-          <nz-dropdown-menu #menu="nzDropdownMenu">
+          <nz-dropdown-menu #cihui="nzDropdownMenu">
             <ul nz-menu>
-              <li nz-menu-item>个人中心</li>
-              <li nz-menu-item>账户设置</li>
-              <li nz-menu-divider></li>
-              <li nz-menu-item>退出登录</li>
+              <li nz-menu-item>学习与学校</li>
+              <li nz-menu-item>食物</li>
+              <!-- <li nz-menu-divider></li> -->
+              <li nz-menu-item>住宅</li>
+              <li nz-menu-item>购物</li>
+              <li nz-menu-item>休闲娱乐</li>
+              <li nz-menu-item>城市与交通</li>
+              <li nz-menu-item>健康</li>
             </ul>
           </nz-dropdown-menu>
+          
+          <!-- 口语下拉菜单 -->
+          <div class="header-item" nz-dropdown [nzDropdownMenu]="kouyu">
+            <span nz-icon nzType="audio"></span>
+            <span class="username">口语</span>
+          </div>
+          
+          <nz-dropdown-menu #kouyu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item>学习与学校</li>
+              <li nz-menu-item>食物</li>
+              <!-- <li nz-menu-divider></li> -->
+              <li nz-menu-item>住宅</li>
+              <li nz-menu-item>购物</li>
+              <li nz-menu-item>休闲娱乐</li>
+              <li nz-menu-item>城市与交通</li>
+              <li nz-menu-item>健康</li>
+            </ul>
+          </nz-dropdown-menu>
+
+          <div class="header-item">
+            <span nz-icon nzType="user"></span>
+            <span class="username">进度</span>
+          </div>
         </div>
       </div>
     </nz-header>
