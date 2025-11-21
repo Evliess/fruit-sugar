@@ -1,0 +1,134 @@
+/* 让整个布局撑满屏幕高度 */
+.app-layout {
+  min-height: 100vh;
+}
+
+/* ==================
+   侧边栏 (Sider) 样式
+   ================== */
+.menu-sidebar {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+}
+
+.sidebar-logo {
+  position: relative;
+  height: 64px;
+  padding-left: 24px;
+  overflow: hidden;
+  line-height: 64px;
+  background: #001529;
+  transition: all 0.3s;
+}
+
+.sidebar-logo a {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-logo img {
+  display: inline-block;
+  height: 32px;
+  width: 32px;
+  vertical-align: middle;
+}
+
+.sidebar-logo h1 {
+  display: inline-block;
+  margin: 0 0 0 12px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 18px;
+  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
+  vertical-align: middle;
+  /* 防止收起时文字换行导致的闪烁 */
+  white-space: nowrap; 
+}
+
+/* ==================
+   顶部导航 (Header) 样式
+   ================== */
+nz-header {
+  background: #fff;
+  padding: 0;
+  width: 100%;
+  z-index: 2;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 64px;
+}
+
+/* 触发器按钮 */
+.header-trigger {
+  font-size: 20px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.header-trigger:hover {
+  color: #1890ff;
+  background-color: #f7f7f7;
+}
+
+/* 右侧功能区 */
+.header-right {
+  display: flex;
+  padding-right: 24px;
+  height: 64px;
+}
+
+.header-item {
+  padding: 0 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+}
+
+.header-item:hover {
+  background-color: #f7f7f7;
+}
+
+.username {
+  margin-left: 8px;
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.85);
+}
+
+/* 移动端适配：当屏幕较小时隐藏用户名，只留头像 */
+@media (max-width: 768px) {
+  .username {
+    display: none;
+  }
+  .header-item {
+    padding: 0 8px;
+  }
+}
+
+/* ==================
+   内容区域 (Content)
+   ================== */
+nz-content {
+  margin: 0;
+}
+
+.inner-content {
+  padding: 0;
+  background: #fff;
+  min-height: 360px;
+  border-radius: 4px;
+}
+
+nz-footer {
+  text-align: center;
+  color: rgba(0,0,0,0.45);
+}

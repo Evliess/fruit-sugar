@@ -1,1 +1,28 @@
-/* You can add global styles to this file, and also import other style files */
+.ant-card {
+    border: 1px solid #f0f0f0;
+    border-radius: 8px;
+}
+
+.ant-input-borderless{
+    background-color: transparent;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    box-shadow: none;
+    border-radius: 0;
+    text-align: center;
+}
+
+.ant-input-borderless:hover, .ant-input-borderless:focus, .ant-input-borderless-focused {
+    border-bottom: 1px solid #d9d9d9;
+    box-shadow: none;
+}
+
+.ant-input-status-error {
+    border-bottom: 1px solid #ff4080 !important;
+}
+
+.ant-input-status-success {
+    border-bottom: 1px solid rgb(0, 196, 0) !important;
+}

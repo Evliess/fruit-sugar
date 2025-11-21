@@ -1,0 +1,58 @@
+<div nz-row [nzGutter]="16">
+    <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzLg]="{ span: 6 }" [nzXl]="{ span: 6 }">
+        <nz-card nzHoverable [nzCover]="coverTemplate1" [routerLink]="['/shopping', '1']">
+            <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate1>
+            <img alt="example" src="assets/images/card_head_business.png" />
+        </ng-template>
+
+        <ng-template #content1>
+            <h2 class="card-title">商业洽谈</h2>
+            <p class="card-subtitle">天下熙熙，皆为利来</p>
+            <p class="card-description">生下来活下去。</p>
+        </ng-template>
+    </div>
+    <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzLg]="{ span: 6 }" [nzXl]="{ span: 6 }">
+        <nz-card nzHoverable [nzCover]="coverTemplate2" [routerLink]="['/shopping', '1']">
+            <nz-card-meta [nzDescription]="content2"></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate2>
+            <img alt="example" src="assets/images/card_head_house.png" />
+        </ng-template>
+
+        <ng-template #content2>
+            <h2 class="card-title">生活居家</h2>
+            <p class="card-subtitle">生活就是咬着牙辗转人世间</p>
+            <p class="card-description">生下来活下去。</p>
+        </ng-template>
+    </div>
+    <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzLg]="{ span: 6 }" [nzXl]="{ span: 6 }">
+        <nz-card nzHoverable [nzCover]="coverTemplate3" [routerLink]="['/shopping', '1']">
+            <nz-card-meta [nzDescription]="content3"></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate3>
+            <img alt="example" src="assets/images/card_head_business.png" />
+        </ng-template>
+
+        <ng-template #content3>
+            <h2 class="card-title">雅思</h2>
+            <p class="card-subtitle">开始你的雅思之旅</p>
+            <p class="card-description">雅思英语，一学就会。</p>
+        </ng-template>
+    </div>
+    <div nz-col [nzXs]="{ span: 24 }" [nzSm]="{ span: 12 }" [nzLg]="{ span: 6 }" [nzXl]="{ span: 6 }">
+        <nz-card nzHoverable [nzCover]="coverTemplate4" [routerLink]="['/shopping', '1']">
+            <nz-card-meta [nzDescription]="content4"></nz-card-meta>
+        </nz-card>
+        <ng-template #coverTemplate4>
+            <img alt="example" src="assets/images/card_head_note.png" />
+        </ng-template>
+
+        <ng-template #content4>
+             <h2 class="card-title">托福</h2>
+            <p class="card-subtitle">开始你的托福之旅</p>
+            <p class="card-description">托福英语，一学就会。</p>
+        </ng-template>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+/* music-player.component.css */
+
+.lyrics-switch-corner{
+    /* padding-top: 3px; */
+    display: flex;
+    align-items: center;
+}
+
+.track-info {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.track-info h3 {
+    font-size: 16px;
+    font-weight: 500;
+    color: rgba(0, 0, 0, 0.85);
+    margin: 0 0 8px;
+}
+
+.track-info p {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.65);
+    margin: 0;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+.play-pause-btn {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
+    transition: all 0.3s;
+}
+
+.play-pause-btn:hover,
+.play-pause-btn:focus {
+    transform: scale(1.05);
+}
+
+/* 可选：让图标稍微大一点，更醒目 */
+::ng-deep .play-pause-btn i {
+    font-size: 20px;
+}
+
+.phonetic {
+    padding: 0 2px;
+    margin: 0 4px;
+    color: #096dd9;
+    background: #e6f7ff;
+}
+
+.region {
+    font-size: .75rem;
+    font-weight: 700;
+    color: #1d2a57
+}
