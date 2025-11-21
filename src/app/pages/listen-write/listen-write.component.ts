@@ -54,14 +54,16 @@ import { trigger, style, animate, transition } from '@angular/animations';
 export class ListenWriteComponent {
   inputValue: string = '';
   isEyeOpen: boolean = false;
+  isPlay: boolean = true;
 
   // 模拟点击事件
   handleAction(action: string): void {
     console.log('Clicked:', action);
+    if("play"==action) {this.togglePlay()};
   }
 
-  onSwitchChange(checked: boolean): void {
-    console.log(checked ? '标记为：认识' : '标记为：不认识');
+  togglePlay(): void {
+    this.isPlay = !this.isPlay;
   }
 
   toggleEye(): void {

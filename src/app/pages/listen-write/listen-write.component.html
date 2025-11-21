@@ -109,7 +109,7 @@
                 <!-- 播放按钮突出显示 -->
                 <button *nzSpaceItem nz-button nzType="primary" nzShape="circle" nzSize="large" class="play-btn"
                     (click)="handleAction('play')">
-                    <span nz-icon nzType="caret-right" style="font-size: 24px; margin-left: 2px;"></span>
+                    <span nz-icon [nzType]="isPlay ? 'caret-right' : 'reload'" style="font-size: 24px; margin-left: 2px;"></span>
                 </button>
 
                 <button *nzSpaceItem nz-button nzType="default" nzShape="round" nzSize="large"
