@@ -7,6 +7,9 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { CommonModule } from '@angular/common';
 
+import { Router,} from '@angular/router';
+
+
 @Component({
   selector: 'app-root',
   imports: [CommonModule, RouterOutlet, NzIconModule, NzDropDownModule, NzLayoutModule, NzMenuModule, NzButtonModule],
@@ -15,4 +18,9 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   isCollapsed = false;
+
+  constructor(private router: Router) {}
+
+  gotoWord() {this.router.navigate(['/word']);}
+  gotoListen() {this.router.navigate(['/listen']);}
 }

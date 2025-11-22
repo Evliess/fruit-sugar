@@ -44,7 +44,7 @@
   font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
   vertical-align: middle;
   /* 防止收起时文字换行导致的闪烁 */
-  white-space: nowrap; 
+  white-space: nowrap;
 }
 
 /* ==================
@@ -109,6 +109,7 @@ nz-header {
   .username {
     display: none;
   }
+
   .header-item {
     padding: 0 8px;
   }
@@ -130,5 +131,5 @@ nz-content {
 
 nz-footer {
   text-align: center;
-  color: rgba(0,0,0,0.45);
+  color: rgba(0, 0, 0, 0.45);
 }

@@ -18,7 +18,7 @@
       <a href="#">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
         <!-- 收起时隐藏文字 -->
-        <h1 *ngIf="!isCollapsed">Ant Design 19</h1>
+        <h1 *ngIf="!isCollapsed">冲鸭~</h1>
       </a>
     </div>
 
@@ -26,8 +26,8 @@
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
       <li nz-submenu nzTitle="仪表盘" nzIcon="dashboard">
         <ul>
-          <li nz-menu-item>分析页</li>
-          <li nz-menu-item>监控页</li>
+          <li nz-menu-item (click)="gotoWord()"><a routerLinkActive="active" ariaCurrentWhenActive="page">词汇</a></li>
+          <li nz-menu-item (click)="gotoListen()"><a routerLinkActive="active" ariaCurrentWhenActive="page">口语</a></li>
           <li nz-menu-item>工作台</li>
         </ul>
       </li>

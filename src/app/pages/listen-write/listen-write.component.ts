@@ -19,7 +19,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
 
 
 @Component({
-  selector: 'app-ci-hui',
+  selector: 'app-listen-write',
   imports: [
     CommonModule,
     FormsModule,

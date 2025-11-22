@@ -3,11 +3,11 @@ import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
-import { 
-  MenuFoldOutline, 
-  MenuUnfoldOutline, 
-  DashboardOutline, 
-  UserOutline, 
+import {
+  MenuFoldOutline,
+  MenuUnfoldOutline,
+  DashboardOutline,
+  UserOutline,
   SettingOutline,
   BellOutline,
   SearchOutline
