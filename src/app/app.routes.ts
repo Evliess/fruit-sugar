@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/welcome' },
-  { path: 'welcome', loadChildren: () => import('./pages/listen-write/listen-write.routes').then(m => m.LISTEN_WRITE_ROUTES) },
-  { path: 'shopping', loadChildren: () => import('./pages/shopping/shopping.routes').then(m => m.SHOPPING_ROUTES) }
+  { path: '', pathMatch: 'full', redirectTo: '/listen' },
+  { path: 'listen', loadChildren: () => import('./pages/listen-write/listen-write.routes').then(m => m.LISTEN_WRITE_ROUTES) },
+  { path: 'word', loadChildren: () => import('./pages/ci-hui/ci-hui.routes').then(m => m.CI_HUI_ROUTES) }
 ];
