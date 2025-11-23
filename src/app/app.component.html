@@ -18,15 +18,26 @@
       <a href="#">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
         <!-- 收起时隐藏文字 -->
-        <h1 *ngIf="!isCollapsed">冲鸭~</h1>
+        <h1 *ngIf="!isCollapsed">首页</h1>
       </a>
     </div>
 
     <!-- 左侧菜单 -->
     <ul nz-menu nzTheme="light" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzTitle="仪表盘" nzIcon="dashboard">
+      <li nz-submenu nzTitle="场景词汇" nzIcon="read">
         <ul>
-          <li nz-menu-item (click)="gotoWord()"><a routerLinkActive="active" ariaCurrentWhenActive="page">词汇</a></li>
+          <li nz-menu-item (click)="gotoWord()"><a routerLinkActive="active" ariaCurrentWhenActive="page">学习与学校</a></li>
+          <li nz-menu-item>食物</li>
+          <li nz-menu-item>住宅</li>
+          <li nz-menu-item>购物</li>
+          <li nz-menu-item>休闲与娱乐</li>
+          <li nz-menu-item>城市与交通</li>
+          <li nz-menu-item>健康</li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="口语表达" nzIcon="muted">
+        <ul>
+          <li nz-menu-item (click)="gotoWord()"><a routerLinkActive="active" ariaCurrentWhenActive="page">学习与学校</a></li>
           <li nz-menu-item (click)="gotoListen()"><a routerLinkActive="active" ariaCurrentWhenActive="page">口语</a></li>
           <li nz-menu-item>工作台</li>
         </ul>
@@ -54,7 +65,7 @@
           
           <div class="header-item" nz-dropdown [nzDropdownMenu]="cihui">
             <span nz-icon nzType="read"></span>
-            <span class="username">词汇</span>
+            <span class="username">场景词汇</span>
           </div>
           
           <nz-dropdown-menu #cihui="nzDropdownMenu">

@@ -24,8 +24,15 @@
               <span class="phonetic">🇺🇸 {{ item.usPhonetic }}</span>
               <span class="phonetic">🇬🇧 {{ item.ukPhonetic }}</span>
             </div>
+
+            @if (!item.showDetails) {
+              <div class="definition">{{ item.sentences[0].en }}</div>
+            }
+
+            @if (item.showDetails) {
+              <div class="definition">{{ item.definition }}</div>
+            }
             
-            <div class="definition">{{ item.definition }}</div>
           </div>
 
           <!-- 右侧：按钮组 -->
