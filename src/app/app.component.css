@@ -19,7 +19,7 @@
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  background: #001529;
+  background: #f5f8ff;
   transition: all 0.3s;
 }
 
@@ -38,7 +38,7 @@
 .sidebar-logo h1 {
   display: inline-block;
   margin: 0 0 0 12px;
-  color: #fff;
+  color: #000;
   font-weight: 600;
   font-size: 18px;
   font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
@@ -101,8 +101,15 @@ nz-header {
 .username {
   margin-left: 8px;
   font-size: 14px;
-  color: rgba(0, 0, 0, 0.85);
 }
+
+.username:hover {
+    /* 移动背景位置，产生流光效果 */
+    background-position: 100% center;
+    
+    /* 可选：轻微放大，增加交互感 */
+    transform: scale(1.02); 
+  }
 
 /* 移动端适配：当屏幕较小时隐藏用户名，只留头像 */
 @media (max-width: 768px) {
