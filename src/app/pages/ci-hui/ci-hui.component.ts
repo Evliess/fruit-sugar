@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -13,6 +13,7 @@ import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip'; // 增加 Tooltip 提升体验
+import { CiHuiService } from './ci-hui.service';  
 
 
 // 定义单词数据结构
@@ -54,6 +55,9 @@ export class CiHuiComponent {
   practiceWord: VocabularyWord | null = null;
   practiceInput = '';
 
+  showAllState = inject(CiHuiService)
+
+
   // 模拟数据：10个单词
   words: VocabularyWord[] = [
     {
@@ -84,7 +88,6 @@ export class CiHuiComponent {
       showDetails: false,
       isKnown: false
     },
-    // ... 为了演示简洁，你可以按照此格式复制剩下的8个单词
   ];
   
   // 填充剩余数据的辅助代码（实际开发中请替换为真实数据）

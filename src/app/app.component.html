@@ -4,15 +4,9 @@
     nzCollapsedWidth="0": 移动端收起时宽度为0 (完全隐藏)
     nzWidth="256px": 展开时的宽度
   -->
-  <nz-sider
-    class="menu-sidebar"
-    nzCollapsible
-    nzWidth="256px"
-    nzBreakpoint="lg"
-    [nzCollapsedWidth]="0"
-    [(nzCollapsed)]="isCollapsed"
-    [nzTrigger]="null">
-    
+  <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="lg" [nzCollapsedWidth]="0"
+    [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+
     <!-- Logo 区域 -->
     <div class="sidebar-logo">
       <a href="#">
@@ -57,52 +51,39 @@
       <div class="app-header">
         <!-- 左侧：收缩/展开按钮 -->
         <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-            <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+          <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
         </span>
 
         <!-- 右侧：功能区 -->
         <div class="header-right">
-          
-          <div class="header-item" nz-dropdown [nzDropdownMenu]="cihui">
+          <!-- <div class="header-item" nz-dropdown [nzDropdownMenu]="cihui">
             <span nz-icon nzType="read"></span>
             <span class="username">场景词汇</span>
           </div>
-          
-          <nz-dropdown-menu #cihui="nzDropdownMenu">
+           -->
+          <!-- <nz-dropdown-menu #cihui="nzDropdownMenu">
             <ul nz-menu>
               <li nz-menu-item>学习与学校</li>
               <li nz-menu-item>食物</li>
-              <!-- <li nz-menu-divider></li> -->
+              <li nz-menu-divider></li>
               <li nz-menu-item>住宅</li>
               <li nz-menu-item>购物</li>
               <li nz-menu-item>休闲娱乐</li>
               <li nz-menu-item>城市与交通</li>
               <li nz-menu-item>健康</li>
             </ul>
-          </nz-dropdown-menu>
-          
-          <!-- 口语下拉菜单 -->
-          <div class="header-item" nz-dropdown [nzDropdownMenu]="kouyu">
-            <span nz-icon nzType="muted"></span>
-            <span class="username">口语</span>
+          </nz-dropdown-menu> -->
+          <div (click)="setLearnModel('learn')" [class]="learnModel=='learn'?'header-item selected':'header-item'">
+            <span nz-icon nzType="eye"></span>
+            <span class="username">学习模式</span>
           </div>
-          
-          <nz-dropdown-menu #kouyu="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item>学习与学校</li>
-              <li nz-menu-item>食物</li>
-              <!-- <li nz-menu-divider></li> -->
-              <li nz-menu-item>住宅</li>
-              <li nz-menu-item>购物</li>
-              <li nz-menu-item>休闲娱乐</li>
-              <li nz-menu-item>城市与交通</li>
-              <li nz-menu-item>健康</li>
-            </ul>
-          </nz-dropdown-menu>
-
-          <div class="header-item">
-            <span nz-icon nzType="user"></span>
-            <span class="username">进度</span>
+          <div (click)="setLearnModel('list')" [class]="learnModel=='list'?'header-item selected':'header-item'">
+            <span nz-icon nzType="unordered-list"></span>
+            <span class="username">列表模式</span>
+          </div>
+          <div (click)="setLearnModel('listen')" [class]="learnModel=='listen'?'header-item selected':'header-item'">
+            <span nz-icon nzType="muted"></span>
+            <span class="username">听写模式</span>
           </div>
         </div>
       </div>
@@ -112,10 +93,9 @@
     <nz-content>
       <div class="inner-content">
         <router-outlet></router-outlet>
-        <!-- 占位内容演示滚动 -->
       </div>
     </nz-content>
-    
+
     <!-- <nz-footer>Ant Design Angular 2025 Created by You</nz-footer> -->
   </nz-layout>
 </nz-layout>

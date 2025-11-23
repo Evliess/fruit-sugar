@@ -103,6 +103,10 @@ nz-header {
   font-size: 14px;
 }
 
+.selected {
+  color: #c65097;
+}
+
 .username:hover {
     /* 移动背景位置，产生流光效果 */
     background-position: 100% center;

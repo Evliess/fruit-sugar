@@ -25,11 +25,11 @@
               <span class="phonetic">🇬🇧 {{ item.ukPhonetic }}</span>
             </div>
 
-            @if (!item.showDetails) {
+            @if (!(item.showDetails || showAllState.showAll())) {
               <div class="definition">{{ item.sentences[0].en }}</div>
             }
 
-            @if (item.showDetails) {
+            @if (item.showDetails || showAllState.showAll()) {
               <div class="definition">{{ item.definition }}</div>
             }
             
@@ -56,8 +56,8 @@
             <!-- 显示全部/收起 -->
             <button nz-button nzType="default" 
                     (click)="toggleDetails(item)">
-              <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span> 
-              {{ item.showDetails ? '收起' : '详情' }}
+              <span nz-icon [nzType]="item.showDetails|| showAllState.showAll() ? 'up' : 'down'"></span> 
+              {{ item.showDetails || showAllState.showAll()? '收起' : '详情' }}
             </button>
 
             <!-- 练一练 -->
@@ -69,7 +69,7 @@
         </div>
 
         <!-- 下半部分：详情 (默认隐藏) -->
-        @if (item.showDetails) {
+        @if (item.showDetails || showAllState.showAll()) {
           <div class="row-details">
             <nz-divider></nz-divider>
             
