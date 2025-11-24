@@ -58,5 +58,6 @@ export class AppComponent {
     this.learnModel = model;
     if (model == 'learn') this.showAllState.setShowAll(true);
     if (model == 'list') this.showAllState.setShowAll(false);
+    if (model == 'listen') {this.gotoListen();}
   }
 }
