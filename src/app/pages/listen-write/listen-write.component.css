@@ -423,7 +423,7 @@
 /* 点击/激活效果 (闭眼状态) */
 .floating-eye-btn.active {
   background-color: #262626 !important; /* 变为深色背景，暗示“遮挡/黑暗”模式 */
-  color: #c65097 !important; 
+  color: #0071e3 !important; 
 }
 
 /* 点击瞬间的反馈 */
@@ -459,7 +459,7 @@
 }
 
 .mask-card:hover {
-  border-color: #c65097;
+  border-color: #0071e3;
   background: #f0f9ff;
 }
 
