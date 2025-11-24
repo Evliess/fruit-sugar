@@ -40,14 +40,13 @@ export class AppComponent {
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
     
-    // 逻辑：如果当前 URL 是 '/order'，则隐藏；其他情况显示
-    // 你可以根据需求修改这里的逻辑，比如使用 includes()
-    if (url && url.includes('/home')) {
-      return false;
+   // 只有在 home 或者其他页面才显示 (根据你的需求调整)
+    if (url && url.includes('/word')) {
+      return true;
     }
     
     // 只有在 home 或者其他页面才显示 (根据你的需求调整)
-    return true; 
+    return false; 
   });
 
   ngOnInit(): void {

@@ -3,4 +3,5 @@ import { CiHuiComponent } from './ci-hui.component';
 
 export const CI_HUI_ROUTES: Routes = [
   { path: '', component: CiHuiComponent },
+  { path: ':id', component: CiHuiComponent },
 ];
