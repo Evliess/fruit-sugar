@@ -1,0 +1,55 @@
+<div class="page-container">
+
+    <!-- 循环渲染三个大板块 -->
+    @for (section of sections; track section.name) {
+    <div class="section-wrapper">
+        <h2 class="section-title">{{ section.name }}</h2>
+
+        <!-- Grid 系统: 移动端间距小(12px)，桌面端间距大(24px) -->
+        <nz-row [nzGutter]="[24, 24]">
+
+            @for (item of section.items; track item.title) {
+            <!-- 
+            Responsive Breakpoints:
+            nzXs (Mobile): 24格 (占满)
+            nzMd (Tablet): 12格 (一行两个)
+            nzLg (Desktop): 8格 (一行三个)
+          -->
+            <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="8">
+
+                <div class="apple-card" [style.background-image]="'url(' + item.bgImage + ')'">
+                    <!-- 遮罩层，确保文字清晰 -->
+                    <div class="card-overlay"></div>
+
+                    <div class="status-badge">
+                        <span nz-icon nzType="check-circle" nzTheme="fill" *ngIf="item.progress === '10/10'"></span>
+                        <span class="status-text">{{ item.progress }}</span>
+                    </div>
+
+                    <div class="card-content">
+                        <!-- 上部分：标题与描述 -->
+                        <div class="text-group">
+                            <h3 class="card-header">{{ item.title }}</h3>
+                            <p class="card-desc">{{ item.desc }}</p>
+                        </div>
+
+                        <!-- 下部分：按钮组 -->
+                        <div class="btn-group">
+                            <!-- Apple 风格按钮：主要按钮用白色，次要按钮用毛玻璃 -->
+                            <button nz-button nzShape="round" class="btn-primary"><a [href]="item.href">重新开始</a></button>
+                            <button nz-button nzShape="round" class="btn-primary">继续学习</button>
+                            <!-- <button nz-button nzShape="round" class="btn-secondary">
+                                <span nz-icon nzType="plus"></span>
+                            </button> -->
+                        </div>
+                    </div>
+
+                </div>
+            </nz-col>
+            }
+
+        </nz-row>
+    </div>
+    }
+
+</div>

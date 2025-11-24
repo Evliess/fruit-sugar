@@ -10,8 +10,66 @@
 
 
 // 覆盖主色调
-@primary-color: #c65097; // 修改为你的颜色
+// @primary-color: #c65097; // 修改为你的颜色
 
 .ant-menu,.ant-layout-sider {
     background: #f5f8ff;
 }
+
+//苹果
+// 1. 色彩系统 (Color System)
+// ------------------------------------------
+@primary-color: #0071e3;          // Apple 官方蓝色 (Action Blue)
+@info-color:    @primary-color;
+@success-color: #008844;          // Apple 风格的深绿色 (通常比 Ant 默认的绿更深一点)
+@warning-color: #FF9F0A;          // iOS 系统级橙色
+@error-color:   #FF3B30;          // iOS 系统级红色
+
+// 2. 字体与排版 (Typography)
+// ------------------------------------------
+// 强制使用 Apple 系统字体栈，确保在 iOS/Mac 上获得原生体验
+@font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+@text-color:           #1d1d1f;   // Apple 标准正文色 (深灰黑)
+@text-color-secondary: #86868b;   // 辅助文字颜色 (浅灰)
+@heading-color:        #1d1d1f;   // 标题颜色
+@font-size-base:       14px;      // 保持基础字号，Apple 倾向于用行高和字重区分层级
+
+// 3. 全局背景与边框 (Backgrounds & Borders)
+// ------------------------------------------
+@body-background:      #f5f5f7;   // 页面背景：经典的 Apple 浅灰
+@component-background: #ffffff;   // 组件背景：纯白
+@border-color-base:    #d2d2d7;   // 边框颜色：Apple 风格的分割线颜色 (比 Ant 默认的 #f0f0f0 更深一点)
+@border-color-split:   #d2d2d7;
+
+// 4. 圆角与形状 (Borders Radius) - 关键！
+// ------------------------------------------
+// Apple 设计倾向于更大的圆角
+@border-radius-base: 10px;        // 普通组件 (Input, Modal, Card) 的圆角
+@border-radius-sm:   6px;         // 小组件圆角
+
+// 5. 按钮样式 (Buttons)
+// ------------------------------------------
+// Apple 按钮通常是胶囊形 (Pill Shape) 或者圆角矩形
+@btn-border-radius-base: 980px;   // 设置超大值，强制变成胶囊形按钮
+@btn-border-radius-sm:   980px;
+
+// 去除 Ant Design 按钮默认的立体阴影，Apple 偏向扁平
+@btn-primary-shadow: none;
+@btn-text-shadow:    none;
+
+// 增加按钮高度，增加手指触控区域 (符合移动端优先)
+@btn-height-base: 36px;
+@btn-height-lg:   44px;
+@btn-height-sm:   28px;
+
+// 6. 输入框 (Inputs)
+// ------------------------------------------
+@input-height-base: 36px;
+@input-bg:          rgba(255, 255, 255, 0.8); // 输入框可以带一点点透明度
+@input-placeholder-color: #86868b;
+
+// 7. 链接 (Links)
+// ------------------------------------------
+@link-color:       #0066cc;       // 链接颜色略深于主色，增加可读性
+@link-hover-color: #004499;

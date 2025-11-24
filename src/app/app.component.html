@@ -9,7 +9,7 @@
 
     <!-- Logo 区域 -->
     <div class="sidebar-logo">
-      <a href="#">
+      <a href="/home">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
         <!-- 收起时隐藏文字 -->
         <h1 *ngIf="!isCollapsed">首页</h1>
@@ -55,6 +55,7 @@
         </span>
 
         <!-- 右侧：功能区 -->
+        @if(isShowTopMenu()){
         <div class="header-right">
           <!-- <div class="header-item" nz-dropdown [nzDropdownMenu]="cihui">
             <span nz-icon nzType="read"></span>
@@ -86,6 +87,7 @@
             <span class="username">听写模式</span>
           </div>
         </div>
+        }
       </div>
     </nz-header>
 
