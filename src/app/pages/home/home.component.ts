@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzCardModule } from 'ng-zorro-antd/card';
+
 import { Router } from '@angular/router';
 
 interface CardItem {
@@ -20,7 +22,7 @@ interface Section {
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, NzGridModule, NzButtonModule, NzIconModule],  
+  imports: [CommonModule, NzGridModule, NzButtonModule, NzIconModule, NzCardModule],  
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
@@ -46,7 +48,7 @@ export class HomeComponent {
       ]
     },
     {
-      name: '健康生活',
+      name: '去听写',
       items: [
         { title: '运动追踪', href: '/word/1', desc: '记录步数，科学健身', progress: '3/56', bgImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=800&q=80' },
         { title: '健康饮食', href: '/word/1', desc: '卡路里计算，营养搭配', progress: '3/56', bgImage: 'https://images.unsplash.com/photo-1490645935967-10de6ba17061?auto=format&fit=crop&w=800&q=80' },

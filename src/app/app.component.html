@@ -31,16 +31,24 @@
       </li>
       <li nz-submenu nzTitle="口语表达" nzIcon="muted">
         <ul>
-          <li nz-menu-item (click)="gotoWord()"><a routerLinkActive="active" ariaCurrentWhenActive="page">学习与学校</a></li>
-          <li nz-menu-item (click)="gotoListen()"><a routerLinkActive="active" ariaCurrentWhenActive="page">口语</a></li>
-          <li nz-menu-item>工作台</li>
+          <li nz-menu-item (click)="gotoListen()"><a routerLinkActive="active" ariaCurrentWhenActive="page">食物</a></li>
+          <li nz-menu-item>住宅</li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="系统设置" nzIcon="setting">
+      <li nz-submenu nzTitle="去听写" nzIcon="muted">
         <ul>
-          <li nz-menu-item>用户管理</li>
-          <li nz-menu-item>角色管理</li>
+          <li nz-menu-item (click)="gotoListen()"><a routerLinkActive="active" ariaCurrentWhenActive="page">食物</a></li>
+          <li nz-menu-item>住宅</li>
         </ul>
+      </li>
+      <li nz-submenu nzTitle="用户中心" nzIcon="user">
+        <ul>
+          <li nz-menu-item>进度总览</li>
+          <li nz-menu-item>错题本</li>
+          <li nz-menu-item>生词本</li>
+        </ul>
+      </li>
+      <li nz-submenu nzTitle="AI助教" nzIcon="reddit">
       </li>
     </ul>
   </nz-sider>

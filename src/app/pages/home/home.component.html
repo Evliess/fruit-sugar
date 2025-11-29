@@ -15,36 +15,24 @@
             nzMd (Tablet): 12格 (一行两个)
             nzLg (Desktop): 8格 (一行三个)
           -->
-            <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="8">
+            <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="6">
 
-                <div class="apple-card" [style.background-image]="'url(' + item.bgImage + ')'">
-                    <!-- 遮罩层，确保文字清晰 -->
-                    <div class="card-overlay"></div>
+                <nz-card nzHoverable [nzCover]="coverTemplate1">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                <ng-template #coverTemplate1>
+                    <img alt="example" src="assets/images/card_head_business.png" />
+                </ng-template>
 
-                    <div class="status-badge">
-                        <span nz-icon nzType="check-circle" nzTheme="fill" *ngIf="item.progress === '10/10'"></span>
-                        <span class="status-text">{{ item.progress }}</span>
+                <ng-template #content1>
+                    <h2 class="card-title">商业洽谈</h2>
+                    <p class="card-subtitle">天下熙熙，皆为利来</p>
+                    <p class="card-description">天下攘攘，皆为利往</p>
+                    <div class="card-footer">
+                        <span class="footer-title">继续学习</span>
+                        <span class="footer-status">重新开始</span>
                     </div>
-
-                    <div class="card-content">
-                        <!-- 上部分：标题与描述 -->
-                        <div class="text-group">
-                            <h3 class="card-header">{{ item.title }}</h3>
-                            <p class="card-desc">{{ item.desc }}</p>
-                        </div>
-
-                        <!-- 下部分：按钮组 -->
-                        <div class="btn-group">
-                            <!-- Apple 风格按钮：主要按钮用白色，次要按钮用毛玻璃 -->
-                            <button nz-button nzShape="round" class="btn-primary"><a [href]="item.href">重新开始</a></button>
-                            <button nz-button nzShape="round" class="btn-primary">继续学习</button>
-                            <!-- <button nz-button nzShape="round" class="btn-secondary">
-                                <span nz-icon nzType="plus"></span>
-                            </button> -->
-                        </div>
-                    </div>
-
-                </div>
+                </ng-template>
             </nz-col>
             }
 

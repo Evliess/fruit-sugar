@@ -22,114 +22,6 @@
   letter-spacing: -0.01em;
 }
 
-/* --- Apple 风格卡片核心样式 --- */
-.apple-card {
-  position: relative;
-  height: 400px; /* 固定高度，保持整齐 */
-  border-radius: 28px; /* 标志性大圆角 */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  overflow: hidden;
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  cursor: pointer;
-}
-
-/* 卡片悬停微交互 */
-.apple-card:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-}
-
-/* 黑色渐变遮罩 (保证文字在任何图片上都可见) */
-.card-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  /* 从透明到黑色的线性渐变 */
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.4) 50%, rgba(0, 0, 0, 0.8) 100%);
-  z-index: 1;
-}
-
-/* --- 卡片内容布局 --- */
-.card-content {
-  position: relative;
-  z-index: 2;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* 内容上下分布 */
-  padding: 30px;
-}
-
-.text-group {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.card-header {
-  font-size: 24px;
-  font-weight: 600;
-  color: #fff;
-  margin-bottom: 8px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.card-desc {
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.9);
-  font-weight: 400;
-  max-width: 240px;
-  margin: 0 auto;
-  line-height: 1.4;
-}
-
-/* --- 按钮样式 --- */
-.btn-group {
-  display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-/* 主要按钮 (白色实心) */
-.btn-primary {
-  background-color: #fff;
-  color: #000;
-  border: none;
-  font-weight: 600;
-  padding: 0 24px;
-  height: 40px;
-  border-radius: 20px; /* 确保圆角 */
-}
-
-.btn-primary:hover {
-  background-color: rgba(255, 255, 255, 0.9);
-}
-
-/* 次要按钮 (毛玻璃/磨砂效果) */
-.btn-secondary {
-  background-color: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px); /* 标准磨砂 */
-  -webkit-backdrop-filter: blur(10px); /* Safari 支持 */
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #fff;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%; /* 圆形 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
-
-.btn-secondary:hover {
-  background-color: rgba(255, 255, 255, 0.4);
-  border-color: rgba(255, 255, 255, 0.5);
-}
-
 /* --- 移动端响应式调整 (Mobile Only) --- */
 @media (max-width: 768px) {
   .page-container {
@@ -159,50 +51,45 @@
   }
 }
 
-/* --- 新增：进度状态胶囊 --- */
-.status-badge {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 10; /* 保证在遮罩层之上 */
-  
-  /* Apple 风格毛玻璃效果 */
-  background: rgba(0, 0, 0, 0.35); /* 半透明黑 */
-  backdrop-filter: blur(12px);     /* 强模糊 */
-  -webkit-backdrop-filter: blur(12px);
-  
-  /* 边框和圆角 */
-  border: 1px solid rgba(255, 255, 255, 0.15); /* 极细的亮边框 */
-  border-radius: 20px; /* 胶囊形状 */
-  
-  /* 内容布局 */
-  padding: 6px 14px;
+
+
+.card-title {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #2c3e50;
+    margin-bottom: 5px;
+ }
+
+ .card-subtitle {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+ }
+ .card-description {
+    color: rgb(32, 33, 36);
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    font-weight: 400;
+ }
+
+ /* 底部 Footer (Knowledge / Ongoing) */
+.card-footer {
+  border-top: 1px solid #f1f3f4; /* 浅色分割线 */
+  padding: 12px 0;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px; /* 图标和文字的间距 */
-  
-  /* 字体设置 */
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 13px;
-  font-weight: 600; /* 加粗数字 */
-  font-feature-settings: "tnum"; /* 等宽数字，防止数字变化时宽度跳动 */
-  letter-spacing: 0.5px;
-  
-  /* 阴影让它浮起来 */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
 }
 
-/* 悬停卡片时，让 Badge 稍微亮一点 */
-.apple-card:hover .status-badge {
-  background: rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.3);
-}
-
-/* 图标颜色调整 (可选) */
-.status-badge .anticon {
-  color: #34c759; /* Apple iOS Green - 只有打钩时显示绿色 */
+.card-footer .footer-title {
+  font-weight: 700;
   font-size: 14px;
+  color: #202124;
+}
+
+.card-footer .footer-status {
+  font-size: 12px;
+  color: #202124;
 }
 
 /* --- 移动端微调 --- */
