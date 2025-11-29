@@ -1,6 +1,10 @@
 .ant-card {
-    border: 1px solid #f0f0f0;
+    border: 1px solid #dadce0;
     border-radius: 8px;
+}
+
+.ant-card-body {
+    padding: 16px;
 }
 
 .ant-input-borderless{

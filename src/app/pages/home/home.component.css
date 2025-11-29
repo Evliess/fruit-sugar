@@ -74,7 +74,7 @@
 
  /* 底部 Footer (Knowledge / Ongoing) */
 .card-footer {
-  border-top: 1px solid #f1f3f4; /* 浅色分割线 */
+  border-top: 1px solid #dadcdae0; /* 浅色分割线 */
   padding: 12px 0;
   display: flex;
   justify-content: space-between;
