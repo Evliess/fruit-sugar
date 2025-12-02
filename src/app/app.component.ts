@@ -22,7 +22,7 @@ export class AppComponent {
   learnModel = "list";
 
   private router = inject(Router);
-  private showAllState = inject(CiHuiService)
+  private ciHuiService = inject(CiHuiService)
 
   // 1. 创建一个 Observable 流，只关注导航结束事件 (NavigationEnd)
   // 并映射出当前的 URL 字符串
@@ -56,8 +56,8 @@ export class AppComponent {
   gotoListen() { this.router.navigate(['/listen']); }
   setLearnModel(model: string) {
     this.learnModel = model;
-    if (model == 'learn') this.showAllState.setShowAll(true);
-    if (model == 'list') this.showAllState.setShowAll(false);
+    if (model == 'learn') this.ciHuiService.setLearnMode(true);
+    if (model == 'list') this.ciHuiService.setLearnMode(false);
     if (model == 'listen') {this.gotoListen();}
   }
 }

@@ -108,7 +108,8 @@
 }
 
 .phonetic-group {
-  display: flex;
+  /* display: flex; */
+  display: none;
   gap: 16px;
   font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
   color: #8c8c8c;
@@ -164,6 +165,7 @@
   background-color: #fafafa; /* 浅灰背景，区分层级 */
   border-top: 1px solid #f0f0f0;
   padding: 24px 32px;
+  display: none;
 }
 
 .section-block {
@@ -455,7 +457,7 @@
   border: 2px dashed #d9d9d9; /* 虚线边框表示“空”或“待填充” */
   box-shadow: none; /* 移除强烈投影，使其看起来“扁平” */
   cursor: pointer; /* 提示可点击 */
-  min-height: 420px; /* 保持与正常卡片一致的高度，防止抖动 */
+  min-height: 121px; /* 保持与正常卡片一致的高度，防止抖动 */
 }
 
 .mask-card:hover {

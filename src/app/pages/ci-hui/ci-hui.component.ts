@@ -55,7 +55,7 @@ export class CiHuiComponent {
   practiceWord: VocabularyWord | null = null;
   practiceInput = '';
 
-  showAllState = inject(CiHuiService)
+  ciHuiService = inject(CiHuiService)
 
 
   // 模拟数据：10个单词
@@ -69,7 +69,6 @@ export class CiHuiComponent {
       phrases: ['remain resilient', 'resilient economy'],
       sentences: [
         { en: 'Children are often more resilient than adults.', zh: '孩子往往比成年人更有适应力。' },
-        { en: 'The company proved remarkably resilient during the recession.', zh: '这家公司在经济衰退期间表现出了惊人的复原力。' }
       ],
       showDetails: false,
       isKnown: false
@@ -83,7 +82,6 @@ export class CiHuiComponent {
       phrases: ['ambiguous attitude', 'ambiguous wording'],
       sentences: [
         { en: 'His reply to my question was somewhat ambiguous.', zh: '他对我问题的回答有点模棱两可。' },
-        { en: 'The legislation has been drafted in an ambiguous way.', zh: '这项法规起草得含糊不清。' }
       ],
       showDetails: false,
       isKnown: false
@@ -102,7 +100,6 @@ export class CiHuiComponent {
         phrases: [`phrase ${i}-1`, `phrase ${i}-2`],
         sentences: [
            { en: `This is example sentence 1 for word ${i}.`, zh: `这是单词 ${i} 的例句一。` },
-           { en: `This is example sentence 2 for word ${i}.`, zh: `这是单词 ${i} 的例句二。` }
         ],
         showDetails: false,
         isKnown: false
