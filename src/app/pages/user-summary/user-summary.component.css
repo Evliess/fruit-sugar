@@ -94,15 +94,5 @@
 
 .card-footer .footer-status {
   font-size: 12px;
-  color: #202124;
-}
-
-/* --- 移动端微调 --- */
-@media (max-width: 768px) {
-  .status-badge {
-    top: 16px;  /* 移动端稍微靠上一点 */
-    right: 16px;
-    padding: 4px 12px; /* 稍微缩小一点尺寸 */
-    font-size: 12px;
-  }
+  color: #0071e3;
 }
