@@ -8,7 +8,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzInputModule  } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
@@ -54,6 +54,7 @@ export class CiHuiComponent {
   isPracticeVisible = false;
   practiceWord: VocabularyWord | null = null;
   practiceInput = '';
+  userWord = '';
 
   ciHuiService = inject(CiHuiService)
 
@@ -147,4 +148,5 @@ export class CiHuiComponent {
   handlePracticeCancel(): void {
     this.isPracticeVisible = false;
   }
+
 }

@@ -4,6 +4,19 @@
   </div> -->
 
   <div class="list-container">
+    <div class="word-row">
+      <div class="row-main">
+        <div class="word-info">
+          <input nz-input [(ngModel)]="userWord"/>
+        </div>
+        <div class="action-group">
+        <button nz-button nzType="primary" nz-tooltip nzTooltipTitle="添加">
+          <span nz-icon nzType="plus"></span> 添加
+        </button>
+      </div>
+      </div>
+      
+    </div>
     @for (item of words; track item.id) {
     <!-- 单个单词行 -->
     <div class="word-row" [class.is-known]="item.isKnown">
