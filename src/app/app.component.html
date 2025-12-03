@@ -11,6 +11,7 @@
     <div class="sidebar-logo">
       <a href="/home">
         <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+        
         <!-- 收起时隐藏文字 -->
         <h1 *ngIf="!isCollapsed">首页</h1>
       </a>
@@ -43,7 +44,7 @@
       </li>
       <li nz-submenu nzTitle="用户中心" nzIcon="user">
         <ul>
-          <li nz-menu-item>进度总览</li>
+          <li nz-menu-item (click)="gotoUserSummary()">进度总览</li>
           <li nz-menu-item>错题本</li>
           <li nz-menu-item>生词本</li>
         </ul>

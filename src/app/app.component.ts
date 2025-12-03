@@ -54,6 +54,7 @@ export class AppComponent {
 
   gotoWord() { this.router.navigate(['/word']); }
   gotoListen() { this.router.navigate(['/listen']); }
+  gotoUserSummary() { this.router.navigate(['/user-summary']); }
   setLearnModel(model: string) {
     this.learnModel = model;
     if (model == 'learn') this.ciHuiService.setLearnMode(true);
