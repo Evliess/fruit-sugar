@@ -12,10 +12,8 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip'; // 增加 Tooltip 提升体验
-import { CiHuiService } from './ci-hui.service';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ActivatedRoute } from '@angular/router';
-
 
 
 // 定义单词数据结构
@@ -31,10 +29,8 @@ interface VocabularyWord {
   isKnown: boolean;     // 是否标记为认识
 }
 
-
 @Component({
-  selector: 'app-ci-hui',
-  standalone: true,
+  selector: 'app-kou-yu',
   imports: [
     CommonModule,
     FormsModule,
@@ -48,19 +44,18 @@ interface VocabularyWord {
     NzDividerModule,
     NzToolTipModule
   ],
-  templateUrl: './ci-hui.component.html',
-  styleUrls: ['./ci-hui.component.css']
+  templateUrl: './kou-yu.component.html',
+  styleUrl: './kou-yu.component.css'
 })
-export class CiHuiComponent {
-  // 练一练 弹窗相关状态
+export class KouYuComponent {
   isPracticeVisible = false;
   practiceWord: VocabularyWord | null = null;
   practiceInput = '';
   userWord = '';
   isCustom = false;
 
-  ciHuiService = inject(CiHuiService)
   route = inject(ActivatedRoute);
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const isCustom = params['isCustom'];
@@ -68,31 +63,30 @@ export class CiHuiComponent {
     });
   }
 
-
   // 模拟数据：10个单词
   words: VocabularyWord[] = [
     {
       id: 1,
-      word: 'Resilient',
+      word: 'The Bodhi tree originally has no roots.',
       usPhonetic: '/rɪˈzɪliənt/',
       ukPhonetic: '/rɪˈzɪliənt/',
       definition: 'adj. 有弹性的；能复原的；适应力强的',
       phrases: ['remain resilient', 'resilient economy'],
       sentences: [
-        { en: 'Children are often more resilient than adults.', zh: '孩子往往比成年人更有适应力。' },
+        { en: 'Children are often more resilient than adults.', zh: '菩提本无树。' },
       ],
       showDetails: false,
       isKnown: false
     },
     {
       id: 2,
-      word: 'Ambiguous',
+      word: 'Even a clear mirror is not a platform',
       usPhonetic: '/æmˈbɪɡjuəs/',
       ukPhonetic: '/æmˈbɪɡjuəs/',
       definition: 'adj. 模棱两可的；含糊不清的',
       phrases: ['ambiguous attitude', 'ambiguous wording'],
       sentences: [
-        { en: 'His reply to my question was somewhat ambiguous.', zh: '他对我问题的回答有点模棱两可。' },
+        { en: 'His reply to my question was somewhat ambiguous.', zh: '明镜亦非台。' },
       ],
       showDetails: false,
       isKnown: false
@@ -104,13 +98,13 @@ export class CiHuiComponent {
     for (let i = 3; i <= 10; i++) {
       this.words.push({
         id: i,
-        word: `Sample Word ${i}`,
+        word: `Sample sentence ${i}`,
         usPhonetic: '/ˈsæmpəl/',
         ukPhonetic: '/ˈsæmpəl/',
         definition: 'n. 示例单词占位符',
         phrases: [`phrase ${i}-1`, `phrase ${i}-2`],
         sentences: [
-          { en: `This is example sentence 1 for word ${i}.`, zh: `这是单词 ${i} 的例句一。` },
+          { en: `This is example sentence 1 for word ${i}.`, zh: `这是例句 ${i} 。` },
         ],
         showDetails: false,
         isKnown: false
@@ -132,7 +126,7 @@ export class CiHuiComponent {
 
   // 点击“不认识”
   markAsUnknown(item: VocabularyWord): void {
-    item.showDetails = true;
+    item.showDetails = false;
     item.isKnown = false;
   }
 
@@ -158,5 +152,4 @@ export class CiHuiComponent {
   handlePracticeCancel(): void {
     this.isPracticeVisible = false;
   }
-
 }

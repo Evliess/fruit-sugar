@@ -1,20 +1,16 @@
 <div class="container">
-  <!-- <div class="page-header">
-    <h1>词汇打卡</h1>
-  </div> -->
-
   <div class="list-container">
     @if(isCustom) {
     <div class="word-row">
       <div class="row-main">
         <div class="word-info">
-          <input nz-input [(ngModel)]="userWord"/>
+          <input nz-input [(ngModel)]="userWord" />
         </div>
         <div class="action-group">
-        <button nz-button nzType="primary" nz-tooltip nzTooltipTitle="添加">
-          <span nz-icon nzType="plus"></span> 添加
-        </button>
-      </div>
+          <button nz-button nzType="primary" nz-tooltip nzTooltipTitle="添加">
+            <span nz-icon nzType="plus"></span> 添加
+          </button>
+        </div>
       </div>
     </div>
     }
@@ -35,15 +31,15 @@
           </div>
 
           <div class="phonetic-group">
-            <span class="phonetic">🇺🇸 {{ item.usPhonetic }}</span>
-            <span class="phonetic">🇬🇧 {{ item.ukPhonetic }}</span>
+            <span class="phonetic">🇺🇸</span>
+            <span class="phonetic">🇬🇧</span>
           </div>
 
-          @if (!(item.showDetails || ciHuiService.learnMode())) {
-          <div class="definition">{{ item.sentences[0].en }}</div>
+          @if (!(item.showDetails )) {
+          <div class="definition">{{ item.sentences[0].zh }}</div>
           }
 
-          @if (item.showDetails || ciHuiService.learnMode()) {
+          @if (item.showDetails) {
           <div class="definition">{{ item.definition }}</div>
           }
 
@@ -63,22 +59,21 @@
           </button>
 
           <!-- 显示全部/收起 -->
-          @if(!ciHuiService.learnMode()) {
-          <button nz-button nzType="default" (click)="toggleDetails(item)">
-            <span nz-icon [nzType]="item.showDetails|| ciHuiService.learnMode() ? 'up' : 'down'"></span>
-            {{ item.showDetails || ciHuiService.learnMode()? '收起' : '详情' }}
-          </button>
+
+          <!-- <button nz-button nzType="default" (click)="toggleDetails(item)">
+            <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
+            {{ item.showDetails ? '收起' : '详情' }}
+          </button> -->
 
           <!-- 练一练 -->
           <button nz-button nzType="primary" (click)="openPractice(item)">
             <span nz-icon nzType="edit"></span> 练一练
           </button>
-          }
         </div>
       </div>
 
       <!-- 下半部分：详情 (默认隐藏) -->
-      @if (item.showDetails || ciHuiService.learnMode()) {
+      @if (item.showDetails) {
       <div class="row-details">
         <nz-divider></nz-divider>
 

@@ -52,7 +52,14 @@ export class AppComponent {
   ngOnInit(): void {
   }
 
-  gotoWord() { this.router.navigate(['/word']); }
+  gotoWord(isCustom: boolean = false) { 
+    if (!isCustom) this.router.navigate(['/word']); 
+    else this.router.navigate(['/word'], {queryParams: {isCustom: true}}); 
+  }
+  gotoKouYu(isCustom: boolean = false) {
+    if (!isCustom) this.router.navigate(['/kou-yu']);
+    else this.router.navigate(['/kou-yu'], {queryParams: {isCustom: true}});
+  }
   gotoListen() { this.router.navigate(['/listen']); }
   gotoUserSummary() { this.router.navigate(['/user-summary']); }
   setLearnModel(model: string) {
