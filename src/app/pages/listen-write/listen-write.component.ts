@@ -11,6 +11,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 
 import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
 
@@ -38,6 +39,7 @@ interface VocabularyWord {
     NzSwitchModule,
     NzDividerModule,
     MechanicalTypingDirective,
+    NzDropDownModule,
     NzTagModule
   ],
   templateUrl: './listen-write.component.html',

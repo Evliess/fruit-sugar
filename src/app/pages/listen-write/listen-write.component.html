@@ -4,7 +4,21 @@
             <nz-space [nzSize]="12">
                 <nz-switch *nzSpaceItem [(ngModel)]="soundEnabled" nzCheckedChildren="音效开" nzUnCheckedChildren="音效关"
                     nzSize="default" />
-                <nz-switch *nzSpaceItem nz-button [(ngModel)]="soundTypeUK" nzCheckedChildren="英式" nzUnCheckedChildren="美式" nzSize="default" />
+                <nz-switch *nzSpaceItem nz-button [(ngModel)]="soundTypeUK" nzCheckedChildren="英式"
+                    nzUnCheckedChildren="美式" nzSize="default" />
+                <a nz-dropdown *nzSpaceItem nzTrigger="click" [nzDropdownMenu]="menu">
+                    词汇列表
+                    <nz-icon nzType="down" />
+                </a>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                        @for(item of words; track $index) {
+                            <li nz-menu-item nzSelected="{{currIndex==$index}}">{{item.word}}</li>
+                        }
+                        
+                    </ul>
+                </nz-dropdown-menu>
+
             </nz-space>
         </div>
         <!-- 桌面端靠左，移动端居中 -->
@@ -39,7 +53,7 @@
                     <!-- A. 常用词组 -->
                     <div class="section-block">
                         <h4 class="section-title"><span nz-icon nzType="read" nzTheme="outline"></span> 常用词组</h4>
-                        <div nz-row [nzGutter]="[16, 12]"> <!-- Grid 布局 -->
+                        <div nz-row [nzGutter]="[16, 12]">
                             <div nz-col [nzSpan]="24" [nzMd]="12" class="phrase-item">
                                 <span class="en">thick accent</span>
                                 <span class="cn">重口音</span>
