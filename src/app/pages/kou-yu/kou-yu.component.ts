@@ -19,12 +19,8 @@ import { ActivatedRoute } from '@angular/router';
 // 定义单词数据结构
 interface VocabularyWord {
   id: number;
-  word: string;
-  usPhonetic: string; // 美式
-  ukPhonetic: string; // 英式
-  definition: string; // 中文释义
-  phrases: string[];  // 常用词组
-  sentences: { en: string; zh: string }[]; // 例句
+  sentence_en: string;
+  sentence_zh: string; // 中文释义
   showDetails: boolean; // 是否显示详情 (不认识时为 true)
   isKnown: boolean;     // 是否标记为认识
 }
@@ -67,27 +63,15 @@ export class KouYuComponent {
   words: VocabularyWord[] = [
     {
       id: 1,
-      word: 'The Bodhi tree originally has no roots.',
-      usPhonetic: '/rɪˈzɪliənt/',
-      ukPhonetic: '/rɪˈzɪliənt/',
-      definition: 'adj. 有弹性的；能复原的；适应力强的',
-      phrases: ['remain resilient', 'resilient economy'],
-      sentences: [
-        { en: 'Children are often more resilient than adults.', zh: '菩提本无树。' },
-      ],
+      sentence_en: 'The Bodhi tree originally has no roots.',
+      sentence_zh: '菩提本无树',
       showDetails: false,
       isKnown: false
     },
     {
       id: 2,
-      word: 'Even a clear mirror is not a platform',
-      usPhonetic: '/æmˈbɪɡjuəs/',
-      ukPhonetic: '/æmˈbɪɡjuəs/',
-      definition: 'adj. 模棱两可的；含糊不清的',
-      phrases: ['ambiguous attitude', 'ambiguous wording'],
-      sentences: [
-        { en: 'His reply to my question was somewhat ambiguous.', zh: '明镜亦非台。' },
-      ],
+      sentence_en: 'Even a clear mirror is not a platform',
+      sentence_zh: '明镜亦非台',
       showDetails: false,
       isKnown: false
     },
@@ -98,14 +82,8 @@ export class KouYuComponent {
     for (let i = 3; i <= 10; i++) {
       this.words.push({
         id: i,
-        word: `Sample sentence ${i}`,
-        usPhonetic: '/ˈsæmpəl/',
-        ukPhonetic: '/ˈsæmpəl/',
-        definition: 'n. 示例单词占位符',
-        phrases: [`phrase ${i}-1`, `phrase ${i}-2`],
-        sentences: [
-          { en: `This is example sentence 1 for word ${i}.`, zh: `这是例句 ${i} 。` },
-        ],
+        sentence_en: `Sample sentence ${i}`,
+        sentence_zh: `这是例句 ${i} 。`,
         showDetails: false,
         isKnown: false
       });
@@ -141,7 +119,7 @@ export class KouYuComponent {
   handlePracticeOk(): void {
     if (!this.practiceWord) return;
 
-    if (this.practiceInput.trim().toLowerCase() === this.practiceWord.word.toLowerCase()) {
+    if (this.practiceInput.trim().toLowerCase() === this.practiceWord.sentence_en.toLowerCase()) {
       this.message.success('拼写正确！继续保持！');
       this.isPracticeVisible = false;
     } else {

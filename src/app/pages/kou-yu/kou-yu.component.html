@@ -24,7 +24,7 @@
         <!-- 左侧：单词信息 -->
         <div class="word-info">
           <div class="word-title-group">
-            <span class="word-text">{{ item.word }}</span>
+            <span class="word-text">{{ item.sentence_en }}</span>
             @if (item.isKnown) {
             <nz-tag [nzColor]="'success'">已掌握</nz-tag>
             }
@@ -34,14 +34,6 @@
             <span class="phonetic">🇺🇸</span>
             <span class="phonetic">🇬🇧</span>
           </div>
-
-          @if (!(item.showDetails )) {
-          <div class="definition">{{ item.sentences[0].zh }}</div>
-          }
-
-          @if (item.showDetails) {
-          <div class="definition">{{ item.definition }}</div>
-          }
 
         </div>
 
@@ -71,44 +63,16 @@
           </button>
         </div>
       </div>
-
-      <!-- 下半部分：详情 (默认隐藏) -->
-      @if (item.showDetails) {
-      <div class="row-details">
-        <nz-divider></nz-divider>
-
-        <div class="detail-block">
-          <span class="detail-label">常用词组：</span>
-          <div class="detail-content">
-            @for (phrase of item.phrases; track $index) {
-            <nz-tag>{{ phrase }}</nz-tag>
-            }
-          </div>
-        </div>
-
-        <div class="detail-block mt-2">
-          <span class="detail-label">双语例句：</span>
-          <div class="detail-content sentence-list">
-            @for (sent of item.sentences; track $index) {
-            <div class="sentence-item">
-              <p class="en">{{ sent.en }}</p>
-              <p class="zh">{{ sent.zh }}</p>
-            </div>
-            }
-          </div>
-        </div>
-      </div>
-      }
     </div>
     }
   </div>
 
   <!-- 练一练 弹窗 (保持不变) -->
-  <nz-modal [(nzVisible)]="isPracticeVisible" [nzTitle]="'拼写练习'" (nzOnCancel)="handlePracticeCancel()"
+  <nz-modal [(nzVisible)]="isPracticeVisible" [nzTitle]="'口语练习'" (nzOnCancel)="handlePracticeCancel()"
     (nzOnOk)="handlePracticeOk()">
     <ng-container *nzModalContent>
-      <p class="modal-desc">释义：{{ practiceWord?.definition }}</p>
-      <input nz-input placeholder="输入单词..." [(ngModel)]="practiceInput" (keydown.enter)="handlePracticeOk()" />
+      <p class="modal-desc">释义：{{ practiceWord?.sentence_zh }}</p>
+      <input nz-input placeholder="请在此输入..." [(ngModel)]="practiceInput" (keydown.enter)="handlePracticeOk()" />
     </ng-container>
   </nz-modal>
 </div>
