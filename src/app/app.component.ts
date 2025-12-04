@@ -20,6 +20,9 @@ import { CiHuiService } from './pages/ci-hui/ci-hui.service';
 export class AppComponent {
   isCollapsed = false;
   learnModel = "list";
+  
+  category = "";
+  leftMenuCategory = '';
 
   private router = inject(Router);
   private ciHuiService = inject(CiHuiService)
@@ -52,20 +55,25 @@ export class AppComponent {
   ngOnInit(): void {
   }
 
-  gotoWord(isCustom: boolean = false) { 
-    if (!isCustom) this.router.navigate(['/word']); 
-    else this.router.navigate(['/word'], {queryParams: {isCustom: true}}); 
+  gotoWord(isCustom: boolean = false, category: string) {
+    this.category = category;
+    this.leftMenuCategory = "ci_hui";
+    console.log('gotoWord', isCustom, category);
+    this.router.navigate(['/word'], {queryParams: {isCustom: isCustom, category: category}}); 
   }
   gotoKouYu(isCustom: boolean = false) {
     if (!isCustom) this.router.navigate(['/kou-yu']);
     else this.router.navigate(['/kou-yu'], {queryParams: {isCustom: true}});
   }
-  gotoListen() { this.router.navigate(['/listen']); }
+  gotoListen(category: string='') {
+    this.leftMenuCategory = "listen";
+    this.router.navigate(['/listen'], {queryParams: {category: this.category}}); 
+  }
   gotoUserSummary() { this.router.navigate(['/user-summary']); }
   setLearnModel(model: string) {
     this.learnModel = model;
     if (model == 'learn') this.ciHuiService.setLearnMode(true);
     if (model == 'list') this.ciHuiService.setLearnMode(false);
-    if (model == 'listen') {this.gotoListen();}
+    // if (model == 'listen') {this.gotoListen();}
   }
 }
