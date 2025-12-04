@@ -77,7 +77,7 @@ export class CiHuiComponent {
       usPhonetic: '/rɪˈzɪliənt/',
       ukPhonetic: '/rɪˈzɪliənt/',
       definition: 'adj. 有弹性的；能复原的；适应力强的',
-      phrases: ['remain resilient', 'resilient economy'],
+      phrases: ['remain resilient;有弹性的', 'resilient economy;适应力强的'],
       sentences: [
         { en: 'Children are often more resilient than adults.', zh: '孩子往往比成年人更有适应力。' },
       ],
@@ -90,7 +90,7 @@ export class CiHuiComponent {
       usPhonetic: '/æmˈbɪɡjuəs/',
       ukPhonetic: '/æmˈbɪɡjuəs/',
       definition: 'adj. 模棱两可的；含糊不清的',
-      phrases: ['ambiguous attitude', 'ambiguous wording'],
+      phrases: ['ambiguous attitude；模棱两可的', 'ambiguous wording；含糊不清的'],
       sentences: [
         { en: 'His reply to my question was somewhat ambiguous.', zh: '他对我问题的回答有点模棱两可。' },
       ],
@@ -108,7 +108,7 @@ export class CiHuiComponent {
         usPhonetic: '/ˈsæmpəl/',
         ukPhonetic: '/ˈsæmpəl/',
         definition: 'n. 示例单词占位符',
-        phrases: [`phrase ${i}-1`, `phrase ${i}-2`],
+        phrases: [`phrase ${i}-1；含糊不清的`, `phrase ${i}-2；模棱两可的`],
         sentences: [
           { en: `This is example sentence 1 for word ${i}.`, zh: `这是单词 ${i} 的例句一。` },
         ],
