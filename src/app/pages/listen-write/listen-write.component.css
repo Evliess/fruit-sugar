@@ -392,8 +392,8 @@
 
 .floating-eye-btn {
   position: fixed; /* 固定定位，不随页面滚动 */
-  right: 40px;     /* 距离右侧距离 */
-  bottom: 40px;    /* 距离底部距离 */
+  right: 80px;     /* 距离右侧距离 */
+  top: 380px;    /* 距离底部距离 */
   width: 56px !important;
   height: 56px !important;
   border: none !important;
