@@ -99,8 +99,9 @@
         <div class="input-section">
             <div class="input-wrapper">
                 <nz-input-group>
-                    <input nz-input [(ngModel)]="inputValue" placeholder="Type your answer here..." nzSize="large"
-                        nzBorderless [appMechanicalTyping]="soundEnabled" class="minimal-input" />
+                    <input nz-input [(ngModel)]="inputValue" placeholder="请在此输入..." nzSize="large"
+                        nzBorderless [appMechanicalTyping]="soundEnabled" [class]="inputStatus" 
+                        (keydown)="checkAnswer()"/>
                 </nz-input-group>
             </div>
         </div>

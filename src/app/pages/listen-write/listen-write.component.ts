@@ -47,6 +47,7 @@ interface VocabularyWord {
 })
 export class ListenWriteComponent {
   inputValue: string = '';
+  inputStatus: string = 'minimal-input';
   isEyeOpen: boolean = false;
   isPlay: boolean = true;
   soundEnabled: boolean = true;
@@ -101,6 +102,16 @@ export class ListenWriteComponent {
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
     this.playAudio();
+  }
+
+  checkAnswer(): void {
+    const trimmedInput = this.inputValue.trim().toLowerCase();
+    const correctAnswer = this.currWord.word.toLowerCase();
+    if (trimmedInput === correctAnswer) {
+      this.inputStatus = 'minimal-input minimal-input-success';
+    } else {
+      this.inputStatus = 'minimal-input';
+    }
   }
 
 

@@ -271,7 +271,7 @@
 /* 极简下划线 Input */
 .minimal-input {
   border: none !important;
-  border-bottom: 2px solid #e8e8e8 !important;
+  border-bottom: 2px solid #1890ff !important;
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -282,8 +282,8 @@
   transition: border-color 0.3s ease;
 }
 
-.minimal-input:focus {
-  border-bottom-color: #1890ff !important;
+.minimal-input-success {
+  border-bottom-color: #52c41a !important;
 }
 
 .minimal-input::placeholder {
