@@ -2,17 +2,18 @@
     <div class="container">
         <div nz-row nzJustify="end" class="top-bar">
             <nz-space [nzSize]="12">
-                <nz-switch *nzSpaceItem [(ngModel)]="soundEnabled" nzCheckedChildren="音效开" nzUnCheckedChildren="音效关" nzSize="default" />
-                <nz-switch *nzSpaceItem nz-button nzCheckedChildren="英式" nzUnCheckedChildren="美式" nzSize="default" />
+                <nz-switch *nzSpaceItem [(ngModel)]="soundEnabled" nzCheckedChildren="音效开" nzUnCheckedChildren="音效关"
+                    nzSize="default" />
+                <nz-switch *nzSpaceItem nz-button [(ngModel)]="soundTypeUK" nzCheckedChildren="英式" nzUnCheckedChildren="美式" nzSize="default" />
             </nz-space>
         </div>
         <!-- 桌面端靠左，移动端居中 -->
         <div class="card-section">
-            <nz-card *ngIf="isEyeOpen" @switchAnimation class="flash-card" [nzBordered]="false" nzHoverable>
+            <nz-card *ngIf="isEyeOpen" class="flash-card" [nzBordered]="false" nzHoverable>
                 <!-- 1. 头部：单词与音标 -->
                 <div class="card-header">
                     <div class="word-row">
-                        <h1 class="vocab-word">accent</h1>
+                        <h1 class="vocab-word">{{currWord.word}}</h1>
                         <!-- 音标在移动端会换行，桌面端跟在后面 -->
                         <div class="phonetic-group">
                             <span class="phonetic-item"><span class="region">UK</span>/ˈæk.sənt/</span>
@@ -23,14 +24,12 @@
 
                 <!-- 2. 中部：核心释义 -->
                 <div class="card-body">
+                    @for (item of currWord.definitions; track $index) {
                     <div class="definition-item">
-                        <nz-tag [nzColor]="'blue'" class="pos-tag">n.</nz-tag>
-                        <span class="meaning">口音，腔调；土音</span>
+                        <nz-tag [nzColor]="'blue'" class="pos-tag">{{item.type}}</nz-tag>
+                        <span class="meaning">{{item.zh}}</span>
                     </div>
-                    <div class="definition-item">
-                        <nz-tag [nzColor]="'green'" class="pos-tag">v.</nz-tag>
-                        <span class="meaning">强调；着重；突出</span>
-                    </div>
+                    }
                 </div>
 
                 <!-- 3. 底部：扩展内容 (词组 + 例句) -->
@@ -87,8 +86,7 @@
             <div class="input-wrapper">
                 <nz-input-group>
                     <input nz-input [(ngModel)]="inputValue" placeholder="Type your answer here..." nzSize="large"
-                        nzBorderless [appMechanicalTyping]="soundEnabled"
-                        class="minimal-input" />
+                        nzBorderless [appMechanicalTyping]="soundEnabled" class="minimal-input" />
                 </nz-input-group>
             </div>
         </div>

@@ -58,10 +58,10 @@ export class AppComponent {
   gotoWord(isCustom: boolean = false, category: string) {
     this.category = category;
     this.leftMenuCategory = "ci_hui";
-    console.log('gotoWord', isCustom, category);
     this.router.navigate(['/word'], {queryParams: {isCustom: isCustom, category: category}}); 
   }
   gotoKouYu(isCustom: boolean = false) {
+    this.leftMenuCategory = "kou_yu";
     if (!isCustom) this.router.navigate(['/kou-yu']);
     else this.router.navigate(['/kou-yu'], {queryParams: {isCustom: true}});
   }
@@ -74,6 +74,5 @@ export class AppComponent {
     this.learnModel = model;
     if (model == 'learn') this.ciHuiService.setLearnMode(true);
     if (model == 'list') this.ciHuiService.setLearnMode(false);
-    // if (model == 'listen') {this.gotoListen();}
   }
 }

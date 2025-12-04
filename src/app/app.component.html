@@ -37,9 +37,9 @@
           <li nz-menu-item>住宅</li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="口语表达" nzIcon="muted">
+      <li nz-submenu nzTitle="口语表达" nzIcon="muted" [nzOpen]="leftMenuCategory==='kou_yu'">
         <ul>
-          <li nz-menu-item (click)="gotoKouYu(false)"><a routerLinkActive="active" ariaCurrentWhenActive="page">食物</a></li>
+          <li nz-menu-item (click)="gotoKouYu(false)" [nzSelected]="leftMenuCategory==='kou_yu' && category==='food'"><a routerLinkActive="active" ariaCurrentWhenActive="page">食物</a></li>
           <li nz-menu-item>住宅</li>
           <li nz-menu-item (click)="gotoKouYu(true)"><a routerLinkActive="active" ariaCurrentWhenActive="page">自定义</a></li>
         </ul>
