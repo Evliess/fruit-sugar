@@ -15,6 +15,8 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 
 import { trigger, style, animate, transition } from '@angular/animations';
+import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
+
 
 
 
@@ -32,6 +34,7 @@ import { trigger, style, animate, transition } from '@angular/animations';
     NzSpaceModule,
     NzSwitchModule,
     NzDividerModule,
+    MechanicalTypingDirective,
     NzTagModule
   ],
   templateUrl: './listen-write.component.html',
@@ -55,6 +58,8 @@ export class ListenWriteComponent {
   inputValue: string = '';
   isEyeOpen: boolean = false;
   isPlay: boolean = true;
+  soundEnabled = true;
+
 
   // 模拟点击事件
   handleAction(action: string): void {

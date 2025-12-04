@@ -2,7 +2,7 @@
     <div class="container">
         <div nz-row nzJustify="end" class="top-bar">
             <nz-space [nzSize]="12">
-                <nz-switch *nzSpaceItem nzCheckedChildren="音效开" nzUnCheckedChildren="音效关" nzSize="default" />
+                <nz-switch *nzSpaceItem [(ngModel)]="soundEnabled" nzCheckedChildren="音效开" nzUnCheckedChildren="音效关" nzSize="default" />
                 <nz-switch *nzSpaceItem nz-button nzCheckedChildren="英式" nzUnCheckedChildren="美式" nzSize="default" />
             </nz-space>
         </div>
@@ -87,7 +87,8 @@
             <div class="input-wrapper">
                 <nz-input-group>
                     <input nz-input [(ngModel)]="inputValue" placeholder="Type your answer here..." nzSize="large"
-                        nzBorderless class="minimal-input" />
+                        nzBorderless [appMechanicalTyping]="soundEnabled"
+                        class="minimal-input" />
                 </nz-input-group>
             </div>
         </div>
