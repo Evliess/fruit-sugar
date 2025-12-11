@@ -47,8 +47,8 @@
       <li nz-submenu nzTitle="用户中心" nzIcon="user">
         <ul>
           <li nz-menu-item (click)="gotoUserSummary()">进度总览</li>
-          <li nz-menu-item>错题本</li>
-          <li nz-menu-item (click)="gotoWrongBook()">生词本</li>
+          <li nz-menu-item (click)="gotoWrongBook()">错题本</li>
+          <li nz-menu-item (click)="gotoUnknownBook()">生词本</li>
         </ul>
       </li>
       <li nz-submenu nzTitle="AI助教" nzIcon="reddit">
@@ -85,18 +85,34 @@
               <li nz-menu-item>健康</li>
             </ul>
           </nz-dropdown-menu> -->
-          <div (click)="setLearnModel('learn')" [class]="learnModel=='learn'?'header-item selected':'header-item'">
-            <span nz-icon nzType="eye"></span>
-            <span class="username">学习模式</span>
-          </div>
-          <div (click)="setLearnModel('list')" [class]="learnModel=='list'?'header-item selected':'header-item'">
-            <span nz-icon nzType="unordered-list"></span>
-            <span class="username">列表模式</span>
-          </div>
-          <div (click)="gotoListen()" [class]="learnModel=='listen'?'header-item selected':'header-item'">
-            <span nz-icon nzType="muted"></span>
-            <span class="username">听写模式</span>
-          </div>
+          @if(leftMenuCategory=='ci_hui'){
+            <div (click)="setLearnModel('learn')" [class]="learnModel=='learn'?'header-item selected':'header-item'">
+              <span nz-icon nzType="eye"></span>
+              <span class="username">学习模式</span>
+            </div>
+            <div (click)="setLearnModel('list')" [class]="learnModel=='list'?'header-item selected':'header-item'">
+              <span nz-icon nzType="unordered-list"></span>
+              <span class="username">列表模式</span>
+            </div>
+            <div (click)="gotoListen()" [class]="learnModel=='listen'?'header-item selected':'header-item'">
+              <span nz-icon nzType="muted"></span>
+              <span class="username">听写模式</span>
+            </div>
+          }
+          @if(leftMenuCategory=='user') {
+            <div (click)="gotoUserSummary()" [class]="category=='user-summary'?'header-item selected':'header-item'">
+              <span nz-icon nzType="dashboard"></span>
+              <span class="username">进度总览</span>
+            </div>
+            <div (click)="gotoWrongBook()" [class]="category=='wrong-book'?'header-item selected':'header-item'">
+              <span nz-icon nzType="file-excel"></span>
+              <span class="username">错题本</span>
+            </div>
+            <div (click)="gotoUnknownBook()" [class]="category=='unknown-book'?'header-item selected':'header-item'">
+              <span nz-icon nzType="book"></span>
+              <span class="username">生词本</span>
+            </div>
+          }
         </div>
         }
       </div>
