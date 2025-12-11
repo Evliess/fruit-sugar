@@ -44,11 +44,11 @@
           <li nz-menu-item (click)="gotoKouYu(true)"><a routerLinkActive="active" ariaCurrentWhenActive="page">自定义</a></li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="用户中心" nzIcon="user">
+      <li nz-submenu nzTitle="用户中心" nzIcon="user" [nzOpen]="leftMenuCategory==='user'">
         <ul>
-          <li nz-menu-item (click)="gotoUserSummary()">进度总览</li>
-          <li nz-menu-item (click)="gotoWrongBook()">错题本</li>
-          <li nz-menu-item (click)="gotoUnknownBook()">生词本</li>
+          <li nz-menu-item (click)="gotoUserSummary()" nzSelected="{{category==='user-summary'}}">进度总览</li>
+          <li nz-menu-item (click)="gotoWrongBook()" nzSelected="{{category=='wrong-book'}}">错题本</li>
+          <li nz-menu-item (click)="gotoUnknownBook()" nzSelected="{{category=='unknown-book'}}">生词本</li>
         </ul>
       </li>
       <li nz-submenu nzTitle="AI助教" nzIcon="reddit">
