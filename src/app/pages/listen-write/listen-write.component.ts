@@ -71,8 +71,8 @@ export class ListenWriteComponent {
     {
       id: 3, word: 'rich', definitions: [{ type: 'adj.', zh: '有钱的，富有的' },
       ],
-      usAudio: 'https://dict.youdao.com/dictvoice?audio=rich&type=1',
-      ukAudio: 'https://dict.youdao.com/dictvoice?audio=rich&type=2'
+      usAudio: 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=rich',
+      ukAudio: 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=rich'
     },
   ];
   currIndex: number = 0;
@@ -109,12 +109,11 @@ export class ListenWriteComponent {
     const correctAnswer = this.currWord.word.toLowerCase();
     if (trimmedInput === correctAnswer) {
       this.inputStatus = 'minimal-input minimal-input-success';
+      this.playNext();
     } else {
       this.inputStatus = 'minimal-input';
     }
   }
-
-
 
   // 模拟点击事件
   handleAction(action: string): void {

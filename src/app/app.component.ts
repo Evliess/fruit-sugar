@@ -75,4 +75,7 @@ export class AppComponent {
     if (model == 'learn') this.ciHuiService.setLearnMode(true);
     if (model == 'list') this.ciHuiService.setLearnMode(false);
   }
+  gotoWrongBook(){
+    this.router.navigate(['/unknown-book']);
+  }
 }
