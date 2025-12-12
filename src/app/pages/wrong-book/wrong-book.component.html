@@ -1,1 +1,78 @@
-<p>wrong-book works!</p>
+<div class="container">
+  <div class="list-container">
+    @if(isCustom) {
+    <div class="word-row">
+      <div class="row-main">
+        <div class="word-info">
+          <input nz-input [(ngModel)]="userWord" />
+        </div>
+        <div class="action-group">
+          <button nz-button nzType="primary" nz-tooltip nzTooltipTitle="添加">
+            <span nz-icon nzType="plus"></span> 添加
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+    @for (item of words; track item.id) {
+    <!-- 单个单词行 -->
+    <div class="word-row" [class.is-known]="item.isKnown">
+
+      <!-- 上半部分：主要信息 + 操作按钮 -->
+      <div class="row-main">
+
+        <!-- 左侧：单词信息 -->
+        <div class="word-info">
+          <div class="word-title-group">
+            <span class="word-text">{{ item.sentence_en }}</span>
+            @if (item.isKnown) {
+            <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+            }
+          </div>
+
+          <div class="phonetic-group">
+            <span class="phonetic">🇺🇸</span>
+            <span class="phonetic">🇬🇧</span>
+          </div>
+
+        </div>
+
+        <!-- 右侧：按钮组 -->
+        <div class="action-group">
+          <!-- 认识 -->
+          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+            (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+            <span nz-icon nzType="check"></span> 认识
+          </button>
+
+          <!-- 不认识 -->
+          <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
+            <span nz-icon nzType="close"></span> 不认识
+          </button>
+
+          <!-- 显示全部/收起 -->
+
+          <!-- <button nz-button nzType="default" (click)="toggleDetails(item)">
+            <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
+            {{ item.showDetails ? '收起' : '详情' }}
+          </button> -->
+
+          <!-- 练一练 -->
+          <button nz-button nzType="primary" (click)="openPractice(item)">
+            <span nz-icon nzType="edit"></span> 练一练
+          </button>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+
+  <!-- 练一练 弹窗 (保持不变) -->
+  <nz-modal [(nzVisible)]="isPracticeVisible" [nzTitle]="'口语练习'" (nzOnCancel)="handlePracticeCancel()"
+    (nzOnOk)="handlePracticeOk()">
+    <ng-container *nzModalContent>
+      <p class="modal-desc">释义：{{ practiceWord?.sentence_zh }}</p>
+      <input nz-input placeholder="请在此输入..." [(ngModel)]="practiceInput" (keydown.enter)="handlePracticeOk()" />
+    </ng-container>
+  </nz-modal>
+</div>

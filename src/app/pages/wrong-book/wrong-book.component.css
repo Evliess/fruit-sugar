@@ -1,0 +1,162 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+/* 每一行的容器样式 */
+.word-row {
+  background: #fff;
+  border-radius: 8px;
+  padding: 16px 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+  border-left: 4px solid transparent;
+}
+
+.word-row:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 已认识的单词左边框变绿，背景微变 */
+.word-row.is-known {
+  border-left-color: #52c41a;
+  background-color: #fafff0;
+}
+
+/* 行的主要区域布局 */
+.row-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap; /* 关键：允许换行 */
+}
+
+/* 左侧信息区域 */
+.word-info {
+  flex: 1;
+  min-width: 280px; /* 保证手机端文字不会被挤得太小 */
+}
+
+.word-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.word-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #262626;
+}
+
+.phonetic-group {
+  font-size: 13px;
+  color: #8c8c8c;
+  margin-bottom: 4px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.phonetic {
+  margin-right: 12px;
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.definition {
+  font-size: 15px;
+  color: #595959;
+}
+
+/* 右侧按钮组区域 */
+.action-group {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0; /* 防止按钮被压缩 */
+}
+
+/* 详情区域样式 */
+.row-details {
+  margin-top: 16px;
+  animation: fadeIn 0.3s;
+}
+
+.detail-block {
+  margin-bottom: 12px;
+}
+
+.detail-label {
+  font-weight: bold;
+  color: #1890ff;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.detail-content {
+  padding-left: 8px;
+}
+
+.sentence-item {
+  margin-bottom: 8px;
+  padding: 8px;
+  background: #fafafa;
+  border-radius: 4px;
+  border-left: 2px solid #d9d9d9;
+}
+
+.sentence-item .en {
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.sentence-item .zh {
+  color: #8c8c8c;
+  font-size: 13px;
+}
+
+.mt-2 {
+  margin-top: 12px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 移动端响应式适配 */
+@media (max-width: 768px) {
+  .word-row {
+    padding: 16px; /* 减少内边距 */
+  }
+
+  .row-main {
+    align-items: flex-start; /* 顶部对齐 */
+    flex-direction: column; /* 强制垂直排列 */
+  }
+
+  .action-group {
+    width: 100%;
+    justify-content: flex-end; /* 按钮靠右 */
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed #e8e8e8; /* 分隔线 */
+  }
+  
+  /* 按钮在手机端稍微小一点点，或者占满 */
+  .action-group button {
+    flex: 1; /* 可选：让按钮平分宽度，方便点击 */
+    padding: 0 8px;
+    font-size: 12px;
+  }
+}
