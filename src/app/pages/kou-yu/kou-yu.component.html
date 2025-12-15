@@ -22,7 +22,7 @@
       <div class="row-main">
 
         <!-- 左侧：单词信息 -->
-        <div class="word-info">
+        <div class="word-info" appHoverSound [hoverTime]="500" (hoverTimeout)="handleSound(item.sentence_en)">
           <div class="word-title-group">
             <span class="word-text">{{ item.sentence_en }}</span>
             @if (item.isKnown) {

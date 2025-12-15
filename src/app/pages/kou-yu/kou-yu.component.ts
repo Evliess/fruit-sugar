@@ -14,6 +14,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ActivatedRoute } from '@angular/router';
+import { HoverSoundDirective } from '../../hover-sound.directive';
 
 
 // 定义单词数据结构
@@ -38,6 +39,7 @@ interface VocabularyWord {
     NzInputModule,
     NzIconModule,
     NzDividerModule,
+    HoverSoundDirective,
     NzToolTipModule
   ],
   templateUrl: './kou-yu.component.html',
@@ -58,6 +60,8 @@ export class KouYuComponent {
       this.isCustom = isCustom === 'true';
     });
   }
+
+  private audio = new Audio();
 
   // 模拟数据：10个单词
   words: VocabularyWord[] = [
@@ -129,5 +133,11 @@ export class KouYuComponent {
 
   handlePracticeCancel(): void {
     this.isPracticeVisible = false;
+  }
+
+  handleSound(src: string): void {
+    this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=rich';
+    this.audio.load();
+    this.audio.play().catch(e => console.warn('Playback failed:', e));
   }
 }

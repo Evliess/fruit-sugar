@@ -42,7 +42,6 @@ export class AppComponent {
   // 只要 currentUrl 发生变化，这个值会自动更新
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
-    console.log('当前路由:', url);
 
     // 只有在 home 或者其他页面才显示 (根据你的需求调整)
     if (url && (url.includes('/word') || url.includes('/unknown-book') 
