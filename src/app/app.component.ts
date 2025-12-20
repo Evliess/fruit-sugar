@@ -3,21 +3,27 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzInputModule } from 'ng-zorro-antd/input';
 import { CommonModule } from '@angular/common';
+import { NzFormModule } from 'ng-zorro-antd/form';
 import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CiHuiService } from './pages/ci-hui/ci-hui.service';
+import { NzInputDirective } from "ng-zorro-antd/input";
 
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, NzIconModule, NzDropDownModule, NzLayoutModule, NzMenuModule, NzButtonModule],
+  imports: [CommonModule, RouterOutlet, NzFormModule, NzCardModule,NzInputModule,
+    NzIconModule, NzDropDownModule, NzLayoutModule, NzMenuModule, NzButtonModule, NzInputDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  isLogined = true
   isCollapsed = false;
   learnModel = "list";
 

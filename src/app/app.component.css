@@ -144,3 +144,74 @@ nz-footer {
   text-align: center;
   color: rgba(0, 0, 0, 0.45);
 }
+
+
+/* 容器：全屏背景，Flexbox 居中 */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; /* 经典的灰色背景 */
+  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg'); /* 可选背景图 */
+  background-repeat: no-repeat;
+  background-position: center 110px;
+  background-size: 100%;
+}
+
+/* 内容卡片：核心响应式逻辑 */
+.login-content {
+  width: 100%;
+  max-width: 400px; /* 电脑端最大宽度 */
+  padding: 24px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 加点阴影更有质感 */
+}
+
+/* 移动端适配：当屏幕小于 480px 时 (主流手机) */
+@media (max-width: 480px) {
+  .login-content {
+    max-width: 90%; /* 手机端留出左右边距 */
+    box-shadow: none; /* 手机端通常去掉阴影让界面更扁平，或者保留看喜好 */
+    background: transparent; /* 极简风格手机端可以去掉白色背景块 */
+  }
+  
+  /* 如果手机端去掉了白色背景，可能需要调整文字颜色 */
+  /* .title { color: #333; } */
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.logo {
+  height: 44px;
+  margin-right: 16px;
+  vertical-align: top;
+}
+
+.title {
+  position: relative;
+  top: 2px;
+  color: rgba(0, 0, 0, 0.85);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 600;
+  font-size: 28px; /* 手机端字体大一点更易读 */
+}
+
+.login-form {
+  max-width: 100%;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+/* 按钮全宽 */
+.login-button {
+  width: 100%;
+}
