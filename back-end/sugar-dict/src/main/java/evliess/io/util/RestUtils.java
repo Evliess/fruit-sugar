@@ -132,7 +132,7 @@ public class RestUtils {
         String sentence = params.get("q");
         String voiceName = params.get("voiceName");
         if (Constants.VOICE_BR.equals(voiceName)) {
-          filePath = audioDir.getAbsolutePath() + File.separator + getDigest(sentence) + "_br.mp3";
+          filePath = audioDir.getAbsolutePath() + File.separator + getDigest(sentence) + "_uk.mp3";
         } else {
           filePath = audioDir.getAbsolutePath() + File.separator + getDigest(sentence) + "_us.mp3";
         }
@@ -149,7 +149,7 @@ public class RestUtils {
     return filePath;
   }
 
-  private static String getDigest(String string) {
+  public static String getDigest(String string) {
     if (string == null) {
       return null;
     }
