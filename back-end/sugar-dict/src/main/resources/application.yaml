@@ -1,16 +1,14 @@
-spring.datasource.url: ${DB_URL}
-spring.datasource.driverClassName: com.mysql.cj.jdbc.Driver
-spring.datasource.username: ${DB_USER}
-spring.datasource.password: ${DB_ACCESS_KEY}
-
-
-spring.datasource.hikari.connection-timeout: 30000
-spring.datasource.hikari.maximum-pool-size: 10
-spring.datasource.hikari.minimum-idle: 5
-spring.datasource.hikari.idle-timeout: 30000
-
-
 spring:
+  datasource:
+    url: ${DB_URL}
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: ${DB_USER}
+    password: ${DB_ACCESS_KEY}
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+      minimum-idle: 10
+      idle-timeout: 600000
   jpa:
     properties:
       hibernate:
