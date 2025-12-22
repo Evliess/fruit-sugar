@@ -1,5 +1,6 @@
 package evliess.io.controller;
 
+import evliess.io.dto.UserDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -21,17 +22,6 @@ import java.nio.file.Paths;
 @RequestMapping("/public/v1")
 @Tag(name = "YouDao Cloud Operations", description = "YouDao Cloud Operations")
 public class DaoYouController {
-    // GET /public/vi/stocks
-    @GetMapping("/stocks")
-    @Operation(
-            summary = "This is a sample",
-            description = "根据媒体类型和ID下载对应的 MPEG 文件（如 MP3 音频）"
-    )
-    public ResponseEntity<String> getStock() {
-        return ResponseEntity.ok("123Test");
-    }
-    // GET /api/users/{id}
-
     @Operation(summary = "根据ID获取用户", description = "返回指定ID的用户信息")
     @GetMapping("/stock/{id}")
     public ResponseEntity<String> getUserById(
@@ -116,5 +106,16 @@ public class DaoYouController {
         // 实现略
         return null;
     }
+
+  @PostMapping("/create")
+  @Operation(summary = "创建新用户", description = "接收JSON格式的name和id来创建用户")
+  public String createUser(
+    @RequestBody UserDto request
+  ) {
+    // 模拟业务逻辑
+    System.out.println("接收到的Name: " + request.getName());
+
+    return "用户 " + request.getName() + " 创建成功";
+  }
 
 }
