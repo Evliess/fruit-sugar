@@ -19,3 +19,8 @@ spring:
 springdoc:
   api-docs:
     enabled: true
+
+logging:
+  level:
+    org.hibernate: WARN
+    com.zaxxer.hikari: WARN
