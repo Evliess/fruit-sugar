@@ -1,0 +1,38 @@
+<div class="page-container">
+
+    <!-- 循环渲染三个大板块 -->
+    @for (section of sections; track section.name) {
+    <div class="section-wrapper">
+        <h2 class="section-title">{{ section.name }}</h2>
+
+        <!-- Grid 系统: 移动端间距小(12px)，桌面端间距大(24px) -->
+        <nz-row [nzGutter]="[24, 24]">
+
+            @for (item of section.items; track item.title) {
+            <!-- 
+            Responsive Breakpoints:
+            nzXs (Mobile): 24格 (占满)
+            nzMd (Tablet): 12格 (一行两个)
+            nzLg (Desktop): 8格 (一行三个)
+          -->
+            <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="6">
+
+                <nz-card nzHoverable nzBordered="true">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                <ng-template #content1>
+                    <h2 class="card-title">留学事务与学术支持</h2>
+                    <p class="card-subtitle">Study Affairs & Academic Support</p>
+                    <div class="card-footer">
+                        <span class="footer-title">进度</span>
+                        <span class="footer-status">58/100</span>
+                    </div>
+                </ng-template>
+            </nz-col>
+            }
+
+        </nz-row>
+    </div>
+    }
+
+</div>

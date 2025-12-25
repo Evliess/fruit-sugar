@@ -65,7 +65,7 @@
     <ul nz-menu nzTheme="light" nzMode="inline">
       <li nz-submenu nzTitle="场景词汇" nzIcon="read" [nzOpen]="leftMenuCategory==='ci_hui'">
         <ul>
-          <li nz-menu-item>学习与学校</li>
+          <li nz-menu-item (click)="gotoWordSubitem(false, '')">学习与学校</li>
           <li nz-menu-item (click)="gotoWord(false, 'food')"
             [nzSelected]="leftMenuCategory==='ci_hui' && category==='food'"><a routerLinkActive="active"
               ariaCurrentWhenActive="page"></a>食物</li>

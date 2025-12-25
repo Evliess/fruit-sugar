@@ -9,4 +9,5 @@ export const routes: Routes = [
   { path: 'kou-yu', loadChildren: () => import('./pages/kou-yu/kou-yu.routes').then(m => m.KOU_YU_ROUTES)},
   { path: 'unknown-book', loadChildren: () => import('./pages/unknown-book/unknown-book.routes').then(m => m.UNKNOWN_BOOK_ROUTES) },
   { path: 'wrong-book', loadChildren: () => import('./pages/wrong-book/wrong-book.routes').then(m => m.WRONG_BOOK_ROUTES) },
+  { path: 'word-subitem', loadChildren: () => import('./pages/word-subitem/word-subitem.routes').then(m => m.WORD_SUBITEM_ROUTES) },
 ];

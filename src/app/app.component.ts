@@ -62,6 +62,11 @@ export class AppComponent {
   ngOnInit(): void {
   }
 
+  gotoWordSubitem(isCustom: boolean = false, category: string) {
+    this.leftMenuCategory = "ci_hui";
+    this.router.navigate(['/word-subitem']);
+    this.leftMenuCategory = "ci_hui";
+  }
   gotoWord(isCustom: boolean = false, category: string) {
     this.category = category;
     this.leftMenuCategory = "ci_hui";
