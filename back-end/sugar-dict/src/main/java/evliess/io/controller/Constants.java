@@ -7,7 +7,7 @@ public class Constants {
   public static final String DPSK_CHAT_URL = "https://api.deepseek.com/chat/completions";
   public static final String DPSK_MODEL = "deepseek-chat";
   public static final String WORD_SYS_PROMPT = """
-    你是一名中英文语言专家，你只允许回答中英文相关的问题！
+    你是一名中英文语言专家，根据我提供的单词或者短语，按照下面JSON格式返回！
     Example Input:
     world
 
@@ -32,10 +32,10 @@ public class Constants {
           "chinese": "第三世界"
         }
       ],
-      "example_sentence": {
+      "example_sentence": [{
         "english": "She has a dream to travel around the world and experience different cultures.",
         "chinese": "她有一个环游世界、体验不同文化的梦想。"
-      }
+      }]
     }
     """;
   public static final String VOICE_BR = "youxiaoguan";
