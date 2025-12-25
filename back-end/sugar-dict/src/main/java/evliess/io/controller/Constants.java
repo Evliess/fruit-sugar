@@ -41,4 +41,24 @@ public class Constants {
   public static final String VOICE_BR = "youxiaoguan";
   public static final String VOICE_US = "youxiaodao";
   public static final String YD_TTS_URL = "https://openapi.youdao.com/ttsapi";
+
+  public static final String[] SENTENCE_CASES = {"restaurant", "airport", "hotel", "bank_card"
+    , "class_discussion", "shopping", "hair_cut", "hospital", "transport"};
+  public static final String[] WORD_CASES = {"school", "food", "housing", "shopping"
+    , "leisure", "city", "health"};
+  public static final String[] WORD_HEALTH_CASES = {"body_anatomy", "illnesses_symptoms", "medical_facilities", "healthcare"
+    , "treatments", "medications", "first_aid", "insurance"};
+  public static final String[] WORD_CITY_CASES = {"transportation_facilities", "traffic_rules", "taxi", "driving"
+    , "public_transportation", "cycling", "airports_train_station", "vehicle_rental", "traffic_incidents"};
+  public static final String[] WORD_LEISURE_CASES = {"indoor_games", "outdoor_sports", "travel", "music"
+    , "nightlife", "fitness", "leisure_services"};
+  public static final String[] WORD_SHOPPING_CASES = {"cosmetics", "clothing", "supermarket", "online_shopping"
+    , "electronics", "stationery", "speciality_stores"};
+  public static final String[] WORD_HOUSING_CASES = {"housing_type", "kitchen", "bathroom", "living_room"
+    , "bedroom", "storage_space", "balcony", "interior_design", "maintenance"};
+  public static final String[] WORD_FOOD_CASES = {"grains_staples", "legumes_pulses", "dairy", "snacks"
+    , "herbs", "oils", "beverages"};
+  public static final String[] WORD_SCHOOL_CASES = {"course_study", "exams_assessment", "classroom_activity", "campus_facilities"
+    , "academic_research", "study_affairs", "campus_life"};
+
 }

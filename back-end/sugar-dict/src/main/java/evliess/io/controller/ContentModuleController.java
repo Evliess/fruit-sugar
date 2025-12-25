@@ -30,7 +30,7 @@ public class ContentModuleController {
   )
   @GetMapping(value = "/content-module", produces = "application/json")
   public ResponseEntity<String> getByName(
-    @Parameter(description = "The name of content module", required = true, example = "食物")
+    @Parameter(description = "The name of content module", required = true, example = "hotel")
     @RequestParam String name
   ) {
     return contentModuleSvc.getByName(name);

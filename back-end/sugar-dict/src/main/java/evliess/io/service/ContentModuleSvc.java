@@ -17,6 +17,13 @@ public class ContentModuleSvc {
     this.contentModuleRepo = contentModuleRepo;
   }
 
+  public ResponseEntity<String> getAllContentModules() {
+    JSONObject jsonObject = new JSONObject();
+
+    return ResponseEntity.ok(jsonObject.toString());
+
+  }
+
   public ResponseEntity<String> getByName(String name) {
     JSONObject jsonObject = new JSONObject();
     if (name == null || name.isBlank()) {
