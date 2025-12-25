@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContentModuleSvc {
   private final ContentModuleRepo contentModuleRepo;
@@ -19,8 +21,8 @@ public class ContentModuleSvc {
 
   public ResponseEntity<String> getAllContentModules() {
     JSONObject jsonObject = new JSONObject();
-
-    return ResponseEntity.ok(jsonObject.toString());
+    List<ContentModule> sentenceCases = this.contentModuleRepo.getByNames(Constants.SENTENCE_CASES);
+    return ResponseEntity.ok(sentenceCases.size() + "");
 
   }
 

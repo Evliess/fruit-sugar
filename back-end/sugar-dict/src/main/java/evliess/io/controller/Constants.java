@@ -43,7 +43,7 @@ public class Constants {
   public static final String YD_TTS_URL = "https://openapi.youdao.com/ttsapi";
 
   public static final String[] SENTENCE_CASES = {"restaurant", "airport", "hotel", "bank_card"
-    , "class_discussion", "shopping", "hair_cut", "hospital", "transport"};
+    , "class_discussion", "shop", "hair_cut", "hospital", "transport"};
   public static final String[] WORD_CASES = {"school", "food", "housing", "shopping"
     , "leisure", "city", "health"};
   public static final String[] WORD_HEALTH_CASES = {"body_anatomy", "illnesses_symptoms", "medical_facilities", "healthcare"

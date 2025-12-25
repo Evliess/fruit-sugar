@@ -23,6 +23,14 @@ public class ContentModuleController {
     this.contentModuleSvc = contentModuleSvc;
   }
 
+  @Operation(
+    summary = "Get All ContentModules",
+    description = "Get All ContentModules"
+  )
+  @GetMapping(value = "/all-content-modules", produces = "application/json")
+  public ResponseEntity<String> getAllContentModules(){
+    return this.contentModuleSvc.getAllContentModules();
+  }
 
   @Operation(
     summary = "Get ContentModule By Name",
