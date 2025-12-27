@@ -16,7 +16,9 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip'; // 增加 Tooltip 提�
 import { CiHuiService } from './ci-hui.service';
 import { ActivatedRoute } from '@angular/router';
 import { SugarDictService } from '../../services/sugar-dict';
-import { map, Observable } from 'rxjs';
+import { map } from 'rxjs';
+import { HoverSoundDirective } from '../../hover-sound.directive';
+
 
 
 
@@ -26,7 +28,7 @@ interface VocabularyWord {
   word: string;
   usPhonetic: string; // 美式
   ukPhonetic: string; // 英式
-  definition: string; // 中文释义
+  definition: {}; // 中文释义
   phrases: string[];  // 常用词组
   sentences: { en: string; zh: string }[]; // 例句
   showDetails: boolean; // 是否显示详情 (不认识时为 true)
@@ -48,6 +50,7 @@ interface VocabularyWord {
     NzInputModule,
     NzIconModule,
     NzDividerModule,
+    HoverSoundDirective,
     NzToolTipModule
   ],
   templateUrl: './ci-hui.component.html',
@@ -61,11 +64,12 @@ export class CiHuiComponent {
   isCustom = false;
   ciHuiService = inject(CiHuiService)
   private sugarDictService = inject(SugarDictService)
+  private audio = new Audio();
   route = inject(ActivatedRoute);
   wordsCount = 0;
   words: any[] = [];
 
-  constructor(private message: NzMessageService) {}
+  constructor(private message: NzMessageService) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -84,7 +88,7 @@ export class CiHuiComponent {
               word: wordData.text,
               usPhonetic: wordData.phoneticUS,
               ukPhonetic: wordData.phoneticUK,
-              definition: this.parseDefinition(wordData.definition),
+              definition: this.safeJsonParse(wordData.definition, {}),
               phrases: formattedPhrases,
               sentences: this.safeJsonParse(wordData.sentences, []),
               showDetails: false,
@@ -102,15 +106,6 @@ export class CiHuiComponent {
     });
   }
 
-  private parseDefinition(defStr: string): string {
-    try {
-      const obj = JSON.parse(defStr);
-      return Object.values(obj).join('; ');
-    } catch {
-      return defStr;
-    }
-  }
-  
   private safeJsonParse(data: any, fallback: any): any {
     if (typeof data !== 'string') return data || fallback;
     try {
@@ -118,6 +113,16 @@ export class CiHuiComponent {
     } catch (e) {
       return fallback;
     }
+  }
+
+  handleSound(phonetic: string, word: string): void {
+    if (phonetic=="US") {
+      this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=' + word;
+    } else {
+      this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=' + word;
+    }
+    this.audio.load();
+    this.audio.play().catch(e => console.warn('Playback failed:', e));
   }
 
   // 切换显示全部/收起

@@ -35,8 +35,8 @@
           </div>
 
           <div class="phonetic-group">
-            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }}</span>
-            <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }}</span>
+            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100" (hoverTimeout)="handleSound('US', item.word)"/></span>
+            <strong>🇬🇧 </strong><span class="phonetic" >{{ item.ukPhonetic }} <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100" (hoverTimeout)="handleSound('UK', item.word)"/></span>
           </div>
 
           @if (!(item.showDetails || ciHuiService.learnMode())) {

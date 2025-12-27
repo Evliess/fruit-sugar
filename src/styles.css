@@ -30,3 +30,9 @@
 .ant-input-status-success {
     border-bottom: 1px solid rgb(0, 196, 0) !important;
 }
+
+.sound-icon {
+  cursor: pointer;
+  margin-left: 6px;
+  color: #1890ff;
+}
