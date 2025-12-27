@@ -8,7 +8,7 @@
         <!-- Grid 系统: 移动端间距小(12px)，桌面端间距大(24px) -->
         <nz-row [nzGutter]="[24, 24]">
 
-            @for (item of section.items; track item.title) {
+            @for (item of section.items; track item.id) {
             <!-- 
             Responsive Breakpoints:
             nzXs (Mobile): 24格 (占满)
@@ -25,9 +25,9 @@
                 </ng-template>
 
                 <ng-template #content1>
-                    <h2 class="card-title">商业洽谈</h2>
-                    <p class="card-subtitle">天下熙熙，皆为利来</p>
-                    <p class="card-description">天下攘攘，皆为利往</p>
+                    <h2 class="card-title">{{ getChineseContentModuleName(item.description) }}</h2>
+                    <p class="card-subtitle">{{ getEnglishContentModuleName(item.description) }}</p>
+                    <p class="card-description"></p>
                     <div class="card-footer">
                         <span class="footer-title">继续学习</span>
                         <span class="footer-status">重新开始</span>

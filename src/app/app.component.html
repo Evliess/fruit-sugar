@@ -1,43 +1,43 @@
 @if(!isLogined) {
-  <div class="login-container">
-    <div class="login-content">
+<div class="login-container">
+  <div class="login-content">
 
-      <!-- 标题区域 -->
-      <div class="login-header">
-        <!-- <img src="" alt="Logo" class="logo" /> -->
-        <h2 class="title">欢迎登录</h2>
+    <!-- 标题区域 -->
+    <div class="login-header">
+      <!-- <img src="" alt="Logo" class="logo" /> -->
+      <h2 class="title">欢迎登录</h2>
+    </div>
+
+    <!-- 表单区域 -->
+    <form nz-form class="login-form">
+      <!-- 用户名 -->
+      <nz-form-item>
+        <nz-input-group nzPrefixIcon="user" nzSize="large">
+          <input type="text" nz-input formControlName="username" placeholder="请输入用户名" />
+        </nz-input-group>
+      </nz-form-item>
+
+      <!-- 密码 -->
+      <nz-form-item>
+        <nz-input-group nzPrefixIcon="lock" nzSize="large">
+          <input type="password" nz-input formControlName="password" placeholder="请输入口令" />
+        </nz-input-group>
+      </nz-form-item>
+
+      <!-- 记住我 / 忘记密码 (可选) -->
+      <div class="login-options">
+        <!-- <label nz-checkbox formControlName="remember">记住我</label> -->
+        <!-- <a class="forgot-password">忘记密码?</a> -->
       </div>
 
-      <!-- 表单区域 -->
-      <form nz-form class="login-form">
-        <!-- 用户名 -->
-        <nz-form-item>
-            <nz-input-group nzPrefixIcon="user" nzSize="large">
-              <input type="text" nz-input formControlName="username" placeholder="请输入用户名" />
-            </nz-input-group>
-        </nz-form-item>
+      <!-- 登录按钮 -->
+      <button nz-button class="login-button" [nzType]="'primary'" [nzSize]="'large'">
+        登 录
+      </button>
 
-        <!-- 密码 -->
-        <nz-form-item>
-            <nz-input-group nzPrefixIcon="lock" nzSize="large">
-              <input type="password" nz-input formControlName="password" placeholder="请输入口令" />
-            </nz-input-group>
-        </nz-form-item>
-
-        <!-- 记住我 / 忘记密码 (可选) -->
-        <div class="login-options">
-          <!-- <label nz-checkbox formControlName="remember">记住我</label> -->
-          <!-- <a class="forgot-password">忘记密码?</a> -->
-        </div>
-
-        <!-- 登录按钮 -->
-        <button nz-button class="login-button" [nzType]="'primary'" [nzSize]="'large'">
-          登 录
-        </button>
-
-      </form>
-    </div>
+    </form>
   </div>
+</div>
 }
 
 
@@ -65,32 +65,45 @@
     <ul nz-menu nzTheme="light" nzMode="inline">
       <li nz-submenu nzTitle="场景词汇" nzIcon="read" [nzOpen]="leftMenuCategory==='ci_hui'">
         <ul>
-          <li nz-menu-item (click)="gotoWordSubitem(false, '')">学习与学校</li>
-          <li nz-menu-item (click)="gotoWord(false, 'food')"
-            [nzSelected]="leftMenuCategory==='ci_hui' && category==='food'"><a routerLinkActive="active"
-              ariaCurrentWhenActive="page"></a>食物</li>
-          <li nz-menu-item>住宅</li>
-          <li nz-menu-item>购物</li>
-          <li nz-menu-item>休闲与娱乐</li>
-          <li nz-menu-item>城市与交通</li>
-          <li nz-menu-item>健康</li>
+          <!-- @for(word of wordCases; track word.id){
+          <li nz-menu-item (click)="gotoWord(false, word?.name)"
+            [nzSelected]="leftMenuCategory==='ci_hui' && category==='{{word?.name}}'">
+            <a routerLinkActive="active"
+              ariaCurrentWhenActive="page">{{getChineseContentModuleName(word?.description)}}</a>
+          </li>
+          } -->
+          @for(word of wordCases; track word.id){
+          <li nz-menu-item (click)="gotoWordSubitem(false, word?.name, word?.description)"
+            [nzSelected]="leftMenuCategory==='ci_hui' && category==='{{word?.name}}'">
+            <a routerLinkActive="active"
+              ariaCurrentWhenActive="page">{{getChineseContentModuleName(word?.description)}}</a>
+          }
           <li nz-menu-item (click)="gotoWord(true, 'custom')" nzSelected="{{category==='custom'}}"><a
               routerLinkActive="active" ariaCurrentWhenActive="page">自定义</a></li>
         </ul>
       </li>
       <li nz-submenu nzTitle="去听写" nzIcon="muted" [nzOpen]="leftMenuCategory==='listen'">
         <ul>
-          <li nz-menu-item (click)="gotoListen('food')" [nzSelected]="leftMenuCategory==='listen' && category==='food'">
-            <a routerLinkActive="active" ariaCurrentWhenActive="page">食物</a></li>
-          <li nz-menu-item>住宅</li>
+          @for(word of wordCases; track word.id){
+          <li nz-menu-item (click)="gotoListen( word?.name)"
+            [nzSelected]="leftMenuCategory==='listen' && category==='{{word?.name}}'">
+            <a routerLinkActive="active"
+              ariaCurrentWhenActive="page">{{getChineseContentModuleName(word?.description)}}</a>
+          </li>
+          }
         </ul>
       </li>
       <li nz-submenu nzTitle="口语表达" nzIcon="muted" [nzOpen]="leftMenuCategory==='kou_yu'">
         <ul>
-          <li nz-menu-item (click)="gotoKouYu(false)" [nzSelected]="leftMenuCategory==='kou_yu' && category==='food'"><a
-              routerLinkActive="active" ariaCurrentWhenActive="page">食物</a></li>
+
           <li nz-menu-item>住宅</li>
-          <li nz-menu-item (click)="gotoKouYu(true)"><a routerLinkActive="active" ariaCurrentWhenActive="page">自定义</a>
+          @for(sentence of sentenceCases; track sentence.id) {
+          <li nz-menu-item (click)="gotoKouYu(false, sentence.name)"
+            [nzSelected]="leftMenuCategory==='kou_yu' && category==='{{sentence?.name}}'"><a routerLinkActive="active"
+              ariaCurrentWhenActive="page">{{sentence.description}}</a></li>
+          }
+          <li nz-menu-item (click)="gotoKouYu(true, 'custom')"><a routerLinkActive="active"
+              ariaCurrentWhenActive="page">自定义</a>
           </li>
         </ul>
       </li>

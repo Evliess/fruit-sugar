@@ -13,15 +13,16 @@ import { filter, map } from 'rxjs/operators';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CiHuiService } from './pages/ci-hui/ci-hui.service';
 import { NzInputDirective } from "ng-zorro-antd/input";
-
+import { SugarDictService } from './services/sugar-dict';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterOutlet, NzFormModule, NzCardModule,NzInputModule,
+  imports: [CommonModule, RouterOutlet, NzFormModule, NzCardModule, NzInputModule,
     NzIconModule, NzDropDownModule, NzLayoutModule, NzMenuModule, NzButtonModule, NzInputDirective],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
+
 export class AppComponent {
   isLogined = true
   isCollapsed = false;
@@ -30,8 +31,13 @@ export class AppComponent {
   category = "";
   leftMenuCategory = '';
 
+  sentenceCases: any[] = []
+  wordCases: any[] = []
+
+
   private router = inject(Router);
   private ciHuiService = inject(CiHuiService)
+  private sugarDictService = inject(SugarDictService)
 
   // 1. 创建一个 Observable 流，只关注导航结束事件 (NavigationEnd)
   // 并映射出当前的 URL 字符串
@@ -50,7 +56,7 @@ export class AppComponent {
     const url = this.currentUrl();
 
     // 只有在 home 或者其他页面才显示 (根据你的需求调整)
-    if (url && (url.includes('/word') || url.includes('/unknown-book') 
+    if (url && (url.includes('/word') || url.includes('/unknown-book')
       || url.includes('/wrong-book') || url.includes('user-summary'))) {
       return true;
     }
@@ -60,20 +66,37 @@ export class AppComponent {
   });
 
   ngOnInit(): void {
+    this.sugarDictService.getAllContentModules().subscribe({
+      next: (response: any) => {
+        this.sentenceCases = response.sentenceCases;
+        this.wordCases = response.wordCases;
+      },
+      error: (err) => console.error('请求失败:', err)
+    });
   }
 
-  gotoWordSubitem(isCustom: boolean = false, category: string) {
-    this.leftMenuCategory = "ci_hui";
-    this.router.navigate(['/word-subitem']);
-    this.leftMenuCategory = "ci_hui";
+  getChineseContentModuleName(name: string) {
+    return this.sugarDictService.getChineseContentModuleName(name);
   }
+  getEnglishContentModuleName(name: string) {
+    return this.sugarDictService.getEnglishContentModuleName(name);
+  }
+
+  gotoWordSubitem(isCustom: boolean = false, parentName: string, parentDescription: string) {
+    this.leftMenuCategory = "ci_hui";
+    this.router.navigate(['/word-subitem'], 
+      { queryParams: { isCustom: isCustom, parentName: parentName, parentDescription: parentDescription } });
+  }
+
   gotoWord(isCustom: boolean = false, category: string) {
     this.category = category;
+    console.log(category);
     this.leftMenuCategory = "ci_hui";
     this.router.navigate(['/word'], { queryParams: { isCustom: isCustom, category: category } });
   }
-  gotoKouYu(isCustom: boolean = false) {
+  gotoKouYu(isCustom: boolean = false, category: string) {
     this.leftMenuCategory = "kou_yu";
+    console.log(category);
     if (!isCustom) this.router.navigate(['/kou-yu']);
     else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true } });
   }
