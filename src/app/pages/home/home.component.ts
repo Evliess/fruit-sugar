@@ -43,7 +43,19 @@ export class HomeComponent {
     });
   }
 
-  
+  gotoWordSubitem(parentId: number, parentName: string, parentDescription: string, isCustom: boolean = false) {
+   this.router.navigate(['/word-subitem'], 
+      { queryParams: { isCustom: isCustom, parentId: parentId, parentName: parentName, parentDescription: parentDescription} });
+  }
+  gotoListenWrite(id: number) {
+    console.log("gotoListenWrite");
+    this.router.navigate(['/listen', id]);
+  }
+  gotoKouYu(id: number, isCustom: boolean = false) {
+    console.log("gotoKouYu");
+    this.router.navigate(['/kou-yu', id]);
+  }
+
   getChineseContentModuleName(name: string) {
     return this.sugarDictService.getChineseContentModuleName(name);
   }

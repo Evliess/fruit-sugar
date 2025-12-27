@@ -16,6 +16,14 @@ export class SugarDictService {
         return this.http.get<String>(`${this.apiUrl}` + "/children-content-module?parentName=" + parentName);
     }
 
+    getWordsByChildContentModuleId(childContentModuleId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/words/by-child-content-module-id?childModuleId=" + childContentModuleId);
+    }
+
+    getSentencesByContentModuleId(contentModuleId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/sentences/by-content-module-id?id=" + contentModuleId);
+    }
+
     getChineseContentModuleName(name: string) {
         if (!name.includes("(")) {
             return name;

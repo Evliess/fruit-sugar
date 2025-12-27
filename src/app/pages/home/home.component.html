@@ -16,10 +16,21 @@
             nzLg (Desktop): 8格 (一行三个)
           -->
             <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="6">
-
-                <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true">
+                @if(section.name==='场景词汇'){
+                    <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoWordSubitem(item.id, item.name, item.description)">
                     <nz-card-meta [nzDescription]="content1"></nz-card-meta>
                 </nz-card>
+                }
+                @if(section.name==='去听写'){
+                    <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoListenWrite(item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @if(section.name==='口语表达'){
+                    <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoKouYu(item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
                 <ng-template #coverTemplate1>
                     <img alt="example" src="assets/images/card_head_business.png" />
                 </ng-template>

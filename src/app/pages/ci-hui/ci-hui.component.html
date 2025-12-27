@@ -8,13 +8,13 @@
     <div class="word-row">
       <div class="row-main">
         <div class="word-info">
-          <input nz-input [(ngModel)]="userWord"/>
+          <input nz-input [(ngModel)]="userWord" />
         </div>
         <div class="action-group">
-        <button nz-button nzType="primary" nz-tooltip nzTooltipTitle="添加">
-          <span nz-icon nzType="plus"></span> 添加
-        </button>
-      </div>
+          <button nz-button nzType="primary" nz-tooltip nzTooltipTitle="添加">
+            <span nz-icon nzType="plus"></span> 添加
+          </button>
+        </div>
       </div>
     </div>
     }
@@ -35,18 +35,19 @@
           </div>
 
           <div class="phonetic-group">
-            <span class="phonetic">🇺🇸 {{ item.usPhonetic }}</span>
-            <span class="phonetic">🇬🇧 {{ item.ukPhonetic }}</span>
+            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }}</span>
+            <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }}</span>
           </div>
 
           @if (!(item.showDetails || ciHuiService.learnMode())) {
-          <div class="definition">{{ item.sentences[0].en }}</div>
+          <div class="definition">{{item.sentences[0].text}}</div>
           }
 
           @if (item.showDetails || ciHuiService.learnMode()) {
-          <div class="definition">{{ item.definition }}</div>
+            @for (item of item.definition | keyvalue; track item.key) {
+            <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
+            }
           }
-
         </div>
 
         <!-- 右侧：按钮组 -->
@@ -86,7 +87,7 @@
           <span class="detail-label">常用词组：</span>
           <div class="detail-content">
             @for (phrase of item.phrases; track $index) {
-            <nz-tag>{{ phrase }}</nz-tag>
+             <nz-tag>{{ phrase }}</nz-tag>
             }
           </div>
         </div>
@@ -96,8 +97,8 @@
           <div class="detail-content sentence-list">
             @for (sent of item.sentences; track $index) {
             <div class="sentence-item">
-              <p class="en">{{ sent.en }}</p>
-              <p class="zh">{{ sent.zh }}</p>
+              <p class="en">{{ sent.text }}</p>
+              <p class="zh">{{ sent.textTranslation }}</p>
             </div>
             }
           </div>

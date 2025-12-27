@@ -6,7 +6,7 @@
         <h2 class="section-title">{{ parentDescription }}</h2>
         <!-- Grid 系统: 移动端间距小(12px)，桌面端间距大(24px) -->
         <nz-row [nzGutter]="[24, 24]">
-            @for (word of wordSubitems; track word.id) {
+            @for (subModule of wordSubitems; track subModule.id) {
             <!-- 
             Responsive Breakpoints:
             nzXs (Mobile): 24格 (占满)
@@ -15,12 +15,12 @@
           -->
             <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="6">
 
-                <nz-card nzHoverable nzBordered="true">
+                <nz-card nzHoverable nzBordered="true" (click)="gotoWords(subModule.id)">
                     <nz-card-meta [nzDescription]="content1"></nz-card-meta>
                 </nz-card>
                 <ng-template #content1>
-                    <h2 class="card-title">{{ getChineseContentModuleName(word.description) }}</h2>
-                    <p class="card-subtitle">{{ getEnglishContentModuleName(word.description) }}</p>
+                    <h2 class="card-title">{{ getChineseContentModuleName(subModule.description) }}</h2>
+                    <p class="card-subtitle">{{ getEnglishContentModuleName(subModule.description) }}</p>
                     <div class="card-footer">
                         <span class="footer-title">进度</span>
                         <span class="footer-status">58/100</span>

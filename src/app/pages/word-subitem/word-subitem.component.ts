@@ -4,6 +4,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { ActivatedRoute } from '@angular/router';
 import { SugarDictService } from '../../services/sugar-dict';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,6 +18,7 @@ export class WordSubitemComponent {
   isCustom: boolean = false;
   parentName: string = '';
   parentDescription: string = '';
+  private router = inject(Router);
   constructor(private route: ActivatedRoute) { }
   private sugarDictService = inject(SugarDictService)
   ngOnInit() {
@@ -29,6 +31,10 @@ export class WordSubitemComponent {
       });
     });
 
+  }
+
+  gotoWords(moduleId: number) {
+    this.router.navigate(['/word'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
   }
 
   getChineseContentModuleName(name: string) {
