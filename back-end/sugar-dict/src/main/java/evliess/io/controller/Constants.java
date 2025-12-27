@@ -2,6 +2,7 @@ package evliess.io.controller;
 
 public class Constants {
   public static final String RESULT = "result";
+  public static final String MSG = "msg";
   public static final String OK = "ok";
   public static final String ERROR = "err";
   public static final String DPSK_CHAT_URL = "https://api.deepseek.com/chat/completions";

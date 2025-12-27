@@ -24,19 +24,22 @@ public class ContentModuleController {
   }
 
   @Operation(
-    summary = "Get All ContentModules",
-    description = "Get All ContentModules"
+    summary = "Get Children ContentModules By Parent Name",
+    description = "Get Children ContentModules By Parent Name"
   )
-  @GetMapping(value = "/all-content-modules", produces = "application/json")
-  public ResponseEntity<String> getAllContentModules(){
-    return this.contentModuleSvc.getAllContentModules();
+  @GetMapping(value = "/children-content-module", produces = "application/json")
+  public ResponseEntity<String> getChildrenContentModules(
+    @Parameter(description = "The name of parent content module", required = true, example = "food")
+    @RequestParam String parentName
+  ) {
+    return contentModuleSvc.getChildrenContentModules(parentName);
   }
 
   @Operation(
     summary = "Get ContentModule By Name",
     description = "Get ContentModule By Name"
   )
-  @GetMapping(value = "/content-module", produces = "application/json")
+  @GetMapping(value = "/content-module/by-name", produces = "application/json")
   public ResponseEntity<String> getByName(
     @Parameter(description = "The name of content module", required = true, example = "hotel")
     @RequestParam String name
