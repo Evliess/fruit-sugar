@@ -22,17 +22,18 @@
                 </nz-card>
                 <ng-template #coverTemplate1>
                     <div class="progress-wrapper">
-                        <nz-progress nz-tooltip nzTooltipTitle="3 done / 3 in progress / 4 to do" nzType="circle"
-                            [nzPercent]="60" [nzSuccessPercent]="30"></nz-progress>
+                        <nz-progress nz-tooltip nzType="circle"
+                            [nzPercent]="getPercent(item.learnedCount, item.sentencesCount)" 
+                            [nzSuccessPercent]="getPercent(item.learnedCount, item.sentencesCount)"></nz-progress>
                     </div>
                 </ng-template>
 
                 <ng-template #content1>
-                    <h2 class="card-title">学习与学校</h2>
-                    <p class="card-subtitle"></p>
+                    <h2 class="card-title">{{ getChineseContentModuleName(item.title) }}</h2>
+                    <p class="card-subtitle">{{ getEnglishContentModuleName(item.title) }}</p>
                     <div class="card-footer">
-                        <span class="footer-title">已学习：60</span>
-                        <span class="footer-status">总计: 100</span>
+                        <span class="footer-title">已学习：{{ item.learnedCount }}</span>
+                        <span class="footer-status">总计: {{ item.sentencesCount }}</span>
                     </div>
                 </ng-template>
             </nz-col>

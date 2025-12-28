@@ -86,11 +86,14 @@
       </li> -->
       <li nz-submenu nzTitle="口语表达" nzIcon="muted">
         <ul>
-          @for(sentence of sentenceCases; track sentence.id) {
-          <li nz-menu-item (click)="gotoKouYu(false, sentence.id)"
+          <!-- @for(sentence of sentenceCases; track sentence.id) { -->
+          <!-- <li nz-menu-item (click)="gotoKouYu(false, sentence.id)"
             ><a routerLinkActive="active"
               ariaCurrentWhenActive="page">{{sentence.description}}</a></li>
-          }
+          } -->
+          <li nz-menu-item (click)="gotoKouYu(false, 'custom')"><a routerLinkActive="active"
+              ariaCurrentWhenActive="page">热门场景</a>
+          </li>
           <li nz-menu-item (click)="gotoKouYu(true, 'custom')"><a routerLinkActive="active"
               ariaCurrentWhenActive="page">自定义</a>
           </li>

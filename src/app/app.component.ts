@@ -105,7 +105,7 @@ export class AppComponent {
     this.router.navigate(['/word'], { queryParams: { isCustom: isCustom, category: category } });
   }
   gotoKouYu(isCustom: boolean = false, moduleId: string) {
-    if (!isCustom) this.router.navigate(['/kou-yu'], { queryParams: { isCustom: false, moduleId: moduleId } });
+    if (!isCustom) this.router.navigate(['/sentence-item']);
     else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true, moduleId: moduleId } });
   }
   gotoListen() {

@@ -1,0 +1,37 @@
+<div class="page-container">
+
+    <!-- 循环渲染三个大板块 -->
+    
+    <div class="section-wrapper">
+        <h2 class="section-title">热门场景</h2>
+        <!-- Grid 系统: 移动端间距小(12px)，桌面端间距大(24px) -->
+        <nz-row [nzGutter]="[24, 24]">
+            @for (subModule of sentenceCases; track subModule.id) {
+            <!-- 
+            Responsive Breakpoints:
+            nzXs (Mobile): 24格 (占满)
+            nzMd (Tablet): 12格 (一行两个)
+            nzLg (Desktop): 8格 (一行三个)
+          -->
+            <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="6">
+
+                <nz-card nzHoverable nzBordered="true">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                <ng-template #content1>
+                    <h2 class="card-title">{{ getChineseContentModuleName(subModule.description) }}</h2>
+                    <p class="card-subtitle">{{ getEnglishContentModuleName(subModule.description) }}</p>
+                    <div class="card-footer">
+                        <!-- <span class="footer-title" (click)="gotoWords(subModule.id)">重新开始</span>
+                        <span class="footer-status">进度: 58/{{subModule.wordsCount}}</span> -->
+                        <button nz-button nzType="dashed" nzSize="small" (click)="gotoKouYu(false, subModule.id)">重新开始</button>
+                        <button nz-button nzType="primary" nzSize="small">进度: 18/{{subModule.sentencesCount}}</button>
+                    </div>
+                </ng-template>
+            </nz-col>
+            }
+
+        </nz-row>
+    </div>
+
+</div>

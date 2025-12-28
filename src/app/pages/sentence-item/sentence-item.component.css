@@ -1,0 +1,103 @@
+/* --- 全局容器设置 --- */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background-color: #f5f5f7; /* Apple 官网经典灰白底色 */
+  min-height: 100vh;
+  /* Apple 默认字体栈 */
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* --- 区块标题样式 --- */
+.section-wrapper {
+  margin-bottom: 60px;
+}
+
+.section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1d1d1f; /* Apple 深黑色 */
+  margin-bottom: 24px;
+  letter-spacing: -0.01em;
+}
+
+/* --- 移动端响应式调整 (Mobile Only) --- */
+@media (max-width: 768px) {
+  .page-container {
+    padding: 20px 10px; /* 减少外部容器的边距 */
+  }
+
+  .section-title {
+    font-size: 22px;
+    margin-left: 10px;
+    margin-bottom: 16px;
+  }
+
+  .apple-card {
+    height: 360px; /* 移动端稍微调小高度 */
+    border-radius: 20px; /* 移动端圆角稍微调小 */
+    margin-bottom: 6px; /* 卡片本身的下边距 */
+  }
+
+  /* 
+    强制修正 Ant Design Grid 的间距 
+    实现你要求的 "6px margin" 效果 
+  */
+  nz-col {
+    padding-left: 6px !important;
+    padding-right: 6px !important;
+    padding-bottom: 12px; /* 卡片之间的垂直间距 */
+  }
+}
+
+
+
+.card-title {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #2c3e50;
+    margin-bottom: 5px;
+ }
+
+ .card-subtitle {
+    color: #7f8c8d;
+    font-size: 0.95rem;
+ }
+ .card-description {
+    color: rgb(32, 33, 36);
+    font-size: 12px;
+    line-height: 1.5;
+    letter-spacing: 0;
+    font-weight: 400;
+ }
+
+ /* 底部 Footer (Knowledge / Ongoing) */
+.card-footer {
+  border-top: 1px solid #dadcdae0; /* 浅色分割线 */
+  padding: 12px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-footer .footer-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: #202124;
+}
+
+.card-footer .footer-status {
+  font-size: 12px;
+  color: #202124;
+}
+
+/* --- 移动端微调 --- */
+@media (max-width: 768px) {
+  .status-badge {
+    top: 16px;  /* 移动端稍微靠上一点 */
+    right: 16px;
+    padding: 4px 12px; /* 稍微缩小一点尺寸 */
+    font-size: 12px;
+  }
+}
