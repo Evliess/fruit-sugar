@@ -22,7 +22,15 @@ public class WordSvc {
     this.wordRepo = wordRepo;
   }
 
+  public ResponseEntity<String> getWordsSimpleByModuleId(Long childModuleId) {
+    return buildResponseEntity(childModuleId, true);
+  }
+
   public ResponseEntity<String> getWordsByModuleId(Long childModuleId) {
+    return buildResponseEntity(childModuleId, false);
+  }
+
+  private ResponseEntity<String> buildResponseEntity(Long childModuleId, boolean isSimple) {
     JSONObject jsonObject = new JSONObject();
     if (childModuleId == null) {
       jsonObject.put(Constants.RESULT, Constants.ERROR);
@@ -40,7 +48,7 @@ public class WordSvc {
         log.error("No words found for module ID: {}", childModuleId);
         return ResponseEntity.ok(jsonObject.toString());
       }
-      JSONArray wordArr = buildWordsArray(words);
+      JSONArray wordArr = buildWordsArray(words, isSimple);
       jsonObject.put(Constants.RESULT, Constants.OK);
       jsonObject.put("words", wordArr);
       jsonObject.put("count", wordArr.size());
@@ -54,21 +62,23 @@ public class WordSvc {
     }
   }
 
-  private static JSONArray buildWordsArray(List<Word> words) {
+  private static JSONArray buildWordsArray(List<Word> words, boolean isSimple) {
     JSONArray wordArr = new JSONArray();
     for (Word word : words) {
       JSONObject wordObj = new JSONObject();
       wordObj.put("id", word.getId());
       wordObj.put("text", word.getText());
-      wordObj.put("phoneticUS", word.getPhoneticUS());
-      wordObj.put("phoneticUK", word.getPhoneticUK());
       wordObj.put("definition", word.getDefinition());
-      wordObj.put("audioUSUrl", word.getAudioUSUrl());
-      wordObj.put("audioUKUrl", word.getAudioUKUrl());
-      wordObj.put("phrases", word.getPhrases());
-      wordObj.put("sentences", word.getSentences());
-      wordObj.put("moduleId", word.getModuleId());
-      wordObj.put("isKnown", false);
+      if (!isSimple) {
+        wordObj.put("phoneticUS", word.getPhoneticUS());
+        wordObj.put("phoneticUK", word.getPhoneticUK());
+        wordObj.put("audioUSUrl", word.getAudioUSUrl());
+        wordObj.put("audioUKUrl", word.getAudioUKUrl());
+        wordObj.put("phrases", word.getPhrases());
+        wordObj.put("sentences", word.getSentences());
+        wordObj.put("moduleId", word.getModuleId());
+        wordObj.put("isKnown", false);
+      }
       wordArr.add(wordObj);
     }
     return wordArr;

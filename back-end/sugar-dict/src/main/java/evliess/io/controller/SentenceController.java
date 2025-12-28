@@ -1,6 +1,7 @@
 package evliess.io.controller;
 
 import evliess.io.service.SentenceSvc;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,13 @@ public class SentenceController {
     this.sentenceSvc = sentenceSvc;
   }
 
+  @Operation(
+    summary = "Get Sentence Information by Module Id",
+    description = "Get Sentence Information by Module Id"
+  )
   @GetMapping(value = "/sentences/by-content-module-id", produces = "application/json")
   public ResponseEntity<String> getSentencesByModuleId(
-    @Parameter(description = "The id of content module", required = true, example = "11")
+    @Parameter(description = "The id of content module", required = true, example = "1")
     @RequestParam Long moduleId
   ) {
     return this.sentenceSvc.getSentencesByModuleId(moduleId);
