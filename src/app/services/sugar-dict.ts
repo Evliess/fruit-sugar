@@ -31,7 +31,6 @@ export class SugarDictService {
         return name.split("(")[0];
     }
     getEnglishContentModuleName(name: string) {
-        console.log(name);
         if (!name.includes("(")) {
             return name;
         }

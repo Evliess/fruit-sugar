@@ -34,7 +34,7 @@ export class WordSubitemComponent {
   }
 
   gotoWords(moduleId: number) {
-    this.router.navigate(['/word'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
+    this.router.navigate(['/words'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
   }
 
   getChineseContentModuleName(name: string) {

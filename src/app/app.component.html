@@ -63,18 +63,10 @@
 
     <!-- 左侧菜单 -->
     <ul nz-menu nzTheme="light" nzMode="inline">
-      <li nz-submenu nzTitle="场景词汇" nzIcon="read" [nzOpen]="leftMenuCategory==='ci_hui'">
+      <li nz-submenu nzTitle="场景词汇" nzIcon="read">
         <ul>
-          <!-- @for(word of wordCases; track word.id){
-          <li nz-menu-item (click)="gotoWord(false, word?.name)"
-            [nzSelected]="leftMenuCategory==='ci_hui' && category==='{{word?.name}}'">
-            <a routerLinkActive="active"
-              ariaCurrentWhenActive="page">{{getChineseContentModuleName(word?.description)}}</a>
-          </li>
-          } -->
           @for(word of wordCases; track word.id){
-          <li nz-menu-item (click)="gotoWordSubitem(false, word?.name, word?.description)"
-            [nzSelected]="leftMenuCategory==='ci_hui' && category==='{{word?.name}}'">
+          <li nz-menu-item (click)="gotoWordSubitem('words', false, word?.name, word?.description)">
             <a routerLinkActive="active"
               ariaCurrentWhenActive="page">{{getChineseContentModuleName(word?.description)}}</a>
           }
@@ -82,22 +74,21 @@
               routerLinkActive="active" ariaCurrentWhenActive="page">自定义</a></li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="去听写" nzIcon="muted" [nzOpen]="leftMenuCategory==='listen'">
+      <!-- <li nz-submenu nzTitle="去听写" nzIcon="muted" [nzOpen]="leftMenuCategory==='listen'">
         <ul>
           @for(word of wordCases; track word.id){
-          <li nz-menu-item (click)="gotoListen( word?.name)"
+          <li nz-menu-item (click)="gotoWordSubitem('listen', false, word?.name, word?.description)"
             [nzSelected]="leftMenuCategory==='listen' && category==='{{word?.name}}'">
             <a routerLinkActive="active"
               ariaCurrentWhenActive="page">{{getChineseContentModuleName(word?.description)}}</a>
-          </li>
           }
         </ul>
-      </li>
-      <li nz-submenu nzTitle="口语表达" nzIcon="muted" [nzOpen]="leftMenuCategory==='kou_yu'">
+      </li> -->
+      <li nz-submenu nzTitle="口语表达" nzIcon="muted">
         <ul>
           @for(sentence of sentenceCases; track sentence.id) {
           <li nz-menu-item (click)="gotoKouYu(false, sentence.id)"
-            [nzSelected]="leftMenuCategory==='kou_yu' && category==='{{sentence?.name}}'"><a routerLinkActive="active"
+            ><a routerLinkActive="active"
               ariaCurrentWhenActive="page">{{sentence.description}}</a></li>
           }
           <li nz-menu-item (click)="gotoKouYu(true, 'custom')"><a routerLinkActive="active"
@@ -105,7 +96,7 @@
           </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="用户中心" nzIcon="user" [nzOpen]="leftMenuCategory==='user'">
+      <li nz-submenu nzTitle="用户中心" nzIcon="user">
         <ul>
           <li nz-menu-item (click)="gotoUserSummary()" nzSelected="{{category==='user-summary'}}">进度总览</li>
           <li nz-menu-item (click)="gotoWrongBook()" nzSelected="{{category=='wrong-book'}}">错题本</li>
@@ -146,7 +137,7 @@
               <li nz-menu-item>健康</li>
             </ul>
           </nz-dropdown-menu> -->
-          @if(leftMenuCategory=='ci_hui'){
+          @if(isShowCIHUIMenu()){
           <div (click)="setLearnModel('learn')" [class]="learnModel=='learn'?'header-item selected':'header-item'">
             <span nz-icon nzType="eye"></span>
             <span class="username">学习模式</span>
@@ -160,7 +151,7 @@
             <span class="username">听写模式</span>
           </div>
           }
-          @if(leftMenuCategory=='user') {
+          @if(isShowUserMenu()) {
           <div (click)="gotoUserSummary()" [class]="category=='user-summary'?'header-item selected':'header-item'">
             <span nz-icon nzType="dashboard"></span>
             <span class="username">进度总览</span>

@@ -29,7 +29,6 @@ export class AppComponent {
   learnModel = "list";
 
   category = "";
-  leftMenuCategory = '';
 
   sentenceCases: any[] = []
   wordCases: any[] = []
@@ -54,15 +53,29 @@ export class AppComponent {
   // 只要 currentUrl 发生变化，这个值会自动更新
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
-
-    // 只有在 home 或者其他页面才显示 (根据你的需求调整)
     if (url && (url.includes('/word') || url.includes('/unknown-book')
       || url.includes('/wrong-book') || url.includes('user-summary'))) {
       return true;
     }
-
-    // 只有在 home 或者其他页面才显示 (根据你的需求调整)
     return false;
+  });
+
+  isShowCIHUIMenu = computed(() => {
+    const url = this.currentUrl();
+    if (url.includes('/words')) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  isShowUserMenu = computed(() => {
+    const url = this.currentUrl();
+    if (url.includes('/user-summary') || url.includes('/unknown-book') || url.includes('/wrong-book')) {
+      return true;
+    } else {
+      return false;
+    }
   });
 
   ngOnInit(): void {
@@ -82,24 +95,20 @@ export class AppComponent {
     return this.sugarDictService.getEnglishContentModuleName(name);
   }
 
-  gotoWordSubitem(isCustom: boolean = false, parentName: string, parentDescription: string) {
-    this.leftMenuCategory = "ci_hui";
-    this.router.navigate(['/word-subitem'], 
-      { queryParams: { isCustom: isCustom, parentName: parentName, parentDescription: parentDescription } });
+  gotoWordSubitem(type: string, isCustom: boolean = false, parentName: string, parentDescription: string) {
+    this.router.navigate(['/word-subitem'],
+      { queryParams: { type: type, isCustom: isCustom, parentName: parentName, parentDescription: parentDescription } });
   }
 
   gotoWord(isCustom: boolean = false, category: string) {
     this.category = category;
-    this.leftMenuCategory = "ci_hui";
     this.router.navigate(['/word'], { queryParams: { isCustom: isCustom, category: category } });
   }
   gotoKouYu(isCustom: boolean = false, moduleId: string) {
-    this.leftMenuCategory = "kou_yu";
     if (!isCustom) this.router.navigate(['/kou-yu'], { queryParams: { isCustom: false, moduleId: moduleId } });
     else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true, moduleId: moduleId } });
   }
   gotoListen(category: string = '') {
-    this.leftMenuCategory = "listen";
     this.router.navigate(['/listen'], { queryParams: { category: this.category } });
   }
 
@@ -111,19 +120,16 @@ export class AppComponent {
 
   gotoUserSummary() {
     this.router.navigate(['/user-summary']);
-    this.leftMenuCategory = "user";
     this.category = "user-summary";
   }
 
   gotoUnknownBook() {
     this.router.navigate(['/unknown-book']);
-    this.leftMenuCategory = "user";
     this.category = "unknown-book";
   }
 
   gotoWrongBook() {
     this.router.navigate(['/wrong-book']);
-    this.leftMenuCategory = "user";
     this.category = "wrong-book";
   }
 }

@@ -17,12 +17,12 @@
           -->
             <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="6">
                 @if(section.name==='场景词汇'){
-                    <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoWordSubitem(item.id, item.name, item.description)">
+                    <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
                     <nz-card-meta [nzDescription]="content1"></nz-card-meta>
                 </nz-card>
                 }
                 @if(section.name==='去听写'){
-                    <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoListenWrite(item.id)">
+                    <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoWordSubitem('listen', item.id, item.name, item.description)">
                     <nz-card-meta [nzDescription]="content1"></nz-card-meta>
                 </nz-card>
                 }

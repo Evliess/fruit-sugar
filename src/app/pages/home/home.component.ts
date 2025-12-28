@@ -30,10 +30,10 @@ export class HomeComponent {
           name: '场景词汇',
           items: this.wordCases
         });
-        this.sections.push({
-          name: '去听写',
-          items: this.wordCases
-        });
+        // this.sections.push({
+        //   name: '去听写',
+        //   items: this.wordCases
+        // });
         this.sections.push({
           name: '口语表达',
           items: this.sentenceCases
@@ -43,9 +43,9 @@ export class HomeComponent {
     });
   }
 
-  gotoWordSubitem(parentId: number, parentName: string, parentDescription: string, isCustom: boolean = false) {
+  gotoWordSubitem(type: string, parentId: number, parentName: string, parentDescription: string, isCustom: boolean = false) {
    this.router.navigate(['/word-subitem'], 
-      { queryParams: { isCustom: isCustom, parentId: parentId, parentName: parentName, parentDescription: parentDescription} });
+      { queryParams: { type: type, isCustom: isCustom, parentId: parentId, parentName: parentName, parentDescription: parentDescription} });
   }
   gotoListenWrite(id: number) {
     console.log("gotoListenWrite");
