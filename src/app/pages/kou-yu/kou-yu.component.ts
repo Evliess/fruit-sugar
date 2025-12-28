@@ -14,16 +14,19 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs';
 import { HoverSoundDirective } from '../../hover-sound.directive';
+import { SugarDictService } from '../../services/sugar-dict';
 
 
-// 定义单词数据结构
-interface VocabularyWord {
+interface Sentence {
   id: number;
   sentence_en: string;
-  sentence_zh: string; // 中文释义
-  showDetails: boolean; // 是否显示详情 (不认识时为 true)
-  isKnown: boolean;     // 是否标记为认识
+  sentence_zh: string;
+  showDetails: boolean;
+  audioUSUrl: string;
+  audioUKUrl: string;
+  isKnown: boolean;
 }
 
 @Component({
@@ -47,73 +50,70 @@ interface VocabularyWord {
 })
 export class KouYuComponent {
   isPracticeVisible = false;
-  practiceWord: VocabularyWord | null = null;
+  practiceWord: Sentence | null = null;
   practiceInput = '';
   userWord = '';
   isCustom = false;
 
   route = inject(ActivatedRoute);
+  private sugarDictService = inject(SugarDictService)
+  private audio = new Audio();
+  sentences: Sentence[] = [];
+  constructor(private message: NzMessageService) { }
+
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const isCustom = params['isCustom'];
-      this.isCustom = isCustom === 'true';
+      this.isCustom = params['isCustom'] === 'true';
+      const moduleId = params['moduleId'];
+      if (!moduleId) return;
+      this.sugarDictService.getSentencesByContentModuleId(moduleId).pipe(
+        map((response: any) => {
+          const rawData = response?.sentences || [];
+          console.log(rawData);
+          return rawData.map((item: any) => ({
+            id: item.id,
+            sentence_en: item.text,
+            sentence_zh: item.textTranslation,
+            audioUSUrl: item.audioUSUrl,
+            audioUKUrl: item.audioUKUrl,
+            showDetails: false,
+            isKnown: false
+          } as Sentence));
+        })
+      ).subscribe({
+        next: (processedData: Sentence[]) => {
+          this.sentences = processedData;
+        },
+        error: (err) => {
+          console.error('获取例句失败:', err);
+        }
+      });
     });
   }
 
-  private audio = new Audio();
 
-  // 模拟数据：10个单词
-  words: VocabularyWord[] = [
-    {
-      id: 1,
-      sentence_en: 'The Bodhi tree originally has no roots.',
-      sentence_zh: '菩提本无树',
-      showDetails: false,
-      isKnown: false
-    },
-    {
-      id: 2,
-      sentence_en: 'Even a clear mirror is not a platform',
-      sentence_zh: '明镜亦非台',
-      showDetails: false,
-      isKnown: false
-    },
-  ];
-
-  // 填充剩余数据的辅助代码（实际开发中请替换为真实数据）
-  constructor(private message: NzMessageService) {
-    for (let i = 3; i <= 10; i++) {
-      this.words.push({
-        id: i,
-        sentence_en: `Sample sentence ${i}`,
-        sentence_zh: `这是例句 ${i} 。`,
-        showDetails: false,
-        isKnown: false
-      });
-    }
-  }
 
   // 切换显示全部/收起
-  toggleDetails(item: VocabularyWord): void {
+  toggleDetails(item: Sentence): void {
     item.showDetails = !item.showDetails;
   }
 
   // 点击“认识”
-  markAsKnown(item: VocabularyWord): void {
+  markAsKnown(item: Sentence): void {
     item.isKnown = true;
     item.showDetails = false; // 收起详情
     this.message.success('太棒了！已标记为认识。');
   }
 
   // 点击“不认识”
-  markAsUnknown(item: VocabularyWord): void {
+  markAsUnknown(item: Sentence): void {
     item.showDetails = false;
     item.isKnown = false;
   }
 
   // 点击“练一练”
-  openPractice(item: VocabularyWord): void {
+  openPractice(item: Sentence): void {
     this.practiceWord = item;
     this.practiceInput = ''; // 清空输入框
     this.isPracticeVisible = true;
@@ -135,8 +135,9 @@ export class KouYuComponent {
     this.isPracticeVisible = false;
   }
 
-  handleSound(src: string): void {
-    this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=rich';
+  handleSound(audioUrl: string): void {
+    const apiUrl = this.sugarDictService.apiUrl;
+    this.audio.src = apiUrl +"/audio/" +audioUrl;
     this.audio.load();
     this.audio.play().catch(e => console.warn('Playback failed:', e));
   }

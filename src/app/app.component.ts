@@ -90,15 +90,13 @@ export class AppComponent {
 
   gotoWord(isCustom: boolean = false, category: string) {
     this.category = category;
-    console.log(category);
     this.leftMenuCategory = "ci_hui";
     this.router.navigate(['/word'], { queryParams: { isCustom: isCustom, category: category } });
   }
-  gotoKouYu(isCustom: boolean = false, category: string) {
+  gotoKouYu(isCustom: boolean = false, moduleId: string) {
     this.leftMenuCategory = "kou_yu";
-    console.log(category);
-    if (!isCustom) this.router.navigate(['/kou-yu']);
-    else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true } });
+    if (!isCustom) this.router.navigate(['/kou-yu'], { queryParams: { isCustom: false, moduleId: moduleId } });
+    else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true, moduleId: moduleId } });
   }
   gotoListen(category: string = '') {
     this.leftMenuCategory = "listen";

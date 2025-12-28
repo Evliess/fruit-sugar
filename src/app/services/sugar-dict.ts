@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 export class SugarDictService {
     private http = inject(HttpClient);
 
-    private apiUrl = "http://localhost:8080/sugar-dict/public/v1";
+    public apiUrl = "http://localhost:8080/sugar-dict/public/v1";
 
     getAllContentModules(): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/home/all-modules");
@@ -21,7 +21,7 @@ export class SugarDictService {
     }
 
     getSentencesByContentModuleId(contentModuleId: number): Observable<String> {
-        return this.http.get<String>(`${this.apiUrl}` + "/sentences/by-content-module-id?id=" + contentModuleId);
+        return this.http.get<String>(`${this.apiUrl}` + "/sentences/by-content-module-id?moduleId=" + contentModuleId);
     }
 
     getChineseContentModuleName(name: string) {
@@ -31,6 +31,7 @@ export class SugarDictService {
         return name.split("(")[0];
     }
     getEnglishContentModuleName(name: string) {
+        console.log(name);
         if (!name.includes("(")) {
             return name;
         }

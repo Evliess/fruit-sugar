@@ -14,7 +14,7 @@
       </div>
     </div>
     }
-    @for (item of words; track item.id) {
+    @for (item of sentences; track item.id) {
     <!-- 单个单词行 -->
     <div class="word-row" [class.is-known]="item.isKnown">
 
@@ -22,19 +22,18 @@
       <div class="row-main">
 
         <!-- 左侧：单词信息 -->
-        <div class="word-info" appHoverSound [hoverTime]="500" (hoverTimeout)="handleSound(item.sentence_en)">
+        <div class="word-info">
           <div class="word-title-group">
             <span class="word-text">{{ item.sentence_en }}</span>
             @if (item.isKnown) {
             <nz-tag [nzColor]="'success'">已掌握</nz-tag>
             }
           </div>
-
           <div class="phonetic-group">
-            <span class="phonetic">🇺🇸</span>
-            <span class="phonetic">🇬🇧</span>
+            <span class="phonetic">🇺🇸 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="500" (hoverTimeout)="handleSound(item.audioUSUrl)"></nz-icon></span>
+            <span class="phonetic">🇬🇧 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="500" (hoverTimeout)="handleSound(item.audioUKUrl)"></nz-icon></span>
           </div>
-
+          <div class="definition">{{ item.sentence_zh }}</div>
         </div>
 
         <!-- 右侧：按钮组 -->

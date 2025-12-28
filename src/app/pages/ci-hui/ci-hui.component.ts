@@ -73,7 +73,7 @@ export class CiHuiComponent {
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      const isCustom = params['isCustom'] === 'true';
+      this.isCustom = params['isCustom'] === 'true';
       const moduleId = params['moduleId'];
       this.sugarDictService.getWordsByChildContentModuleId(moduleId).pipe(
         map((response: any) => {

@@ -95,10 +95,8 @@
       </li>
       <li nz-submenu nzTitle="口语表达" nzIcon="muted" [nzOpen]="leftMenuCategory==='kou_yu'">
         <ul>
-
-          <li nz-menu-item>住宅</li>
           @for(sentence of sentenceCases; track sentence.id) {
-          <li nz-menu-item (click)="gotoKouYu(false, sentence.name)"
+          <li nz-menu-item (click)="gotoKouYu(false, sentence.id)"
             [nzSelected]="leftMenuCategory==='kou_yu' && category==='{{sentence?.name}}'"><a routerLinkActive="active"
               ariaCurrentWhenActive="page">{{sentence.description}}</a></li>
           }
