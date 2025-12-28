@@ -146,7 +146,6 @@
   background: transparent; /* 移除背景，只留文字颜色，更干净 */
   padding: 0;
   margin-right: 12px;
-  width: 24px; 
   font-size: 16px;
   text-align: right;
 }

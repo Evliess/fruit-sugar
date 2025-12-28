@@ -13,9 +13,9 @@
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                     <ul nz-menu>
                         @for(item of words; track $index) {
-                            <li nz-menu-item nzSelected="{{currIndex==$index}}">{{item.word}}</li>
+                        <li nz-menu-item nzSelected="{{currIndex==$index}}">{{item.word}}</li>
                         }
-                        
+
                     </ul>
                 </nz-dropdown-menu>
 
@@ -38,10 +38,10 @@
 
                 <!-- 2. 中部：核心释义 -->
                 <div class="card-body">
-                    @for (item of currWord.definitions; track $index) {
-                    <div class="definition-item">
-                        <nz-tag [nzColor]="'blue'" class="pos-tag">{{item.type}}</nz-tag>
-                        <span class="meaning">{{item.zh}}</span>
+                    @for (item of currWord.definitions | keyvalue; track item.key) {
+                     <div class="definition-item">
+                        <nz-tag [nzColor]="'blue'" class="pos-tag">{{ item.key + "."}}</nz-tag>
+                        <span class="meaning"> {{ item.value }}</span>
                     </div>
                     }
                 </div>
@@ -99,9 +99,8 @@
         <div class="input-section">
             <div class="input-wrapper">
                 <nz-input-group>
-                    <input nz-input [(ngModel)]="inputValue" placeholder="请在此输入..." nzSize="large"
-                        nzBorderless [appMechanicalTyping]="soundEnabled" [class]="inputStatus" 
-                        (keydown)="checkAnswer()"/>
+                    <input nz-input [(ngModel)]="inputValue" placeholder="请在此输入..." nzSize="large" nzBorderless
+                        [appMechanicalTyping]="soundEnabled" [class]="inputStatus" (keydown)="checkAnswer()" />
                 </nz-input-group>
             </div>
         </div>

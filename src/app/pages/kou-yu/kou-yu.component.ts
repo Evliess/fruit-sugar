@@ -70,7 +70,6 @@ export class KouYuComponent {
       this.sugarDictService.getSentencesByContentModuleId(moduleId).pipe(
         map((response: any) => {
           const rawData = response?.sentences || [];
-          console.log(rawData);
           return rawData.map((item: any) => ({
             id: item.id,
             sentence_en: item.text,

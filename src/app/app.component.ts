@@ -108,8 +108,12 @@ export class AppComponent {
     if (!isCustom) this.router.navigate(['/kou-yu'], { queryParams: { isCustom: false, moduleId: moduleId } });
     else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true, moduleId: moduleId } });
   }
-  gotoListen(category: string = '') {
-    this.router.navigate(['/listen'], { queryParams: { category: this.category } });
+  gotoListen() {
+    const url = this.currentUrl();
+    if(url.includes('moduleId=')) {
+      const moduleId = url.split('moduleId=')[1];
+      this.router.navigate(['/listen'], { queryParams: { moduleId: moduleId } });
+    }
   }
 
   setLearnModel(model: string) {

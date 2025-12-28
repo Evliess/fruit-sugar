@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -12,8 +12,11 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-
+import { ActivatedRoute } from '@angular/router';
 import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
+import { SugarDictService } from '../../services/sugar-dict';
+import { map } from 'rxjs';
+
 
 
 interface VocabularyWord {
@@ -52,56 +55,75 @@ export class ListenWriteComponent {
   isPlay: boolean = true;
   soundEnabled: boolean = true;
   soundTypeUK: boolean = true;
+  private sugarDictService = inject(SugarDictService)
+  route = inject(ActivatedRoute);
 
-  words: VocabularyWord[] = [
-    {
-      id: 1, word: 'hello', definitions: [{ type: 'int.', zh: '喂，你好（用于问候或打招呼)' },
-      { type: 'n.', zh: '招呼，问候' },
-      { type: 'v.', zh: '说（或大声说）“喂”' }],
-      usAudio: 'https://dict.youdao.com/dictvoice?audio=hello&type=1',
-      ukAudio: 'https://dict.youdao.com/dictvoice?audio=hello&type=2'
-    },
-    {
-      id: 2, word: 'world', definitions: [{ type: 'n.', zh: '世界，地球，天下' },
-      { type: 'adj.', zh: '世界上最重要的，世界闻名的' },
-      ],
-      usAudio: 'https://dict.youdao.com/dictvoice?audio=world&type=1',
-      ukAudio: 'https://dict.youdao.com/dictvoice?audio=world&type=2'
-    },
-    {
-      id: 3, word: 'rich', definitions: [{ type: 'adj.', zh: '有钱的，富有的' },
-      ],
-      usAudio: 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=rich',
-      ukAudio: 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=rich'
-    },
-  ];
+  words: VocabularyWord[] = [];
   currIndex: number = 0;
-  currWord: VocabularyWord = this.words[this.currIndex];
-
+  currWord: VocabularyWord = undefined as any;
   private audio = new Audio();
 
   ngOnInit(): void {
-    this.playAudio();
+    this.route.queryParams.subscribe(params => {
+      const moduleId = params['moduleId'];
+      this.sugarDictService.getWordsSimpleByChildContentModuleId(moduleId).pipe(
+        map((response: any) => {
+          const rawWords = response.words || [];
+          return rawWords.map((wordData: any) => {
+            const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
+            const formattedPhrases = parsedPhrases.map((p: any) =>
+              `${p.text}; ${p.textTranslation}`
+            );
+            return {
+              id: wordData.id,
+              word: wordData.text,
+              usAudio: wordData.phoneticUS,
+              ukAudio: wordData.phoneticUK,
+              definitions: this.safeJsonParse(wordData.definition, {}),
+            } as VocabularyWord;
+          });
+        })
+      ).subscribe({
+        next: (words: VocabularyWord[]) => {
+          this.words = words;
+          this.currWord = this.words[this.currIndex];
+          this.playAudio(this.currWord.word);
+        },
+        error: (err) => console.error('请求失败:', err)
+      });
+    });
+   
+  }
+  private safeJsonParse(data: any, fallback: any): any {
+    if (typeof data !== 'string') return data || fallback;
+    try {
+      return JSON.parse(data);
+    } catch (e) {
+      return fallback;
+    }
   }
 
-  playAudio(): void {
-    this.audio.src = this.soundTypeUK ? this.currWord.ukAudio : this.currWord.usAudio;
+
+  playAudio(word: string): void {
+    const usAudio = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=' + word;
+    const ukAudio = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=' + word;
+    this.audio.src = this.soundTypeUK ? ukAudio : usAudio;
     this.audio.load();
-    this.audio.play().catch(e => console.warn('Playback failed:', e));
+    this.audio.play().catch(e => console.warn('Playback failed:', word));
   }
 
   playNext(): void {
     this.currIndex = (this.currIndex + 1) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
-    this.playAudio();
+    this.playAudio(this.currWord.word);
   }
 
   playPrev(): void {
     this.currIndex = (this.currIndex - 1 + this.words.length) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
-    this.playAudio();
+    this.playAudio(this.currWord.word);
   }
 
   checkAnswer(): void {
@@ -117,10 +139,9 @@ export class ListenWriteComponent {
 
   // 模拟点击事件
   handleAction(action: string): void {
-    console.log('Clicked:', action);
     if ("play" == action) {
       this.togglePlay();
-      this.playAudio();
+      this.playAudio(this.currWord.word);
     };
     if ("prev" == action) { this.playPrev(); };
     if ("next" == action) { this.playNext(); }

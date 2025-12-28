@@ -20,6 +20,10 @@ export class SugarDictService {
         return this.http.get<String>(`${this.apiUrl}` + "/words/by-child-content-module-id?childModuleId=" + childContentModuleId);
     }
 
+    getWordsSimpleByChildContentModuleId(childContentModuleId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/words/simple/by-child-content-module-id?childModuleId=" + childContentModuleId);
+    }
+
     getSentencesByContentModuleId(contentModuleId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/sentences/by-content-module-id?moduleId=" + contentModuleId);
     }

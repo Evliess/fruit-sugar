@@ -51,9 +51,9 @@ export class HomeComponent {
     console.log("gotoListenWrite");
     this.router.navigate(['/listen', id]);
   }
-  gotoKouYu(id: number, isCustom: boolean = false) {
-    console.log("gotoKouYu");
-    this.router.navigate(['/kou-yu', id]);
+  gotoKouYu(isCustom: boolean = false, moduleId: string) {
+    if (!isCustom) this.router.navigate(['/kou-yu'], { queryParams: { isCustom: false, moduleId: moduleId } });
+    else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true, moduleId: moduleId } });
   }
 
   getChineseContentModuleName(name: string) {
