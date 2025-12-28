@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { SugarDictService } from '../../services/sugar-dict';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+
 
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, NzGridModule, NzCardModule],
+  imports: [CommonModule, NzGridModule, NzCardModule, NzButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

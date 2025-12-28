@@ -9,4 +9,7 @@ import java.util.List;
 public interface WordRepo extends JpaRepository<Word, Long> {
   @Query("SELECT a from Word a WHERE a.moduleId= :moduleId")
   List<Word> getWordsByModuleId(Long moduleId);
+
+  @Query("SELECT count(a.id) from Word a WHERE a.moduleId= :moduleId")
+  int countWordsByModuleId(Long moduleId);
 }

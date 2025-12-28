@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSONObject;
 import evliess.io.controller.Constants;
 import evliess.io.entity.ContentModule;
 import evliess.io.jpa.ContentModuleRepo;
+import evliess.io.jpa.WordRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,10 +15,12 @@ import java.util.List;
 @Service
 public class ContentModuleSvc {
   private final ContentModuleRepo contentModuleRepo;
+  private final WordRepo wordRepo;
 
   @Autowired
-  public ContentModuleSvc(ContentModuleRepo contentModuleRepo) {
+  public ContentModuleSvc(ContentModuleRepo contentModuleRepo, WordRepo wordRepo) {
     this.contentModuleRepo = contentModuleRepo;
+    this.wordRepo = wordRepo;
   }
 
   public ResponseEntity<String> getChildrenContentModules(String parentName) {
@@ -47,6 +50,7 @@ public class ContentModuleSvc {
       cmObj.put("id", cm.getId());
       cmObj.put("name", cm.getName());
       cmObj.put("description", cm.getDescription());
+      cmObj.put("wordsCount", this.wordRepo.countWordsByModuleId(cm.getId()));
       children.add(cmObj);
     }
     return ResponseEntity.ok(jsonObject.toString());

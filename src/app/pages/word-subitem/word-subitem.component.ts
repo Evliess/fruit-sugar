@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { ActivatedRoute } from '@angular/router';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 import { SugarDictService } from '../../services/sugar-dict';
 import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-word-subitem',
-  imports: [CommonModule, NzGridModule, NzCardModule],
+  imports: [CommonModule, NzGridModule, NzCardModule, NzButtonModule],
   templateUrl: './word-subitem.component.html',
   styleUrl: './word-subitem.component.css'
 })
