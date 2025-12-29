@@ -123,7 +123,7 @@ export class CiHuiComponent {
     }
     this.audio.load();
     this.audio.play().catch(e => {
-      console.warn('Playback failed:', e); 
+      console.warn('Playback failed:', word); 
     });
   }
 
