@@ -16,6 +16,10 @@ export class SugarDictService {
         return this.http.get<String>(`${this.apiUrl}` + "/children-content-module?parentName=" + parentName);
     }
 
+    getAllChildrenContentModules(): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/all-children-content-module");
+    }
+
     getWordsByChildContentModuleId(childContentModuleId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/words/by-child-content-module-id?childModuleId=" + childContentModuleId);
     }

@@ -26,6 +26,28 @@ public class ContentModuleSvc {
     this.sentenceRepo = sentenceRepo;
   }
 
+  public ResponseEntity<String> getAllChildrenContentModules() {
+    JSONObject jsonObject = new JSONObject();
+    List<ContentModule> childCases = this.contentModuleRepo.getByNames(Constants.WORD_SCHOOL_CASES);
+    childCases.addAll(this.contentModuleRepo.getByNames(Constants.WORD_FOOD_CASES));
+    childCases.addAll(this.contentModuleRepo.getByNames(Constants.WORD_SHOPPING_CASES));
+    childCases.addAll(this.contentModuleRepo.getByNames(Constants.WORD_HOUSING_CASES));
+    childCases.addAll(this.contentModuleRepo.getByNames(Constants.WORD_LEISURE_CASES));
+    childCases.addAll(this.contentModuleRepo.getByNames(Constants.WORD_CITY_CASES));
+    childCases.addAll(this.contentModuleRepo.getByNames(Constants.WORD_HEALTH_CASES));
+    JSONArray children = new JSONArray();
+    jsonObject.put("children", children);
+    for (ContentModule cm : childCases) {
+      JSONObject cmObj = new JSONObject();
+      cmObj.put("id", cm.getId());
+      cmObj.put("name", cm.getName());
+      cmObj.put("description", cm.getDescription());
+      cmObj.put("wordsCount", this.wordRepo.countWordsByModuleId(cm.getId()));
+      children.add(cmObj);
+    }
+    return ResponseEntity.ok(jsonObject.toString());
+  }
+
   public ResponseEntity<String> getChildrenContentModules(String parentName) {
     JSONObject jsonObject = new JSONObject();
     if (parentName == null || parentName.isEmpty()) {

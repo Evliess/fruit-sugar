@@ -36,6 +36,16 @@ public class ContentModuleController {
   }
 
   @Operation(
+    summary = "Get All Children ContentModules",
+    description = "Get All Children ContentModules"
+  )
+  @GetMapping(value = "/all-children-content-module", produces = "application/json")
+  public ResponseEntity<String> getAllChildrenContentModules(
+  ) {
+    return contentModuleSvc.getAllChildrenContentModules();
+  }
+
+  @Operation(
     summary = "Get ContentModule By Name",
     description = "Get ContentModule By Name"
   )

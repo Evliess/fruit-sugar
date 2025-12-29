@@ -33,19 +33,37 @@ interface Section {
 export class UserSummaryComponent {
   private sugarDictService = inject(SugarDictService)
 
-  sections: Section[] = [
-    // {
-    //   name: '场景词汇',
-    //   items: [
-    //     { title: '学习与学校', href: '/word/1', desc: '下午帮我签到', progress: '3/56', bgImage: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?auto=format&fit=crop&w=800&q=80' },
-    //     { title: '食物', href: '/word/1', desc: '来呗奶茶吧', progress: '3/56', bgImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80' },
-    //     { title: '公共交通', href: '/word/1', desc: '地铁公交，一码通行', progress: '3/56', bgImage: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80' },
-    //     { title: '住宅', href: '/word/1', desc: '满城尽带黄金甲', progress: '3/56', bgImage: 'https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=800&q=80' }
-    //   ]
-    // }
-  ];
+  sections: Section[] = [];
 
   ngOnInit(): void {
+    this.sections.splice(0, 0, {name: '场景词汇', items: []});
+    this.sections.splice(1, 0, {name: '口语表达', items: []});
+
+    //get changjing cihui
+    this.sugarDictService.getAllChildrenContentModules().pipe(
+      map((response: any) => {
+        const rawData = response.children || [];
+        return rawData.map((item: any) => ({
+          id: item.id,
+          title: item.description,
+          desc: item.description,
+          learnedCount: 16,
+          sentencesCount: item.wordsCount,
+          bgImage: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80'
+        } as any));
+      })
+    ).subscribe({
+      next: (processedData: any[]) => {
+        console.log(processedData);
+        const cihui = {
+          name: '场景词汇',
+          items: processedData
+        };
+        this.sections.splice(0, 1, cihui);
+      },
+      error: (err) => console.error('请求失败:', err)
+    });
+    //get kouyu
     this.sugarDictService.getAllContentModules().pipe(
       map((response: any) => {
         const rawData = response.sentenceCases || [];
@@ -60,16 +78,15 @@ export class UserSummaryComponent {
       })
     ).subscribe({
       next: (processedData: any[]) => {
-        console.log('请求成功:', processedData);
         const kouyu = {
           name: '口语表达',
           items: processedData
         };
-        this.sections.push(kouyu);
-        console.log('Sections:', kouyu);
+        this.sections.splice(1, 1, kouyu);
       },
       error: (err) => console.error('请求失败:', err)
     });
+    
   }
 
   getChineseContentModuleName(name: string) {
