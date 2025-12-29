@@ -39,8 +39,8 @@ public class Constants {
       }]
     }
     """;
-  public static final String VOICE_BR = "youxiaoguan";
-  public static final String VOICE_US = "youxiaodao";
+  public static final String VOICE_BR = "youxiaoguan"; //UK
+  public static final String VOICE_US = "youxiaodao";  //US
   public static final String YD_TTS_URL = "https://openapi.youdao.com/ttsapi";
 
   public static final String[] SENTENCE_CASES = {"restaurant", "airport", "hotel", "bank_card"

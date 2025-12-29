@@ -23,12 +23,13 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class RestUtils {
   private static final String SORRY_MESSAGE = "Ops, Something is wrong with dpsk service!";
   private static final Double TEMPERATURE = 1.0;
   private static final Logger logger = LoggerFactory.getLogger(RestUtils.class);
-
+  private static final ReentrantLock lock = new ReentrantLock();
   private static RestTemplate buildRestTemplate() {
     return new RestTemplateBuilder().connectTimeout(Duration.ofMinutes(2L))
       .readTimeout(Duration.ofMinutes(2L)).build();
@@ -136,7 +137,9 @@ public class RestUtils {
         } else {
           filePath = audioDir.getAbsolutePath() + File.separator + getDigest(sentence) + "_us.mp3";
         }
+        lock.lock();
         Files.write(Paths.get(filePath), body);
+        lock.unlock();
         logger.info("{} 已保存至: {}", sentence, filePath);
       } else {
         String json = new String(body, StandardCharsets.UTF_8);
