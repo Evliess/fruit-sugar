@@ -1,5 +1,7 @@
 server.servlet.context-path: /sugar-dict
-
+audio.dir: ${AUDIO_DIR}
+youd.app.key: ${YOUD_KEY}
+youd.app.secret: ${YOUD_SECRET}
 spring:
   datasource:
     url: ${DB_URL}
