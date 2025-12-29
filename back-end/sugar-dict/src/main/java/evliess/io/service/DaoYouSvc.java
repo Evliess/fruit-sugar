@@ -31,6 +31,18 @@ public class DaoYouSvc {
     this.wordRepo = wordRepo;
   }
 
+  public ResponseEntity<String> getDigest(String text) {
+    JSONObject jsonObject = new JSONObject();
+    if (text == null || text.isEmpty()) {
+      jsonObject.put(Constants.RESULT, Constants.ERROR);
+      return ResponseEntity.ok(jsonObject.toString());
+    }
+    String digest = RestUtils.getDigest(text);
+    jsonObject.put(Constants.RESULT, Constants.OK);
+    jsonObject.put("digest", digest);
+    return ResponseEntity.ok(jsonObject.toString());
+  }
+
   public ResponseEntity<String> getTextTts(String text) {
     JSONObject jsonObject = new JSONObject();
     if (text == null || text.isEmpty()) {

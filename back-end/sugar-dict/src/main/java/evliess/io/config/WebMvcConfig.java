@@ -20,7 +20,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
       .setCachePeriod(3600)
       .resourceChain(true);
 
-    String custom = "custom/";
+    String custom = "custom" + File.separator;
     registry.addResourceHandler("/public/v1/audio/custom/**")
       .addResourceLocations("file:" + audioDir + File.separator + custom)
       .setCachePeriod(3600).resourceChain(true);
