@@ -32,6 +32,14 @@ export class SugarDictService {
         return this.http.get<String>(`${this.apiUrl}` + "/sentences/by-content-module-id?moduleId=" + contentModuleId);
     }
 
+    getTextDigest(text: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/text/digest", { text: text });
+    }
+
+    getTextTts(text: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/text/tts", { text: text });
+    }
+
     getChineseContentModuleName(name: string) {
         if (!name.includes("(")) {
             return name;

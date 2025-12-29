@@ -43,7 +43,6 @@ public class DaoYouController {
   }
 
 
-
   // DELETE /api/users/{id}
   @Operation(summary = "删除用户", description = "根据ID删除指定用户")
   @ApiResponse(responseCode = "204", description = "删除成功（无内容返回）")
@@ -61,12 +60,12 @@ public class DaoYouController {
     summary = "Get Digest by Text",
     description = "Get Digest by Text"
   )
-  @GetMapping(value = "/text/digest", produces = "application/json")
-  public ResponseEntity<String> getByName(
+  @PostMapping(value = "/text/digest", produces = "application/json")
+  public ResponseEntity<String> getTextDigest(
     @Parameter(description = "The Text to Get Digest", required = true, example = "hello")
-    @RequestParam String text
+    @RequestBody TextDto textDto
   ) {
-    return this.daoYouSvc.getDigest(text);
+    return this.daoYouSvc.getDigest(textDto.getText());
   }
 
   @Operation(summary = "Get Voice by Text", description = "Get Voice by Text")

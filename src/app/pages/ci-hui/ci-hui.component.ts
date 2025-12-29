@@ -116,13 +116,15 @@ export class CiHuiComponent {
   }
 
   handleSound(phonetic: string, word: string): void {
-    if (phonetic=="US") {
+    if (phonetic == "US") {
       this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=' + word;
     } else {
       this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=' + word;
     }
     this.audio.load();
-    this.audio.play().catch(e => console.warn('Playback failed:', e));
+    this.audio.play().catch(e => {
+      console.warn('Playback failed:', e); 
+    });
   }
 
   // 切换显示全部/收起
