@@ -4,7 +4,7 @@
     <!-- 标题区域 -->
     <div class="login-header">
       <!-- <img src="" alt="Logo" class="logo" /> -->
-      <h2 class="title">欢迎登录</h2>
+      <h2 class="title">生成口令</h2>
     </div>
 
     <!-- 表单区域 -->
@@ -12,10 +12,16 @@
       <!-- 用户名 -->
       <nz-form-item>
         <nz-input-group nzPrefixIcon="user" nzSize="large">
-          <input type="text" nz-input placeholder="请输入口令" />
+          <input type="text" nz-input placeholder="请输入用户名" />
         </nz-input-group>
       </nz-form-item>
 
+      <!-- 密码 -->
+      <nz-form-item>
+        <nz-input-group nzPrefixIcon="clock-circle" nzSize="large">
+          <input type="text" nz-input placeholder="请输入有效期" />
+        </nz-input-group>
+      </nz-form-item>
 
       <!-- 记住我 / 忘记密码 (可选) -->
       <div class="login-options">
@@ -24,8 +30,8 @@
       </div>
 
       <!-- 登录按钮 -->
-      <button (click)="login()" nz-button class="login-button" [nzType]="'primary'" [nzSize]="'default'">
-        登 录
+      <button (click)="generate()" nz-button class="login-button" [nzType]="'primary'" [nzSize]="'default'">
+        生成
       </button>
 
     </div>

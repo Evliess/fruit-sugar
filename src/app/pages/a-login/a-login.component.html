@@ -4,7 +4,7 @@
     <!-- 标题区域 -->
     <div class="login-header">
       <!-- <img src="" alt="Logo" class="logo" /> -->
-      <h2 class="title">欢迎登录</h2>
+      <h2 class="title">管理员登录</h2>
     </div>
 
     <!-- 表单区域 -->
@@ -12,10 +12,16 @@
       <!-- 用户名 -->
       <nz-form-item>
         <nz-input-group nzPrefixIcon="user" nzSize="large">
-          <input type="text" nz-input placeholder="请输入口令" />
+          <input type="text" nz-input placeholder="请输入用户名" />
         </nz-input-group>
       </nz-form-item>
 
+      <!-- 密码 -->
+      <nz-form-item>
+        <nz-input-group nzPrefixIcon="lock" nzSize="large">
+          <input type="text" nz-input placeholder="请输入口令" />
+        </nz-input-group>
+      </nz-form-item>
 
       <!-- 记住我 / 忘记密码 (可选) -->
       <div class="login-options">

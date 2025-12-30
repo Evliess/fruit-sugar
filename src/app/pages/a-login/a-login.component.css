@@ -1,7 +1,7 @@
+/* 容器：全屏背景，Flexbox 居中 */
 .login-header {
     text-align: center;
 }
-/* 容器：全屏背景，Flexbox 居中 */
 .login-container {
   display: flex;
   justify-content: center;
