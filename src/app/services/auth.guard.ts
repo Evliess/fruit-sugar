@@ -8,7 +8,9 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   // 检查 AuthService 里的 Signal 是否有值
-  if (authService.isAuthenticated()) {
+  const isAuth = authService.isAuthenticated();
+
+  if (isAuth) {
     return true;
   }
 

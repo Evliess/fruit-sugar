@@ -47,7 +47,6 @@ export class MainLayoutComponent {
   // 只要 currentUrl 发生变化，这个值会自动更新
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
-    console.log("Current URL:", url);
     if (url && (url.includes('/word') || url.includes('/unknown-book')
       || url.includes('/wrong-book') || url.includes('user-summary'))) {
       return true;

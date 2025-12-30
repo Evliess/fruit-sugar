@@ -25,17 +25,17 @@ registerLocaleData(en);
 const icons = [MenuFoldOutline, MenuUnfoldOutline, DashboardOutline, UserOutline, SettingOutline, BellOutline, SearchOutline];
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), 
-    // provideRouter(routes), 
-    provideRouter(routes, withDebugTracing()),
-    provideNzIcons(icons), 
-    provideNzI18n(en_US), 
-    importProvidersFrom(FormsModule), 
-    provideAnimationsAsync(), 
-    // provideAppInitializer(() => {
-    //   const authService = new AuthService();
-    //   authService.initializeAuth();
-    // }),
-    provideHttpClient()
+  providers: [provideZoneChangeDetection({ eventCoalescing: true }),
+  provideRouter(routes),
+  // provideRouter(routes, withDebugTracing()),
+  provideNzIcons(icons),
+  provideNzI18n(en_US),
+  importProvidersFrom(FormsModule),
+  provideAnimationsAsync(),
+  provideAppInitializer(() => {
+    const authService = new AuthService();
+    authService.loadSavedSession();
+  }),
+  provideHttpClient()
   ]
 };
