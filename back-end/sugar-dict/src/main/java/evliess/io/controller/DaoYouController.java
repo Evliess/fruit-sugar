@@ -60,9 +60,9 @@ public class DaoYouController {
     summary = "Get Digest by Text",
     description = "Get Digest by Text"
   )
+
   @PostMapping(value = "/text/digest", produces = "application/json")
   public ResponseEntity<String> getTextDigest(
-    @Parameter(description = "The Text to Get Digest", required = true, example = "hello")
     @RequestBody TextDto textDto
   ) {
     return this.daoYouSvc.getDigest(textDto.getText());

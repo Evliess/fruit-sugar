@@ -6,7 +6,8 @@ SET FOREIGN_KEY_CHECKS = 0;
 CREATE TABLE `users` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '用户ID',
   `identifier` VARCHAR(100) NOT NULL COMMENT '用户手机号或邮箱（唯一标识）',
-  `code` VARCHAR(255) DEFAULT NULL COMMENT '密码哈希',
+  `code` VARCHAR(100) DEFAULT NULL COMMENT '密码哈希',
+  `role` VARCHAR(100) DEFAULT NULL COMMENT '角色',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_identifier` (`identifier`)
 ) ENGINE=InnoDB COMMENT='用户基础信息表';
@@ -83,6 +84,7 @@ CREATE TABLE `user_custom_books` (
   `name` VARCHAR(50) DEFAULT '默认词书' COMMENT '词书名称',
   `word_id` BIGINT UNSIGNED DEFAULT NULL,
   `sentence_id` BIGINT UNSIGNED DEFAULT NULL,
+  `module_id` BIGINT UNSIGNED NOT NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`id`),
   KEY `idx_user_id` (`user_id`)
@@ -94,16 +96,48 @@ CREATE TABLE `user_custom_books` (
 -- ==========================================
 
 -- 场景/模块维度的学习进度
-CREATE TABLE `user_module_progress` (
+CREATE TABLE `user_words_progress` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT UNSIGNED NOT NULL,
-  `module_id` BIGINT UNSIGNED NOT NULL COMMENT '场景ID',
-  `status` VARCHAR(50) COMMENT '状态',
-  `total_words_count` INT DEFAULT 0 COMMENT '单词总数(快照，避免频繁count)',
-  `learned_words_count` INT DEFAULT 0 COMMENT '已学单词数',
-  `last_studied_at` DATETIME DEFAULT NULL COMMENT '最近学习时间',
+  `module_id` BIGINT UNSIGNED NOT NULL,
+  `total_words_count` INT DEFAULT 0 ,
+  `learned_words_count` INT DEFAULT 0 ,
+  `last_studied_at` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_user_module` (`user_id`, `module_id`)
-) ENGINE=InnoDB COMMENT='场景学习总进度';
+  UNIQUE KEY `uk_user_words_progress` (`user_id`, `module_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `user_learned_words` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `module_id` BIGINT UNSIGNED NOT NULL ,
+  `word_id` BIGINT UNSIGNED NOT NULL,
+  `learned_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_user_learned_words` (`user_id`, `word_id`),
+  INDEX `idx_user_learned_words` (`user_id`, `module_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `user_sentences_progress` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `module_id` BIGINT UNSIGNED NOT NULL,
+  `total_sentences_count` INT DEFAULT 0 ,
+  `learned_sentences_count` INT DEFAULT 0 ,
+  `last_studied_at` DATETIME DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_user_sentences_progress` (`user_id`, `module_id`)
+) ENGINE=InnoDB;
+
+CREATE TABLE `user_learned_sentences` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `module_id` BIGINT UNSIGNED NOT NULL ,
+  `sentence_id` BIGINT UNSIGNED NOT NULL,
+  `learned_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uk_user_learned_sentences` (`user_id`, `sentence_id`),
+  INDEX `idx_user_learned_sentences` (`user_id`, `module_id`)
+) ENGINE=InnoDB;
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -62,4 +62,7 @@ public class Constants {
   public static final String[] WORD_SCHOOL_CASES = {"course_study", "exams_assessment", "classroom_activity", "campus_facilities"
     , "academic_research", "study_affairs", "campus_life"};
 
+  public static final String ROLE_ADMIN = "admin";
+  public static final String ROLE_USER = "user";
+
 }
