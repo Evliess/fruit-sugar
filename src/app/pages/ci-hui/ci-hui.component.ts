@@ -19,9 +19,6 @@ import { SugarDictService } from '../../services/sugar-dict';
 import { map } from 'rxjs';
 import { HoverSoundDirective } from '../../hover-sound.directive';
 
-
-
-
 // 定义单词数据结构
 interface VocabularyWord {
   id: number;

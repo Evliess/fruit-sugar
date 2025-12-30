@@ -1,0 +1,39 @@
+<div class="login-container">
+  <div class="login-content">
+
+    <!-- 标题区域 -->
+    <div class="login-header">
+      <!-- <img src="" alt="Logo" class="logo" /> -->
+      <h2 class="title">欢迎登录</h2>
+    </div>
+
+    <!-- 表单区域 -->
+    <div nz-form class="login-form">
+      <!-- 用户名 -->
+      <nz-form-item>
+        <nz-input-group nzPrefixIcon="user" nzSize="large">
+          <input type="text" nz-input formControlName="username" placeholder="请输入用户名" />
+        </nz-input-group>
+      </nz-form-item>
+
+      <!-- 密码 -->
+      <nz-form-item>
+        <nz-input-group nzPrefixIcon="lock" nzSize="large">
+          <input type="password" nz-input formControlName="password" placeholder="请输入口令" />
+        </nz-input-group>
+      </nz-form-item>
+
+      <!-- 记住我 / 忘记密码 (可选) -->
+      <div class="login-options">
+        <!-- <label nz-checkbox formControlName="remember">记住我</label> -->
+        <!-- <a class="forgot-password">忘记密码?</a> -->
+      </div>
+
+      <!-- 登录按钮 -->
+      <button (click)="login()" nz-button class="login-button" [nzType]="'primary'" [nzSize]="'default'">
+        登 录
+      </button>
+
+    </div>
+  </div>
+</div>

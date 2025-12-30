@@ -1,0 +1,22 @@
+/* 容器：全屏背景，Flexbox 居中 */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; /* 经典的灰色背景 */
+  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg'); /* 可选背景图 */
+  background-repeat: no-repeat;
+  background-position: center 110px;
+  background-size: 100%;
+}
+
+/* 内容卡片：核心响应式逻辑 */
+.login-content {
+  width: 100%;
+  max-width: 400px; /* 电脑端最大宽度 */
+  padding: 24px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 加点阴影更有质感 */
+}
