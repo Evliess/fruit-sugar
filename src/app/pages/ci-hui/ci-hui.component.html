@@ -18,7 +18,7 @@
       </div>
     </div>
     }
-    @for (item of words; track item.id) {
+    @for (item of words.slice(0, 10); track item.id) {
     <!-- 单个单词行 -->
     <div class="word-row" [class.is-known]="item.isKnown">
 
@@ -35,8 +35,12 @@
           </div>
 
           <div class="phonetic-group">
-            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100" (hoverTimeout)="handleSound('US', item.word)"/></span>
-            <strong>🇬🇧 </strong><span class="phonetic" >{{ item.ukPhonetic }} <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100" (hoverTimeout)="handleSound('UK', item.word)"/></span>
+            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('US', item.word)" /></span>
+            <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
+                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('UK', item.word)" /></span>
           </div>
 
           @if (!(item.showDetails || ciHuiService.learnMode())) {
@@ -44,9 +48,9 @@
           }
 
           @if (item.showDetails || ciHuiService.learnMode()) {
-            @for (item of item.definition | keyvalue; track item.key) {
-            <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
-            }
+          @for (item of item.definition | keyvalue; track item.key) {
+          <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
+          }
           }
         </div>
 
@@ -87,7 +91,7 @@
           <span class="detail-label">常用词组：</span>
           <div class="detail-content">
             @for (phrase of item.phrases; track $index) {
-             <nz-tag>{{ phrase }}</nz-tag>
+            <nz-tag>{{ phrase }}</nz-tag>
             }
           </div>
         </div>
@@ -106,6 +110,101 @@
       </div>
       }
     </div>
+    }
+    @defer (on timer(50ms)) {
+      @for (item of words.slice(10); track item.id) {
+      <!-- 单个单词行 -->
+      <div class="word-row" [class.is-known]="item.isKnown">
+
+        <!-- 上半部分：主要信息 + 操作按钮 -->
+        <div class="row-main">
+
+          <!-- 左侧：单词信息 -->
+          <div class="word-info">
+            <div class="word-title-group">
+              <span class="word-text">{{ item.word }}</span>
+              @if (item.isKnown) {
+              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+              }
+            </div>
+
+            <div class="phonetic-group">
+              <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                  (hoverTimeout)="handleSound('US', item.word)" /></span>
+              <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
+                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                  (hoverTimeout)="handleSound('UK', item.word)" /></span>
+            </div>
+
+            @if (!(item.showDetails || ciHuiService.learnMode())) {
+            <div class="definition">{{item.sentences[0].text}}</div>
+            }
+
+            @if (item.showDetails || ciHuiService.learnMode()) {
+            @for (item of item.definition | keyvalue; track item.key) {
+            <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
+            }
+            }
+          </div>
+
+          <!-- 右侧：按钮组 -->
+          <div class="action-group">
+            <!-- 认识 -->
+            <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+              (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+              <span nz-icon nzType="check"></span> 认识
+            </button>
+
+            <!-- 不认识 -->
+            <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
+              <span nz-icon nzType="close"></span> 不认识
+            </button>
+
+            <!-- 显示全部/收起 -->
+            @if(!ciHuiService.learnMode()) {
+            <button nz-button nzType="default" (click)="toggleDetails(item)">
+              <span nz-icon [nzType]="item.showDetails|| ciHuiService.learnMode() ? 'up' : 'down'"></span>
+              {{ item.showDetails || ciHuiService.learnMode()? '收起' : '详情' }}
+            </button>
+
+            <!-- 练一练 -->
+            <button nz-button nzType="primary" (click)="openPractice(item)">
+              <span nz-icon nzType="edit"></span> 练一练
+            </button>
+            }
+          </div>
+        </div>
+
+        <!-- 下半部分：详情 (默认隐藏) -->
+        @if (item.showDetails || ciHuiService.learnMode()) {
+        <div class="row-details">
+          <nz-divider></nz-divider>
+
+          <div class="detail-block">
+            <span class="detail-label">常用词组：</span>
+            <div class="detail-content">
+              @for (phrase of item.phrases; track $index) {
+              <nz-tag>{{ phrase }}</nz-tag>
+              }
+            </div>
+          </div>
+
+          <div class="detail-block mt-2">
+            <span class="detail-label">双语例句：</span>
+            <div class="detail-content sentence-list">
+              @for (sent of item.sentences; track $index) {
+              <div class="sentence-item">
+                <p class="en">{{ sent.text }}</p>
+                <p class="zh">{{ sent.textTranslation }}</p>
+              </div>
+              }
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+      }
     }
   </div>
 
