@@ -16,7 +16,7 @@
     }
     @for (item of sentences; track item.id) {
     <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown">
+    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound(item.audioUSUrl)">
 
       <!-- 上半部分：主要信息 + 操作按钮 -->
       <div class="row-main">
