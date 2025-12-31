@@ -4,13 +4,14 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { ActivatedRoute } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { SugarDictService } from '../../services/sugar-dict';
 import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-word-subitem',
-  imports: [CommonModule, NzGridModule, NzCardModule, NzButtonModule],
+  imports: [CommonModule, NzGridModule, NzCardModule, NzButtonModule,NzProgressModule],
   templateUrl: './word-subitem.component.html',
   styleUrl: './word-subitem.component.css'
 })
@@ -43,6 +44,11 @@ export class WordSubitemComponent {
   }
   getEnglishContentModuleName(name: string) {
     return this.sugarDictService.getEnglishContentModuleName(name);
+  }
+
+  getPercent(learnedCount: number, totalCount: number): number {
+    if (totalCount === 0) return 0;
+    return Math.round((learnedCount / totalCount) * 100);
   }
 
 }

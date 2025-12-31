@@ -21,11 +21,13 @@
                 <ng-template #content1>
                     <h2 class="card-title">{{ getChineseContentModuleName(subModule.description) }}</h2>
                     <p class="card-subtitle">{{ getEnglishContentModuleName(subModule.description) }}</p>
+                    <nz-progress [nzPercent]="getPercent(14, subModule.sentencesCount)" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"
+                        nzStatus="active" nzSize="small"></nz-progress>
                     <div class="card-footer">
                         <!-- <span class="footer-title" (click)="gotoWords(subModule.id)">重新开始</span>
                         <span class="footer-status">进度: 58/{{subModule.wordsCount}}</span> -->
                         <button nz-button nzType="dashed" nzSize="small" (click)="gotoKouYu(false, subModule.id)">重新开始</button>
-                        <button nz-button nzType="primary" nzSize="small">进度: 18/{{subModule.sentencesCount}}</button>
+                        <button nz-button nzType="primary" nzSize="small">继续学习</button>
                     </div>
                 </ng-template>
             </nz-col>

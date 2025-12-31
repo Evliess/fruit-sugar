@@ -3,11 +3,12 @@ import { SugarDictService } from '../../services/sugar-dict';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sentence-item',
-  imports: [NzGridModule, NzCardModule, NzButtonModule],
+  imports: [NzGridModule, NzCardModule, NzButtonModule, NzProgressModule],
   templateUrl: './sentence-item.component.html',
   styleUrl: './sentence-item.component.css'
 })
@@ -36,5 +37,9 @@ export class SentenceItemComponent {
   }
   getEnglishContentModuleName(name: string) {
     return this.sugarDictService.getEnglishContentModuleName(name);
+  }
+  getPercent(learnedCount: number, totalCount: number): number {
+    if (totalCount === 0) return 0;
+    return Math.round((learnedCount / totalCount) * 100);
   }
 }
