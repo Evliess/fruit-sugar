@@ -53,5 +53,14 @@ export class SugarDictService {
         return name.split("(")[1].slice(0, -1);
     }
 
+    userLogin(code: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/user/login", { code: code });
+    }
+    adminLogin(name: string, code: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/user/admin-login", { name: name, code: code });
+    }
+    createUser(name: string, days: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/user/create-or-update", { name: name, days: days });
+    }
 
 }

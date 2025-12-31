@@ -12,14 +12,14 @@
       <!-- 用户名 -->
       <nz-form-item>
         <nz-input-group nzPrefixIcon="user" nzSize="large">
-          <input type="text" nz-input placeholder="请输入用户名" />
+          <input type="text" (change)="inputName($event)" nz-input placeholder="请输入用户名" />
         </nz-input-group>
       </nz-form-item>
 
       <!-- 密码 -->
       <nz-form-item>
         <nz-input-group nzPrefixIcon="lock" nzSize="large">
-          <input type="text" nz-input placeholder="请输入口令" />
+          <input type="text" (change)="inputToken($event)" nz-input placeholder="请输入口令" />
         </nz-input-group>
       </nz-form-item>
 

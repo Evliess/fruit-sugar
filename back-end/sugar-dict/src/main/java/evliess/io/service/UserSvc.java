@@ -56,6 +56,7 @@ public class UserSvc {
       if (user != null && validToken) {
         jsonObject.put(Constants.RESULT, Constants.OK);
         jsonObject.put("token", parts[1]);
+        jsonObject.put("user", parts[0]);
         return ResponseEntity.ok(jsonObject.toString());
       } else {
         jsonObject.put(Constants.RESULT, Constants.ERROR);
@@ -89,6 +90,7 @@ public class UserSvc {
     }
     this.userRepo.save(user);
     jsonObject.put(Constants.RESULT, Constants.OK);
+    jsonObject.put("token", token);
     return ResponseEntity.ok(jsonObject.toString());
   }
 }

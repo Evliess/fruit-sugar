@@ -12,7 +12,7 @@
       <!-- 用户名 -->
       <nz-form-item>
         <nz-input-group nzPrefixIcon="user" nzSize="large">
-          <input type="text" nz-input placeholder="请输入口令" />
+          <input type="text" nz-input placeholder="请输入口令" (change)="inputToken($event)"/>
         </nz-input-group>
       </nz-form-item>
 
