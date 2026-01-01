@@ -31,7 +31,6 @@ export class AuthService {
 
   loadSavedSession() {
     const savedUser = sessionStorage.getItem('auth_user');
-    console.log('Loaded saved user from session:', savedUser);
     if (savedUser) {
       try {
         this.userSignal.set(JSON.parse(savedUser));

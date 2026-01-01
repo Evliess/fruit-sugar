@@ -42,12 +42,12 @@
         <div class="action-group">
           <!-- 认识 -->
           <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-            (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+            (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
             <span nz-icon nzType="check"></span> 认识
           </button>
 
           <!-- 不认识 -->
-          <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
+          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
             <span nz-icon nzType="close"></span> 不认识
           </button>
 
@@ -59,7 +59,7 @@
           </button> -->
 
           <!-- 练一练 -->
-          <button nz-button nzType="primary" (click)="openPractice(item)">
+          <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
             <span nz-icon nzType="edit"></span> 练一练
           </button>
         </div>
@@ -95,12 +95,12 @@
         <div class="action-group">
           <!-- 认识 -->
           <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-            (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+            (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
             <span nz-icon nzType="check"></span> 认识
           </button>
 
           <!-- 不认识 -->
-          <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
+          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
             <span nz-icon nzType="close"></span> 不认识
           </button>
 
@@ -112,7 +112,7 @@
           </button> -->
 
           <!-- 练一练 -->
-          <button nz-button nzType="primary" (click)="openPractice(item)">
+          <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
             <span nz-icon nzType="edit"></span> 练一练
           </button>
         </div>
