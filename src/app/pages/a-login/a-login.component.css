@@ -1,25 +1,67 @@
-/* 容器：全屏背景，Flexbox 居中 */
-.login-header {
-    text-align: center;
-}
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #f0f2f5; /* 经典的灰色背景 */
-  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg'); /* 可选背景图 */
+  background-color: #f0f2f5;
+  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
   background-repeat: no-repeat;
-  background-position: center 110px;
-  background-size: 100%;
+  background-position: center bottom;
+  background-size: contain;
 }
 
-/* 内容卡片：核心响应式逻辑 */
+/* 内容卡片：核心响应式适配 */
 .login-content {
   width: 100%;
-  max-width: 400px; /* 电脑端最大宽度 */
-  padding: 24px;
+  max-width: 400px; 
+  padding: 32px 24px;
   background: #fff;
+  border-radius: 8px; 
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); 
+  box-sizing: border-box; 
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #000000d9;
+  margin: 0;
+}
+
+/* 表单项间距 */
+nz-form-item {
+  margin-bottom: 24px;
+}
+
+/* 按钮：手机端加长，方便点击 */
+.login-button {
+  width: 100%;
+  height: 44px; /* 移动端触控黄金高度 */
+  font-size: 16px;
+  margin-top: 8px;
   border-radius: 4px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* 加点阴影更有质感 */
+}
+
+/* --- 手机端专属优化 (Media Query) --- */
+@media screen and (max-width: 576px) {
+  .login-container {
+    background-image: none; /* 手机端去掉背景图，更纯净 */
+    background-color: #fff; /* 手机端背景可改为纯白，看起来像原生 App */
+    align-items: flex-start; /* 手机端内容靠上一点，防止软键盘弹出遮挡 */
+    padding-top: 15vh;
+  }
+
+  .login-content {
+    box-shadow: none; /* 手机端如果背景变白，可以去掉阴影 */
+    padding: 20px;
+  }
+  
+  .title {
+    font-size: 20px;
+  }
 }

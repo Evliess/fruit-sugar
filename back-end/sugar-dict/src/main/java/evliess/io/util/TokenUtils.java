@@ -45,6 +45,10 @@ public class TokenUtils {
     return encode(Instant.now().plus(Duration.ofMinutes(minutes)).toEpochMilli() + "");
   }
 
+  private static String getNowMinusMinutesToken(int minutes) {
+    return encode(Instant.now().minus(Duration.ofMinutes(minutes)).toEpochMilli() + "");
+  }
+
   private static String generateToken(String days) {
     if (days.startsWith("-")) {
       int minutes = Integer.parseInt(days.substring(1));
@@ -52,6 +56,10 @@ public class TokenUtils {
     }
     int daysInt = Integer.parseInt(days);
     return UUID.randomUUID() + "--" + getNowPlusDaysToken(daysInt);
+  }
+
+  public static String revokeToken() {
+    return getNowMinusMinutesToken(3);
   }
 
   public static String generateToken(String user, String days) {

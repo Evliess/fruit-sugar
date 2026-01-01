@@ -62,5 +62,8 @@ export class SugarDictService {
     createUser(name: string, days: string): Observable<String> {
         return this.http.post<String>(`${this.apiUrl}` + "/user/create-or-update", { name: name, days: days });
     }
+    revokeUser(code: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/user/revoke-token", { code: code });
+    }
 
 }

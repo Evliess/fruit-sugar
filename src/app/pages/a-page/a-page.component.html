@@ -1,39 +1,47 @@
 <div class="login-container">
+
+
   <div class="login-content">
+    <nz-tabset>
+      <nz-tab nzTitle="生成口令">
+        <div class="login-header">
+          <h2 class="title">生成口令</h2>
+        </div>
+        <div nz-form class="login-form">
+          <nz-form-item>
+            <nz-input-group nzPrefixIcon="user" nzSize="large">
+              <input type="text" (input)="inputName($event)" nz-input placeholder="请输入用户名" />
+            </nz-input-group>
+          </nz-form-item>
 
-    <!-- 标题区域 -->
-    <div class="login-header">
-      <!-- <img src="" alt="Logo" class="logo" /> -->
-      <h2 class="title">生成口令</h2>
-    </div>
+          <nz-form-item>
+            <nz-input-group nzPrefixIcon="clock-circle" nzSize="large">
+              <input type="text" (input)="inputDays($event)" nz-input placeholder="请输入有效期" />
+            </nz-input-group>
+          </nz-form-item>
+          <button (click)="generate()" nz-button class="login-button" [nzType]="'primary'" [nzSize]="'default'">
+            生成
+          </button>
+        </div>
+      </nz-tab>
+      <nz-tab nzTitle="撤销口令">
+        <div class="login-header">
+          <h2 class="title">撤销口令</h2>
+        </div>
+        <div nz-form class="login-form">
+          <nz-form-item>
+            <nz-input-group nzPrefixIcon="key" nzSize="large">
+              <input type="text" (input)="inputToken($event)" nz-input placeholder="请输入要撤销的口令" />
+            </nz-input-group>
+          </nz-form-item>
 
-    <!-- 表单区域 -->
-    <div nz-form class="login-form">
-      <!-- 用户名 -->
-      <nz-form-item>
-        <nz-input-group nzPrefixIcon="user" nzSize="large">
-          <input type="text" (input)="inputName($event)" nz-input placeholder="请输入用户名" />
-        </nz-input-group>
-      </nz-form-item>
+          <button (click)="revoke()" nz-button class="login-button" [nzType]="'primary'" [nzSize]="'default'">
+            撤销
+          </button>
+        </div>
+      </nz-tab>
+    </nz-tabset>
 
-      <!-- 密码 -->
-      <nz-form-item>
-        <nz-input-group nzPrefixIcon="clock-circle" nzSize="large">
-          <input type="text" (input)="inputDays($event)" nz-input placeholder="请输入有效期" />
-        </nz-input-group>
-      </nz-form-item>
 
-      <!-- 记住我 / 忘记密码 (可选) -->
-      <div class="login-options">
-        <!-- <label nz-checkbox formControlName="remember">记住我</label> -->
-        <!-- <a class="forgot-password">忘记密码?</a> -->
-      </div>
-
-      <!-- 登录按钮 -->
-      <button (click)="generate()" nz-button class="login-button" [nzType]="'primary'" [nzSize]="'default'">
-        生成
-      </button>
-
-    </div>
   </div>
 </div>

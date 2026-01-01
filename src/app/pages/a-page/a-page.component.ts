@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzNotificationService } from 'ng-zorro-antd/notification';
 import { SugarDictService } from '../../services/sugar-dict';
 
 @Component({
   selector: 'app-a-page',
-  imports: [NzFormModule, NzInputModule, NzButtonModule],
+  imports: [NzFormModule, NzInputModule, NzButtonModule, NzTabsModule],
   templateUrl: './a-page.component.html',
   styleUrl: './a-page.component.css'
 })
@@ -46,6 +47,42 @@ export class APageComponent {
     if ($event && $event.target.value !== undefined) {
       this.name = $event.target.value;
     }
+  }
+
+  inputToken($event: any) {
+    if ($event && $event.target.value !== undefined) {
+      this.token = $event.target.value;
+    }
+  }
+
+  revoke() {
+    this.sugarDictService.revokeUser(this.token).subscribe({
+      next: (response: any) => {
+        if (response && response.result === 'ok') {
+          this.notification.create(
+            'success',
+            this.token,
+            `口令已失效`,
+            { nzDuration: 0 }
+          );
+        } else {
+          this.notification.create(
+            'info',
+            this.token,
+            `后台服务异常，稍后再试`,
+            { nzDuration: 0 }
+          );
+        }
+      },
+      error: () => {
+        this.notification.create(
+          'info',
+          this.token,
+          `后台服务异常，稍后再试`,
+          { nzDuration: 0 }
+        );
+      }
+    });
   }
 
   isPureNumber(value: string | number): boolean {

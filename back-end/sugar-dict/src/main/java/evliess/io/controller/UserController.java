@@ -40,5 +40,11 @@ public class UserController {
     return this.userSvc.adminLogin(userDto.getName(), userDto.getCode());
   }
 
+  @Operation(summary = "Revoke Token", description = "Revoke Token")
+  @PostMapping(value = "/user/revoke-token", produces = "application/json")
+  public ResponseEntity<String> revoke(@RequestBody UserDto userDto) {
+    return this.userSvc.revokeToken(userDto.getCode());
+  }
+
 
 }

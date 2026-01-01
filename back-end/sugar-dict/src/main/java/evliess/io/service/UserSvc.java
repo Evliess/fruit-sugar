@@ -42,6 +42,26 @@ public class UserSvc {
     return ResponseEntity.ok(jsonObject.toString());
   }
 
+  public ResponseEntity<String> revokeToken(String token) {
+    JSONObject jsonObject = new JSONObject();
+    if (token == null || token.isEmpty()) {
+      jsonObject.put(Constants.RESULT, Constants.ERROR);
+      jsonObject.put(Constants.MSG, "Token error!");
+      return ResponseEntity.ok(jsonObject.toString());
+    }
+    try {
+      String[] parts = TokenUtils.decodeToken(token);
+      User user = this.userRepo.getUserByName(parts[0]);
+      user.setCode(TokenUtils.revokeToken());
+      this.userRepo.save(user);
+    } catch (Exception e) {
+      jsonObject.put(Constants.RESULT, Constants.ERROR);
+      jsonObject.put(Constants.MSG, "Token error!");
+    }
+    jsonObject.put(Constants.RESULT, Constants.OK);
+    return ResponseEntity.ok(jsonObject.toString());
+  }
+
   public ResponseEntity<String> login(String token) {
     JSONObject jsonObject = new JSONObject();
     if (token == null || token.isEmpty()) {
@@ -53,7 +73,7 @@ public class UserSvc {
       String[] parts = TokenUtils.decodeToken(token);
       User user = this.userRepo.getUserByName(parts[0]);
       boolean validToken = TokenUtils.isValidToken(parts[1]);
-      if (user != null && validToken) {
+      if (user != null && validToken && token.equals(user.getCode())) {
         jsonObject.put(Constants.RESULT, Constants.OK);
         jsonObject.put("token", parts[1]);
         jsonObject.put("user", parts[0]);
