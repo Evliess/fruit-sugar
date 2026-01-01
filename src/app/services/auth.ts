@@ -12,6 +12,7 @@ export class AuthService {
   currentUser = this.userSignal.asReadonly();
   isAuthenticated = computed(() => !!this.userSignal());
   isAdmin = computed(() => this.userSignal()?.role === 'admin');
+  isUser = computed(() => this.userSignal()?.role === 'user');
   
   private getUserFromStorage(): any {
     const data = sessionStorage.getItem('auth_user');
