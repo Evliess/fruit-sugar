@@ -16,4 +16,8 @@ public interface UserWordProgressRepo extends JpaRepository<UserWordProgress, Lo
   @Modifying
   @Query("UPDATE UserWordProgress p SET p.learnedWordsCount = p.learnedWordsCount - 1, p.lastStudiedAt = CURRENT_TIMESTAMP WHERE p.userId = :userId AND p.moduleId = :moduleId")
   void decrementLearnedCount(@Param("userId") Long userId, @Param("moduleId") Long moduleId);
+
+  @Modifying
+  @Query("UPDATE UserWordProgress p SET p.learnedWordsCount = 0, p.lastStudiedAt = CURRENT_TIMESTAMP WHERE p.userId = :userId AND p.moduleId = :moduleId")
+  void resetLearnedCount(@Param("userId") Long userId, @Param("moduleId") Long moduleId);
 }

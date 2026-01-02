@@ -44,6 +44,12 @@ export class WordSubitemComponent {
     this.router.navigate(['/words'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
   }
 
+  gotoResetWordsProgress(moduleId: number) {
+    this.sugarDictService.resetWordsProgressByChildContentModuleId(moduleId, this.currentUser()?.id || 0).subscribe(() => {
+      this.router.navigate(['/words'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
+    });
+  }
+
   getChineseContentModuleName(name: string) {
     return this.sugarDictService.getChineseContentModuleName(name);
   }

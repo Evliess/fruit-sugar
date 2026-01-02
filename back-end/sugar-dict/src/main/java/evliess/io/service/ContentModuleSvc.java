@@ -5,13 +5,11 @@ import com.alibaba.fastjson2.JSONObject;
 import evliess.io.controller.Constants;
 import evliess.io.entity.ContentModule;
 import evliess.io.entity.UserLearnedWord;
-import evliess.io.jpa.ContentModuleRepo;
-import evliess.io.jpa.SentenceRepo;
-import evliess.io.jpa.UserLearnedWordRepo;
-import evliess.io.jpa.WordRepo;
+import evliess.io.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,14 +19,19 @@ public class ContentModuleSvc {
   private final WordRepo wordRepo;
   private final SentenceRepo sentenceRepo;
   private final UserLearnedWordRepo userLearnedWordRepo;
+  private final UserWordProgressRepo userWordProgressRepo;
 
   @Autowired
-  public ContentModuleSvc(ContentModuleRepo contentModuleRepo, WordRepo wordRepo,
-                          SentenceRepo sentenceRepo, UserLearnedWordRepo userLearnedWordRepo) {
+  public ContentModuleSvc(ContentModuleRepo contentModuleRepo
+    , WordRepo wordRepo
+    , SentenceRepo sentenceRepo
+    , UserLearnedWordRepo userLearnedWordRepo
+    , UserWordProgressRepo userWordProgressRepo) {
     this.contentModuleRepo = contentModuleRepo;
     this.wordRepo = wordRepo;
     this.sentenceRepo = sentenceRepo;
     this.userLearnedWordRepo = userLearnedWordRepo;
+    this.userWordProgressRepo = userWordProgressRepo;
   }
 
   public ResponseEntity<String> getAllChildrenContentModules() {
@@ -121,8 +124,22 @@ public class ContentModuleSvc {
       return ResponseEntity.ok(jsonObject.toString());
     }
     ContentModule contentModule = this.contentModuleRepo.getByName(name);
+    jsonObject.put(Constants.RESULT, Constants.OK);
     jsonObject.put("name", contentModule.getName());
     jsonObject.put("description", contentModule.getDescription());
+    return ResponseEntity.ok(jsonObject.toString());
+  }
+
+  @Transactional
+  public ResponseEntity<String> resetLearnedCount(Long userId, Long moduleId) {
+    JSONObject jsonObject = new JSONObject();
+    if (userId == null || moduleId == null) {
+      jsonObject.put(Constants.RESULT, Constants.ERROR);
+      return ResponseEntity.ok(jsonObject.toString());
+    }
+    this.userLearnedWordRepo.deleteByUserIdAndModuleId(userId, moduleId);
+    this.userWordProgressRepo.resetLearnedCount(userId, moduleId);
+    jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
   }
 }

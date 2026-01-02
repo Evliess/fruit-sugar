@@ -21,5 +21,10 @@ public interface UserLearnedWordRepo extends JpaRepository<UserLearnedWord, Long
   @Query("DELETE FROM UserLearnedWord u WHERE u.userId = :userId AND u.wordId = :wordId")
   int deleteByUserIdAndWordId(Long userId, Long wordId);
 
+  @Modifying
+  @Transactional
+  @Query("DELETE FROM UserLearnedWord u WHERE u.userId = :userId AND u.moduleId = :moduleId")
+  int deleteByUserIdAndModuleId(Long userId, Long moduleId);
+
 
 }

@@ -1,15 +1,13 @@
 package evliess.io.controller;
 
+import evliess.io.dto.UserLearnedDTO;
 import evliess.io.service.ContentModuleSvc;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/public/v1")
@@ -57,6 +55,18 @@ public class ContentModuleController {
     @RequestParam String name
   ) {
     return contentModuleSvc.getByName(name);
+  }
+
+  @Operation(
+    summary = "Reset ContentModule Learned Count by UserId and ModuleId",
+    description = "Reset ContentModule Learned Count by UserId and ModuleId"
+  )
+  @PostMapping(value = "/content-module/reset-learned-count", produces = "application/json")
+  public ResponseEntity<String> resetLearnedCount(
+    @RequestBody UserLearnedDTO userLearnedDTO
+    ) {
+      return this.contentModuleSvc
+        .resetLearnedCount(userLearnedDTO.getUserId(), userLearnedDTO.getModuleId());
   }
 
 

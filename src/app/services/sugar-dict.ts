@@ -20,6 +20,10 @@ export class SugarDictService {
         return this.http.get<String>(`${this.apiUrl}` + "/all-children-content-module");
     }
 
+    resetWordsProgressByChildContentModuleId(childContentModuleId: number, userId: number): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/content-module/reset-learned-count", { moduleId: childContentModuleId, userId: userId });
+    }
+
     getWordsByChildContentModuleId(childContentModuleId: number, userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/words/by-child-content-module-id?childModuleId=" + childContentModuleId + "&userId=" + userId);
     }
