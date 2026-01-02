@@ -4,8 +4,10 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import evliess.io.controller.Constants;
 import evliess.io.entity.ContentModule;
+import evliess.io.entity.UserLearnedWord;
 import evliess.io.jpa.ContentModuleRepo;
 import evliess.io.jpa.SentenceRepo;
+import evliess.io.jpa.UserLearnedWordRepo;
 import evliess.io.jpa.WordRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +20,15 @@ public class ContentModuleSvc {
   private final ContentModuleRepo contentModuleRepo;
   private final WordRepo wordRepo;
   private final SentenceRepo sentenceRepo;
+  private final UserLearnedWordRepo userLearnedWordRepo;
 
   @Autowired
-  public ContentModuleSvc(ContentModuleRepo contentModuleRepo, WordRepo wordRepo, SentenceRepo sentenceRepo) {
+  public ContentModuleSvc(ContentModuleRepo contentModuleRepo, WordRepo wordRepo,
+                          SentenceRepo sentenceRepo, UserLearnedWordRepo userLearnedWordRepo) {
     this.contentModuleRepo = contentModuleRepo;
     this.wordRepo = wordRepo;
     this.sentenceRepo = sentenceRepo;
+    this.userLearnedWordRepo = userLearnedWordRepo;
   }
 
   public ResponseEntity<String> getAllChildrenContentModules() {
@@ -48,7 +53,7 @@ public class ContentModuleSvc {
     return ResponseEntity.ok(jsonObject.toString());
   }
 
-  public ResponseEntity<String> getChildrenContentModules(String parentName) {
+  public ResponseEntity<String> getChildrenContentModules(String parentName, Long userId) {
     JSONObject jsonObject = new JSONObject();
     if (parentName == null || parentName.isEmpty()) {
       jsonObject.put(Constants.RESULT, Constants.ERROR);
@@ -76,6 +81,8 @@ public class ContentModuleSvc {
       cmObj.put("name", cm.getName());
       cmObj.put("description", cm.getDescription());
       cmObj.put("wordsCount", this.wordRepo.countWordsByModuleId(cm.getId()));
+      List<UserLearnedWord> knownWords = this.userLearnedWordRepo.findLearnedWordIds(userId, cm.getId());
+      cmObj.put("learnedCount", (knownWords == null || knownWords.isEmpty()) ? 0 : knownWords.size());
       children.add(cmObj);
     }
     return ResponseEntity.ok(jsonObject.toString());

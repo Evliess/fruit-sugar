@@ -30,9 +30,11 @@ public class ContentModuleController {
   @GetMapping(value = "/children-content-module", produces = "application/json")
   public ResponseEntity<String> getChildrenContentModules(
     @Parameter(description = "The name of parent content module", required = true, example = "food")
-    @RequestParam String parentName
+    @RequestParam String parentName,
+    @Parameter(description = "The id of user", required = true, example = "1")
+    @RequestParam Long userId
   ) {
-    return contentModuleSvc.getChildrenContentModules(parentName);
+    return contentModuleSvc.getChildrenContentModules(parentName, userId);
   }
 
   @Operation(

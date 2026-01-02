@@ -23,7 +23,7 @@ export class ALoginComponent {
     this.sugarDictService.adminLogin(this.token, this.name).subscribe({
       next: (response: any) => {
         if(response && response.result === 'ok') {
-          this.authService.setSession({id: this.token, name: this.name, role: 'admin' } );
+          this.authService.setSession({id: 0, code: this.token, name: this.name, role: 'admin' });
           this.router.navigate(['/admin/admin-page']);
         } else {
           this.router.navigate(['/admin-login']);

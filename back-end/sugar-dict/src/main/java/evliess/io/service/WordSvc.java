@@ -3,34 +3,41 @@ package evliess.io.service;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import evliess.io.controller.Constants;
+import evliess.io.entity.UserLearnedWord;
 import evliess.io.entity.Word;
+import evliess.io.jpa.UserLearnedWordRepo;
 import evliess.io.jpa.WordRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
 public class WordSvc {
   private final WordRepo wordRepo;
+  private final UserLearnedWordRepo userLearnedWordRepo;
 
   @Autowired
-  public WordSvc(WordRepo wordRepo) {
+  public WordSvc(WordRepo wordRepo, UserLearnedWordRepo userLearnedWordRepo) {
     this.wordRepo = wordRepo;
+    this.userLearnedWordRepo = userLearnedWordRepo;
   }
 
   public ResponseEntity<String> getWordsSimpleByModuleId(Long childModuleId) {
-    return buildResponseEntity(childModuleId, true);
+    return buildResponseEntity(childModuleId, true, null);
   }
 
-  public ResponseEntity<String> getWordsByModuleId(Long childModuleId) {
-    return buildResponseEntity(childModuleId, false);
+  public ResponseEntity<String> getWordsByModuleId(Long childModuleId, Long userId) {
+    return buildResponseEntity(childModuleId, false, userId);
   }
 
-  private ResponseEntity<String> buildResponseEntity(Long childModuleId, boolean isSimple) {
+  private ResponseEntity<String> buildResponseEntity(Long childModuleId, boolean isSimple, Long userId) {
     JSONObject jsonObject = new JSONObject();
     if (childModuleId == null) {
       jsonObject.put(Constants.RESULT, Constants.ERROR);
@@ -48,7 +55,11 @@ public class WordSvc {
         log.error("No words found for module ID: {}", childModuleId);
         return ResponseEntity.ok(jsonObject.toString());
       }
-      JSONArray wordArr = buildWordsArray(words, isSimple);
+      List<UserLearnedWord> knownWords = new ArrayList<>();
+      if (userId != null) {
+        knownWords = this.userLearnedWordRepo.findLearnedWordIds(userId, childModuleId);
+      }
+      JSONArray wordArr = buildWordsArray(words, knownWords, isSimple);
       jsonObject.put(Constants.RESULT, Constants.OK);
       jsonObject.put("words", wordArr);
       jsonObject.put("count", wordArr.size());
@@ -62,8 +73,12 @@ public class WordSvc {
     }
   }
 
-  private static JSONArray buildWordsArray(List<Word> words, boolean isSimple) {
+  private static JSONArray buildWordsArray(List<Word> words, List<UserLearnedWord> knownWords, boolean isSimple) {
     JSONArray wordArr = new JSONArray();
+    Set<Long> knownWordIds = new HashSet<>();
+    for (UserLearnedWord knownWord : knownWords) {
+      knownWordIds.add(knownWord.getWordId());
+    }
     for (Word word : words) {
       JSONObject wordObj = new JSONObject();
       wordObj.put("id", word.getId());
@@ -77,7 +92,7 @@ public class WordSvc {
         wordObj.put("phrases", word.getPhrases());
         wordObj.put("sentences", word.getSentences());
         wordObj.put("moduleId", word.getModuleId());
-        wordObj.put("isKnown", false);
+        wordObj.put("isKnown", knownWordIds.contains(word.getId()));
       }
       wordArr.add(wordObj);
     }

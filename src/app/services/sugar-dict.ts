@@ -12,16 +12,16 @@ export class SugarDictService {
         return this.http.get<String>(`${this.apiUrl}` + "/home/all-modules");
     }
 
-    getChildrenContentModules(parentName: string): Observable<String> {
-        return this.http.get<String>(`${this.apiUrl}` + "/children-content-module?parentName=" + parentName);
+    getChildrenContentModules(parentName: string, userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/children-content-module?parentName=" + parentName + "&userId=" + userId);
     }
 
     getAllChildrenContentModules(): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/all-children-content-module");
     }
 
-    getWordsByChildContentModuleId(childContentModuleId: number): Observable<String> {
-        return this.http.get<String>(`${this.apiUrl}` + "/words/by-child-content-module-id?childModuleId=" + childContentModuleId);
+    getWordsByChildContentModuleId(childContentModuleId: number, userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/words/by-child-content-module-id?childModuleId=" + childContentModuleId + "&userId=" + userId);
     }
 
     getWordsSimpleByChildContentModuleId(childContentModuleId: number): Observable<String> {
@@ -65,5 +65,15 @@ export class SugarDictService {
     revokeUser(code: string): Observable<String> {
         return this.http.post<String>(`${this.apiUrl}` + "/user/revoke-token", { code: code });
     }
+
+    markWordAsKnown(userId: number, wordId: number, moduleId: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/word/mark-as-known", { userId: userId, wordId: wordId, moduleId: moduleId });
+    }
+
+    markWordAsUnknown(userId: number, wordId: number, moduleId: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/word/mark-as-unknown", { userId: userId, wordId: wordId, moduleId: moduleId });
+    }
+
+
 
 }

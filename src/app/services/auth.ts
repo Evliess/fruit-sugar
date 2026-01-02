@@ -1,8 +1,9 @@
 import { Injectable, signal, computed } from '@angular/core';
 
 export interface User {
-  id: string;
+  id: number;
   name: string;
+  code: string;
   role: 'admin' | 'user';
 }
 

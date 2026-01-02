@@ -30,9 +30,11 @@ public class WordController {
   @GetMapping(value = "/words/by-child-content-module-id", produces = "application/json")
   public ResponseEntity<String> getWordsByModuleId(
     @Parameter(description = "The id of child content module", required = true, example = "19")
-    @RequestParam Long childModuleId
+    @RequestParam Long childModuleId,
+    @Parameter(description = "The id of user", required = true, example = "1")
+    @RequestParam Long userId
   ) {
-    return this.wordSvc.getWordsByModuleId(childModuleId);
+    return this.wordSvc.getWordsByModuleId(childModuleId, userId);
   }
 
   @Operation(

@@ -22,8 +22,8 @@ export class LoginComponent {
   login() {
     this.sugarDictService.userLogin(this.token).subscribe({
       next: (response: any) => {
-        if(response && response.result === 'ok') {
-          this.authService.setSession({id: response.token, name: response.user, role: 'user' } );
+        if (response && response.result === 'ok') {
+          this.authService.setSession({ id: response.id, code: response.token, name: response.user, role: 'user' });
           this.router.navigate(['/home']);
         } else {
           this.router.navigate(['/login']);

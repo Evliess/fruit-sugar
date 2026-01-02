@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserLearnedWord {
+public class LearnedWord {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

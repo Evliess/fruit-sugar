@@ -77,6 +77,7 @@ public class UserSvc {
         jsonObject.put(Constants.RESULT, Constants.OK);
         jsonObject.put("token", parts[1]);
         jsonObject.put("user", parts[0]);
+        jsonObject.put("id", user.getId());
         return ResponseEntity.ok(jsonObject.toString());
       } else {
         jsonObject.put(Constants.RESULT, Constants.ERROR);

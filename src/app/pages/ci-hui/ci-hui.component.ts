@@ -16,6 +16,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip'; // 增加 Tooltip 提�
 import { CiHuiService } from './ci-hui.service';
 import { ActivatedRoute } from '@angular/router';
 import { SugarDictService } from '../../services/sugar-dict';
+import { AuthService } from '../../services/auth';
 import { map } from 'rxjs';
 import { HoverSoundDirective } from '../../hover-sound.directive';
 
@@ -62,9 +63,12 @@ export class CiHuiComponent {
   ciHuiService = inject(CiHuiService)
   private sugarDictService = inject(SugarDictService)
   private audio = new Audio();
+  private authService = inject(AuthService);
   route = inject(ActivatedRoute);
   wordsCount = 0;
   words: any[] = [];
+  moduleId = '';
+  currentUser = this.authService.currentUser;
 
   constructor(private message: NzMessageService) { }
 
@@ -72,7 +76,8 @@ export class CiHuiComponent {
     this.route.queryParams.subscribe(params => {
       this.isCustom = params['isCustom'] === 'true';
       const moduleId = params['moduleId'];
-      this.sugarDictService.getWordsByChildContentModuleId(moduleId).pipe(
+      this.moduleId = moduleId;
+      this.sugarDictService.getWordsByChildContentModuleId(moduleId, this.currentUser()?.id || 0).pipe(
         map((response: any) => {
           const rawWords = response.words || [];
           return rawWords.map((wordData: any) => {
@@ -89,7 +94,7 @@ export class CiHuiComponent {
               phrases: formattedPhrases,
               sentences: this.safeJsonParse(wordData.sentences, []),
               showDetails: false,
-              isKnown: false
+              isKnown: wordData.isKnown
             } as VocabularyWord;
           });
         })
@@ -120,7 +125,7 @@ export class CiHuiComponent {
     }
     this.audio.load();
     this.audio.play().catch(e => {
-      console.warn('Playback failed:', word); 
+      console.warn('Playback failed:', word);
     });
   }
 
@@ -133,13 +138,22 @@ export class CiHuiComponent {
   markAsKnown(item: VocabularyWord): void {
     item.isKnown = true;
     item.showDetails = false; // 收起详情
-    this.message.success('太棒了！已标记为认识。');
+    this.sugarDictService.markWordAsKnown(this.currentUser()?.id || -1, item.id, this.moduleId).subscribe({
+      next: (response: any) => {
+        this.message.success('太棒了！已标记为认识。');
+      }
+    });
   }
 
   // 点击“不认识”
   markAsUnknown(item: VocabularyWord): void {
     item.showDetails = true;
     item.isKnown = false;
+    this.sugarDictService.markWordAsUnknown(this.currentUser()?.id || -1, item.id, this.moduleId).subscribe({
+      next: (response: any) => {
+        this.message.info('已标记为不认识，加油学习哦！');
+      }
+    });
   }
 
   // 点击“练一练”
