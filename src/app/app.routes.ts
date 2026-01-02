@@ -14,6 +14,7 @@ export const routes: Routes = [
     children: [
       { path: 'home', loadChildren: () => import('./pages/home/home.routes').then(m => m.HOME_ROUTES) },
       { path: 'listen', loadChildren: () => import('./pages/listen-write/listen-write.routes').then(m => m.LISTEN_WRITE_ROUTES) },
+      { path: 'sen-listen', loadChildren: () => import('./pages/sen-listen-write/sen-listen-write.routes').then(m => m.SEN_LISTEN_WRITE_ROUTES) },
       { path: 'words', loadChildren: () => import('./pages/ci-hui/ci-hui.routes').then(m => m.CI_HUI_ROUTES) },
       { path: 'user-summary', loadChildren: () => import('./pages/user-summary/user-summary.routes').then(m => m.USER_SUMMARY_ROUTES) },
       { path: 'kou-yu', loadChildren: () => import('./pages/kou-yu/kou-yu.routes').then(m => m.KOU_YU_ROUTES) },
@@ -25,14 +26,14 @@ export const routes: Routes = [
 
   },
 
-{
+  {
     path: 'admin',
-    canActivate: [adminGuard], 
+    canActivate: [adminGuard],
     children: [
       { path: 'admin-page', component: APageComponent },
       { path: '', redirectTo: 'page', pathMatch: 'full' }
     ]
   },
 
-  { path: '**', redirectTo: 'home'},
+  { path: '**', redirectTo: 'home' },
 ];

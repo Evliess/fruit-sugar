@@ -48,7 +48,9 @@ export class MainLayoutComponent {
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
     if (url && (url.includes('/word') || url.includes('/unknown-book')
-      || url.includes('/wrong-book') || url.includes('user-summary'))) {
+      || url.includes('/wrong-book') || url.includes('user-summary') 
+      || url.includes('/kou-yu')
+    )) {
       return true;
     }
     return false;
@@ -57,6 +59,15 @@ export class MainLayoutComponent {
   isShowCIHUIMenu = computed(() => {
     const url = this.currentUrl();
     if (url.includes('/words')) {
+      return true;
+    } else {
+      return false;
+    }
+  });
+
+  isShowSentenceMenu = computed(() => {
+    const url = this.currentUrl();
+    if (url.includes('/kou-yu')) {
       return true;
     } else {
       return false;
@@ -106,8 +117,13 @@ export class MainLayoutComponent {
     const url = this.currentUrl();
     if (url.includes('moduleId=')) {
       const moduleId = url.split('moduleId=')[1];
-      this.router.navigate(['/listen'], { queryParams: { moduleId: moduleId } });
+      this.router.navigate(['/listen'], { queryParams: { moduleId: moduleId} });
     }
+  }
+
+  gotoSentenceListen() {
+    const url = this.currentUrl();
+    console.log('Current URL:', url);
   }
 
   setLearnModel(model: string) {

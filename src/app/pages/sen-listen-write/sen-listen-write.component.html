@@ -1,0 +1,137 @@
+<div class="page-wrapper">
+    <div class="container">
+        <div nz-row nzJustify="end" class="top-bar">
+            <nz-space [nzSize]="12">
+                <nz-switch *nzSpaceItem [(ngModel)]="soundEnabled" nzCheckedChildren="音效开" nzUnCheckedChildren="音效关"
+                    nzSize="default" />
+                <nz-switch *nzSpaceItem nz-button [(ngModel)]="soundTypeUK" nzCheckedChildren="英式"
+                    nzUnCheckedChildren="美式" nzSize="default" />
+                <a nz-dropdown *nzSpaceItem nzTrigger="click" [nzDropdownMenu]="menu">
+                    词汇列表
+                    <nz-icon nzType="down" />
+                </a>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu>
+                        @for(item of words; track $index) {
+                        <li nz-menu-item nzSelected="{{currIndex==$index}}">{{item.word}}</li>
+                        }
+
+                    </ul>
+                </nz-dropdown-menu>
+
+            </nz-space>
+        </div>
+        <!-- 桌面端靠左，移动端居中 -->
+        <div class="card-section">
+            <nz-card *ngIf="isEyeOpen" class="flash-card" [nzBordered]="false" nzHoverable>
+                <!-- 1. 头部：单词与音标 -->
+                <div class="card-header">
+                    <div class="word-row">
+                        <h1 class="vocab-word">{{currWord.word}}</h1>
+                        <!-- 音标在移动端会换行，桌面端跟在后面 -->
+                        <div class="phonetic-group">
+                            <span class="phonetic-item"><span class="region">UK</span>/ˈæk.sənt/</span>
+                            <span class="phonetic-item"><span class="region">US</span>/ˈæk.sent/</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. 中部：核心释义 -->
+                <div class="card-body">
+                    @for (item of currWord.definitions | keyvalue; track item.key) {
+                     <div class="definition-item">
+                        <nz-tag [nzColor]="'blue'" class="pos-tag">{{ item.key + "."}}</nz-tag>
+                        <span class="meaning"> {{ item.value }}</span>
+                    </div>
+                    }
+                </div>
+
+                <!-- 3. 底部：扩展内容 (词组 + 例句) -->
+                <!-- 使用灰色背景区分，增加呼吸感 -->
+                <div class="card-footer-content">
+
+                    <!-- A. 常用词组 -->
+                    <div class="section-block">
+                        <h4 class="section-title"><span nz-icon nzType="read" nzTheme="outline"></span> 常用词组</h4>
+                        <div nz-row [nzGutter]="[16, 12]">
+                            <div nz-col [nzSpan]="24" [nzMd]="12" class="phrase-item">
+                                <span class="en">thick accent</span>
+                                <span class="cn">重口音</span>
+                            </div>
+                            <div nz-col [nzSpan]="24" [nzMd]="12" class="phrase-item">
+                                <span class="en">accent lighting</span>
+                                <span class="cn">重点照明</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <nz-divider class="inner-divider"></nz-divider>
+
+                    <!-- B. 经典例句 -->
+                    <div class="section-block">
+                        <h4 class="section-title"><span nz-icon nzType="message" nzTheme="outline"></span> 双语例句</h4>
+                        <div class="sentence-list">
+                            <div class="sentence-item">
+                                <p class="en">He speaks with a strong southern <b>accent</b>.</p>
+                                <p class="cn">他说话带着很重的南方口音。</p>
+                            </div>
+                            <div class="sentence-item">
+                                <p class="en">In all our products the <b>accent</b> is on quality.</p>
+                                <p class="cn">我们所有的产品都强调质量。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </nz-card>
+            <!-- <div *ngIf="!isEyeOpen" @switchAnimation class="flash-card mask-card" (click)="toggleEye()">
+                <div class="mask-content">
+                    <span nz-icon nzType="eye-invisible" nzTheme="outline" class="mask-icon"></span>
+                    <p class="mask-text">内容已隐藏</p>
+                    <button nz-button nzType="primary" nzGhost nzShape="round" size="small">
+                        点击显示
+                    </button>
+                </div>
+            </div> -->
+        </div>
+
+        <!-- 3. 输入区域 (Input Area) -->
+        <div class="input-section">
+            <div class="input-wrapper">
+                <nz-input-group>
+                    <input nz-input [(ngModel)]="inputValue" placeholder="请在此输入..." nzSize="large" nzBorderless
+                        [appMechanicalTyping]="soundEnabled" [class]="inputStatus" (keydown)="checkAnswer()" />
+                </nz-input-group>
+            </div>
+        </div>
+
+        <!-- 4. 底部导航 (Bottom Navigation) -->
+        <div class="bottom-nav">
+            <nz-space [nzSize]="24" nzAlign="center">
+                <button *nzSpaceItem nz-button nzType="default" nzShape="round" nzSize="large"
+                    (click)="handleAction('prev')">
+                    <span nz-icon nzType="left"></span> 上一个
+                </button>
+
+                <!-- 播放按钮突出显示 -->
+                <button *nzSpaceItem nz-button nzType="primary" nzShape="circle" nzSize="large" class="play-btn"
+                    (click)="handleAction('play')">
+                    <span nz-icon [nzType]="isPlay ? 'caret-right' : 'reload'"
+                        style="font-size: 24px; margin-left: 2px;"></span>
+                </button>
+
+                <button *nzSpaceItem nz-button nzType="default" nzShape="round" nzSize="large"
+                    (click)="handleAction('next')">
+                    下一个 <span nz-icon nzType="right"></span>
+                </button>
+            </nz-space>
+        </div>
+
+    </div>
+    <button nz-button nzShape="circle" class="floating-eye-btn" [class.active]="!isEyeOpen" (click)="toggleEye()"
+        nz-tooltip nzTooltipPlacement="left">
+
+        <!-- 动态切换图标 -->
+        <span nz-icon [nzType]="isEyeOpen ? 'eye' : 'eye-invisible'" nzTheme="outline"></span>
+    </button>
+</div>

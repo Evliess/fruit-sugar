@@ -110,6 +110,12 @@
             <span class="username">听写模式</span>
           </div>
           }
+          @if(isShowSentenceMenu()) {
+            <div (click)="gotoSentenceListen()" [class]="learnModel=='listen'?'header-item selected':'header-item'">
+            <span nz-icon nzType="muted"></span>
+            <span class="username">听写模式</span>
+          </div>
+          }
           @if(isShowUserMenu()) {
           <div (click)="gotoUserSummary()" [class]="category=='user-summary'?'header-item selected':'header-item'">
             <span nz-icon nzType="dashboard"></span>
