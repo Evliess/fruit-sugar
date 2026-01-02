@@ -123,7 +123,10 @@ export class MainLayoutComponent {
 
   gotoSentenceListen() {
     const url = this.currentUrl();
-    console.log('Current URL:', url);
+    if (url.includes('moduleId=')) {
+      const moduleId = url.split('moduleId=')[1];
+      this.router.navigate(['/sen-listen'], { queryParams: { moduleId: moduleId} });
+    }
   }
 
   setLearnModel(model: string) {

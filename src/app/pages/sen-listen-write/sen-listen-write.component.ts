@@ -65,7 +65,7 @@ export class SenListenWriteComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const moduleId = params['moduleId'];
-      this.sugarDictService.getSentencesByContentModuleId(1).pipe(
+      this.sugarDictService.getSentencesByContentModuleId(moduleId).pipe(
         map((response: any) => {
           const rawWords = response.sentences || [];
           return rawWords.map((sentence: any) => {

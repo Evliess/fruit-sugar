@@ -11,7 +11,7 @@
                     <nz-icon nzType="down" />
                 </a>
                 <nz-dropdown-menu #menu="nzDropdownMenu">
-                    <ul nz-menu>
+                    <ul nz-menu class="word-list">
                         @for(item of words; track $index) {
                         <li nz-menu-item nzSelected="{{currIndex==$index}}">{{item.word}}</li>
                         }
