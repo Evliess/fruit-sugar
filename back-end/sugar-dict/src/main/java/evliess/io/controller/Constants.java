@@ -64,5 +64,9 @@ public class Constants {
 
   public static final String ROLE_ADMIN = "admin";
   public static final String ROLE_USER = "user";
+  public static final String MODULE_CUSTOM_WORDS = "custom_words";
+  public static final String MODULE_CUSTOM_SENTENCES = "custom_sentences";
+  public static final String UNKNOWN_TYPE_WORD = "word";
+  public static final String UNKNOWN_TYPE_SENTENCE = "sentence";
 
 }

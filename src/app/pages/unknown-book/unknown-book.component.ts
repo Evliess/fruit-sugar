@@ -68,7 +68,7 @@ export class UnknownBookComponent {
 
   route = inject(ActivatedRoute);
   ngOnInit(): void {
-    this.sugarDictService.getUserUnknownWords(this.currentUser()?.id || 0).pipe(
+    this.sugarDictService.getUserUnknown(this.currentUser()?.id || 0).pipe(
       map((response: any) => {
         const rawWords = response.words || [];
         return rawWords.map((wordData: any) => {
@@ -139,7 +139,7 @@ export class UnknownBookComponent {
   // }
 
   deleteUnknownWord(item: VocabularyWord): void {
-    this.sugarDictService.removeUserUnknownWord(this.currentUser()?.id || -1, item.id).subscribe({
+    this.sugarDictService.removeUserUnknown(this.currentUser()?.id || -1, item.id).subscribe({
       next: (response: any) => {
         this.words = this.words.filter(w => w.id !== item.id);
         this.wordsCount = this.words.length;

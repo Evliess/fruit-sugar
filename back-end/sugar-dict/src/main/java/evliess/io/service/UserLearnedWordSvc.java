@@ -19,14 +19,14 @@ import java.time.LocalDateTime;
 @Service
 public class UserLearnedWordSvc {
   private final UserLearnedWordRepo userLearnedWordRepo;
-  private final UserUnknownWordSvc userUnknownWordSvc;
+  private final UserUnknownSvc userUnknownWordSvc;
   private final UserWordProgressRepo userWordProgressRepo;
   private final WordRepo wordRepo;
 
   @Autowired
   public UserLearnedWordSvc(UserLearnedWordRepo userLearnedWordRepo
     , UserWordProgressRepo userWordProgressRepo, WordRepo wordRepo
-    , UserUnknownWordSvc userUnknownWordSvc) {
+    , UserUnknownSvc userUnknownWordSvc) {
     this.userLearnedWordRepo = userLearnedWordRepo;
     this.userWordProgressRepo = userWordProgressRepo;
     this.wordRepo = wordRepo;

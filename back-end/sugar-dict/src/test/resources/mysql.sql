@@ -57,10 +57,11 @@ CREATE TABLE `sentences` (
 
 -- 生词本 (New Words)
 -- 排序：按添加时间
-CREATE TABLE `user_unknown_words` (
+CREATE TABLE `user_unknown` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT UNSIGNED NOT NULL,
-  `word_id` BIGINT UNSIGNED NOT NULL,
+  `word_id` BIGINT UNSIGNED,
+  `sentence_id` BIGINT UNSIGNED,
   `module_id` BIGINT UNSIGNED NOT NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`id`),
@@ -87,6 +88,7 @@ CREATE TABLE `user_custom_books` (
   `word_id` BIGINT UNSIGNED DEFAULT NULL,
   `sentence_id` BIGINT UNSIGNED DEFAULT NULL,
   `module_id` BIGINT UNSIGNED NOT NULL,
+  `type` VARCHAR(50) COMMENT 'word or sentence',
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`id`),
   KEY `idx_user_id` (`user_id`)
