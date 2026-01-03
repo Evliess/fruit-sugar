@@ -17,6 +17,7 @@ import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { HoverSoundDirective } from '../../hover-sound.directive';
 import { SugarDictService } from '../../services/sugar-dict';
+import { AuthService } from '../../services/auth';
 
 
 interface Sentence {
@@ -54,9 +55,11 @@ export class KouYuComponent {
   practiceInput = '';
   userWord = '';
   isCustom = false;
-
+  moduleId = '';
   route = inject(ActivatedRoute);
   private sugarDictService = inject(SugarDictService)
+  private authService = inject(AuthService);
+  currentUser = this.authService.currentUser;
   private audio = new Audio();
   sentences: Sentence[] = [];
   constructor(private message: NzMessageService) { }
@@ -66,6 +69,7 @@ export class KouYuComponent {
     this.route.queryParams.subscribe(params => {
       this.isCustom = params['isCustom'] === 'true';
       const moduleId = params['moduleId'];
+      this.moduleId = moduleId;
       if (!moduleId) return;
       this.sugarDictService.getSentencesByContentModuleId(moduleId).pipe(
         map((response: any) => {
@@ -109,6 +113,11 @@ export class KouYuComponent {
   markAsUnknown(item: Sentence): void {
     item.showDetails = false;
     item.isKnown = false;
+    this.sugarDictService.markSentenceAsUnKnown(this.currentUser()?.id || -1, item.id, this.moduleId).subscribe({
+      next: (response: any) => {
+        this.message.info('已标记为不认识，加油学习哦！');
+      }
+    });
   }
 
   // 点击“练一练”

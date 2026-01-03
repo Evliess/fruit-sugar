@@ -77,14 +77,20 @@ export class SugarDictService {
     markWordAsUnknown(userId: number, wordId: number, moduleId: string): Observable<String> {
         return this.http.post<String>(`${this.apiUrl}` + "/word/mark-as-unknown", { userId: userId, wordId: wordId, moduleId: moduleId });
     }
+
+    markSentenceAsUnKnown(userId: number, sentenceId: number, moduleId: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/sentence/mark-as-unknown", { userId: userId, sentenceId: sentenceId, moduleId: moduleId });
+    }
     
     getUserUnknown(userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/user-unknown/user-id/" + userId);
     }
-    removeUserUnknown(userId: number, wordIdOrSentenceId: number): Observable<String> {
-        return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-word/"+ userId + "/" + wordIdOrSentenceId);
+    removeUserUnknownWord(userId: number, wordId: number): Observable<String> {
+        return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-word/"+ userId + "/" + wordId);
     }
 
-
+    removeUserUnknownSentence(userId: number, sentenceId: number): Observable<String> {
+        return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-sentence/"+ userId + "/" + sentenceId);
+    }
 
 }

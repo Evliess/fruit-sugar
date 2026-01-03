@@ -17,4 +17,8 @@ public interface UserSentenceProgressRepo extends JpaRepository<UserSentenceProg
   @Modifying
   @Query("UPDATE UserSentenceProgress p SET p.learnedSentencesCount = p.learnedSentencesCount - 1, p.lastStudiedAt = CURRENT_TIMESTAMP WHERE p.userId = :userId AND p.moduleId = :moduleId")
   void decrementLearnedCount(@Param("userId") Long userId, @Param("moduleId") Long moduleId);
+
+  @Modifying
+  @Query("UPDATE UserSentenceProgress p SET p.learnedSentencesCount = 0, p.lastStudiedAt = CURRENT_TIMESTAMP WHERE p.userId = :userId AND p.moduleId = :moduleId")
+  void resetLearnedCount(@Param("userId") Long userId, @Param("moduleId") Long moduleId);
 }

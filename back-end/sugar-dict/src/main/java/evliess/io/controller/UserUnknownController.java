@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/public/v1")
-@Tag(name = "Users Unknown Word Operations", description = "Users Unknown Word Operations")
+@Tag(name = "Users Unknown Operations", description = "Users Unknown Operations")
 public class UserUnknownController {
 
-  private final UserUnknownSvc userUnknownWordSvc;
+  private final UserUnknownSvc userUnknownSvc;
 
   @Autowired
-  public UserUnknownController(UserUnknownSvc userUnknownWordSvc) {
-    this.userUnknownWordSvc = userUnknownWordSvc;
+  public UserUnknownController(UserUnknownSvc userUnknownSvc) {
+    this.userUnknownSvc = userUnknownSvc;
   }
 
   @Operation(summary = "Delete by UserID and WordId", description = "Delete by userID and wordId")
@@ -28,7 +28,7 @@ public class UserUnknownController {
     @Parameter(description = "wordId", required = true, example = "1")
     @PathVariable Long wordId
   ) {
-    return this.userUnknownWordSvc.remove(userId, wordId);
+    return this.userUnknownSvc.remove(userId, wordId);
   }
 
   @Operation(summary = "Delete by UserID and sentenceId", description = "Delete by userID and sentenceId")
@@ -36,10 +36,10 @@ public class UserUnknownController {
   public ResponseEntity<String> removeSentence(
     @Parameter(description = "userId", required = true, example = "1")
     @PathVariable Long userId,
-    @Parameter(description = "wordId", required = true, example = "1")
-    @PathVariable Long wordId
+    @Parameter(description = "sentenceId", required = true, example = "1")
+    @PathVariable Long sentenceId
   ) {
-    return this.userUnknownWordSvc.removeSentence(userId, wordId);
+    return this.userUnknownSvc.removeSentence(userId, sentenceId);
   }
 
   @Operation(
@@ -51,7 +51,7 @@ public class UserUnknownController {
     @Parameter(description = "userId", required = true, example = "1")
     @PathVariable Long userId
   ) {
-    return this.userUnknownWordSvc.getUnknownByUserId(userId);
+    return this.userUnknownSvc.getUnknownByUserId(userId);
   }
 
 }

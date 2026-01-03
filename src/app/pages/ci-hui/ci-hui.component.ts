@@ -76,7 +76,7 @@ export class CiHuiComponent {
     this.route.queryParams.subscribe(params => {
       this.isCustom = params['isCustom'] === 'true';
       const moduleId = params['moduleId'];
-      this.moduleId = moduleId;
+      this.moduleId = params['moduleId'];
       this.sugarDictService.getWordsByChildContentModuleId(moduleId, this.currentUser()?.id || 0).pipe(
         map((response: any) => {
           const rawWords = response.words || [];

@@ -30,6 +30,7 @@ interface VocabularyWord {
   sentences: { text: string; textTranslation: string }[]; // 例句
   showDetails: boolean; // 是否显示详情 (不认识时为 true)
   isKnown: boolean;     // 是否标记为认识
+  type?: string;    // 单词类型（可选）
 }
 
 @Component({
@@ -85,7 +86,8 @@ export class UnknownBookComponent {
             phrases: formattedPhrases,
             sentences: this.safeJsonParse(wordData.sentences, []),
             showDetails: false,
-            isKnown: wordData.isKnown
+            isKnown: wordData.isKnown,
+            type: wordData.type
           } as VocabularyWord;
         });
       })
@@ -93,7 +95,6 @@ export class UnknownBookComponent {
       next: (words: VocabularyWord[]) => {
         this.words = words;
         this.wordsCount = words.length;
-        console.log('获取生词本单词列表成功:', words);
       },
       error: (err) => console.error('请求失败:', err)
     });
@@ -139,11 +140,20 @@ export class UnknownBookComponent {
   // }
 
   deleteUnknownWord(item: VocabularyWord): void {
-    this.sugarDictService.removeUserUnknown(this.currentUser()?.id || -1, item.id).subscribe({
+    this.sugarDictService.removeUserUnknownWord(this.currentUser()?.id || -1, item.id).subscribe({
       next: (response: any) => {
         this.words = this.words.filter(w => w.id !== item.id);
         this.wordsCount = this.words.length;
         this.message.success('已从生词本移除该单词。');
+      }});
+  }
+
+  deleteUnknownSentence(item: VocabularyWord): void {
+    this.sugarDictService.removeUserUnknownSentence(this.currentUser()?.id || -1, item.id).subscribe({
+      next: (response: any) => {  
+        this.words = this.words.filter(w => w.id !== item.id);
+        this.wordsCount = this.words.length;
+        this.message.success('已从生词本移除该例句。');
       }});
   }
 

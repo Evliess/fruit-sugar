@@ -43,8 +43,12 @@
                 (hoverTimeout)="handleSound('UK', item.word)" /></span>
           </div>
 
-          @if (!(item.showDetails )) {
+          @if (!(item.showDetails) && item.type == 'word') {
           <div class="definition">{{item.sentences[0].text}}</div>
+          } @else {
+          @for (item of item.definition | keyvalue; track item.key) {
+          <div class="definition">{{ item.value }}</div>
+          }
           }
 
           @if (item.showDetails) {
@@ -57,10 +61,17 @@
 
         <!-- 右侧：按钮组 -->
         <div class="action-group">
+          @if(item.type == 'word') {
           <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
             (click)="$event.stopPropagation();deleteUnknownWord(item)" nz-tooltip nzTooltipTitle="移除">
             <span nz-icon nzType="close"></span> 移除
           </button>
+          } @else {
+          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+            (click)="$event.stopPropagation();deleteUnknownSentence(item)" nz-tooltip nzTooltipTitle="移除">
+            <span nz-icon nzType="close"></span> 移除
+          </button>
+          }
           <!-- 认识 -->
           <!-- <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
             (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
@@ -73,10 +84,12 @@
           </button> -->
 
           <!-- 显示全部/收起 -->
+          @if(item.type == 'word') {
           <button nz-button nzType="default" (click)="$event.stopPropagation();toggleDetails(item)">
             <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
             {{ item.showDetails? '收起' : '详情' }}
           </button>
+          }
 
           <!-- 练一练 -->
           <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
@@ -89,7 +102,7 @@
       @if (item.showDetails ) {
       <div class="row-details">
         <nz-divider></nz-divider>
-
+        @if(item.type == 'word') {
         <div class="detail-block">
           <span class="detail-label">常用词组：</span>
           <div class="detail-content">
@@ -98,18 +111,19 @@
             }
           </div>
         </div>
-
+        }
+        @if(item.type == 'word') {
         <div class="detail-block mt-2">
           <span class="detail-label">双语例句：</span>
           <div class="detail-content sentence-list">
             @for (sent of item.sentences; track $index) {
             <div class="sentence-item">
-              <p class="en">{{ sent.text }}</p>
-              <p class="zh">{{ sent.textTranslation }}</p>
+              <p class="en">{{ sent?.text }}</p>
+              <p class="zh">{{ sent?.textTranslation }}</p>
             </div>
             }
           </div>
-        </div>
+        </div>}
       </div>
       }
     </div>
@@ -138,11 +152,15 @@
                 (hoverTimeout)="handleSound('UK', item.word)" /></span>
           </div>
 
-          @if (!(item.showDetails )) {
+          @if (!(item.showDetails) && item.type == 'word') {
           <div class="definition">{{item.sentences[0].text}}</div>
+          }@else {
+          @for (item of item.definition | keyvalue; track item.key) {
+          <div class="definition">{{ item.value }}</div>
+          }
           }
 
-          @if (item.showDetails) {
+          @if (item.showDetails && item.type == 'word') {
           @for (item of item.definition | keyvalue; track item.key) {
           <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
           }
@@ -152,10 +170,17 @@
 
         <!-- 右侧：按钮组 -->
         <div class="action-group">
+          @if(item.type == 'word') {
           <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
             (click)="$event.stopPropagation();deleteUnknownWord(item)" nz-tooltip nzTooltipTitle="移除">
             <span nz-icon nzType="close"></span> 移除
           </button>
+          } @else {
+          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+            (click)="$event.stopPropagation();deleteUnknownSentence(item)" nz-tooltip nzTooltipTitle="移除">
+            <span nz-icon nzType="close"></span> 移除
+          </button>
+          }
           <!-- 认识 -->
           <!-- <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
             (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
@@ -168,10 +193,12 @@
           </button> -->
 
           <!-- 显示全部/收起 -->
+          @if(item.type == 'word') {
           <button nz-button nzType="default" (click)="$event.stopPropagation();toggleDetails(item)">
             <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
             {{ item.showDetails? '收起' : '详情' }}
           </button>
+          }
 
           <!-- 练一练 -->
           <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
@@ -184,7 +211,7 @@
       @if (item.showDetails ) {
       <div class="row-details">
         <nz-divider></nz-divider>
-
+        @if(item.type == 'word') {
         <div class="detail-block">
           <span class="detail-label">常用词组：</span>
           <div class="detail-content">
@@ -193,18 +220,21 @@
             }
           </div>
         </div>
-
+        }
+        @if(item.type == 'word') {
         <div class="detail-block mt-2">
           <span class="detail-label">双语例句：</span>
           <div class="detail-content sentence-list">
+
             @for (sent of item.sentences; track $index) {
             <div class="sentence-item">
-              <p class="en">{{ sent.text }}</p>
-              <p class="zh">{{ sent.textTranslation }}</p>
+              <p class="en">{{ sent?.text }}</p>
+              <p class="zh">{{ sent?.textTranslation }}</p>
             </div>
             }
+
           </div>
-        </div>
+        </div>}
       </div>
       }
     </div>

@@ -56,6 +56,27 @@ public class UserUnknownSvc {
     return ResponseEntity.ok(jsonObject.toString());
   }
 
+  public ResponseEntity<String> markAsUnKnownSentence(Long userId, Long sentenceId, Long moduleId) {
+    JSONObject jsonObject = new JSONObject();
+    if (userId == null || sentenceId == null || moduleId == null) {
+      jsonObject.put(Constants.RESULT, Constants.ERROR);
+      jsonObject.put(Constants.MSG, "Required Parameters Err");
+      log.error("userId: {}, sentenceId: {}, moduleId: {}", userId, sentenceId, moduleId);
+      return ResponseEntity.ok(jsonObject.toString());
+    }
+    boolean exist = this.userUnknownWordRepo.existsByUserIdAndSentenceId(userId, sentenceId);
+    if (!exist) {
+      UserUnknown userUnknownWord = new UserUnknown();
+      userUnknownWord.setUserId(userId);
+      userUnknownWord.setSentenceId(sentenceId);
+      userUnknownWord.setModuleId(moduleId);
+      userUnknownWord.setCreatedAt(LocalDateTime.now());
+      this.userUnknownWordRepo.save(userUnknownWord);
+    }
+    jsonObject.put(Constants.RESULT, Constants.OK);
+    return ResponseEntity.ok(jsonObject.toString());
+  }
+
   @Transactional
   public ResponseEntity<String> remove(Long userId, Long wordId) {
     JSONObject jsonObject = new JSONObject();
@@ -65,7 +86,7 @@ public class UserUnknownSvc {
       log.error("userId: {}, wordId: {}, wordId: {}", userId, wordId, wordId);
       return ResponseEntity.ok(jsonObject.toString());
     }
-    this.userUnknownWordRepo.deleteUserUnknownWordsByUserIdAndWordId(userId, wordId);
+    this.userUnknownWordRepo.deleteUserUnknownWordByUserIdAndWordId(userId, wordId);
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
   }
@@ -79,7 +100,7 @@ public class UserUnknownSvc {
       log.error("userId: {}, wordId: {}", userId, sentenceId);
       return ResponseEntity.ok(jsonObject.toString());
     }
-    this.userUnknownWordRepo.deleteUserUnknownSentencesByUserIdAndWordId(userId, sentenceId);
+    this.userUnknownWordRepo.deleteUserUnknownSentenceByUserIdAndWordId(userId, sentenceId);
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
   }
@@ -124,10 +145,12 @@ public class UserUnknownSvc {
       Sentence sentence = sentenceOpt.get();
       sentenceObj.put("id", sentence.getId());
       sentenceObj.put("text", sentence.getText());
-      sentenceObj.put("definition", sentence.getTextTranslation());
+      JSONObject definitionObj = new JSONObject();
+      definitionObj.put("textTranslation", sentence.getTextTranslation());
+      sentenceObj.put("definition", definitionObj.toString());
       sentenceObj.put("audioUSUrl", sentence.getAudioUSUrl());
       sentenceObj.put("audioUKUrl", sentence.getAudioUKUrl());
-      sentenceObj.put("type", Constants.UNKNOWN_TYPE_WORD);
+      sentenceObj.put("type", Constants.UNKNOWN_TYPE_SENTENCE);
     }
     return sentenceObj;
   }
