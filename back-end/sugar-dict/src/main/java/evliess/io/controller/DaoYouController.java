@@ -6,7 +6,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,20 +36,6 @@ public class DaoYouController {
       content = @Content(schema = @Schema(implementation = String.class))
     )
     @RequestBody String user
-  ) {
-    // 实现略
-    return null;
-  }
-
-
-  // DELETE /api/users/{id}
-  @Operation(summary = "删除用户", description = "根据ID删除指定用户")
-  @ApiResponse(responseCode = "204", description = "删除成功（无内容返回）")
-  @ApiResponse(responseCode = "404", description = "用户不存在")
-  @DeleteMapping("/{id}")
-  public ResponseEntity<String> deleteUser(
-    @Parameter(description = "要删除的用户ID", required = true, example = "123")
-    @PathVariable Long id
   ) {
     // 实现略
     return null;

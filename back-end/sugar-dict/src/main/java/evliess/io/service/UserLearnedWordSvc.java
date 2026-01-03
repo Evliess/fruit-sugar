@@ -19,15 +19,18 @@ import java.time.LocalDateTime;
 @Service
 public class UserLearnedWordSvc {
   private final UserLearnedWordRepo userLearnedWordRepo;
+  private final UserUnknownWordSvc userUnknownWordSvc;
   private final UserWordProgressRepo userWordProgressRepo;
   private final WordRepo wordRepo;
 
   @Autowired
   public UserLearnedWordSvc(UserLearnedWordRepo userLearnedWordRepo
-    , UserWordProgressRepo userWordProgressRepo, WordRepo wordRepo) {
+    , UserWordProgressRepo userWordProgressRepo, WordRepo wordRepo
+    , UserUnknownWordSvc userUnknownWordSvc) {
     this.userLearnedWordRepo = userLearnedWordRepo;
     this.userWordProgressRepo = userWordProgressRepo;
     this.wordRepo = wordRepo;
+    this.userUnknownWordSvc = userUnknownWordSvc;
   }
 
   @Transactional
@@ -44,6 +47,7 @@ public class UserLearnedWordSvc {
       this.userLearnedWordRepo.deleteByUserIdAndWordId(userId, wordId);
       this.userWordProgressRepo.decrementLearnedCount(userId, moduleId);
     }
+    this.userUnknownWordSvc.markAsUnKnown(userId, wordId, moduleId);
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
   }
@@ -66,6 +70,9 @@ public class UserLearnedWordSvc {
       userLearnedWord.setModuleId(moduleId);
       this.userLearnedWordRepo.save(userLearnedWord);
       this.createOrIncrementLearnedCounts(userId, moduleId, 1);
+    }
+    if (this.userUnknownWordSvc.existsByUserIdAndWordId(userId, wordId)) {
+      this.userUnknownWordSvc.remove(userId, wordId);
     }
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());

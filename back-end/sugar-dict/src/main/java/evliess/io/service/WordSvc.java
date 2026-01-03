@@ -3,7 +3,6 @@ package evliess.io.service;
 import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import evliess.io.controller.Constants;
-import evliess.io.entity.UserLearnedWord;
 import evliess.io.entity.Word;
 import evliess.io.jpa.UserLearnedWordRepo;
 import evliess.io.jpa.WordRepo;
@@ -13,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Service
@@ -55,7 +52,7 @@ public class WordSvc {
         log.error("No words found for module ID: {}", childModuleId);
         return ResponseEntity.ok(jsonObject.toString());
       }
-      List<UserLearnedWord> knownWords = new ArrayList<>();
+      List<Long> knownWords = new ArrayList<>();
       if (userId != null) {
         knownWords = this.userLearnedWordRepo.findLearnedWordIds(userId, childModuleId);
       }
@@ -73,12 +70,8 @@ public class WordSvc {
     }
   }
 
-  private static JSONArray buildWordsArray(List<Word> words, List<UserLearnedWord> knownWords, boolean isSimple) {
+  public static JSONArray buildWordsArray(List<Word> words, List<Long> knownWords, boolean isSimple) {
     JSONArray wordArr = new JSONArray();
-    Set<Long> knownWordIds = new HashSet<>();
-    for (UserLearnedWord knownWord : knownWords) {
-      knownWordIds.add(knownWord.getWordId());
-    }
     for (Word word : words) {
       JSONObject wordObj = new JSONObject();
       wordObj.put("id", word.getId());
@@ -92,7 +85,7 @@ public class WordSvc {
         wordObj.put("phrases", word.getPhrases());
         wordObj.put("sentences", word.getSentences());
         wordObj.put("moduleId", word.getModuleId());
-        wordObj.put("isKnown", knownWordIds.contains(word.getId()));
+        wordObj.put("isKnown", knownWords.contains(word.getId()));
       }
       wordArr.add(wordObj);
     }

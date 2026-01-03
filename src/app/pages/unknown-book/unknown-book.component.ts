@@ -14,6 +14,10 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip'; // 增加 Tooltip 提升体验
 import { ActivatedRoute } from '@angular/router';
+import { SugarDictService } from '../../services/sugar-dict';
+import { AuthService } from '../../services/auth';
+import { HoverSoundDirective } from '../../hover-sound.directive';
+import { map } from 'rxjs';
 
 // 定义单词数据结构
 interface VocabularyWord {
@@ -23,7 +27,7 @@ interface VocabularyWord {
   ukPhonetic: string; // 英式
   definition: string; // 中文释义
   phrases: string[];  // 常用词组
-  sentences: { en: string; zh: string }[]; // 例句
+  sentences: { text: string; textTranslation: string }[]; // 例句
   showDetails: boolean; // 是否显示详情 (不认识时为 true)
   isKnown: boolean;     // 是否标记为认识
 }
@@ -41,75 +45,79 @@ interface VocabularyWord {
     NzInputModule,
     NzIconModule,
     NzDividerModule,
+    HoverSoundDirective,
     NzToolTipModule
   ],
   templateUrl: './unknown-book.component.html',
   styleUrl: './unknown-book.component.css'
 })
 export class UnknownBookComponent {
-  // 练一练 弹窗相关状态
+  constructor(private message: NzMessageService) { }
   isPracticeVisible = false;
   practiceWord: VocabularyWord | null = null;
   practiceInput = '';
   userWord = '';
   isCustom = false;
+  private sugarDictService = inject(SugarDictService)
+  private authService = inject(AuthService);
+  private audio = new Audio();
+  currentUser = this.authService.currentUser
+  wordsCount = 0;
+  words: VocabularyWord[] = [];
+
 
   route = inject(ActivatedRoute);
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      const isCustom = params['isCustom'];
-      this.isCustom = isCustom === 'true';
+    this.sugarDictService.getUserUnknownWords(this.currentUser()?.id || 0).pipe(
+      map((response: any) => {
+        const rawWords = response.words || [];
+        return rawWords.map((wordData: any) => {
+          const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
+          const formattedPhrases = parsedPhrases.map((p: any) =>
+            `${p.text}; ${p.textTranslation}`
+          );
+          return {
+            id: wordData.id,
+            word: wordData.text,
+            usPhonetic: wordData.phoneticUS,
+            ukPhonetic: wordData.phoneticUK,
+            definition: this.safeJsonParse(wordData.definition, {}),
+            phrases: formattedPhrases,
+            sentences: this.safeJsonParse(wordData.sentences, []),
+            showDetails: false,
+            isKnown: wordData.isKnown
+          } as VocabularyWord;
+        });
+      })
+    ).subscribe({
+      next: (words: VocabularyWord[]) => {
+        this.words = words;
+        this.wordsCount = words.length;
+        console.log('获取生词本单词列表成功:', words);
+      },
+      error: (err) => console.error('请求失败:', err)
     });
   }
 
-
-  // 模拟数据：10个单词
-  words: VocabularyWord[] = [
-    {
-      id: 1,
-      word: 'Resilient',
-      usPhonetic: '/rɪˈzɪliənt/',
-      ukPhonetic: '/rɪˈzɪliənt/',
-      definition: 'adj. 有弹性的；能复原的；适应力强的',
-      phrases: ['remain resilient;有弹性的', 'resilient economy;适应力强的'],
-      sentences: [
-        { en: 'Children are often more resilient than adults.', zh: '孩子往往比成年人更有适应力。' },
-      ],
-      showDetails: false,
-      isKnown: false
-    },
-    {
-      id: 2,
-      word: 'Ambiguous',
-      usPhonetic: '/æmˈbɪɡjuəs/',
-      ukPhonetic: '/æmˈbɪɡjuəs/',
-      definition: 'adj. 模棱两可的；含糊不清的',
-      phrases: ['ambiguous attitude；模棱两可的', 'ambiguous wording；含糊不清的'],
-      sentences: [
-        { en: 'His reply to my question was somewhat ambiguous.', zh: '他对我问题的回答有点模棱两可。' },
-      ],
-      showDetails: false,
-      isKnown: false
-    },
-  ];
-
-  // 填充剩余数据的辅助代码（实际开发中请替换为真实数据）
-  constructor(private message: NzMessageService) {
-    for (let i = 3; i <= 10; i++) {
-      this.words.push({
-        id: i,
-        word: `Sample Word ${i}`,
-        usPhonetic: '/ˈsæmpəl/',
-        ukPhonetic: '/ˈsæmpəl/',
-        definition: 'n. 示例单词占位符',
-        phrases: [`phrase ${i}-1；含糊不清的`, `phrase ${i}-2；模棱两可的`],
-        sentences: [
-          { en: `This is example sentence 1 for word ${i}.`, zh: `这是单词 ${i} 的例句一。` },
-        ],
-        showDetails: false,
-        isKnown: false
-      });
+  private safeJsonParse(data: any, fallback: any): any {
+    if (typeof data !== 'string') return data || fallback;
+    try {
+      return JSON.parse(data);
+    } catch (e) {
+      return fallback;
     }
+  }
+
+  handleSound(phonetic: string, word: string): void {
+    if (phonetic == "US") {
+      this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=' + word;
+    } else {
+      this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=' + word;
+    }
+    this.audio.load();
+    this.audio.play().catch(e => {
+      console.warn('Playback failed:', word);
+    });
   }
 
   // 切换显示全部/收起
@@ -118,16 +126,25 @@ export class UnknownBookComponent {
   }
 
   // 点击“认识”
-  markAsKnown(item: VocabularyWord): void {
-    item.isKnown = true;
-    item.showDetails = false; // 收起详情
-    this.message.success('太棒了！已标记为认识。');
-  }
+  // markAsKnown(item: VocabularyWord): void {
+  //   item.isKnown = true;
+  //   item.showDetails = false; // 收起详情
+  //   this.message.success('太棒了！已标记为认识。');
+  // }
 
   // 点击“不认识”
-  markAsUnknown(item: VocabularyWord): void {
-    item.showDetails = true;
-    item.isKnown = false;
+  // markAsUnknown(item: VocabularyWord): void {
+  //   item.showDetails = true;
+  //   item.isKnown = false;
+  // }
+
+  deleteUnknownWord(item: VocabularyWord): void {
+    this.sugarDictService.removeUserUnknownWord(this.currentUser()?.id || -1, item.id).subscribe({
+      next: (response: any) => {
+        this.words = this.words.filter(w => w.id !== item.id);
+        this.wordsCount = this.words.length;
+        this.message.success('已从生词本移除该单词。');
+      }});
   }
 
   // 点击“练一练”

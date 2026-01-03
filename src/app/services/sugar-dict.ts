@@ -77,6 +77,13 @@ export class SugarDictService {
     markWordAsUnknown(userId: number, wordId: number, moduleId: string): Observable<String> {
         return this.http.post<String>(`${this.apiUrl}` + "/word/mark-as-unknown", { userId: userId, wordId: wordId, moduleId: moduleId });
     }
+    
+    getUserUnknownWords(userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/user-unknown-words/user-id/" + userId);
+    }
+    removeUserUnknownWord(userId: number, wordId: number): Observable<String> {
+        return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-word/"+ userId + "/" + wordId);
+    }
 
 
 

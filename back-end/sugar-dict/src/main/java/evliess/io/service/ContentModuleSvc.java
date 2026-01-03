@@ -4,7 +4,6 @@ import com.alibaba.fastjson2.JSONArray;
 import com.alibaba.fastjson2.JSONObject;
 import evliess.io.controller.Constants;
 import evliess.io.entity.ContentModule;
-import evliess.io.entity.UserLearnedWord;
 import evliess.io.jpa.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -84,7 +83,7 @@ public class ContentModuleSvc {
       cmObj.put("name", cm.getName());
       cmObj.put("description", cm.getDescription());
       cmObj.put("wordsCount", this.wordRepo.countWordsByModuleId(cm.getId()));
-      List<UserLearnedWord> knownWords = this.userLearnedWordRepo.findLearnedWordIds(userId, cm.getId());
+      List<Long> knownWords = this.userLearnedWordRepo.findLearnedWordIds(userId, cm.getId());
       cmObj.put("learnedCount", (knownWords == null || knownWords.isEmpty()) ? 0 : knownWords.size());
       children.add(cmObj);
     }
