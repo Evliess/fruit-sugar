@@ -97,6 +97,18 @@ export class SugarDictService {
         return this.http.post<String>(`${this.apiUrl}` + "/sentence/mark-as-mistake", { userId: userId, sentenceId: sentenceId, moduleId: moduleId });
     }
 
+    getUserMistake(userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/user-mistake/user-id/" + userId);
+    }
+
+    removeUserMistakeWord(userId: number, wordId: number): Observable<String> {
+        return this.http.delete<String>(`${this.apiUrl}` + "/user-mistake-word/" + userId + "/" + wordId);
+    }
+
+    removeUserMistakeSentence(userId: number, sentenceId: number): Observable<String> {
+        return this.http.delete<String>(`${this.apiUrl}` + "/user-mistake-sentence/" + userId + "/" + sentenceId);
+    }
+
     getUserUnknown(userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/user-unknown/user-id/" + userId);
     }

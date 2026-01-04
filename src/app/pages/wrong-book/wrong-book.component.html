@@ -1,4 +1,8 @@
 <div class="container">
+  <!-- <div class="page-header">
+    <h1>词汇打卡</h1>
+  </div> -->
+
   <div class="list-container">
     @if(isCustom) {
     <div class="word-row">
@@ -14,9 +18,9 @@
       </div>
     </div>
     }
-    @for (item of words; track item.id) {
+    @for (item of words.slice(0, 10); track item.id) {
     <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown">
+    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound('US', item.word)">
 
       <!-- 上半部分：主要信息 + 操作按钮 -->
       <div class="row-main">
@@ -24,55 +28,228 @@
         <!-- 左侧：单词信息 -->
         <div class="word-info">
           <div class="word-title-group">
-            <span class="word-text">{{ item.sentence_en }}</span>
+            <span class="word-text">{{ item.word }}</span>
             @if (item.isKnown) {
             <nz-tag [nzColor]="'success'">已掌握</nz-tag>
             }
           </div>
 
           <div class="phonetic-group">
-            <span class="phonetic">🇺🇸</span>
-            <span class="phonetic">🇬🇧</span>
+            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('US', item.word)" /></span>
+            <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
+                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('UK', item.word)" /></span>
           </div>
+
+          @if (!(item.showDetails) && item.type == 'word') {
+          <div class="definition">{{item.sentences[0].text}}</div>
+          } @else {
+          @for (item of item.definition | keyvalue; track item.key) {
+          <div class="definition">{{ item.value }}</div>
+          }
+          }
+
+          @if (item.showDetails) {
+          @for (item of item.definition | keyvalue; track item.key) {
+          <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
+          }
+          }
 
         </div>
 
         <!-- 右侧：按钮组 -->
         <div class="action-group">
-          <!-- 认识 -->
+          @if(item.type == 'word') {
           <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+            (click)="$event.stopPropagation();deleteMistakeWord(item)" nz-tooltip nzTooltipTitle="移除">
+            <span nz-icon nzType="close"></span> 移除
+          </button>
+          } @else {
+          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+            (click)="$event.stopPropagation();deleteMistakeSentence(item)" nz-tooltip nzTooltipTitle="移除">
+            <span nz-icon nzType="close"></span> 移除
+          </button>
+          }
+          <!-- 认识 -->
+          <!-- <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
             (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
             <span nz-icon nzType="check"></span> 认识
-          </button>
-
-          <!-- 不认识 -->
-          <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
-            <span nz-icon nzType="close"></span> 不认识
-          </button>
-
-          <!-- 显示全部/收起 -->
-
-          <!-- <button nz-button nzType="default" (click)="toggleDetails(item)">
-            <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
-            {{ item.showDetails ? '收起' : '详情' }}
           </button> -->
 
+          <!-- 不认识 -->
+          <!-- <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
+            <span nz-icon nzType="close"></span> 不认识
+          </button> -->
+
+          <!-- 显示全部/收起 -->
+          @if(item.type == 'word') {
+          <button nz-button nzType="default" (click)="$event.stopPropagation();toggleDetails(item)">
+            <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
+            {{ item.showDetails? '收起' : '详情' }}
+          </button>
+          }
+
           <!-- 练一练 -->
-          <button nz-button nzType="primary" (click)="openPractice(item)">
+          <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
             <span nz-icon nzType="edit"></span> 练一练
           </button>
         </div>
       </div>
+
+      <!-- 下半部分：详情 (默认隐藏) -->
+      @if (item.showDetails ) {
+      <div class="row-details">
+        <nz-divider></nz-divider>
+        @if(item.type == 'word') {
+        <div class="detail-block">
+          <span class="detail-label">常用词组：</span>
+          <div class="detail-content">
+            @for (phrase of item.phrases; track $index) {
+            <nz-tag>{{ phrase }}</nz-tag>
+            }
+          </div>
+        </div>
+        }
+        @if(item.type == 'word') {
+        <div class="detail-block mt-2">
+          <span class="detail-label">双语例句：</span>
+          <div class="detail-content sentence-list">
+            @for (sent of item.sentences; track $index) {
+            <div class="sentence-item">
+              <p class="en">{{ sent?.text }}</p>
+              <p class="zh">{{ sent?.textTranslation }}</p>
+            </div>
+            }
+          </div>
+        </div>}
+      </div>
+      }
     </div>
     }
+    @for (item of words.slice(10); track item.id) {
+    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound('US', item.word)">
+
+      <!-- 上半部分：主要信息 + 操作按钮 -->
+      <div class="row-main">
+
+        <!-- 左侧：单词信息 -->
+        <div class="word-info">
+          <div class="word-title-group">
+            <span class="word-text">{{ item.word }}</span>
+            @if (item.isKnown) {
+            <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+            }
+          </div>
+
+          <div class="phonetic-group">
+            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('US', item.word)" /></span>
+            <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
+                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('UK', item.word)" /></span>
+          </div>
+
+          @if (!(item.showDetails) && item.type == 'word') {
+          <div class="definition">{{item.sentences[0].text}}</div>
+          }@else {
+          @for (item of item.definition | keyvalue; track item.key) {
+          <div class="definition">{{ item.value }}</div>
+          }
+          }
+
+          @if (item.showDetails && item.type == 'word') {
+          @for (item of item.definition | keyvalue; track item.key) {
+          <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
+          }
+          }
+
+        </div>
+
+        <!-- 右侧：按钮组 -->
+        <div class="action-group">
+          @if(item.type == 'word') {
+          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+            (click)="$event.stopPropagation();deleteMistakeWord(item)" nz-tooltip nzTooltipTitle="移除">
+            <span nz-icon nzType="close"></span> 移除
+          </button>
+          } @else {
+          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+            (click)="$event.stopPropagation();deleteMistakeSentence(item)" nz-tooltip nzTooltipTitle="移除">
+            <span nz-icon nzType="close"></span> 移除
+          </button>
+          }
+          <!-- 认识 -->
+          <!-- <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+            (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+            <span nz-icon nzType="check"></span> 认识
+          </button> -->
+
+          <!-- 不认识 -->
+          <!-- <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip nzTooltipTitle="标记为不认识">
+            <span nz-icon nzType="close"></span> 不认识
+          </button> -->
+
+          <!-- 显示全部/收起 -->
+          @if(item.type == 'word') {
+          <button nz-button nzType="default" (click)="$event.stopPropagation();toggleDetails(item)">
+            <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
+            {{ item.showDetails? '收起' : '详情' }}
+          </button>
+          }
+
+          <!-- 练一练 -->
+          <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
+            <span nz-icon nzType="edit"></span> 练一练
+          </button>
+        </div>
+      </div>
+
+      <!-- 下半部分：详情 (默认隐藏) -->
+      @if (item.showDetails ) {
+      <div class="row-details">
+        <nz-divider></nz-divider>
+        @if(item.type == 'word') {
+        <div class="detail-block">
+          <span class="detail-label">常用词组：</span>
+          <div class="detail-content">
+            @for (phrase of item.phrases; track $index) {
+            <nz-tag>{{ phrase }}</nz-tag>
+            }
+          </div>
+        </div>
+        }
+        @if(item.type == 'word') {
+        <div class="detail-block mt-2">
+          <span class="detail-label">双语例句：</span>
+          <div class="detail-content sentence-list">
+
+            @for (sent of item.sentences; track $index) {
+            <div class="sentence-item">
+              <p class="en">{{ sent?.text }}</p>
+              <p class="zh">{{ sent?.textTranslation }}</p>
+            </div>
+            }
+
+          </div>
+        </div>}
+      </div>
+      }
+    </div>
+    }
+
   </div>
 
   <!-- 练一练 弹窗 (保持不变) -->
-  <nz-modal [(nzVisible)]="isPracticeVisible" [nzTitle]="'口语练习'" (nzOnCancel)="handlePracticeCancel()"
+  <nz-modal [(nzVisible)]="isPracticeVisible" [nzTitle]="'拼写练习'" (nzOnCancel)="handlePracticeCancel()"
     (nzOnOk)="handlePracticeOk()">
     <ng-container *nzModalContent>
-      <p class="modal-desc">释义：{{ practiceWord?.sentence_zh }}</p>
-      <input nz-input placeholder="请在此输入..." [(ngModel)]="practiceInput" (keydown.enter)="handlePracticeOk()" />
+      @for (item of practiceWord?.definition | keyvalue; track item.key) {
+      <div class="definition">{{ item.value }}</div>
+      }
+      <input nz-input placeholder="输入单词..." [(ngModel)]="practiceInput" (keydown.enter)="handlePracticeOk()" />
     </ng-container>
   </nz-modal>
 </div>
