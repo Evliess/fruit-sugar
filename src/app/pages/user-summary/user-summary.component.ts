@@ -5,6 +5,7 @@ import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { AuthService } from '../../services/auth';
 
 import { Router } from '@angular/router';
 import { map } from 'rxjs';
@@ -32,6 +33,8 @@ interface Section {
 })
 export class UserSummaryComponent {
   private sugarDictService = inject(SugarDictService)
+  private authService = inject(AuthService);
+  currentUser = this.authService.currentUser;
 
   sections: Section[] = [];
 
@@ -64,7 +67,7 @@ export class UserSummaryComponent {
       error: (err) => console.error('请求失败:', err)
     });
     //get kouyu
-    this.sugarDictService.getAllContentModules().pipe(
+    this.sugarDictService.getSentenceContentModules(this.currentUser()?.id || -1).pipe(
       map((response: any) => {
         const rawData = response.sentenceCases || [];
         return rawData.map((item: any) => ({

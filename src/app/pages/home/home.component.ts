@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { SugarDictService } from '../../services/sugar-dict';
+import { AuthService } from '../../services/auth';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 
 
@@ -21,9 +22,11 @@ export class HomeComponent {
   wordCases: any[] = []
   private sugarDictService = inject(SugarDictService)
   sections: any[] = [];
+  private authService = inject(AuthService);
+  currentUser = this.authService.currentUser;
 
   ngOnInit(): void {
-    this.sugarDictService.getAllContentModules().subscribe({
+    this.sugarDictService.getSentenceContentModules(this.currentUser()?.id || -1).subscribe({
       next: (response: any) => {
         this.sentenceCases = response.sentenceCases;
         this.wordCases = response.wordCases;
@@ -46,8 +49,8 @@ export class HomeComponent {
   }
 
   gotoWordSubitem(type: string, parentId: number, parentName: string, parentDescription: string, isCustom: boolean = false) {
-   this.router.navigate(['/word-subitem'], 
-      { queryParams: { type: type, isCustom: isCustom, parentId: parentId, parentName: parentName, parentDescription: parentDescription} });
+    this.router.navigate(['/word-subitem'],
+      { queryParams: { type: type, isCustom: isCustom, parentId: parentId, parentName: parentName, parentDescription: parentDescription } });
   }
   gotoListenWrite(id: number) {
     console.log("gotoListenWrite");

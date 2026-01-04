@@ -6,24 +6,28 @@ import com.alibaba.fastjson2.JSONObject;
 import evliess.io.controller.Constants;
 import evliess.io.entity.Sentence;
 import evliess.io.jpa.SentenceRepo;
+import evliess.io.jpa.UserLearnedSentenceRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
 public class SentenceSvc {
   private final SentenceRepo sentenceRepo;
+  private final UserLearnedSentenceRepo userLearnedSentenceRepo;
 
   @Autowired
-  public SentenceSvc(SentenceRepo sentenceRepo) {
+  public SentenceSvc(SentenceRepo sentenceRepo, UserLearnedSentenceRepo userLearnedSentenceRepo) {
     this.sentenceRepo = sentenceRepo;
+    this.userLearnedSentenceRepo = userLearnedSentenceRepo;
   }
 
-  public ResponseEntity<String> getSentencesByModuleId(Long moduleId) {
+  public ResponseEntity<String> getSentencesByModuleId(Long moduleId, Long userId) {
     JSONObject jsonObject = new JSONObject();
     if (moduleId == null) {
       jsonObject.put(Constants.RESULT, Constants.ERROR);
@@ -41,7 +45,11 @@ public class SentenceSvc {
         jsonObject.put("count", 0);
         return ResponseEntity.ok(jsonObject.toString());
       }
-      JSONArray sentenceArr = buildSentencesArray(sentences);
+      List<Long> knownSentences = new ArrayList<>();
+      if (userId != null) {
+        knownSentences = this.userLearnedSentenceRepo.findLearnedSentenceIds(userId, moduleId);
+      }
+      JSONArray sentenceArr = buildSentencesArray(sentences, knownSentences);
       jsonObject.put(Constants.RESULT, Constants.OK);
       jsonObject.put("sentences", sentenceArr);
       jsonObject.put("count", sentenceArr.size());
@@ -55,7 +63,7 @@ public class SentenceSvc {
     }
   }
 
-  private static JSONArray buildSentencesArray(List<Sentence> sentences) {
+  private static JSONArray buildSentencesArray(List<Sentence> sentences, List<Long> knownSentences) {
     JSONArray sentenceArr = new JSONArray();
     for (Sentence sentence : sentences) {
       JSONObject sentenceObj = new JSONObject();
@@ -65,6 +73,7 @@ public class SentenceSvc {
       sentenceObj.put("audioUSUrl", sentence.getAudioUSUrl());
       sentenceObj.put("audioUKUrl", sentence.getAudioUKUrl());
       sentenceObj.put("moduleId", sentence.getModuleId());
+      sentenceObj.put("isKnown", knownSentences.contains(sentence.getId()));
       sentenceArr.add(sentenceObj);
     }
     return sentenceArr;

@@ -58,8 +58,8 @@ public class ContentModuleController {
   }
 
   @Operation(
-    summary = "Reset ContentModule Learned Count by UserId and ModuleId",
-    description = "Reset ContentModule Learned Count by UserId and ModuleId"
+    summary = "Reset Word ContentModule Learned Count by UserId and ModuleId",
+    description = "Reset Word ContentModule Learned Count by UserId and ModuleId"
   )
   @PostMapping(value = "/content-module/reset-learned-count", produces = "application/json")
   public ResponseEntity<String> resetLearnedCount(
@@ -67,6 +67,18 @@ public class ContentModuleController {
     ) {
       return this.contentModuleSvc
         .resetLearnedCount(userLearnedDTO.getUserId(), userLearnedDTO.getModuleId());
+  }
+
+  @Operation(
+    summary = "Reset Sentence ContentModule Learned Count by UserId and ModuleId",
+    description = "Reset Sentence ContentModule Learned Count by UserId and ModuleId"
+  )
+  @PostMapping(value = "/content-module/reset-sentence-learned-count", produces = "application/json")
+  public ResponseEntity<String> resetLearnedSentenceCount(
+    @RequestBody UserLearnedDTO userLearnedDTO
+  ) {
+    return this.contentModuleSvc
+      .resetLearnedSentenceCount(userLearnedDTO.getUserId(), userLearnedDTO.getModuleId());
   }
 
 

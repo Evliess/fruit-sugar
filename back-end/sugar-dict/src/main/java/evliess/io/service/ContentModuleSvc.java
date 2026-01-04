@@ -18,19 +18,25 @@ public class ContentModuleSvc {
   private final WordRepo wordRepo;
   private final SentenceRepo sentenceRepo;
   private final UserLearnedWordRepo userLearnedWordRepo;
+  private final UserLearnedSentenceRepo userLearnedSentenceRepo;
   private final UserWordProgressRepo userWordProgressRepo;
+  private final UserSentenceProgressRepo userSentenceProgressRepo;
 
   @Autowired
   public ContentModuleSvc(ContentModuleRepo contentModuleRepo
     , WordRepo wordRepo
     , SentenceRepo sentenceRepo
     , UserLearnedWordRepo userLearnedWordRepo
-    , UserWordProgressRepo userWordProgressRepo) {
+    , UserWordProgressRepo userWordProgressRepo
+    , UserLearnedSentenceRepo userLearnedSentenceRepo
+    , UserSentenceProgressRepo userSentenceProgressRepo) {
     this.contentModuleRepo = contentModuleRepo;
     this.wordRepo = wordRepo;
     this.sentenceRepo = sentenceRepo;
     this.userLearnedWordRepo = userLearnedWordRepo;
     this.userWordProgressRepo = userWordProgressRepo;
+    this.userLearnedSentenceRepo = userLearnedSentenceRepo;
+    this.userSentenceProgressRepo = userSentenceProgressRepo;
   }
 
   public ResponseEntity<String> getAllChildrenContentModules() {
@@ -90,7 +96,7 @@ public class ContentModuleSvc {
     return ResponseEntity.ok(jsonObject.toString());
   }
 
-  public ResponseEntity<String> getAllContentModules() {
+  public ResponseEntity<String> getAllContentModules(Long userId) {
     JSONObject jsonObject = new JSONObject();
     List<ContentModule> sentenceCases = this.contentModuleRepo.getByNames(Constants.SENTENCE_CASES);
     JSONArray sentences = new JSONArray();
@@ -100,6 +106,8 @@ public class ContentModuleSvc {
       sentence.put("id", cm.getId());
       sentence.put("name", cm.getName());
       sentence.put("description", cm.getDescription());
+      List<Long> knownSentences = this.userLearnedSentenceRepo.findLearnedSentenceIds(userId, cm.getId());
+      sentence.put("learnedCount", (knownSentences == null || knownSentences.isEmpty()) ? 0 : knownSentences.size());
       sentence.put("sentencesCount", this.sentenceRepo.countSentencesByModuleId(cm.getId()));
       sentences.add(sentence);
     }
@@ -138,6 +146,19 @@ public class ContentModuleSvc {
     }
     this.userLearnedWordRepo.deleteByUserIdAndModuleId(userId, moduleId);
     this.userWordProgressRepo.resetLearnedCount(userId, moduleId);
+    jsonObject.put(Constants.RESULT, Constants.OK);
+    return ResponseEntity.ok(jsonObject.toString());
+  }
+
+  @Transactional
+  public ResponseEntity<String> resetLearnedSentenceCount(Long userId, Long moduleId) {
+    JSONObject jsonObject = new JSONObject();
+    if (userId == null || moduleId == null) {
+      jsonObject.put(Constants.RESULT, Constants.ERROR);
+      return ResponseEntity.ok(jsonObject.toString());
+    }
+    this.userLearnedSentenceRepo.deleteByUserIdAndModuleId(userId, moduleId);
+    this.userSentenceProgressRepo.resetLearnedCount(userId, moduleId);
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
   }

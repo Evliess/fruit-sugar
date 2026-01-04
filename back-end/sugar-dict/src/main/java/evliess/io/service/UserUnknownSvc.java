@@ -22,15 +22,15 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class UserUnknownSvc {
-  private final UserUnknownRepo userUnknownWordRepo;
+  private final UserUnknownRepo userUnknownRepo;
   private final WordRepo wordRepo;
   private final SentenceRepo sentenceRepo;
 
   @Autowired
-  public UserUnknownSvc(UserUnknownRepo userUnknownWordRepo
+  public UserUnknownSvc(UserUnknownRepo userUnknownRepo
     , WordRepo wordRepo
     , SentenceRepo sentenceRepo) {
-    this.userUnknownWordRepo = userUnknownWordRepo;
+    this.userUnknownRepo = userUnknownRepo;
     this.wordRepo = wordRepo;
     this.sentenceRepo = sentenceRepo;
   }
@@ -43,14 +43,14 @@ public class UserUnknownSvc {
       log.error("userId: {}, wordId: {}, moduleId: {}", userId, wordId, moduleId);
       return ResponseEntity.ok(jsonObject.toString());
     }
-    boolean exist = this.userUnknownWordRepo.existsByUserIdAndWordId(userId, wordId);
+    boolean exist = this.userUnknownRepo.existsByUserIdAndWordId(userId, wordId);
     if (!exist) {
       UserUnknown userUnknownWord = new UserUnknown();
       userUnknownWord.setUserId(userId);
       userUnknownWord.setWordId(wordId);
       userUnknownWord.setModuleId(moduleId);
       userUnknownWord.setCreatedAt(LocalDateTime.now());
-      this.userUnknownWordRepo.save(userUnknownWord);
+      this.userUnknownRepo.save(userUnknownWord);
     }
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
@@ -64,14 +64,14 @@ public class UserUnknownSvc {
       log.error("userId: {}, sentenceId: {}, moduleId: {}", userId, sentenceId, moduleId);
       return ResponseEntity.ok(jsonObject.toString());
     }
-    boolean exist = this.userUnknownWordRepo.existsByUserIdAndSentenceId(userId, sentenceId);
+    boolean exist = this.userUnknownRepo.existsByUserIdAndSentenceId(userId, sentenceId);
     if (!exist) {
       UserUnknown userUnknownWord = new UserUnknown();
       userUnknownWord.setUserId(userId);
       userUnknownWord.setSentenceId(sentenceId);
       userUnknownWord.setModuleId(moduleId);
       userUnknownWord.setCreatedAt(LocalDateTime.now());
-      this.userUnknownWordRepo.save(userUnknownWord);
+      this.userUnknownRepo.save(userUnknownWord);
     }
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
@@ -86,7 +86,7 @@ public class UserUnknownSvc {
       log.error("userId: {}, wordId: {}, wordId: {}", userId, wordId, wordId);
       return ResponseEntity.ok(jsonObject.toString());
     }
-    this.userUnknownWordRepo.deleteUserUnknownWordByUserIdAndWordId(userId, wordId);
+    this.userUnknownRepo.deleteUserUnknownWordByUserIdAndWordId(userId, wordId);
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
   }
@@ -100,7 +100,7 @@ public class UserUnknownSvc {
       log.error("userId: {}, wordId: {}", userId, sentenceId);
       return ResponseEntity.ok(jsonObject.toString());
     }
-    this.userUnknownWordRepo.deleteUserUnknownSentenceByUserIdAndWordId(userId, sentenceId);
+    this.userUnknownRepo.deleteUserUnknownSentenceByUserIdAndWordId(userId, sentenceId);
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
   }
@@ -113,7 +113,7 @@ public class UserUnknownSvc {
       log.error("userId is null");
       return ResponseEntity.ok(jsonObject.toString());
     }
-    List<UserUnknown> words = this.userUnknownWordRepo.getUserUnknownWordsByUserId(userId);
+    List<UserUnknown> words = this.userUnknownRepo.getUserUnknownWordsByUserId(userId);
     JSONArray wordArr = new JSONArray();
     for (UserUnknown word : words) {
       JSONObject wordObj = buildWordObj(word);
@@ -121,7 +121,7 @@ public class UserUnknownSvc {
         wordArr.add(wordObj);
       }
     }
-    List<UserUnknown> sentences = this.userUnknownWordRepo.getUserUnknownSentencesByUserId(userId);
+    List<UserUnknown> sentences = this.userUnknownRepo.getUserUnknownSentencesByUserId(userId);
     for (UserUnknown sentence : sentences) {
       JSONObject sentenceObj = buildSentenceObj(sentence);
       if (sentenceObj.getString("id") != null) {
@@ -135,7 +135,11 @@ public class UserUnknownSvc {
   }
 
   public boolean existsByUserIdAndWordId(Long userId, Long wordId) {
-    return this.userUnknownWordRepo.existsByUserIdAndWordId(userId, wordId);
+    return this.userUnknownRepo.existsByUserIdAndWordId(userId, wordId);
+  }
+
+  public boolean existsByUserIdAndSentenceId(Long userId, Long sentenceId) {
+    return this.userUnknownRepo.existsByUserIdAndSentenceId(userId, sentenceId);
   }
 
   private JSONObject buildSentenceObj(UserUnknown unknownWord) {

@@ -8,8 +8,8 @@ export class SugarDictService {
 
     public apiUrl = "http://localhost:8080/sugar-dict/public/v1";
 
-    getAllContentModules(): Observable<String> {
-        return this.http.get<String>(`${this.apiUrl}` + "/home/all-modules");
+    getSentenceContentModules(userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/sentences/content-modules/" + userId);
     }
 
     getChildrenContentModules(parentName: string, userId: number): Observable<String> {
@@ -24,6 +24,10 @@ export class SugarDictService {
         return this.http.post<String>(`${this.apiUrl}` + "/content-module/reset-learned-count", { moduleId: childContentModuleId, userId: userId });
     }
 
+    resetSentencesProgressByModuleId(contentModuleId: number, userId: number): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/content-module/reset-sentence-learned-count", { moduleId: contentModuleId, userId: userId });
+    }
+
     getWordsByChildContentModuleId(childContentModuleId: number, userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/words/by-child-content-module-id?childModuleId=" + childContentModuleId + "&userId=" + userId);
     }
@@ -32,8 +36,8 @@ export class SugarDictService {
         return this.http.get<String>(`${this.apiUrl}` + "/words/simple/by-child-content-module-id?childModuleId=" + childContentModuleId);
     }
 
-    getSentencesByContentModuleId(contentModuleId: number): Observable<String> {
-        return this.http.get<String>(`${this.apiUrl}` + "/sentences/by-content-module-id?moduleId=" + contentModuleId);
+    getSentencesByContentModuleId(contentModuleId: number, userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/sentences/by-content-module-id?moduleId=" + contentModuleId + "&userId=" + userId);
     }
 
     getTextDigest(text: string): Observable<String> {
@@ -78,19 +82,23 @@ export class SugarDictService {
         return this.http.post<String>(`${this.apiUrl}` + "/word/mark-as-unknown", { userId: userId, wordId: wordId, moduleId: moduleId });
     }
 
+    markSentenceAsKnown(userId: number, sentenceId: number, moduleId: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/sentence/mark-as-known", { userId: userId, sentenceId: sentenceId, moduleId: moduleId });
+    }
+
     markSentenceAsUnKnown(userId: number, sentenceId: number, moduleId: string): Observable<String> {
         return this.http.post<String>(`${this.apiUrl}` + "/sentence/mark-as-unknown", { userId: userId, sentenceId: sentenceId, moduleId: moduleId });
     }
-    
+
     getUserUnknown(userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/user-unknown/user-id/" + userId);
     }
     removeUserUnknownWord(userId: number, wordId: number): Observable<String> {
-        return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-word/"+ userId + "/" + wordId);
+        return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-word/" + userId + "/" + wordId);
     }
 
     removeUserUnknownSentence(userId: number, sentenceId: number): Observable<String> {
-        return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-sentence/"+ userId + "/" + sentenceId);
+        return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-sentence/" + userId + "/" + sentenceId);
     }
 
 }

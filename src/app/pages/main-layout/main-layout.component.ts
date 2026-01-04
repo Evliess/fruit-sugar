@@ -31,6 +31,7 @@ export class MainLayoutComponent {
   private ciHuiService = inject(CiHuiService)
   private sugarDictService = inject(SugarDictService)
   private authService = inject(AuthService);
+  currentUser = this.authService.currentUser;
 
   // 1. 创建一个 Observable 流，只关注导航结束事件 (NavigationEnd)
   // 并映射出当前的 URL 字符串
@@ -48,7 +49,7 @@ export class MainLayoutComponent {
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
     if (url && (url.includes('/word') || url.includes('/unknown-book')
-      || url.includes('/wrong-book') || url.includes('user-summary') 
+      || url.includes('/wrong-book') || url.includes('user-summary')
       || url.includes('/kou-yu')
     )) {
       return true;
@@ -84,7 +85,7 @@ export class MainLayoutComponent {
   });
 
   ngOnInit(): void {
-    this.sugarDictService.getAllContentModules().subscribe({
+    this.sugarDictService.getSentenceContentModules(this.currentUser()?.id || -1).subscribe({
       next: (response: any) => {
         this.sentenceCases = response.sentenceCases;
         this.wordCases = response.wordCases;
@@ -117,7 +118,7 @@ export class MainLayoutComponent {
     const url = this.currentUrl();
     if (url.includes('moduleId=')) {
       const moduleId = url.split('moduleId=')[1];
-      this.router.navigate(['/listen'], { queryParams: { moduleId: moduleId} });
+      this.router.navigate(['/listen'], { queryParams: { moduleId: moduleId } });
     }
   }
 
@@ -125,7 +126,7 @@ export class MainLayoutComponent {
     const url = this.currentUrl();
     if (url.includes('moduleId=')) {
       const moduleId = url.split('moduleId=')[1];
-      this.router.navigate(['/sen-listen'], { queryParams: { moduleId: moduleId} });
+      this.router.navigate(['/sen-listen'], { queryParams: { moduleId: moduleId } });
     }
   }
 

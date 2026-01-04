@@ -71,7 +71,7 @@ export class KouYuComponent {
       const moduleId = params['moduleId'];
       this.moduleId = moduleId;
       if (!moduleId) return;
-      this.sugarDictService.getSentencesByContentModuleId(moduleId).pipe(
+      this.sugarDictService.getSentencesByContentModuleId(moduleId, this.currentUser()?.id || -1).pipe(
         map((response: any) => {
           const rawData = response?.sentences || [];
           return rawData.map((item: any) => ({
@@ -81,12 +81,13 @@ export class KouYuComponent {
             audioUSUrl: item.audioUSUrl,
             audioUKUrl: item.audioUKUrl,
             showDetails: false,
-            isKnown: false
+            isKnown: item.isKnown || false
           } as Sentence));
         })
       ).subscribe({
         next: (processedData: Sentence[]) => {
           this.sentences = processedData;
+          console.log('获取例句成功:', this.sentences);
         },
         error: (err) => {
           console.error('获取例句失败:', err);
@@ -105,8 +106,12 @@ export class KouYuComponent {
   // 点击“认识”
   markAsKnown(item: Sentence): void {
     item.isKnown = true;
-    item.showDetails = false; // 收起详情
-    this.message.success('太棒了！已标记为认识。');
+    item.showDetails = false;
+    this.sugarDictService.markSentenceAsKnown(this.currentUser()?.id || -1, item.id, this.moduleId).subscribe({
+      next: (response: any) => {
+        this.message.success('太棒了！已标记为认识。');
+      }
+    });
   }
 
   // 点击“不认识”

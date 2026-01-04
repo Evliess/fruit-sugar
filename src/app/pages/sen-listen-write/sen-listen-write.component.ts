@@ -15,6 +15,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { ActivatedRoute } from '@angular/router';
 import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
 import { SugarDictService } from '../../services/sugar-dict';
+import { AuthService } from '../../services/auth';
 import { map } from 'rxjs';
 
 interface Sentence {
@@ -54,6 +55,8 @@ export class SenListenWriteComponent {
   soundEnabled: boolean = true;
   soundTypeUK: boolean = true;
   private sugarDictService = inject(SugarDictService)
+  private authService = inject(AuthService);
+  currentUser = this.authService.currentUser;
   route = inject(ActivatedRoute);
   apiUrl = this.sugarDictService.apiUrl;
 
@@ -65,7 +68,7 @@ export class SenListenWriteComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const moduleId = params['moduleId'];
-      this.sugarDictService.getSentencesByContentModuleId(moduleId).pipe(
+      this.sugarDictService.getSentencesByContentModuleId(moduleId,this.currentUser()?.id || -1).pipe(
         map((response: any) => {
           const rawWords = response.sentences || [];
           return rawWords.map((sentence: any) => {

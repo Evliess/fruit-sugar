@@ -21,7 +21,7 @@ public class UserLearnedSentence {
   @Column(name = "module_id")
   private Long moduleId;
   @Column(name = "sentence_id")
-  private Integer sentenceId;
+  private Long sentenceId;
   @Column(name = "learned_at")
   private LocalDateTime learnedAt;
 }

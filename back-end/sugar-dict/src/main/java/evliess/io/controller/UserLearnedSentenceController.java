@@ -28,4 +28,11 @@ public class UserLearnedSentenceController {
     return this.userLearnedSentenceSvc.markAsUnKnown(userLearnedDTO.getUserId(),
       userLearnedDTO.getSentenceId(), userLearnedDTO.getModuleId());
   }
+
+  @Operation(summary = "Mark a known sentence", description = "Mark a known sentence")
+  @PostMapping(value = "/sentence/mark-as-known", produces = "application/json")
+  public ResponseEntity<String> markAsKnown(@RequestBody UserLearnedDTO userLearnedDTO) {
+    return this.userLearnedSentenceSvc.markAsKnown(userLearnedDTO.getUserId(), userLearnedDTO.getSentenceId()
+      , userLearnedDTO.getModuleId());
+  }
 }
