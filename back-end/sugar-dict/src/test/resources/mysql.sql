@@ -73,11 +73,12 @@ CREATE TABLE `user_unknown` (
 CREATE TABLE `user_mistakes` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT UNSIGNED NOT NULL,
-  `item_type` VARCHAR(100) NOT NULL COMMENT '错题类型',
   `word_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '如果是单词',
   `sentence_id` BIGINT UNSIGNED DEFAULT NULL COMMENT '如果是句子',
+  `module_id` BIGINT UNSIGNED NOT NULL,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `idx_user_id` (`user_id`)
 ) ENGINE=InnoDB COMMENT='错题本(含遗忘曲线算法字段)';
 
 -- 自定义词书 (Custom Book)

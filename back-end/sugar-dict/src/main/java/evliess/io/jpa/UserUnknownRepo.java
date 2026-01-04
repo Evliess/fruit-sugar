@@ -20,7 +20,7 @@ public interface UserUnknownRepo extends JpaRepository<UserUnknown, Long> {
 
   @Query("DELETE from UserUnknown a WHERE a.userId= :userId AND a.sentenceId = :sentenceId")
   @Modifying
-  int deleteUserUnknownSentenceByUserIdAndWordId(Long userId, Long sentenceId);
+  int deleteUserUnknownSentenceByUserIdAndSentenceId(Long userId, Long sentenceId);
 
   @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM UserUnknown u WHERE u.userId = :userId AND u.wordId = :wordId")
   boolean existsByUserIdAndWordId(Long userId, Long wordId);

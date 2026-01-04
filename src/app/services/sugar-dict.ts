@@ -90,6 +90,13 @@ export class SugarDictService {
         return this.http.post<String>(`${this.apiUrl}` + "/sentence/mark-as-unknown", { userId: userId, sentenceId: sentenceId, moduleId: moduleId });
     }
 
+    markWordAsMistake(userId: number, wordId: number, moduleId: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/word/mark-as-mistake", { userId: userId, wordId: wordId, moduleId: moduleId });
+    }
+    markSentenceAsMistake(userId: number, sentenceId: number, moduleId: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/sentence/mark-as-mistake", { userId: userId, sentenceId: sentenceId, moduleId: moduleId });
+    }
+
     getUserUnknown(userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/user-unknown/user-id/" + userId);
     }

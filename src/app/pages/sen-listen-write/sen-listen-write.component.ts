@@ -64,11 +64,13 @@ export class SenListenWriteComponent {
   currIndex: number = 0;
   currWord: Sentence = undefined as any;
   private audio = new Audio();
+  moduleId: string = '';
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const moduleId = params['moduleId'];
-      this.sugarDictService.getSentencesByContentModuleId(moduleId,this.currentUser()?.id || -1).pipe(
+      this.moduleId = moduleId;
+      this.sugarDictService.getSentencesByContentModuleId(moduleId, this.currentUser()?.id || -1).pipe(
         map((response: any) => {
           const rawWords = response.sentences || [];
           return rawWords.map((sentence: any) => {
@@ -143,12 +145,17 @@ export class SenListenWriteComponent {
       this.playNext();
     } else {
       this.inputStatus = 'minimal-input';
+      this.sugarDictService.markSentenceAsMistake(this.currentUser()?.id || -1, this.currWord.id, this.moduleId).subscribe({
+        next: (response: any) => {
+          console.log("Succeed to mark a sentence as mistake");
+        }
+      });
     }
   }
 
-  // 模拟点击事件
-  handleAction(action: string): void {
-    if ("play" == action) {
+    // 模拟点击事件
+    handleAction(action: string): void {
+      if("play" == action) {
       this.togglePlay();
       if (this.soundTypeUK) {
         this.playAudio(this.currWord.ukAudio);
