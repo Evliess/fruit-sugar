@@ -100,7 +100,7 @@
             <div class="input-wrapper">
                 <nz-input-group>
                     <input nz-input [(ngModel)]="inputValue" placeholder="请在此输入..." nzSize="large" nzBorderless
-                        [appMechanicalTyping]="soundEnabled" [class]="inputStatus" (keydown)="checkAnswer()" />
+                        [appMechanicalTyping]="soundEnabled" [class]="inputStatus" (keydown.enter)="checkAnswer()" />
                 </nz-input-group>
             </div>
         </div>

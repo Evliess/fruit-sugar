@@ -15,6 +15,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { ActivatedRoute } from '@angular/router';
 import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
 import { SugarDictService } from '../../services/sugar-dict';
+import { AuthService } from '../../services/auth';
 import { map } from 'rxjs';
 
 
@@ -57,8 +58,11 @@ export class ListenWriteComponent {
   soundTypeUK: boolean = true;
   private sugarDictService = inject(SugarDictService)
   route = inject(ActivatedRoute);
+  private authService = inject(AuthService);
+  currentUser = this.authService.currentUser;
 
   words: VocabularyWord[] = [];
+  moduleId: string = ''; 
   currIndex: number = 0;
   currWord: VocabularyWord = undefined as any;
   private audio = new Audio();
@@ -66,6 +70,7 @@ export class ListenWriteComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       const moduleId = params['moduleId'];
+      this.moduleId = moduleId;
       this.sugarDictService.getWordsSimpleByChildContentModuleId(moduleId).pipe(
         map((response: any) => {
           const rawWords = response.words || [];
@@ -92,7 +97,7 @@ export class ListenWriteComponent {
         error: (err) => console.error('请求失败:', err)
       });
     });
-   
+
   }
   private safeJsonParse(data: any, fallback: any): any {
     if (typeof data !== 'string') return data || fallback;
@@ -134,6 +139,11 @@ export class ListenWriteComponent {
       this.playNext();
     } else {
       this.inputStatus = 'minimal-input';
+      this.sugarDictService.markWordAsMistake(this.currentUser()?.id || -1, this.currWord.id, this.moduleId).subscribe({
+      next: (response: any) => {
+        console.log("Succeed to mark a word as mistake");
+      }
+    });
     }
   }
 
