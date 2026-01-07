@@ -85,11 +85,9 @@ CREATE TABLE `user_mistakes` (
 CREATE TABLE `user_custom_books` (
   `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT UNSIGNED NOT NULL,
-  `name` VARCHAR(50) DEFAULT '默认词书' COMMENT '词书名称',
   `word_id` BIGINT UNSIGNED DEFAULT NULL,
   `sentence_id` BIGINT UNSIGNED DEFAULT NULL,
   `module_id` BIGINT UNSIGNED NOT NULL,
-  `type` VARCHAR(50) COMMENT 'word or sentence',
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '添加时间',
   PRIMARY KEY (`id`),
   KEY `idx_user_id` (`user_id`)

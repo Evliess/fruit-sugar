@@ -41,20 +41,28 @@ public class DaoYouController {
     return null;
   }
 
-  @Operation(
-    summary = "Get Digest by Text",
-    description = "Get Digest by Text"
-  )
-
-  @PostMapping(value = "/text/digest", produces = "application/json")
+  //  @Operation(summary = "Get Digest by Text", description = "Get Digest by Text")
+//  @PostMapping(value = "/text/digest", produces = "application/json")
   public ResponseEntity<String> getTextDigest(
     @RequestBody TextDto textDto
   ) {
     return this.daoYouSvc.getDigest(textDto.getText());
   }
 
-  @Operation(summary = "Get Voice by Text", description = "Get Voice by Text")
-  @PostMapping("/text/tts")
+  @Operation(summary = "Custom word by Text and userId", description = "Custom word by Text and userId")
+  @PostMapping(value = "/custom/word", produces = "application/json")
+  public ResponseEntity<String> customWord(@RequestBody TextDto textDto) {
+    return this.daoYouSvc.customWord(textDto.getUserId(), textDto.getText());
+  }
+
+  @Operation(summary = "Custom sentence by Text and userId", description = "Custom sentence by Text and userId")
+  @PostMapping(value = "/custom/sentence", produces = "application/json")
+  public ResponseEntity<String> customSentence(@RequestBody TextDto textDto) {
+    return this.daoYouSvc.customSentence(textDto.getUserId(), textDto.getText());
+  }
+
+  //  @Operation(summary = "Get Voice by Text", description = "Get Voice by Text")
+//  @PostMapping("/text/tts")
   public ResponseEntity<String> getTextTts(@RequestBody TextDto textDto) {
     return this.daoYouSvc.getTextTts(textDto.getText());
   }

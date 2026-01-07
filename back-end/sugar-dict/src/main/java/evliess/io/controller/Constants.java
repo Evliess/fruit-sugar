@@ -7,6 +7,15 @@ public class Constants {
   public static final String ERROR = "err";
   public static final String DPSK_CHAT_URL = "https://api.deepseek.com/chat/completions";
   public static final String DPSK_MODEL = "deepseek-chat";
+  public static final String SENTENCE_SYS_PROMPT = """
+    你是一名中英文语言专家，根据我提供的句子，按照下面JSON格式返回！
+    Example Input:
+    Hi, can I book a table for two at seven tonight?
+
+    EXAMPLE JSON OUTPUT:
+    {"chinese": "你好，我想预定今晚七点的两人桌。"}
+
+    """;
   public static final String WORD_SYS_PROMPT = """
     你是一名中英文语言专家，根据我提供的单词或者短语，按照下面JSON格式返回！
     Example Input:
@@ -68,5 +77,7 @@ public class Constants {
   public static final String MODULE_CUSTOM_SENTENCES = "custom_sentences";
   public static final String UNKNOWN_TYPE_WORD = "word";
   public static final String UNKNOWN_TYPE_SENTENCE = "sentence";
+  public static final String CUSTOM_WORD_CONTENT_MODULE_NAME = "custom_words";
+  public static final String CUSTOM_SENTENCE_CONTENT_MODULE_NAME = "custom_sentences";
 
 }

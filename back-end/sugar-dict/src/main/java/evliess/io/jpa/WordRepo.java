@@ -19,4 +19,10 @@ public interface WordRepo extends JpaRepository<Word, Long> {
   @Query("UPDATE Word a set a.audioUSUrl = :url, a.audioUSUrl = :url WHERE a.text = :text")
   @Transactional
   int updateAudioUrlByText(String url, String text);
+
+  @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Word u WHERE u.text = :text")
+  boolean existsByText(String text);
+
+  @Query("SELECT a from Word a WHERE a.text= :text")
+  Word getByText(String text);
 }

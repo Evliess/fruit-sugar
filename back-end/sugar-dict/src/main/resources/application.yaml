@@ -2,7 +2,11 @@ server.servlet.context-path: /sugar-dict
 audio.dir: ${AUDIO_DIR}
 dyou.app.key: ${YOUD_KEY}
 dyou.app.secret: ${YOUD_SECRET}
+dp.app.secret: ${DP_SECRET}
+
 spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
   datasource:
     url: ${DB_URL}
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -30,3 +34,7 @@ logging:
   level:
     org.hibernate: WARN
     com.zaxxer.hikari: WARN
+
+server:
+  shutdown: graceful
+

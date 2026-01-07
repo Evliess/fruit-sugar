@@ -30,6 +30,7 @@ public class RestUtils {
   private static final Double TEMPERATURE = 1.0;
   private static final Logger logger = LoggerFactory.getLogger(RestUtils.class);
   private static final ReentrantLock lock = new ReentrantLock();
+
   private static RestTemplate buildRestTemplate() {
     return new RestTemplateBuilder().connectTimeout(Duration.ofMinutes(2L))
       .readTimeout(Duration.ofMinutes(2L)).build();
@@ -47,6 +48,37 @@ public class RestUtils {
     return resp;
   }
 
+  public static String dpskSentenceChat(String sentence, String token) throws JsonProcessingException {
+    String uuid = UUID.randomUUID().toString();
+    logger.info("DP is answering sentence: {}", uuid);
+    String resp = postSentenceChat(sentence, token, Constants.DPSK_MODEL, Constants.DPSK_CHAT_URL, uuid);
+    if (resp == null) {
+      logger.error("Failed to chat with DP for sentence");
+    } else {
+      logger.info("DP sentence response: {} - {}", uuid, resp);
+    }
+    return resp;
+  }
+
+  private static String postSentenceChat(String sentence, String token, String model, String url, String uuid) throws JsonProcessingException {
+    RestTemplate restTemplate = buildRestTemplate();
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Type", "application/json");
+    headers.add("Authorization", "Bearer " + token);
+    HttpEntity<String> request = getStringHttpEntitySentence(uuid, model, headers, sentence);
+    try {
+      ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+      if (response.getStatusCode() == HttpStatus.OK) {
+        String respBody = response.getBody();
+        return convertOpenAIJsonResponse(respBody);
+      } else {
+        return null;
+      }
+    } catch (Exception e) {
+      logger.error("{}:{}", uuid, e.getMessage(), e);
+      return null;
+    }
+  }
 
   private static String postChat(String msg, String token, String model, String url, String uuid) throws JsonProcessingException {
     RestTemplate restTemplate = buildRestTemplate();
@@ -82,11 +114,22 @@ public class RestUtils {
     return SORRY_MESSAGE;
   }
 
-  private static HttpEntity<String> getStringHttpEntity(String uuid, String model, HttpHeaders headers, String word) throws JsonProcessingException {
+  private static HttpEntity<String> getStringHttpEntitySentence(String uuid, String model, HttpHeaders headers, String sentence)
+    throws JsonProcessingException {
+    return buildChatHttpEntity(headers, model, Constants.SENTENCE_SYS_PROMPT, sentence);
+  }
+
+  private static HttpEntity<String> getStringHttpEntity(String uuid, String model, HttpHeaders headers, String word)
+    throws JsonProcessingException {
+    return buildChatHttpEntity(headers, model, Constants.WORD_SYS_PROMPT, word);
+  }
+
+  private static HttpEntity<String> buildChatHttpEntity(HttpHeaders headers, String model, String systemPrompt, String userContent)
+    throws JsonProcessingException {
     Map<String, Object> body = new HashMap<>();
     List<Map<String, String>> messages = new ArrayList<>();
-    messages.add(Map.of("role", "system", "content", Constants.WORD_SYS_PROMPT));
-    messages.add(Map.of("role", "user", "content", word));
+    messages.add(Map.of("role", "system", "content", systemPrompt));
+    messages.add(Map.of("role", "user", "content", userContent));
     body.put("messages", messages);
     body.put("model", model);
     body.put("stream", false);

@@ -14,5 +14,11 @@ public interface SentenceRepo extends JpaRepository<Sentence, Long> {
   @Query("SELECT count(a.id) from Sentence a WHERE a.moduleId= :moduleId")
   int countSentencesByModuleId(Long moduleId);
 
+  @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Sentence u WHERE u.text = :text")
+  boolean existsByText(String text);
+
+  @Query("SELECT a from Sentence a WHERE a.text= :text")
+  Sentence getByText(String text);
+
 
 }
