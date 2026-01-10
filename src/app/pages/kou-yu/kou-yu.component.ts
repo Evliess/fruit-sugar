@@ -55,6 +55,7 @@ export class KouYuComponent {
   practiceInput = '';
   userWord = '';
   isCustom = false;
+  isLoading = false;
   moduleId = '';
   route = inject(ActivatedRoute);
   private sugarDictService = inject(SugarDictService)
@@ -138,19 +139,21 @@ export class KouYuComponent {
       this.message.warning('请输入要添加的例句。');
       return;
     }
+    this.isLoading = true;
     this.sugarDictService.customSentence(this.currentUser()?.id || -1, sentence).subscribe({
       next: (response: any) => {
         this.message.success('自定义例句添加成功！');
+        this.isLoading = false;
         this.ngOnInit(); // 刷新数据
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('添加自定义例句失败:', err);
         this.message.error('添加自定义例句失败，请稍后重试。');
+        
       }
     });
   }
-
-
 
   // 切换显示全部/收起
   toggleDetails(item: Sentence): void {

@@ -60,6 +60,7 @@ export class CiHuiComponent {
   practiceInput = '';
   userWord = '';
   isCustom = false;
+  isLoading = false;
   ciHuiService = inject(CiHuiService)
   private sugarDictService = inject(SugarDictService)
   private audio = new Audio();
@@ -75,36 +76,69 @@ export class CiHuiComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isCustom = params['isCustom'] === 'true';
-      const moduleId = params['moduleId'];
-      this.moduleId = params['moduleId'];
-      this.sugarDictService.getWordsByChildContentModuleId(moduleId, this.currentUser()?.id || 0).pipe(
-        map((response: any) => {
-          const rawWords = response.words || [];
-          return rawWords.map((wordData: any) => {
-            const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
-            const formattedPhrases = parsedPhrases.map((p: any) =>
-              `${p.text}; ${p.textTranslation}`
-            );
-            return {
-              id: wordData.id,
-              word: wordData.text,
-              usPhonetic: wordData.phoneticUS,
-              ukPhonetic: wordData.phoneticUK,
-              definition: this.safeJsonParse(wordData.definition, {}),
-              phrases: formattedPhrases,
-              sentences: this.safeJsonParse(wordData.sentences, []),
-              showDetails: false,
-              isKnown: wordData.isKnown
-            } as VocabularyWord;
-          });
-        })
-      ).subscribe({
-        next: (words: VocabularyWord[]) => {
-          this.words = words;
-          this.wordsCount = words.length;
-        },
-        error: (err) => console.error('请求失败:', err)
-      });
+      if (!this.isCustom) {
+        const moduleId = params['moduleId'];
+        this.moduleId = params['moduleId'];
+        this.sugarDictService.getWordsByChildContentModuleId(moduleId, this.currentUser()?.id || 0).pipe(
+          map((response: any) => {
+            const rawWords = response.words || [];
+            return rawWords.map((wordData: any) => {
+              const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
+              const formattedPhrases = parsedPhrases.map((p: any) =>
+                `${p.text}; ${p.textTranslation}`
+              );
+              return {
+                id: wordData.id,
+                word: wordData.text,
+                usPhonetic: wordData.phoneticUS,
+                ukPhonetic: wordData.phoneticUK,
+                definition: this.safeJsonParse(wordData.definition, {}),
+                phrases: formattedPhrases,
+                sentences: this.safeJsonParse(wordData.sentences, []),
+                showDetails: false,
+                isKnown: wordData.isKnown
+              } as VocabularyWord;
+            });
+          })
+        ).subscribe({
+          next: (words: VocabularyWord[]) => {
+            this.words = words;
+            this.wordsCount = words.length;
+          },
+          error: (err) => console.error('请求失败:', err)
+        });
+      } else {
+        this.sugarDictService.getCustomWords(this.currentUser()?.id || 0).pipe(
+          map((response: any) => {
+            const rawWords = response.words || [];
+           return rawWords.map((wordData: any) => {
+              const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
+              const formattedPhrases = parsedPhrases.map((p: any) =>
+                `${p.text}; ${p.textTranslation}`
+              );
+              return {
+                id: wordData.id,
+                word: wordData.text,
+                usPhonetic: wordData.phoneticUS,
+                ukPhonetic: wordData.phoneticUK,
+                definition: this.safeJsonParse(wordData.definition, {}),
+                phrases: formattedPhrases,
+                sentences: this.safeJsonParse(wordData.sentences, []),
+                showDetails: false,
+                isKnown: wordData.isKnown
+              } as VocabularyWord;
+            });
+          })
+        ).subscribe({
+          next: (words: VocabularyWord[]) => {
+            console.log(words);
+            this.words = words;
+            this.wordsCount = words.length;
+          },
+          error: (err) => console.error('请求失败:', err)
+        });
+      }
+
     });
   }
 
@@ -117,6 +151,27 @@ export class CiHuiComponent {
     }
   }
 
+  customWord(word: string): void {
+    if (!word.trim()) {
+      this.message.error('请输入要自定义的单词');
+      return;
+    }
+    this.isLoading = true;
+    this.sugarDictService.customWord(this.currentUser()?.id || -1, word).subscribe({
+      next: (response: any) => {
+        this.message.success('自定义单词成功！');
+        this.userWord = ''; // 清空输入框
+        this.isLoading = false;
+        // 刷新单词列表
+        this.ngOnInit();
+      },
+      error: (err) => {
+        console.error('请求失败:', err);
+        this.isLoading = false;
+      }
+    });
+  }
+
   handleSound(phonetic: string, word: string): void {
     if (phonetic == "US") {
       this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=' + word;
@@ -126,6 +181,16 @@ export class CiHuiComponent {
     this.audio.load();
     this.audio.play().catch(e => {
       console.warn('Playback failed:', word);
+    });
+  }
+
+  deleteCustomBook(item: VocabularyWord): void {
+    this.sugarDictService.deleteCustomBook(this.currentUser()?.id || -1, item.id, "word").subscribe({
+      next: (response: any) => {
+        this.message.success('删除成功！');
+        this.ngOnInit();
+      },
+      error: (err) => console.error('请求失败:', err)
     });
   }
 

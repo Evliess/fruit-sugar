@@ -7,7 +7,7 @@
           <input nz-input [(ngModel)]="userWord" />
         </div>
         <div class="action-group">
-          <button nz-button nzType="primary" nz-tooltip nzTooltipTitle="添加" (click)="addCustom(userWord)">
+          <button nz-button nzType="primary" nz-tooltip nzLoading="isLoading" nzTooltipTitle="添加" (click)="addCustom(userWord)">
             <span nz-icon nzType="plus"></span> 添加
           </button>
         </div>

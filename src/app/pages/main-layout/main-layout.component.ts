@@ -48,7 +48,7 @@ export class MainLayoutComponent {
   // 只要 currentUrl 发生变化，这个值会自动更新
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
-    if (url && (url.includes('/word') || url.includes('/unknown-book')
+    if (url && (url.includes('/words?isCustom=false') || url.includes('/unknown-book')
       || url.includes('/wrong-book') || url.includes('user-summary')
       || url.includes('/kou-yu')
     )) {
@@ -108,8 +108,7 @@ export class MainLayoutComponent {
 
   gotoWord(isCustom: boolean = false, category: string) {
     this.category = category;
-    console.log(isCustom);return;
-    this.router.navigate(['/word'], { queryParams: { isCustom: isCustom, category: category } });
+    this.router.navigate(['/words'], { queryParams: { isCustom: isCustom, category: category } });
   }
   gotoKouYu(isCustom: boolean = false, moduleName?: string) {
     if (!isCustom) this.router.navigate(['/sentence-item']);
