@@ -98,6 +98,7 @@ export class WrongBookComponent {
       },
       error: (err) => console.error('请求失败:', err)
     });
+    this.message.success('根据艾宾浩斯记忆法，建议你先复习这些单词，它们的记忆间隔较短');
   }
 
   private safeJsonParse(data: any, fallback: any): any {
