@@ -68,56 +68,66 @@ export class KouYuComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isCustom = params['isCustom'] === 'true';
+      const userId = this.currentUser()?.id || -1;
       if (this.isCustom) {
-        console.log(this.currentUser()?.id);
-        this.sugarDictService.getCustomSentences(this.currentUser()?.id || -1).pipe(
-          map((response: any) => {
-            const rawData = response?.sentences || [];
-            return rawData.map((item: any) => ({
-              id: item.id,
-              sentence_en: item.text,
-              sentence_zh: item.textTranslation,
-              audioUSUrl: item.audioUSUrl,
-              audioUKUrl: item.audioUKUrl,
-              showDetails: false,
-              isKnown: item.isKnown || false
-            } as Sentence));
-          })
-        ).subscribe({
-          next: (processedData: Sentence[]) => {
-            this.sentences = processedData;
-            console.log('获取自定义例句成功:', this.sentences);
-          },
-          error: (err) => {
-            console.error('获取自定义例句失败:', err);
-          }
-        });
+        this.fetchCustomSentences(userId);
       } else {
         const moduleId = params['moduleId'];
-        this.moduleId = moduleId;
-        if (!moduleId) return;
-        this.sugarDictService.getSentencesByContentModuleId(moduleId, this.currentUser()?.id || -1).pipe(
-          map((response: any) => {
-            const rawData = response?.sentences || [];
-            return rawData.map((item: any) => ({
-              id: item.id,
-              sentence_en: item.text,
-              sentence_zh: item.textTranslation,
-              audioUSUrl: item.audioUSUrl,
-              audioUKUrl: item.audioUKUrl,
-              showDetails: false,
-              isKnown: item.isKnown || false
-            } as Sentence));
-          })
-        ).subscribe({
-          next: (processedData: Sentence[]) => {
-            this.sentences = processedData;
-            console.log('获取例句成功:', this.sentences);
-          },
-          error: (err) => {
-            console.error('获取例句失败:', err);
-          }
-        });
+        if (moduleId) {
+          this.fetchModuleSentences(moduleId, userId);
+        } else {
+          this.sentences = [];
+        }
+      }
+    });
+  }
+
+  /**
+   * Map raw sentence data to Sentence interface
+   */
+  private mapSentenceData(rawData: any[]): Sentence[] {
+    return rawData.map((item: any) => ({
+      id: item.id,
+      sentence_en: item.text,
+      sentence_zh: item.textTranslation,
+      audioUSUrl: item.audioUSUrl,
+      audioUKUrl: item.audioUKUrl,
+      showDetails: false,
+      isKnown: item.isKnown || false
+    } as Sentence));
+  }
+
+  /**
+   * Fetch custom sentences for the current user
+   */
+  private fetchCustomSentences(userId: number): void {
+    this.sugarDictService.getCustomSentences(userId).pipe(
+      map((response: any) => this.mapSentenceData(response?.sentences || []))
+    ).subscribe({
+      next: (processedData: Sentence[]) => {
+        this.sentences = processedData;
+        console.log('获取自定义例句成功:', this.sentences);
+      },
+      error: (err) => {
+        console.error('获取自定义例句失败:', err);
+      }
+    });
+  }
+
+  /**
+   * Fetch sentences by content module ID
+   */
+  private fetchModuleSentences(moduleId: number, userId: number): void {
+    this.moduleId = moduleId + "";
+    this.sugarDictService.getSentencesByContentModuleId(moduleId, userId).pipe(
+      map((response: any) => this.mapSentenceData(response?.sentences || []))
+    ).subscribe({
+      next: (processedData: Sentence[]) => {
+        this.sentences = processedData;
+        console.log('获取例句成功:', this.sentences);
+      },
+      error: (err) => {
+        console.error('获取例句失败:', err);
       }
     });
   }
