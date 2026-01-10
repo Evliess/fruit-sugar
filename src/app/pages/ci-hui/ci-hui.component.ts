@@ -76,70 +76,84 @@ export class CiHuiComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isCustom = params['isCustom'] === 'true';
-      if (!this.isCustom) {
-        const moduleId = params['moduleId'];
-        this.moduleId = params['moduleId'];
-        this.sugarDictService.getWordsByChildContentModuleId(moduleId, this.currentUser()?.id || 0).pipe(
-          map((response: any) => {
-            const rawWords = response.words || [];
-            return rawWords.map((wordData: any) => {
-              const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
-              const formattedPhrases = parsedPhrases.map((p: any) =>
-                `${p.text}; ${p.textTranslation}`
-              );
-              return {
-                id: wordData.id,
-                word: wordData.text,
-                usPhonetic: wordData.phoneticUS,
-                ukPhonetic: wordData.phoneticUK,
-                definition: this.safeJsonParse(wordData.definition, {}),
-                phrases: formattedPhrases,
-                sentences: this.safeJsonParse(wordData.sentences, []),
-                showDetails: false,
-                isKnown: wordData.isKnown
-              } as VocabularyWord;
-            });
-          })
-        ).subscribe({
-          next: (words: VocabularyWord[]) => {
-            this.words = words;
-            this.wordsCount = words.length;
-          },
-          error: (err) => console.error('请求失败:', err)
-        });
+      const userId = this.currentUser()?.id || 0;
+      
+      if (this.isCustom) {
+        this.fetchCustomWords(userId);
       } else {
-        this.sugarDictService.getCustomWords(this.currentUser()?.id || 0).pipe(
-          map((response: any) => {
-            const rawWords = response.words || [];
-           return rawWords.map((wordData: any) => {
-              const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
-              const formattedPhrases = parsedPhrases.map((p: any) =>
-                `${p.text}; ${p.textTranslation}`
-              );
-              return {
-                id: wordData.id,
-                word: wordData.text,
-                usPhonetic: wordData.phoneticUS,
-                ukPhonetic: wordData.phoneticUK,
-                definition: this.safeJsonParse(wordData.definition, {}),
-                phrases: formattedPhrases,
-                sentences: this.safeJsonParse(wordData.sentences, []),
-                showDetails: false,
-                isKnown: wordData.isKnown
-              } as VocabularyWord;
-            });
-          })
-        ).subscribe({
-          next: (words: VocabularyWord[]) => {
-            console.log(words);
-            this.words = words;
-            this.wordsCount = words.length;
-          },
-          error: (err) => console.error('请求失败:', err)
-        });
+        const moduleId = params['moduleId'];
+        this.moduleId = moduleId;
+        
+        if (moduleId) {
+          this.fetchModuleWords(moduleId, userId);
+        } else {
+          this.clearWords();
+        }
       }
-
     });
+  }
+
+  /**
+   * Map raw word data to VocabularyWord interface
+   */
+  private mapWordData(rawWords: any[]): VocabularyWord[] {
+    return rawWords.map((wordData: any) => {
+      const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
+      const formattedPhrases = parsedPhrases.map((p: any) =>
+        `${p.text}; ${p.textTranslation}`
+      );
+      
+      return {
+        id: wordData.id,
+        word: wordData.text,
+        usPhonetic: wordData.phoneticUS,
+        ukPhonetic: wordData.phoneticUK,
+        definition: this.safeJsonParse(wordData.definition, {}),
+        phrases: formattedPhrases,
+        sentences: this.safeJsonParse(wordData.sentences, []),
+        showDetails: false,
+        isKnown: wordData.isKnown
+      } as VocabularyWord;
+    });
+  }
+
+  /**
+   * Fetch words for a specific module
+   */
+  private fetchModuleWords(moduleId: number, userId: number): void {
+    this.sugarDictService.getWordsByChildContentModuleId(Number(moduleId), userId).pipe(
+      map((response: any) => this.mapWordData(response.words || []))
+    ).subscribe({
+      next: (words: VocabularyWord[]) => {
+        this.words = words;
+        this.wordsCount = words.length;
+      },
+      error: (err) => console.error('获取模块单词失败:', err)
+    });
+  }
+
+  /**
+   * Fetch custom words for the current user
+   */
+  private fetchCustomWords(userId: number): void {
+    this.sugarDictService.getCustomWords(userId).pipe(
+      map((response: any) => this.mapWordData(response.words || []))
+    ).subscribe({
+      next: (words: VocabularyWord[]) => {
+        console.log(words);
+        this.words = words;
+        this.wordsCount = words.length;
+      },
+      error: (err) => console.error('获取自定义单词失败:', err)
+    });
+  }
+
+  /**
+   * Clear words and reset count when no valid data is available
+   */
+  private clearWords(): void {
+    this.words = [];
+    this.wordsCount = 0;
   }
 
   private safeJsonParse(data: any, fallback: any): any {
