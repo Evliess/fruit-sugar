@@ -12,6 +12,7 @@ import evliess.io.jpa.WordRepo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,7 @@ public class UserCustomBookSvc {
     this.sentenceRepo = sentenceRepo;
   }
 
+  @Transactional
   public ResponseEntity<String> deleteUserCustomWordByUserIdAndWordId(Long userId, Long id, String type) {
     JSONObject jsonObject = new JSONObject();
     if (userId == null || id == null) {
@@ -47,7 +49,7 @@ public class UserCustomBookSvc {
         this.userCustomBookRepo.deleteUserCustomSentenceByUserIdAndSentenceId(userId, id);
       }
     } catch (Exception e) {
-      log.error("Failed to delete user {}, Obj id {}", userId, id);
+      log.error("Failed to delete user {}, Obj id {}", userId, id, e);
       jsonObject.put(Constants.RESULT, Constants.ERROR);
       jsonObject.put(Constants.MSG, "Failed to delete obj: " + id);
       return ResponseEntity.ok(jsonObject.toString());

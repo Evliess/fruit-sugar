@@ -179,6 +179,20 @@ export class KouYuComponent {
     });
   }
 
+  deleteCustomSentence(item: Sentence): void {
+    console.log(item); 
+    this.sugarDictService.deleteCustomBook(this.currentUser()?.id || -1, item.id, "sentence").subscribe({
+      next: (response: any) => {
+        this.message.success('自定义例句删除成功！');
+        this.ngOnInit(); // 刷新数据
+      },
+      error: (err) => {
+        console.error('删除自定义例句失败:', err);
+        this.message.error('删除自定义例句失败，请稍后重试。');
+      }
+    });
+  }
+
   // 点击“练一练”
   openPractice(item: Sentence): void {
     this.practiceWord = item;
