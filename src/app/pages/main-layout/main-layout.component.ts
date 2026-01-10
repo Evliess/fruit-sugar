@@ -108,6 +108,7 @@ export class MainLayoutComponent {
 
   gotoWord(isCustom: boolean = false, category: string) {
     this.category = category;
+    console.log(isCustom);return;
     this.router.navigate(['/word'], { queryParams: { isCustom: isCustom, category: category } });
   }
   gotoKouYu(isCustom: boolean = false, moduleName?: string) {
