@@ -68,31 +68,75 @@ export class KouYuComponent {
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       this.isCustom = params['isCustom'] === 'true';
-      const moduleId = params['moduleId'];
-      this.moduleId = moduleId;
-      if (!moduleId) return;
-      this.sugarDictService.getSentencesByContentModuleId(moduleId, this.currentUser()?.id || -1).pipe(
-        map((response: any) => {
-          const rawData = response?.sentences || [];
-          return rawData.map((item: any) => ({
-            id: item.id,
-            sentence_en: item.text,
-            sentence_zh: item.textTranslation,
-            audioUSUrl: item.audioUSUrl,
-            audioUKUrl: item.audioUKUrl,
-            showDetails: false,
-            isKnown: item.isKnown || false
-          } as Sentence));
-        })
-      ).subscribe({
-        next: (processedData: Sentence[]) => {
-          this.sentences = processedData;
-          console.log('获取例句成功:', this.sentences);
-        },
-        error: (err) => {
-          console.error('获取例句失败:', err);
-        }
-      });
+      if (this.isCustom) {
+        console.log(this.currentUser()?.id);
+        this.sugarDictService.getCustomSentences(this.currentUser()?.id || -1).pipe(
+          map((response: any) => {
+            const rawData = response?.sentences || [];
+            return rawData.map((item: any) => ({
+              id: item.id,
+              sentence_en: item.text,
+              sentence_zh: item.textTranslation,
+              audioUSUrl: item.audioUSUrl,
+              audioUKUrl: item.audioUKUrl,
+              showDetails: false,
+              isKnown: item.isKnown || false
+            } as Sentence));
+          })
+        ).subscribe({
+          next: (processedData: Sentence[]) => {
+            this.sentences = processedData;
+            console.log('获取自定义例句成功:', this.sentences);
+          },
+          error: (err) => {
+            console.error('获取自定义例句失败:', err);
+          }
+        });
+      } else {
+        const moduleId = params['moduleId'];
+        this.moduleId = moduleId;
+        if (!moduleId) return;
+        this.sugarDictService.getSentencesByContentModuleId(moduleId, this.currentUser()?.id || -1).pipe(
+          map((response: any) => {
+            const rawData = response?.sentences || [];
+            return rawData.map((item: any) => ({
+              id: item.id,
+              sentence_en: item.text,
+              sentence_zh: item.textTranslation,
+              audioUSUrl: item.audioUSUrl,
+              audioUKUrl: item.audioUKUrl,
+              showDetails: false,
+              isKnown: item.isKnown || false
+            } as Sentence));
+          })
+        ).subscribe({
+          next: (processedData: Sentence[]) => {
+            this.sentences = processedData;
+            console.log('获取例句成功:', this.sentences);
+          },
+          error: (err) => {
+            console.error('获取例句失败:', err);
+          }
+        });
+      }
+    });
+  }
+
+  // 添加自定义例句
+  addCustom(sentence: string) {
+    if (!sentence.trim()) {
+      this.message.warning('请输入要添加的例句。');
+      return;
+    }
+    this.sugarDictService.customSentence(this.currentUser()?.id || -1, sentence).subscribe({
+      next: (response: any) => {
+        this.message.success('自定义例句添加成功！');
+        this.ngOnInit(); // 刷新数据
+      },
+      error: (err) => {
+        console.error('添加自定义例句失败:', err);
+        this.message.error('添加自定义例句失败，请稍后重试。');
+      }
     });
   }
 
@@ -150,7 +194,11 @@ export class KouYuComponent {
 
   handleSound(audioUrl: string): void {
     const apiUrl = this.sugarDictService.apiUrl;
-    this.audio.src = apiUrl +"/audio/" +audioUrl;
+    if(audioUrl.endsWith(".mp3")) {
+      this.audio.src =apiUrl + "/audio/custom/" + audioUrl;
+    } else {
+      this.audio.src = apiUrl + "/audio/" + audioUrl;
+    }
     this.audio.load();
     this.audio.play().catch(e => console.warn('Playback failed:', e));
   }

@@ -47,10 +47,10 @@
             ><a routerLinkActive="active"
               ariaCurrentWhenActive="page">{{sentence.description}}</a></li>
           } -->
-          <li nz-menu-item (click)="gotoKouYu(false, 'custom')"><a routerLinkActive="active"
+          <li nz-menu-item (click)="gotoKouYu(false)"><a routerLinkActive="active"
               ariaCurrentWhenActive="page">热门场景</a>
           </li>
-          <li nz-menu-item (click)="gotoKouYu(true, 'custom')"><a routerLinkActive="active"
+          <li nz-menu-item (click)="gotoKouYu(true, 'custom_sentences')"><a routerLinkActive="active"
               ariaCurrentWhenActive="page">自定义</a>
           </li>
         </ul>

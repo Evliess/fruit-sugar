@@ -120,4 +120,19 @@ export class SugarDictService {
         return this.http.delete<String>(`${this.apiUrl}` + "/user-unknown-sentence/" + userId + "/" + sentenceId);
     }
 
+    customSentence(userId: number, sentence: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/custom/sentence", { userId: userId, text: sentence });
+    }
+    customWord(userId: number, word: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/custom/word", { userId: userId, text: word });
+    }
+    getCustomSentences(userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/user-custom-book/sentences/" + userId);
+    }
+    getCustomWords(userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/user-custom-book/words/" + userId);
+    }
+    deleteCustomBook(userId: number, id: number, type: string): Observable<String> {
+        return this.http.delete<String>(`${this.apiUrl}` + "/user-custom-book/" + userId + "/" + id + "/" + type);
+    }
 }

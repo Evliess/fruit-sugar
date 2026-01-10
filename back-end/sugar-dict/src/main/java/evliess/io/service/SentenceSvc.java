@@ -63,7 +63,7 @@ public class SentenceSvc {
     }
   }
 
-  private static JSONArray buildSentencesArray(List<Sentence> sentences, List<Long> knownSentences) {
+  public static JSONArray buildSentencesArray(List<Sentence> sentences, List<Long> knownSentences) {
     JSONArray sentenceArr = new JSONArray();
     for (Sentence sentence : sentences) {
       JSONObject sentenceObj = new JSONObject();
