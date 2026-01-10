@@ -26,7 +26,6 @@ export class SentenceItemComponent {
     this.sugarDictService.getSentenceContentModules(this.currentUser()?.id || -1).subscribe({
       next: (response: any) => {
         this.sentenceCases = response.sentenceCases;
-        console.log(this.sentenceCases);
       },
       error: (err) => console.error('请求失败:', err)
     });

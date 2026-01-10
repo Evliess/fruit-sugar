@@ -110,9 +110,9 @@ export class MainLayoutComponent {
     this.category = category;
     this.router.navigate(['/word'], { queryParams: { isCustom: isCustom, category: category } });
   }
-  gotoKouYu(isCustom: boolean = false, moduleId: string) {
+  gotoKouYu(isCustom: boolean = false, moduleName?: string) {
     if (!isCustom) this.router.navigate(['/sentence-item']);
-    else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true, moduleId: moduleId } });
+    else this.router.navigate(['/kou-yu'], { queryParams: { isCustom: true, moduleName: moduleName } });
   }
   gotoListen() {
     const url = this.currentUrl();
