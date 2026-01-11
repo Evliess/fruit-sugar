@@ -13,6 +13,9 @@ public interface UserLearnedSentenceRepo extends JpaRepository<UserLearnedSenten
   @Query("SELECT DISTINCT u.sentenceId FROM UserLearnedSentence u WHERE u.userId = :userId AND u.moduleId = :moduleId")
   List<Long> findLearnedSentenceIds(@Param("userId") Long userId, @Param("moduleId") Long moduleId);
 
+  @Query("SELECT count(u.sentenceId) FROM UserLearnedSentence u WHERE u.userId = :userId")
+  Integer countLearnedSentencesByUserId(@Param("userId") Long userId);
+
   @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM UserLearnedSentence u WHERE u.userId = :userId AND u.sentenceId = :sentenceId")
   boolean existsByUserIdAndSentenceId(Long userId, Long sentenceId);
 

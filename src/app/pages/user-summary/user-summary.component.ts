@@ -3,21 +3,14 @@ import { SugarDictService } from '../../services/sugar-dict';
 import { CommonModule } from '@angular/common';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzProgressModule } from 'ng-zorro-antd/progress';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { AuthService } from '../../services/auth';
 
-import { Router } from '@angular/router';
-import { map } from 'rxjs';
-
 interface CardItem {
-  title: string;
-  desc: string;
-  href: string;
-  learnedCount: number;
-  sentencesCount: number;
-  bgImage: string;
-  progress?: string;
+  title?: string;
+  desc?: string;
+  count?: number;
+  total?: number;
+  className?: string;
 }
 
 interface Section {
@@ -27,7 +20,7 @@ interface Section {
 
 @Component({
   selector: 'app-user-summary',
-  imports: [CommonModule, NzGridModule, NzProgressModule, NzToolTipModule, NzCardModule],
+  imports: [CommonModule, NzGridModule, NzCardModule],
   templateUrl: './user-summary.component.html',
   styleUrl: './user-summary.component.css'
 })
@@ -39,69 +32,74 @@ export class UserSummaryComponent {
   sections: Section[] = [];
 
   ngOnInit(): void {
-    this.sections.splice(0, 0, {name: '场景词汇', items: []});
-    this.sections.splice(1, 0, {name: '口语表达', items: []});
+    this.sections.splice(0, 0, { name: '学习概览', items: [] });
 
-    //get changjing cihui
-    this.sugarDictService.getAllChildrenContentModules().pipe(
-      map((response: any) => {
-        const rawData = response.children || [];
-        return rawData.map((item: any) => ({
-          id: item.id,
-          title: item.description,
-          desc: item.description,
-          learnedCount: 16,
-          sentencesCount: item.wordsCount,
-          bgImage: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80'
-        } as any));
-      })
-    ).subscribe({
-      next: (processedData: any[]) => {
-        console.log(processedData);
-        const cihui = {
-          name: '场景词汇',
-          items: processedData
-        };
-        this.sections.splice(0, 1, cihui);
+    this.sugarDictService.getUserStatistic(this.currentUser()?.id || -1).subscribe({
+      next: (response: any) => {
+        // 处理响应数据
+        const mistakeWords = response.mistakeWords || 0;
+        const mistakeSentences = response.mistakeSentences || 0;
+        const learnedWords = response.learnedWords || 0;
+        const learnedSentences = response.learnedSentences || 0;
+        const unknownWords = response.unknownWords || 0;
+        const unknownSentences = response.unknownSentences || 0;
+        const customWords = response.customWords || 0;
+        const customSentences = response.customSentences || 0;
+        const totalWords = learnedWords + unknownWords + customWords;
+        const totalSentences = learnedSentences + unknownSentences + customSentences;
+        const totalMistakes = mistakeWords + mistakeSentences;
+        
+        this.sections[0].items.push({
+          title: '已掌握词汇',
+          count: learnedWords,
+          total: totalWords,
+          className: 'learned'
+        });
+
+        this.sections[0].items.push({
+          title: '已掌握句子总数',
+          count: learnedSentences,
+          total: totalSentences,
+          className: 'learned'
+        });
+
+        this.sections[0].items.push({
+          title: '累计错误词汇',
+          count: mistakeWords,
+          total: totalMistakes,
+          className: 'mistake'
+        });
+
+        this.sections[0].items.push({
+          title: '累计错误句子',
+          count: mistakeSentences,
+          total: totalMistakes,
+          className: 'mistake'
+        });
+
+        this.sections[0].items.push({
+          title: '不认识词汇总数',
+          count: unknownWords,
+          className: 'unknown'
+        });
+        this.sections[0].items.push({
+          title: '不认识句子',
+          count: unknownSentences,
+          className: 'unknown'
+        });
+        this.sections[0].items.push({
+          title: '自定义词汇总数',
+          count: customWords,
+          className: 'custom'
+        });
+        this.sections[0].items.push({
+          title: '自定义句子总数',
+          count: customSentences,
+          className: 'custom'
+        });
       },
       error: (err) => console.error('请求失败:', err)
     });
-    //get kouyu
-    this.sugarDictService.getSentenceContentModules(this.currentUser()?.id || -1).pipe(
-      map((response: any) => {
-        const rawData = response.sentenceCases || [];
-        return rawData.map((item: any) => ({
-          id: item.id,
-          title: item.description,
-          desc: item.description,
-          learnedCount: 16,
-          sentencesCount: item.sentencesCount,
-          bgImage: 'https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80'
-        } as any));
-      })
-    ).subscribe({
-      next: (processedData: any[]) => {
-        const kouyu = {
-          name: '口语表达',
-          items: processedData
-        };
-        this.sections.splice(1, 1, kouyu);
-      },
-      error: (err) => console.error('请求失败:', err)
-    });
-    
-  }
-
-  getChineseContentModuleName(name: string) {
-    return this.sugarDictService.getChineseContentModuleName(name);
-  }
-  getEnglishContentModuleName(name: string) {
-    return this.sugarDictService.getEnglishContentModuleName(name);
-  }
-
-  getPercent(learnedCount: number, totalCount: number): number {
-    if (totalCount === 0) return 0;
-    return Math.round((learnedCount / totalCount) * 100);
   }
 
 }

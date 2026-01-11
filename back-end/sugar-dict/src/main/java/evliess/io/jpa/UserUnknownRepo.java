@@ -14,6 +14,12 @@ public interface UserUnknownRepo extends JpaRepository<UserUnknown, Long> {
   @Query("SELECT a from UserUnknown a WHERE a.userId= :userId AND a.sentenceId IS NOT NULL")
   List<UserUnknown> getUserUnknownSentencesByUserId(Long userId);
 
+  @Query("SELECT count(a.wordId) from UserUnknown a WHERE a.userId= :userId AND a.wordId IS NOT NULL")
+  Integer countUserUnknownWordsByUserId(Long userId);
+
+  @Query("SELECT count(a.sentenceId) from UserUnknown a WHERE a.userId= :userId AND a.sentenceId IS NOT NULL")
+  Integer countUserUnknownSentencesByUserId(Long userId);
+
   @Query("DELETE from UserUnknown a WHERE a.userId= :userId AND a.wordId = :wordId")
   @Modifying
   int deleteUserUnknownWordByUserIdAndWordId(Long userId, Long wordId);

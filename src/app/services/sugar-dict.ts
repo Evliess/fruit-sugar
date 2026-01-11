@@ -135,4 +135,8 @@ export class SugarDictService {
     deleteCustomBook(userId: number, id: number, type: string): Observable<String> {
         return this.http.delete<String>(`${this.apiUrl}` + "/user-custom-book/" + userId + "/" + id + "/" + type);
     }
+    
+    getUserStatistic(userId: number): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/user-statistic/user-id/" + userId);
+    }
 }

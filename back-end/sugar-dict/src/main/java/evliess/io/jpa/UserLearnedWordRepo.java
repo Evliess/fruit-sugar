@@ -13,6 +13,9 @@ public interface UserLearnedWordRepo extends JpaRepository<UserLearnedWord, Long
   @Query("SELECT DISTINCT u.wordId FROM UserLearnedWord u WHERE u.userId = :userId AND u.moduleId = :moduleId")
   List<Long> findLearnedWordIds(@Param("userId") Long userId, @Param("moduleId") Long moduleId);
 
+  @Query("SELECT count(u.wordId) FROM UserLearnedWord u WHERE u.userId = :userId")
+  Integer countLearnedWordsByUserId(@Param("userId") Long userId);
+
   @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM UserLearnedWord u WHERE u.userId = :userId AND u.wordId = :wordId")
   boolean existsByUserIdAndWordId(Long userId, Long wordId);
 

@@ -14,6 +14,12 @@ public interface UserMistakeRepo extends JpaRepository<UserMistake, Long> {
   @Query("SELECT a from UserMistake a WHERE a.userId= :userId AND a.sentenceId IS NOT NULL")
   List<UserMistake> getUserMistakeSentencesByUserId(Long userId);
 
+  @Query("SELECT count(a.wordId) from UserMistake a WHERE a.userId= :userId AND a.wordId IS NOT NULL")
+  Integer countUserMistakeWordsByUserId(Long userId);
+
+  @Query("SELECT count(a.sentenceId) from UserMistake a WHERE a.userId= :userId AND a.sentenceId IS NOT NULL")
+  Integer countUserMistakeSentenceByUserId(Long userId);
+
   @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM UserMistake u WHERE u.userId = :userId AND u.wordId = :wordId")
   boolean existsByUserIdAndWordId(Long userId, Long wordId);
 

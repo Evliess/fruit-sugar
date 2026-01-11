@@ -12,6 +12,12 @@ public interface UserCustomBookRepo extends JpaRepository<UserCustomBook, Long> 
   @Query("SELECT a from UserCustomBook a WHERE a.userId= :userId AND a.wordId IS NOT NULL")
   List<UserCustomBook> getUserCustomWordsByUserId(Long userId);
 
+  @Query("SELECT count(a.wordId) from UserCustomBook a WHERE a.userId= :userId AND a.wordId IS NOT NULL")
+  Integer countUserCustomWordsByUserId(Long userId);
+
+  @Query("SELECT count(a.sentenceId) from UserCustomBook a WHERE a.userId= :userId AND a.sentenceId IS NOT NULL")
+  Integer countUserCustomSentencesByUserId(Long userId);
+
   @Query("SELECT a from UserCustomBook a WHERE a.userId= :userId AND a.sentenceId IS NOT NULL")
   List<UserCustomBook> getUserCustomSentencesByUserId(Long userId);
 
