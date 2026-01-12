@@ -195,6 +195,13 @@ public class RestUtils {
     return filePath;
   }
 
+  public static String getBase64(String string) {
+    if (string == null) {
+      return null;
+    }
+    return Base64.getEncoder().encodeToString(string.getBytes(StandardCharsets.UTF_8));
+  }
+
   public static String getDigest(String string) {
     if (string == null) {
       return null;

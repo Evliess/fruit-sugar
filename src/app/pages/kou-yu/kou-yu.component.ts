@@ -28,6 +28,7 @@ interface Sentence {
   audioUSUrl: string;
   audioUKUrl: string;
   isKnown: boolean;
+  type: string;
 }
 
 @Component({
@@ -86,7 +87,7 @@ export class KouYuComponent {
   /**
    * Map raw sentence data to Sentence interface
    */
-  private mapSentenceData(rawData: any[]): Sentence[] {
+  private mapSentenceData(rawData: any[], type: string): Sentence[] {
     return rawData.map((item: any) => ({
       id: item.id,
       sentence_en: item.text,
@@ -94,7 +95,8 @@ export class KouYuComponent {
       audioUSUrl: item.audioUSUrl,
       audioUKUrl: item.audioUKUrl,
       showDetails: false,
-      isKnown: item.isKnown || false
+      isKnown: item.isKnown || false,
+      type: type
     } as Sentence));
   }
 
@@ -103,7 +105,7 @@ export class KouYuComponent {
    */
   private fetchCustomSentences(userId: number): void {
     this.sugarDictService.getCustomSentences(userId).pipe(
-      map((response: any) => this.mapSentenceData(response?.sentences || []))
+      map((response: any) => this.mapSentenceData(response?.sentences || [], 'custom'))
     ).subscribe({
       next: (processedData: Sentence[]) => {
         this.sentences = processedData;
@@ -121,11 +123,10 @@ export class KouYuComponent {
   private fetchModuleSentences(moduleId: number, userId: number): void {
     this.moduleId = moduleId + "";
     this.sugarDictService.getSentencesByContentModuleId(moduleId, userId).pipe(
-      map((response: any) => this.mapSentenceData(response?.sentences || []))
+      map((response: any) => this.mapSentenceData(response?.sentences || [], 'built-in'))
     ).subscribe({
       next: (processedData: Sentence[]) => {
         this.sentences = processedData;
-        console.log('获取例句成功:', this.sentences);
       },
       error: (err) => {
         console.error('获取例句失败:', err);
@@ -219,12 +220,20 @@ export class KouYuComponent {
     this.isPracticeVisible = false;
   }
 
-  handleSound(audioUrl: string): void {
+  handleSound(item: Sentence, voice: string): void {
     const apiUrl = this.sugarDictService.apiUrl;
-    if(audioUrl.endsWith(".mp3")) {
-      this.audio.src =apiUrl + "/audio/custom/" + audioUrl;
+    if(item.type === 'custom') {
+      if(voice === 'us') {
+        this.audio.src =apiUrl + "/audio/custom/" + item.audioUSUrl;
+      } else {
+        this.audio.src =apiUrl + "/audio/custom/" + item.audioUKUrl;
+      }
     } else {
-      this.audio.src = apiUrl + "/audio/" + audioUrl;
+      if(voice === 'us') {
+        this.audio.src = apiUrl + "/audio/" + item.audioUSUrl;
+      } else {
+        this.audio.src = apiUrl + "/audio/" + item.audioUKUrl;
+      } 
     }
     this.audio.load();
     this.audio.play().catch(e => console.warn('Playback failed:', e));

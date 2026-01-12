@@ -24,6 +24,8 @@ import { HoverSoundDirective } from '../../hover-sound.directive';
 interface VocabularyWord {
   id: number;
   word: string;
+  audioUSUrl: string; // 美式发音 URL
+  audioUKUrl: string; // 英式发音 URL
   usPhonetic: string; // 美式
   ukPhonetic: string; // 英式
   definition: {}; // 中文释义
@@ -31,6 +33,7 @@ interface VocabularyWord {
   sentences: { en: string; zh: string }[]; // 例句
   showDetails: boolean; // 是否显示详情 (不认识时为 true)
   isKnown: boolean;     // 是否标记为认识
+  type: string;         // 单词类型 (e.g., built-in, custom)
 }
 
 
@@ -96,7 +99,7 @@ export class CiHuiComponent {
   /**
    * Map raw word data to VocabularyWord interface
    */
-  private mapWordData(rawWords: any[]): VocabularyWord[] {
+  private mapWordData(rawWords: any[], type: string): VocabularyWord[] {
     return rawWords.map((wordData: any) => {
       const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
       const formattedPhrases = parsedPhrases.map((p: any) =>
@@ -108,11 +111,14 @@ export class CiHuiComponent {
         word: wordData.text,
         usPhonetic: wordData.phoneticUS,
         ukPhonetic: wordData.phoneticUK,
+        audioUSUrl: wordData.audioUSUrl,
+        audioUKUrl: wordData.audioUKUrl,
         definition: this.safeJsonParse(wordData.definition, {}),
         phrases: formattedPhrases,
         sentences: this.safeJsonParse(wordData.sentences, []),
         showDetails: false,
-        isKnown: wordData.isKnown
+        isKnown: wordData.isKnown,
+        type: type
       } as VocabularyWord;
     });
   }
@@ -122,7 +128,7 @@ export class CiHuiComponent {
    */
   private fetchModuleWords(moduleId: number, userId: number): void {
     this.sugarDictService.getWordsByChildContentModuleId(Number(moduleId), userId).pipe(
-      map((response: any) => this.mapWordData(response.words || []))
+      map((response: any) => this.mapWordData(response.words || [], 'built-in'))
     ).subscribe({
       next: (words: VocabularyWord[]) => {
         this.words = words;
@@ -137,10 +143,9 @@ export class CiHuiComponent {
    */
   private fetchCustomWords(userId: number): void {
     this.sugarDictService.getCustomWords(userId).pipe(
-      map((response: any) => this.mapWordData(response.words || []))
+      map((response: any) => this.mapWordData(response.words || [], 'custom'))
     ).subscribe({
       next: (words: VocabularyWord[]) => {
-        console.log(words);
         this.words = words;
         this.wordsCount = words.length;
       },
@@ -186,15 +191,27 @@ export class CiHuiComponent {
     });
   }
 
-  handleSound(phonetic: string, word: string): void {
-    if (phonetic == "US") {
-      this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=' + word;
+  handleSound(phonetic: string, item: VocabularyWord): void {
+    const apiUrl = this.sugarDictService.apiUrl;
+    if(item.type == "custom") {
+      if(phonetic == "US") {
+        this.audio.src = apiUrl + "/audio/custom/" + item.audioUSUrl;
+      } else {
+        this.audio.src = apiUrl + "/audio/custom/" + item.audioUKUrl;
+      }
     } else {
-      this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=' + word;
-    }
+      console.log(1);
+      if(phonetic == "US") {
+        console.log(2, item.audioUSUrl);
+        this.audio.src = apiUrl + "/audio/words/" + item.audioUSUrl;
+      } else {
+        console.log(3, item.audioUKUrl);
+        this.audio.src = apiUrl + "/audio/words/" + item.audioUKUrl;
+      }
+    }  
     this.audio.load();
     this.audio.play().catch(e => {
-      console.warn('Playback failed:', word);
+      console.warn('Playback failed:', item.word);
     });
   }
 

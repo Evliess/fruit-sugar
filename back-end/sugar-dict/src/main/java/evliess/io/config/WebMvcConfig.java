@@ -25,5 +25,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
       .addResourceLocations("file:" + audioDir + File.separator + custom)
       .setCachePeriod(3600).resourceChain(true);
 
+
+    String builtInWords = "words" + File.separator;
+    registry.addResourceHandler("/public/v1/audio/words/**")
+      .addResourceLocations("file:" + audioDir + File.separator + builtInWords)
+      .setCachePeriod(3600).resourceChain(true);
+
   }
 }

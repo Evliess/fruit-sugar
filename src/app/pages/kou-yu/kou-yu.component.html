@@ -16,7 +16,7 @@
     }
     @for (item of sentences.slice(0, 10); track item.id) {
     <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound(item.audioUSUrl)">
+    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound(item, 'us')">
 
       <!-- 上半部分：主要信息 + 操作按钮 -->
       <div class="row-main">
@@ -31,9 +31,9 @@
           </div>
           <div class="phonetic-group">
             <span class="phonetic">🇺🇸 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
-                [hoverTime]="500" (hoverTimeout)="handleSound(item.audioUSUrl)"></nz-icon></span>
+                [hoverTime]="500" (hoverTimeout)="handleSound(item, 'us')"></nz-icon></span>
             <span class="phonetic">🇬🇧 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
-                [hoverTime]="500" (hoverTimeout)="handleSound(item.audioUKUrl)"></nz-icon></span>
+                [hoverTime]="500" (hoverTimeout)="handleSound(item, 'uk')"></nz-icon></span>
           </div>
           <div class="definition">{{ item.sentence_zh }}</div>
         </div>
@@ -80,7 +80,7 @@
     @defer (on timer(50ms)) {
     @for (item of sentences.slice(10); track item.id) {
     <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound(item.audioUSUrl)">
+    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound(item, 'us')">
 
       <!-- 上半部分：主要信息 + 操作按钮 -->
       <div class="row-main">
@@ -95,9 +95,9 @@
           </div>
           <div class="phonetic-group">
             <span class="phonetic">🇺🇸 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
-                [hoverTime]="500" (hoverTimeout)="handleSound(item.audioUSUrl)"></nz-icon></span>
+                [hoverTime]="500" (hoverTimeout)="handleSound(item, 'us')"></nz-icon></span>
             <span class="phonetic">🇬🇧 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
-                [hoverTime]="500" (hoverTimeout)="handleSound(item.audioUKUrl)"></nz-icon></span>
+                [hoverTime]="500" (hoverTimeout)="handleSound(item, 'uk')"></nz-icon></span>
           </div>
           <div class="definition">{{ item.sentence_zh }}</div>
         </div>

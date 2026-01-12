@@ -73,24 +73,28 @@ public class DaoYouSvc {
     return ResponseEntity.ok(jsonObject.toString());
   }
 
-  private String getTextVoice(String text) {
+  public String getTextVoiceSpecifyDir(String text, String dirName, int sleepTime) {
     String digest = RestUtils.getDigest(text);
-    File audioUS = new File(audioDir + "custom" + File.separator + digest + "_us.mp3");
-    File audioUK = new File(audioDir + "custom" + File.separator + digest + "_uk.mp3");
+    File audioUS = new File(audioDir + dirName + File.separator + digest + "_us.mp3");
+    File audioUK = new File(audioDir + dirName + File.separator + digest + "_uk.mp3");
     if (!audioUS.exists() && !audioUK.exists()) {
       try {
-        RestUtils.getSentenceTTS(APP_KEY, APP_SECRET, Constants.VOICE_US, text, new File(audioDir + "custom" + File.separator));
+        RestUtils.getSentenceTTS(APP_KEY, APP_SECRET, Constants.VOICE_US, text, new File(audioDir + dirName + File.separator));
       } catch (Exception e) {
         log.error("Failed to get tts for: {} us voice", text, e);
       }
       try {
-        Thread.sleep(200);
-        RestUtils.getSentenceTTS(APP_KEY, APP_SECRET, Constants.VOICE_BR, text, new File(audioDir + "custom" + File.separator));
+        Thread.sleep(sleepTime);
+        RestUtils.getSentenceTTS(APP_KEY, APP_SECRET, Constants.VOICE_BR, text, new File(audioDir + dirName + File.separator));
       } catch (Exception e) {
         log.error("Failed to get tts for: {} uk voice", text, e);
       }
     }
     return digest;
+  }
+
+  private String getTextVoice(String text) {
+    return this.getTextVoiceSpecifyDir(text, "custom", 200);
   }
 
   public ResponseEntity<String> customSentence(Long userId, String sentence) {
@@ -195,8 +199,6 @@ public class DaoYouSvc {
       phraseJson.put("textTranslation", phraseObj.getString("chinese"));
       phrasesJson.add(phraseJson);
     }
-    String audio_us_url = "audio_us_url";
-    String audio_uk_url = "audio_uk_url";
     JSONArray sentencesArray = wordData.getJSONArray("example_sentence");
     JSONArray examplesJson = new JSONArray();
     for (int i = 0; i < sentencesArray.size(); i++) {

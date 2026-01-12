@@ -10,20 +10,24 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Service
 public class WordSvc {
   private final WordRepo wordRepo;
   private final UserLearnedWordRepo userLearnedWordRepo;
+  private final DaoYouSvc daoYouSvc;
 
   @Autowired
-  public WordSvc(WordRepo wordRepo, UserLearnedWordRepo userLearnedWordRepo) {
+  public WordSvc(WordRepo wordRepo, UserLearnedWordRepo userLearnedWordRepo, DaoYouSvc daoYouSvc) {
     this.wordRepo = wordRepo;
     this.userLearnedWordRepo = userLearnedWordRepo;
+    this.daoYouSvc = daoYouSvc;
   }
 
   public ResponseEntity<String> getWordsSimpleByModuleId(Long childModuleId) {
@@ -90,5 +94,36 @@ public class WordSvc {
       wordArr.add(wordObj);
     }
     return wordArr;
+  }
+
+  @Transactional
+  public ResponseEntity<String> getAllWords() {
+    JSONObject jsonObject = new JSONObject();
+    jsonObject.put("result", "ok");
+    Long start = 2511L;
+    Long end = 5542L;
+    List<Word> words = this.wordRepo.getByIDRange(start, end);
+    StringBuilder err = new StringBuilder();
+    for (Word word : words) {
+      try {
+        String text = word.getText();
+        String digest = this.daoYouSvc.getTextVoiceSpecifyDir(text, "words", 200);
+        this.wordRepo.updateAudioUrlBase64(digest + "_us.mp3", digest + "_uk.mp3", word.getId());
+        log.info("current word is done: {}, {}", word.getId(), word.getText());
+        int random = ThreadLocalRandom.current().nextInt(1000, 1200);
+        Thread.sleep(random);
+      } catch (Exception e) {
+        log.error("word id: {}", word.getId(), e);
+        err.append(word.getId()).append("[^]").append(word.getText()).append("\n");
+      }
+    }
+
+    try (java.io.FileWriter writer =
+           new java.io.FileWriter("D:\\error\\" + start + "-" + end + ".txt")) {
+      writer.write(err.toString());
+    } catch (Exception e) {
+      log.error("Error writing to file", e);
+    }
+    return ResponseEntity.ok(jsonObject.toString());
   }
 }

@@ -25,4 +25,12 @@ public interface WordRepo extends JpaRepository<Word, Long> {
 
   @Query("SELECT a from Word a WHERE a.text= :text")
   Word getByText(String text);
+
+  @Modifying
+  @Query("UPDATE Word a set a.audioUSUrl = :base64StrUS, a.audioUKUrl = :base64StrUk WHERE a.id = :id")
+  @Transactional
+  void updateAudioUrlBase64(String base64StrUS, String base64StrUk, Long id);
+
+  @Query("SELECT a from Word a WHERE a.id >= :start and a.id <= :end")
+  List<Word> getByIDRange(Long start, Long end);
 }

@@ -21,7 +21,7 @@
     }
     @for (item of words.slice(0, 10); track item.id) {
     <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound('US', item.word)">
+    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound('US', item)">
 
       <!-- 上半部分：主要信息 + 操作按钮 -->
       <div class="row-main">
@@ -38,10 +38,10 @@
           <div class="phonetic-group">
             <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
                 nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('US', item.word)" /></span>
+                (hoverTimeout)="handleSound('US', item)" /></span>
             <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
                 nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('UK', item.word)" /></span>
+                (hoverTimeout)="handleSound('UK', item)" /></span>
           </div>
 
           @if (!(item.showDetails || ciHuiService.learnMode())) {
@@ -125,7 +125,7 @@
     @defer (on timer(50ms)) {
     @for (item of words.slice(10); track item.id) {
     <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound('US', item.word)">
+    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound('US', item)">
 
       <!-- 上半部分：主要信息 + 操作按钮 -->
       <div class="row-main">
@@ -142,10 +142,10 @@
           <div class="phonetic-group">
             <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
                 nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('US', item.word)" /></span>
+                (hoverTimeout)="handleSound('US', item)" /></span>
             <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
                 nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('UK', item.word)" /></span>
+                (hoverTimeout)="handleSound('UK', item)" /></span>
           </div>
 
           @if (!(item.showDetails || ciHuiService.learnMode())) {
