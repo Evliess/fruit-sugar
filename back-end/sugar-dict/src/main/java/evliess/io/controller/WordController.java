@@ -49,11 +49,11 @@ public class WordController {
     return this.wordSvc.getWordsSimpleByModuleId(childModuleId);
   }
 
-  @Operation(
-    summary = "Get All Words to update audio url",
-    description = "Get All Words to update audio url"
-  )
-  @GetMapping(value = "/words/get-all-words", produces = "application/json")
+  //  @Operation(
+//    summary = "Get All Words to update audio url",
+//    description = "Get All Words to update audio url"
+//  )
+//  @GetMapping(value = "/words/get-all-words", produces = "application/json")
   public ResponseEntity<String> getAllWords() {
     return this.wordSvc.getAllWords();
 
