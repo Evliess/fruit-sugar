@@ -73,6 +73,22 @@ public class DaoYouSvc {
     return ResponseEntity.ok(jsonObject.toString());
   }
 
+  public String getTextVoiceSpecifyDirIgnoreExist(String text, String dirName, int sleepTime) {
+    String digest = RestUtils.getDigest(text);
+    try {
+      RestUtils.getSentenceTTS(APP_KEY, APP_SECRET, Constants.VOICE_US, text, new File(audioDir + dirName + File.separator));
+    } catch (Exception e) {
+      log.error("Failed to get tts for: {} us voice", text, e);
+    }
+    try {
+      Thread.sleep(sleepTime);
+      RestUtils.getSentenceTTS(APP_KEY, APP_SECRET, Constants.VOICE_BR, text, new File(audioDir + dirName + File.separator));
+    } catch (Exception e) {
+      log.error("Failed to get tts for: {} uk voice", text, e);
+    }
+    return digest;
+  }
+
   public String getTextVoiceSpecifyDir(String text, String dirName, int sleepTime) {
     String digest = RestUtils.getDigest(text);
     File audioUS = new File(audioDir + dirName + File.separator + digest + "_us.mp3");
@@ -96,7 +112,7 @@ public class DaoYouSvc {
   }
 
   private String fixBuiltInWordVoice(String text) {
-    return this.getTextVoiceSpecifyDir(text, "words", 200);
+    return this.getTextVoiceSpecifyDirIgnoreExist(text, "words", 200);
   }
 
   private String getTextVoice(String text) {

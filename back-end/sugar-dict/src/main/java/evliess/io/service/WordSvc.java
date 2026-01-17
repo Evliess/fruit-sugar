@@ -81,11 +81,11 @@ public class WordSvc {
       wordObj.put("id", word.getId());
       wordObj.put("text", word.getText());
       wordObj.put("definition", word.getDefinition());
+      wordObj.put("audioUSUrl", word.getAudioUSUrl());
+      wordObj.put("audioUKUrl", word.getAudioUKUrl());
       if (!isSimple) {
         wordObj.put("phoneticUS", word.getPhoneticUS());
         wordObj.put("phoneticUK", word.getPhoneticUK());
-        wordObj.put("audioUSUrl", word.getAudioUSUrl());
-        wordObj.put("audioUKUrl", word.getAudioUKUrl());
         wordObj.put("phrases", word.getPhrases());
         wordObj.put("sentences", word.getSentences());
         wordObj.put("moduleId", word.getModuleId());
