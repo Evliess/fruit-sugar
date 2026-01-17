@@ -61,14 +61,14 @@ public class DaoYouSvc {
     return ResponseEntity.ok(jsonObject.toString());
   }
 
-  public ResponseEntity<String> getTextTts(String text) {
+  public ResponseEntity<String> fixBuiltInWordTts(String text) {
     JSONObject jsonObject = new JSONObject();
     if (text == null || text.isEmpty()) {
       jsonObject.put(Constants.RESULT, Constants.ERROR);
       return ResponseEntity.ok(jsonObject.toString());
     }
-    String digest = getTextVoice(text);
-    this.wordRepo.updateAudioUrlByText(digest, text);
+    String digest = fixBuiltInWordVoice(text);
+    this.wordRepo.updateAudioUrlByText(digest + "_us.mp3", digest + "_uk.mp3", text);
     jsonObject.put(Constants.RESULT, Constants.OK);
     return ResponseEntity.ok(jsonObject.toString());
   }
@@ -77,12 +77,14 @@ public class DaoYouSvc {
     String digest = RestUtils.getDigest(text);
     File audioUS = new File(audioDir + dirName + File.separator + digest + "_us.mp3");
     File audioUK = new File(audioDir + dirName + File.separator + digest + "_uk.mp3");
-    if (!audioUS.exists() && !audioUK.exists()) {
+    if (!audioUS.exists()) {
       try {
         RestUtils.getSentenceTTS(APP_KEY, APP_SECRET, Constants.VOICE_US, text, new File(audioDir + dirName + File.separator));
       } catch (Exception e) {
         log.error("Failed to get tts for: {} us voice", text, e);
       }
+    }
+    if (!audioUK.exists()) {
       try {
         Thread.sleep(sleepTime);
         RestUtils.getSentenceTTS(APP_KEY, APP_SECRET, Constants.VOICE_BR, text, new File(audioDir + dirName + File.separator));
@@ -91,6 +93,10 @@ public class DaoYouSvc {
       }
     }
     return digest;
+  }
+
+  private String fixBuiltInWordVoice(String text) {
+    return this.getTextVoiceSpecifyDir(text, "words", 200);
   }
 
   private String getTextVoice(String text) {

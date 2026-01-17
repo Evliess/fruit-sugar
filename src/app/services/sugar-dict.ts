@@ -126,6 +126,9 @@ export class SugarDictService {
     customWord(userId: number, word: string): Observable<String> {
         return this.http.post<String>(`${this.apiUrl}` + "/custom/word", { userId: userId, text: word });
     }
+    fixBuiltInWordTts(word: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/text/retry/tts", { text: word });
+    }
     getCustomSentences(userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/user-custom-book/sentences/" + userId);
     }
@@ -139,4 +142,5 @@ export class SugarDictService {
     getUserStatistic(userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/user-statistic/user-id/" + userId);
     }
+
 }

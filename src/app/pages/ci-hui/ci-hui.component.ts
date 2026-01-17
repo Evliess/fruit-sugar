@@ -200,18 +200,21 @@ export class CiHuiComponent {
         this.audio.src = apiUrl + "/audio/custom/" + item.audioUKUrl;
       }
     } else {
-      console.log(1);
       if(phonetic == "US") {
-        console.log(2, item.audioUSUrl);
         this.audio.src = apiUrl + "/audio/words/" + item.audioUSUrl;
       } else {
-        console.log(3, item.audioUKUrl);
         this.audio.src = apiUrl + "/audio/words/" + item.audioUKUrl;
       }
     }  
     this.audio.load();
     this.audio.play().catch(e => {
       console.warn('Playback failed:', item.word);
+      this.sugarDictService.fixBuiltInWordTts(item.word).subscribe({
+        next: (response: any) => {
+          this.ngOnInit();
+        },
+        error: (err) => console.error('修复失败:', err)
+      });
     });
   }
 

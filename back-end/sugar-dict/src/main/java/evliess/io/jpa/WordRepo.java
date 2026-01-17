@@ -16,9 +16,9 @@ public interface WordRepo extends JpaRepository<Word, Long> {
   int countWordsByModuleId(Long moduleId);
 
   @Modifying
-  @Query("UPDATE Word a set a.audioUSUrl = :url, a.audioUSUrl = :url WHERE a.text = :text")
+  @Query("UPDATE Word a set a.audioUSUrl = :audioUSUrl, a.audioUKUrl = :audioUKUrl WHERE a.text = :text")
   @Transactional
-  int updateAudioUrlByText(String url, String text);
+  int updateAudioUrlByText(String audioUSUrl, String audioUKUrl, String text);
 
   @Query("SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Word u WHERE u.text = :text")
   boolean existsByText(String text);

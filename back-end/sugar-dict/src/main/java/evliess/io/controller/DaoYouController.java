@@ -61,10 +61,9 @@ public class DaoYouController {
     return this.daoYouSvc.customSentence(textDto.getUserId(), textDto.getText());
   }
 
-  //  @Operation(summary = "Get Voice by Text", description = "Get Voice by Text")
-//  @PostMapping("/text/tts")
-  public ResponseEntity<String> getTextTts(@RequestBody TextDto textDto) {
-    return this.daoYouSvc.getTextTts(textDto.getText());
+  @Operation(summary = "Get Voice by Text for built-in word", description = "Get Voice by Text for built-in word")
+  @PostMapping("/text/retry/tts")
+  public ResponseEntity<String> fixBuiltInWordTts(@RequestBody TextDto textDto) {
+    return this.daoYouSvc.fixBuiltInWordTts(textDto.getText());
   }
-
 }
