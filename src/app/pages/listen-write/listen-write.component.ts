@@ -26,6 +26,8 @@ interface VocabularyWord {
   definitions: { type: string; zh: string }[];// 词性
   usAudio: string; // 美式
   ukAudio: string; // 英式
+  audioUSUrl: string; // 美式音频URL
+  audioUKUrl: string; // 英式音频URL
 }
 
 @Component({
@@ -84,6 +86,8 @@ export class ListenWriteComponent {
               word: wordData.text,
               usAudio: wordData.phoneticUS,
               ukAudio: wordData.phoneticUK,
+              audioUSUrl: wordData.audioUSUrl,
+              audioUKUrl: wordData.audioUKUrl,
               definitions: this.safeJsonParse(wordData.definition, {}),
             } as VocabularyWord;
           });
@@ -92,7 +96,7 @@ export class ListenWriteComponent {
         next: (words: VocabularyWord[]) => {
           this.words = words;
           this.currWord = this.words[this.currIndex];
-          this.playAudio(this.currWord.word);
+          this.playAudio(this.currWord);
         },
         error: (err) => console.error('请求失败:', err)
       });
@@ -109,10 +113,9 @@ export class ListenWriteComponent {
   }
 
 
-  playAudio(word: string): void {
-    const usAudio = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=' + word;
-    const ukAudio = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=' + word;
-    this.audio.src = this.soundTypeUK ? ukAudio : usAudio;
+  playAudio(word: VocabularyWord): void {
+    const apiUrl = this.sugarDictService.apiUrl;
+    this.audio.src = this.soundTypeUK ? apiUrl + "/audio/words/" + word.audioUKUrl : apiUrl + "/audio/words/" + word.audioUSUrl;
     this.audio.load();
     this.audio.play().catch(e => console.warn('Playback failed:', word));
   }
@@ -121,14 +124,14 @@ export class ListenWriteComponent {
     this.currIndex = (this.currIndex + 1) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
-    this.playAudio(this.currWord.word);
+    this.playAudio(this.currWord);
   }
 
   playPrev(): void {
     this.currIndex = (this.currIndex - 1 + this.words.length) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
-    this.playAudio(this.currWord.word);
+    this.playAudio(this.currWord);
   }
 
   checkAnswer(): void {
@@ -151,7 +154,7 @@ export class ListenWriteComponent {
   handleAction(action: string): void {
     if ("play" == action) {
       this.togglePlay();
-      this.playAudio(this.currWord.word);
+      this.playAudio(this.currWord);
     };
     if ("prev" == action) { this.playPrev(); };
     if ("next" == action) { this.playNext(); }
