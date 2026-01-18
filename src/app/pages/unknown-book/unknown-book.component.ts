@@ -31,6 +31,8 @@ interface VocabularyWord {
   showDetails: boolean; // 是否显示详情 (不认识时为 true)
   isKnown: boolean;     // 是否标记为认识
   type?: string;    // 单词类型（可选）
+  audioUSUrl?: string; // 美式发音 URL
+  audioUKUrl?: string; // 英式发音 URL
 }
 
 @Component({
@@ -82,6 +84,8 @@ export class UnknownBookComponent {
             word: wordData.text,
             usPhonetic: wordData.phoneticUS,
             ukPhonetic: wordData.phoneticUK,
+            audioUSUrl: wordData.audioUSUrl,
+            audioUKUrl: wordData.audioUKUrl,
             definition: this.safeJsonParse(wordData.definition, {}),
             phrases: formattedPhrases,
             sentences: this.safeJsonParse(wordData.sentences, []),
@@ -109,15 +113,24 @@ export class UnknownBookComponent {
     }
   }
 
-  handleSound(phonetic: string, word: string): void {
-    if (phonetic == "US") {
-      this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_us_female&txt=' + word;
+  handleSound(phonetic: string, item: VocabularyWord): void {
+    const apiUrl = this.sugarDictService.apiUrl;
+    if (item.type == "word") {
+      if (phonetic == "US") {
+        this.audio.src = apiUrl + "/audio/words/" + item.audioUSUrl;
+      } else {
+        this.audio.src = apiUrl + "/audio/words/" + item.audioUKUrl;
+      }
     } else {
-      this.audio.src = 'https://api.frdic.com/api/v2/speech/speakweb?langid=en&voicename=en_uk_male&txt=' + word;
+      if (phonetic == "US") {
+        this.audio.src = apiUrl + "/audio/" + item.audioUSUrl;
+      } else {
+        this.audio.src = apiUrl + "/audio/" + item.audioUKUrl;
+      }
     }
     this.audio.load();
     this.audio.play().catch(e => {
-      console.warn('Playback failed:', word);
+      console.warn('Playback failed:', item.word);
     });
   }
 
