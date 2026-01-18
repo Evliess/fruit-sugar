@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -67,6 +67,11 @@ export class WrongBookComponent {
   words: VocabularyWord[] = [];
   wordsCount = 0;
   constructor(private message: NzMessageService) { }
+  @ViewChild('contentTemplate', { static: true }) contentTemplate!: TemplateRef<any>;
+  
+  createCustomMessage(template: TemplateRef<any>): void {
+    this.message.info(template);
+  }
 
   ngOnInit(): void {
     this.sugarDictService.getUserMistake(this.currentUser()?.id || 0).pipe(
@@ -98,7 +103,7 @@ export class WrongBookComponent {
       },
       error: (err) => console.error('请求失败:', err)
     });
-    this.message.success('根据艾宾浩斯记忆法，建议你先复习这些单词，它们的记忆间隔较短');
+    this.createCustomMessage(this.contentTemplate);
   }
 
   private safeJsonParse(data: any, fallback: any): any {
