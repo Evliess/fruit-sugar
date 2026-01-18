@@ -10,6 +10,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzNotificationPlacement, NzNotificationService } from 'ng-zorro-antd/notification';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
@@ -66,13 +67,7 @@ export class WrongBookComponent {
   route = inject(ActivatedRoute);
   words: VocabularyWord[] = [];
   wordsCount = 0;
-  constructor(private message: NzMessageService) { }
-  @ViewChild('contentTemplate', { static: true }) contentTemplate!: TemplateRef<any>;
-  
-  createCustomMessage(template: TemplateRef<any>): void {
-    this.message.info(template);
-  }
-
+  constructor(private message: NzMessageService, private notification: NzNotificationService) { }
   ngOnInit(): void {
     this.sugarDictService.getUserMistake(this.currentUser()?.id || 0).pipe(
       map((response: any) => {
@@ -100,10 +95,16 @@ export class WrongBookComponent {
       next: (words: VocabularyWord[]) => {
         this.words = words;
         this.wordsCount = words.length;
+        this.notification.create(
+          'info',
+          '提示：',
+          '根据艾宾浩斯记忆法，建议你先复习这些单词，它们的记忆间隔较短',
+          { nzPlacement: "top" }
+        );
       },
       error: (err) => console.error('请求失败:', err)
     });
-    this.createCustomMessage(this.contentTemplate);
+
   }
 
   private safeJsonParse(data: any, fallback: any): any {

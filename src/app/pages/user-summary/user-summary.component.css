@@ -1,135 +1,37 @@
-/* --- 全局容器设置 --- */
-.page-container {
+/* statistics.component.css */
+.container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 40px 20px;
-  background-color: #f5f5f7;
-  /* Apple 官网经典灰白底色 */
+  padding: 20px;
+  background-color: #f0f2f5;
   min-height: 100vh;
-  /* Apple 默认字体栈 */
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+/* 容器基础内边距 */
+.stats-container {
+  padding: 24px;
+  min-height: max-content;
 }
 
-/* --- 区块标题样式 --- */
-.section-wrapper {
-  margin-bottom: 60px;
+/* 图表容器：设置明确高度 */
+.chart-container {
+  width: 100%;
+  height: 350px;
+  min-height: 300px;
 }
 
-.progress-wrapper {
-  text-align: center;
-}
-
-/* Apple-style text colors by class type */
-.progress-wrapper h1.learned {
-  color: #007aff;
-  /* Apple Blue – positive/learned */
-}
-
-.progress-wrapper h1.mistake {
-  color: #ff3b30;
-  /* Apple Red – warning/error */
-}
-
-.progress-wrapper h1.unknown {
-  color: #8e8e93;
-  /* Apple Gray – neutral/unknown */
-}
-
-.progress-wrapper h1.custom {
-  color: #5856d6;
-  /* Apple Indigo – custom/unique */
-}
-
-.progress-wrapper h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
-  margin-top: 12px;
-  margin-bottom: 0;
-}
-
-.section-title {
-  font-size: 28px;
-  font-weight: 700;
-  color: #1d1d1f;
-  /* Apple 深黑色 */
-  margin-bottom: 24px;
-  letter-spacing: -0.01em;
-}
-
-/* --- 移动端响应式调整 (Mobile Only) --- */
-@media (max-width: 768px) {
-  .page-container {
-    padding: 20px 10px;
-    /* 减少外部容器的边距 */
-  }
-
-  .section-title {
-    font-size: 22px;
-    margin-left: 10px;
-    margin-bottom: 16px;
-  }
-
-  .apple-card {
-    height: 360px;
-    /* 移动端稍微调小高度 */
-    border-radius: 20px;
-    /* 移动端圆角稍微调小 */
-    margin-bottom: 6px;
-    /* 卡片本身的下边距 */
-  }
-
-  /* 
-    强制修正 Ant Design Grid 的间距 
-    实现你要求的 "6px margin" 效果 
-  */
-  nz-col {
-    padding-left: 6px !important;
-    padding-right: 6px !important;
-    padding-bottom: 12px;
-    /* 卡片之间的垂直间距 */
-  }
-}
-
-.card-title {
-  font-size: 19px;
-  line-height: 1.2;
-  color: #1d1d1f;
-  text-align: center;
-  margin-bottom: 4px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-}
-
-.card-subtitle {
-  color: #7f8c8d;
-  font-size: 0.95rem;
-}
-
-.card-description {
-  color: rgb(32, 33, 36);
-  font-size: 12px;
-  line-height: 1.5;
-  letter-spacing: 0;
-  font-weight: 400;
-}
-
-/* 底部 Footer (Knowledge / Ongoing) */
-.card-footer {
-  border-top: 1px solid #dadcdae0;
-  /* 浅色分割线 */
-  padding: 12px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.card-footer .footer-title {
-  font-weight: 700;
+/* 统计总数的小标签样式 */
+.total-tag {
+  color: rgba(0, 0, 0, 0.45);
   font-size: 14px;
-  color: #202124;
 }
 
-.card-footer .footer-status {
-  font-size: 12px;
-  color: #0071e3;
+/* 移动端适配：屏幕宽度小于 576px (手机) 时应用 */
+@media (max-width: 576px) {
+  .stats-container {
+    padding: 12px;
+  }
+  
+  .chart-container {
+    height: 300px;
+  }
 }

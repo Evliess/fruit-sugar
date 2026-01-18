@@ -1,44 +1,31 @@
-<div class="page-container">
+<!-- statistics.component.html -->
+<div class="container">
+  <div class="stats-container">
+    <div nz-row [nzGutter]="[16, 16]">
 
-    <!-- 循环渲染三个大板块 -->
-    @for (section of sections; track section.name) {
-    <div class="section-wrapper">
-        <h2 class="section-title">{{ section.name }}</h2>
+      <!-- 词汇统计卡片 -->
+      <div nz-col [nzXs]="24" [nzMd]="12">
+        <nz-card nzTitle="词汇掌握情况" [nzExtra]="totalWordsTemplate">
+          <!-- echarts 指令，自动处理 resize -->
+          <div echarts [options]="wordsChartOption" class="chart-container"></div>
+        </nz-card>
+        <ng-template #totalWordsTemplate>
+          <span class="total-tag">Total: {{ statsData.words.mastered + statsData.words.error + statsData.words.unknown +
+            statsData.words.custom }}</span>
+        </ng-template>
+      </div>
 
-        <!-- Grid 系统: 移动端间距小(12px)，桌面端间距大(24px) -->
-        <nz-row [nzGutter]="[24, 24]">
+      <!-- 句子统计卡片 -->
+      <div nz-col [nzXs]="24" [nzMd]="12">
+        <nz-card nzTitle="句子掌握情况" [nzExtra]="totalSentencesTemplate">
+          <div echarts [options]="sentencesChartOption" class="chart-container"></div>
+        </nz-card>
+        <ng-template #totalSentencesTemplate>
+          <span class="total-tag">Total: {{ statsData.sentences.mastered + statsData.sentences.error +
+            statsData.sentences.unknown + statsData.sentences.custom }}</span>
+        </ng-template>
+      </div>
 
-            @for (item of section.items; track item.title) {
-            <!-- 
-            Responsive Breakpoints:
-            nzXs (Mobile): 24格 (占满)
-            nzMd (Tablet): 12格 (一行两个)
-            nzLg (Desktop): 8格 (一行三个)
-          -->
-            <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="6">
-
-                <nz-card nzHoverable [nzCover]="coverTemplate1" nzBordered="true">
-                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
-                </nz-card>
-                <ng-template #coverTemplate1>
-                    <div class="progress-wrapper"> 
-                        <h1 class="{{ item.className }}">{{ item.count }}</h1>
-                    </div>
-                </ng-template>
-
-                <ng-template #content1>
-                    <h2 class="card-title">{{ item.title }}</h2>
-                    <p class="card-subtitle">{{ item.desc }}</p>
-                    <!-- <div class="card-footer">
-                        <span class="footer-title">已学习：{{ item.learnedCount }}</span>
-                        <span class="footer-status">总计: {{ item.sentencesCount }}</span>
-                    </div> -->
-                </ng-template>
-            </nz-col>
-            }
-
-        </nz-row>
     </div>
-    }
-
+  </div>
 </div>
