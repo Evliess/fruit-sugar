@@ -1,12 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SugarDictService {
     private http = inject(HttpClient);
 
-    public apiUrl = "http://localhost:8080/sugar-dict/public/v1";
+    public apiUrl = environment.apiUrl;
 
     getSentenceContentModules(userId: number): Observable<String> {
         return this.http.get<String>(`${this.apiUrl}` + "/sentences/content-modules/" + userId);
