@@ -70,9 +70,15 @@ export class CiHuiComponent {
   private authService = inject(AuthService);
   route = inject(ActivatedRoute);
   wordsCount = 0;
-  words: any[] = [];
+  firstWords: any[] = [];
+  remainingWords: any[] = [];
   moduleId = '';
   currentUser = this.authService.currentUser;
+
+  // 保持向后兼容的getter
+  get words(): any[] {
+    return [...this.firstWords, ...this.remainingWords];
+  }
 
   constructor(private message: NzMessageService) { }
 
@@ -128,11 +134,25 @@ export class CiHuiComponent {
    */
   private fetchModuleWords(moduleId: number, userId: number): void {
     this.sugarDictService.getWordsByChildContentModuleId(Number(moduleId), userId).pipe(
-      map((response: any) => this.mapWordData(response.words || [], 'built-in'))
+      map((response: any) => {
+        const rawWords = response.words || [];
+        const firstBatch = rawWords.slice(0, 10);
+        const remainingBatch = rawWords.slice(10);
+        
+        // 先处理前10个
+        this.firstWords = this.mapWordData(firstBatch, 'built-in');
+        this.remainingWords = [];
+        this.wordsCount = rawWords.length;
+        
+        // 延迟处理剩余数据
+        setTimeout(() => {
+          this.remainingWords = this.mapWordData(remainingBatch, 'built-in');
+        }, 20);
+        
+        return this.firstWords;
+      })
     ).subscribe({
       next: (words: VocabularyWord[]) => {
-        this.words = words;
-        this.wordsCount = words.length;
       },
       error: (err) => console.error('获取模块单词失败:', err)
     });
@@ -143,11 +163,25 @@ export class CiHuiComponent {
    */
   private fetchCustomWords(userId: number): void {
     this.sugarDictService.getCustomWords(userId).pipe(
-      map((response: any) => this.mapWordData(response.words || [], 'custom'))
+      map((response: any) => {
+        const rawWords = response.words || [];
+        const firstBatch = rawWords.slice(0, 10);
+        const remainingBatch = rawWords.slice(10);
+        
+        // 先处理前10个
+        this.firstWords = this.mapWordData(firstBatch, 'custom');
+        this.remainingWords = [];
+        this.wordsCount = rawWords.length;
+        
+        // 延迟处理剩余数据
+        setTimeout(() => {
+          this.remainingWords = this.mapWordData(remainingBatch, 'custom');
+        }, 20);
+        
+        return this.firstWords;
+      })
     ).subscribe({
       next: (words: VocabularyWord[]) => {
-        this.words = words;
-        this.wordsCount = words.length;
       },
       error: (err) => console.error('获取自定义单词失败:', err)
     });
@@ -157,7 +191,8 @@ export class CiHuiComponent {
    * Clear words and reset count when no valid data is available
    */
   private clearWords(): void {
-    this.words = [];
+    this.firstWords = [];
+    this.remainingWords = [];
     this.wordsCount = 0;
   }
 

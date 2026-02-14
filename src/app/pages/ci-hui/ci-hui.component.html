@@ -1,233 +1,222 @@
 <div class="container">
-  <!-- <div class="page-header">
-    <h1>词汇打卡</h1>
-  </div> -->
-
   <div class="list-container">
     @if(isCustom) {
-    <div class="word-row">
-      <div class="row-main">
-        <div class="word-info">
-          <input nz-input [(ngModel)]="userWord" />
-        </div>
-        <div class="action-group">
-          <button nz-button nzType="primary" (click)="customWord(userWord)" [nzLoading]="isLoading" nz-tooltip
-            nzTooltipTitle="添加">
-            <span nz-icon nzType="plus"></span> 添加
-          </button>
-        </div>
-      </div>
+    <div class="custom-input-section">
+      <input nz-input [(ngModel)]="userWord" placeholder="输入自定义单词..." />
+      <button nz-button nzType="primary" (click)="customWord(userWord)" [nzLoading]="isLoading" nz-tooltip
+        nzTooltipTitle="添加">
+        <span nz-icon nzType="plus"></span> 添加
+      </button>
     </div>
     }
-    @for (item of words.slice(0, 10); track item.id) {
-    <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound('US', item)">
+    
+    <div nz-row [nzGutter]="[16, 16]">
+      @for (item of firstWords; track item.id) {
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="8">
+        <nz-card 
+          [class.is-known]="item.isKnown" 
+          [nzHoverable]="true"
+          appHoverSound 
+          (soundClick)="handleSound('US', item)">
+          
+          <!-- 卡片内容区域 -->
+          <div class="card-content">
+            <!-- 单词标题 -->
+            <div class="word-title-group">
+              <span class="word-text">{{ item.word }}</span>
+              @if (item.isKnown) {
+              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+              }
+            </div>
 
-      <!-- 上半部分：主要信息 + 操作按钮 -->
-      <div class="row-main">
+            <!-- 音标 -->
+            <div class="phonetic-group">
+              <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                  (hoverTimeout)="handleSound('US', item)" /></span>
+              <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
+                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                  (hoverTimeout)="handleSound('UK', item)" /></span>
+            </div>
 
-        <!-- 左侧：单词信息 -->
-        <div class="word-info">
-          <div class="word-title-group">
-            <span class="word-text">{{ item.word }}</span>
-            @if (item.isKnown) {
-            <!-- <nz-tag [nzColor]="'success'">已掌握</nz-tag> -->
+            <!-- 释义 -->
+            @if (!(item.showDetails || ciHuiService.learnMode())) {
+            <div class="definition">{{item.sentences[0]?.text || ''}}</div>
             }
-          </div>
 
-          <div class="phonetic-group">
-            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
-                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('US', item)" /></span>
-            <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
-                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('UK', item)" /></span>
-          </div>
-
-          @if (!(item.showDetails || ciHuiService.learnMode())) {
-          <div class="definition">{{item.sentences[0].text}}</div>
-          }
-
-          @if (item.showDetails || ciHuiService.learnMode()) {
-          @for (item of item.definition | keyvalue; track item.key) {
-          <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
-          }
-          }
-        </div>
-
-        <!-- 右侧：按钮组 -->
-        <div class="action-group">
-          <!-- 认识 -->
-           @if(!isCustom) {
-          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-            (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
-            <span nz-icon nzType="check"></span> 认识
-          </button>
-
-          <!-- 不认识 -->
-          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
-            nzTooltipTitle="标记为不认识">
-            <span nz-icon nzType="close"></span> 不认识
-          </button>
-          }
-
-          <!-- 显示全部/收起 -->
-          @if(!ciHuiService.learnMode()) {
-          <button nz-button nzType="default" (click)="$event.stopPropagation();toggleDetails(item)">
-            <span nz-icon [nzType]="item.showDetails|| ciHuiService.learnMode() ? 'up' : 'down'"></span>
-            {{ item.showDetails || ciHuiService.learnMode()? '收起' : '详情' }}
-          </button>
-
-          <!-- 练一练 -->
-          <!-- <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
-            <span nz-icon nzType="edit"></span> 练一练
-          </button> -->
-          }
-          @if(isCustom) {
-          <!-- 删除 -->
-          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
-            nzTooltipTitle="删除">
-            <span nz-icon nzType="delete"></span> 删除
-          </button>
-          }
-        </div>
-      </div>
-
-      <!-- 下半部分：详情 (默认隐藏) -->
-      @if (item.showDetails || ciHuiService.learnMode()) {
-      <div class="row-details">
-        <nz-divider></nz-divider>
-
-        <div class="detail-block">
-          <span class="detail-label">常用词组：</span>
-          <div class="detail-content">
-            @for (phrase of item.phrases; track $index) {
-            <nz-tag>{{ phrase }}</nz-tag>
+            @if (item.showDetails || ciHuiService.learnMode()) {
+            <div class="definition-details">
+              @for (def of item.definition | keyvalue; track def.key) {
+              <div class="definition-item"><strong>{{ def.key }}:</strong> {{ def.value }}</div>
+              }
+            </div>
             }
-          </div>
-        </div>
 
-        <div class="detail-block mt-2">
-          <span class="detail-label">双语例句：</span>
-          <div class="detail-content sentence-list">
-            @for (sent of item.sentences; track $index) {
-            <div class="sentence-item">
-              <p class="en">{{ sent.text }}</p>
-              <p class="zh">{{ sent.textTranslation }}</p>
+            <!-- 详情区域 -->
+            @if (item.showDetails || ciHuiService.learnMode()) {
+            <div class="card-details">
+              <nz-divider></nz-divider>
+
+              <div class="detail-block">
+                <span class="detail-label">常用词组：</span>
+                <div class="detail-content">
+                  @for (phrase of item.phrases; track $index) {
+                  <nz-tag>{{ phrase }}</nz-tag>
+                  }
+                </div>
+              </div>
+
+              <div class="detail-block mt-2">
+                <span class="detail-label">双语例句：</span>
+                <div class="detail-content sentence-list">
+                  @for (sent of item.sentences; track $index) {
+                  <div class="sentence-item">
+                    <p class="en">{{ sent.text }}</p>
+                    <p class="zh">{{ sent.textTranslation }}</p>
+                  </div>
+                  }
+                </div>
+              </div>
             </div>
             }
           </div>
-        </div>
+
+          <!-- 卡片底部操作按钮 -->
+          <div class="card-footer">
+            @if(!isCustom) {
+            <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+              (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+              <span nz-icon nzType="check"></span> 认识
+            </button>
+
+            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
+              nzTooltipTitle="标记为不认识">
+              <span nz-icon nzType="close"></span> 不认识
+            </button>
+            }
+
+            @if(!ciHuiService.learnMode()) {
+            <button nz-button nzType="default" (click)="$event.stopPropagation();toggleDetails(item)">
+              <span nz-icon [nzType]="item.showDetails|| ciHuiService.learnMode() ? 'up' : 'down'"></span>
+              {{ item.showDetails || ciHuiService.learnMode()? '收起' : '详情' }}
+            </button>
+            }
+
+            @if(isCustom) {
+            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
+              nzTooltipTitle="删除">
+              <span nz-icon nzType="delete"></span> 删除
+            </button>
+            }
+          </div>
+        </nz-card>
       </div>
       }
-    </div>
-    }
-    @defer (on timer(50ms)) {
-    @for (item of words.slice(10); track item.id) {
-    <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound('US', item)">
 
-      <!-- 上半部分：主要信息 + 操作按钮 -->
-      <div class="row-main">
+      @defer (on timer(20ms)) {
+      @for (item of remainingWords; track item.id) {
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="8">
+        <nz-card 
+          [class.is-known]="item.isKnown" 
+          [nzHoverable]="true"
+          appHoverSound 
+          (soundClick)="handleSound('US', item)">
+          
+          <!-- 卡片内容区域 -->
+          <div class="card-content">
+            <!-- 单词标题 -->
+            <div class="word-title-group">
+              <span class="word-text">{{ item.word }}</span>
+              @if (item.isKnown) {
+              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+              }
+            </div>
 
-        <!-- 左侧：单词信息 -->
-        <div class="word-info">
-          <div class="word-title-group">
-            <span class="word-text">{{ item.word }}</span>
-            @if (item.isKnown) {
-            <!-- <nz-tag [nzColor]="'success'">已掌握</nz-tag> -->
+            <!-- 音标 -->
+            <div class="phonetic-group">
+              <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                  (hoverTimeout)="handleSound('US', item)" /></span>
+              <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
+                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                  (hoverTimeout)="handleSound('UK', item)" /></span>
+            </div>
+
+            <!-- 释义 -->
+            @if (!(item.showDetails || ciHuiService.learnMode())) {
+            <div class="definition">{{item.sentences[0]?.text || ''}}</div>
             }
-          </div>
 
-          <div class="phonetic-group">
-            <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
-                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('US', item)" /></span>
-            <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
-                nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('UK', item)" /></span>
-          </div>
-
-          @if (!(item.showDetails || ciHuiService.learnMode())) {
-          <div class="definition">{{item.sentences[0].text}}</div>
-          }
-
-          @if (item.showDetails || ciHuiService.learnMode()) {
-          @for (item of item.definition | keyvalue; track item.key) {
-          <div class="definition"><strong>{{ item.key }}:</strong> {{ item.value }}</div>
-          }
-          }
-        </div>
-
-        <!-- 右侧：按钮组 -->
-        <div class="action-group">
-          <!-- 认识 -->
-          @if(!isCustom) {
-          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-            (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
-            <span nz-icon nzType="check"></span> 认识
-          </button>
-
-          <!-- 不认识 -->
-          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
-            nzTooltipTitle="标记为不认识">
-            <span nz-icon nzType="close"></span> 不认识
-          </button>
-          }
-
-
-          <!-- 显示全部/收起 -->
-          @if(!ciHuiService.learnMode()) {
-          <button nz-button nzType="default" (click)="$event.stopPropagation();toggleDetails(item)">
-            <span nz-icon [nzType]="item.showDetails|| ciHuiService.learnMode() ? 'up' : 'down'"></span>
-            {{ item.showDetails || ciHuiService.learnMode()? '收起' : '详情' }}
-          </button>
-
-          <!-- 练一练 -->
-          <!-- <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
-            <span nz-icon nzType="edit"></span> 练一练
-          </button> -->
-          }
-           @if(isCustom) {
-          <!-- 删除 -->
-          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
-            nzTooltipTitle="删除">
-            <span nz-icon nzType="delete"></span> 删除
-          </button>
-          }
-        </div>
-      </div>
-
-      <!-- 下半部分：详情 (默认隐藏) -->
-      @if (item.showDetails || ciHuiService.learnMode()) {
-      <div class="row-details">
-        <nz-divider></nz-divider>
-
-        <div class="detail-block">
-          <span class="detail-label">常用词组：</span>
-          <div class="detail-content">
-            @for (phrase of item.phrases; track $index) {
-            <nz-tag>{{ phrase }}</nz-tag>
+            @if (item.showDetails || ciHuiService.learnMode()) {
+            <div class="definition-details">
+              @for (def of item.definition | keyvalue; track def.key) {
+              <div class="definition-item"><strong>{{ def.key }}:</strong> {{ def.value }}</div>
+              }
+            </div>
             }
-          </div>
-        </div>
 
-        <div class="detail-block mt-2">
-          <span class="detail-label">双语例句：</span>
-          <div class="detail-content sentence-list">
-            @for (sent of item.sentences; track $index) {
-            <div class="sentence-item">
-              <p class="en">{{ sent.text }}</p>
-              <p class="zh">{{ sent.textTranslation }}</p>
+            <!-- 详情区域 -->
+            @if (item.showDetails || ciHuiService.learnMode()) {
+            <div class="card-details">
+              <nz-divider></nz-divider>
+
+              <div class="detail-block">
+                <span class="detail-label">常用词组：</span>
+                <div class="detail-content">
+                  @for (phrase of item.phrases; track $index) {
+                  <nz-tag>{{ phrase }}</nz-tag>
+                  }
+                </div>
+              </div>
+
+              <div class="detail-block mt-2">
+                <span class="detail-label">双语例句：</span>
+                <div class="detail-content sentence-list">
+                  @for (sent of item.sentences; track $index) {
+                  <div class="sentence-item">
+                    <p class="en">{{ sent.text }}</p>
+                    <p class="zh">{{ sent.textTranslation }}</p>
+                  </div>
+                  }
+                </div>
+              </div>
             </div>
             }
           </div>
-        </div>
+
+          <!-- 卡片底部操作按钮 -->
+          <div class="card-footer">
+            @if(!isCustom) {
+            <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+              (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+              <span nz-icon nzType="check"></span> 认识
+            </button>
+
+            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
+              nzTooltipTitle="标记为不认识">
+              <span nz-icon nzType="close"></span> 不认识
+            </button>
+            }
+
+            @if(!ciHuiService.learnMode()) {
+            <button nz-button nzType="default" (click)="$event.stopPropagation();toggleDetails(item)">
+              <span nz-icon [nzType]="item.showDetails|| ciHuiService.learnMode() ? 'up' : 'down'"></span>
+              {{ item.showDetails || ciHuiService.learnMode()? '收起' : '详情' }}
+            </button>
+            }
+
+            @if(isCustom) {
+            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
+              nzTooltipTitle="删除">
+              <span nz-icon nzType="delete"></span> 删除
+            </button>
+            }
+          </div>
+        </nz-card>
       </div>
       }
+      }
     </div>
-    }
-    }
   </div>
 
   <!-- 练一练 弹窗 (保持不变) -->
