@@ -2,7 +2,7 @@
   <div class="list-container">
     @if(isCustom) {
     <div class="custom-input-section">
-      <input nz-input [(ngModel)]="userWord" placeholder="输入自定义单词..." />
+      <input nz-input [(ngModel)]="userWord" placeholder="输入单词，点击添加按钮，即可完成录入！" />
       <button nz-button nzType="primary" (click)="customWord(userWord)" [nzLoading]="isLoading" nz-tooltip
         nzTooltipTitle="添加">
         <span nz-icon nzType="plus"></span> 添加
