@@ -2,6 +2,9 @@
     <div class="container">
         <div nz-row nzJustify="end" class="top-bar">
             <nz-space [nzSize]="12">
+                <nz-tag nzColor="#0071e3" class="home-tag" (click)="goHome()">首页</nz-tag>
+                <nz-switch *nzSpaceItem [(ngModel)]="isEyeOpen" nzCheckedChildren="听写开" nzUnCheckedChildren="听写开"
+                    nzSize="default" />
                 <nz-switch *nzSpaceItem [(ngModel)]="soundEnabled" nzCheckedChildren="音效开" nzUnCheckedChildren="音效关"
                     nzSize="default" />
                 <nz-switch *nzSpaceItem nz-button [(ngModel)]="soundTypeUK" nzCheckedChildren="英式"
@@ -13,7 +16,7 @@
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                     <ul nz-menu class="word-list">
                         @for(item of words; track $index) {
-                        <li nz-menu-item nzSelected="{{currIndex==$index}}">{{item.word}}</li>
+                        <li nz-menu-item nzSelected="{{currIndex==$index}}">{{item.word}}; {{getShortDefinition(item)}}</li>
                         }
 
                     </ul>
@@ -98,9 +101,10 @@
         <!-- 3. 输入区域 (Input Area) -->
         <div class="input-section">
             <div class="input-wrapper">
-                <nz-input-group>
+                <nz-input-group (click)="sound()">
                     <input nz-input [(ngModel)]="inputValue" placeholder="请在此输入..." nzSize="large" nzBorderless
-                        [appMechanicalTyping]="soundEnabled" [class]="inputStatus" (keydown.enter)="checkAnswer()" />
+                        [appMechanicalTyping]="soundEnabled" [class]="inputStatus" 
+                        (keydown.enter)="checkAnswer()" />
                 </nz-input-group>
             </div>
         </div>
@@ -128,10 +132,8 @@
         </div>
 
     </div>
-    <button nz-button nzShape="circle" class="floating-eye-btn" [class.active]="!isEyeOpen" (click)="toggleEye()"
+    <!-- <button nz-button nzShape="circle" class="floating-eye-btn" [class.active]="!isEyeOpen" (click)="toggleEye()"
         nz-tooltip nzTooltipPlacement="left">
-
-        <!-- 动态切换图标 -->
         <span nz-icon [nzType]="isEyeOpen ? 'eye' : 'eye-invisible'" nzTheme="outline"></span>
-    </button>
+    </button> -->
 </div>

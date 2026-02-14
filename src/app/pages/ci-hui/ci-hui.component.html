@@ -31,7 +31,7 @@
           <div class="word-title-group">
             <span class="word-text">{{ item.word }}</span>
             @if (item.isKnown) {
-            <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+            <!-- <nz-tag [nzColor]="'success'">已掌握</nz-tag> -->
             }
           </div>
 
@@ -79,9 +79,9 @@
           </button>
 
           <!-- 练一练 -->
-          <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
+          <!-- <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
             <span nz-icon nzType="edit"></span> 练一练
-          </button>
+          </button> -->
           }
           @if(isCustom) {
           <!-- 删除 -->
@@ -135,7 +135,7 @@
           <div class="word-title-group">
             <span class="word-text">{{ item.word }}</span>
             @if (item.isKnown) {
-            <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+            <!-- <nz-tag [nzColor]="'success'">已掌握</nz-tag> -->
             }
           </div>
 
@@ -184,9 +184,9 @@
           </button>
 
           <!-- 练一练 -->
-          <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
+          <!-- <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
             <span nz-icon nzType="edit"></span> 练一练
-          </button>
+          </button> -->
           }
            @if(isCustom) {
           <!-- 删除 -->

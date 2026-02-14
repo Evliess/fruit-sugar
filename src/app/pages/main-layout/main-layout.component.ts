@@ -1,4 +1,4 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, inject, effect } from '@angular/core';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -56,6 +56,21 @@ export class MainLayoutComponent {
     }
     return false;
   });
+
+  isRequiredToCloseLeftMenuPage = computed(() => {
+    const url = this.currentUrl();
+    return url && (url.includes('/listen')
+      // || url.includes('/words') || url.includes('/kou-yu')
+    );
+  });
+
+  constructor() {
+    effect(() => {
+      if (this.isRequiredToCloseLeftMenuPage()) {
+        this.isCollapsed = true;
+      }
+    });
+  }
 
   isShowCIHUIMenu = computed(() => {
     const url = this.currentUrl();

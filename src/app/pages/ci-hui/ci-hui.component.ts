@@ -239,7 +239,7 @@ export class CiHuiComponent {
     item.showDetails = false; // 收起详情
     this.sugarDictService.markWordAsKnown(this.currentUser()?.id || -1, item.id, this.moduleId).subscribe({
       next: (response: any) => {
-        this.message.success('太棒了！已标记为认识。');
+        // this.message.success('太棒了！已标记为认识。');
       }
     });
   }
@@ -250,7 +250,7 @@ export class CiHuiComponent {
     item.isKnown = false;
     this.sugarDictService.markWordAsUnknown(this.currentUser()?.id || -1, item.id, this.moduleId).subscribe({
       next: (response: any) => {
-        this.message.info('已标记为不认识，加油学习哦！');
+        // this.message.info('已标记为不认识，加油学习哦！');
       }
     });
   }

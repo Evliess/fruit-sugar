@@ -167,7 +167,7 @@ export class KouYuComponent {
     item.showDetails = false;
     this.sugarDictService.markSentenceAsKnown(this.currentUser()?.id || -1, item.id, this.moduleId).subscribe({
       next: (response: any) => {
-        this.message.success('太棒了！已标记为认识。');
+        // this.message.success('太棒了！已标记为认识。');
       }
     });
   }
@@ -178,7 +178,7 @@ export class KouYuComponent {
     item.isKnown = false;
     this.sugarDictService.markSentenceAsUnKnown(this.currentUser()?.id || -1, item.id, this.moduleId).subscribe({
       next: (response: any) => {
-        this.message.info('已标记为不认识，加油学习哦！');
+        // this.message.info('已标记为不认识，加油学习哦！');
       }
     });
   }

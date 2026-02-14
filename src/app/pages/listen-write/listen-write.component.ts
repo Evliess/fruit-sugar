@@ -12,7 +12,7 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
 import { SugarDictService } from '../../services/sugar-dict';
 import { AuthService } from '../../services/auth';
@@ -60,6 +60,7 @@ export class ListenWriteComponent {
   soundTypeUK: boolean = true;
   private sugarDictService = inject(SugarDictService)
   route = inject(ActivatedRoute);
+  private router = inject(Router);
   private authService = inject(AuthService);
   currentUser = this.authService.currentUser;
 
@@ -110,6 +111,24 @@ export class ListenWriteComponent {
     } catch (e) {
       return fallback;
     }
+  }
+
+  getShortDefinition(word: VocabularyWord): string {
+    const definitions = word.definitions || {};
+    for (const type in definitions) {
+      if (definitions.hasOwnProperty(type)) {
+        return (definitions[type]+"").split('；')[0];
+      }
+    }
+    return '';
+  }
+
+  sound(): void{
+    this.playAudio(this.currWord);
+  }
+
+  goHome(): void {
+    this.router.navigate(['/home']);
   }
 
 
