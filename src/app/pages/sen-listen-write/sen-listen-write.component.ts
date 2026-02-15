@@ -17,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
 import { SugarDictService } from '../../services/sugar-dict';
 import { AuthService } from '../../services/auth';
-import { map } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 
 interface Sentence {
   id: number;
@@ -94,6 +94,15 @@ export class SenListenWriteComponent {
               definitions: sentence.textTranslation,
             } as Sentence;
           });
+        }),
+        switchMap((words: Sentence[]) => {
+          return this.sugarDictService.getListenIndex(this.currentUser()?.id || -1, this.moduleId, 'sentence').pipe(
+            map((response: any) => {
+              const index = response.index || 0;
+              this.currIndex = index >= 0 ? index : 0;
+              return words;
+            })
+          );
         })
       ).subscribe({
         next: (words: Sentence[]) => {
@@ -146,7 +155,6 @@ export class SenListenWriteComponent {
     }
   }
 
-
   playAudio(audioUrl: string): void {
     const apiUrl = this.sugarDictService.apiUrl;
     this.audio.src = apiUrl + "/audio/" + audioUrl;
@@ -158,6 +166,9 @@ export class SenListenWriteComponent {
     this.currIndex = (this.currIndex + 1) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
+    this.sugarDictService.updateListenIndex(this.currentUser()?.id || -1, this.moduleId, 'sentence', this.currIndex).subscribe({
+      next: (response: any) => {}
+    });
     this.hasError = false;
     this.inputStatus = 'minimal-input';
     this.getSentenceWithGap();
@@ -170,6 +181,9 @@ export class SenListenWriteComponent {
 
   playPrev(): void {
     this.currIndex = (this.currIndex - 1 + this.words.length) % this.words.length;
+    this.sugarDictService.updateListenIndex(this.currentUser()?.id || -1, this.moduleId, 'sentence', this.currIndex).subscribe({
+      next: (response: any) => {}
+    });
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
     this.hasError = false;

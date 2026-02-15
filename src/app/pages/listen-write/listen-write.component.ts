@@ -17,7 +17,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
 import { SugarDictService } from '../../services/sugar-dict';
 import { AuthService } from '../../services/auth';
-import { map } from 'rxjs';
+import { map, switchMap } from 'rxjs';
 
 interface VocabularyWord {
   id: number;
@@ -98,6 +98,15 @@ export class ListenWriteComponent {
               sentences: this.safeJsonParse(wordData.sentences, {})[0].text,
             } as VocabularyWord;
           });
+        }),
+        switchMap((words: VocabularyWord[]) => {
+          return this.sugarDictService.getListenIndex(this.currentUser()?.id || -1, this.moduleId, 'word').pipe(
+            map((response: any) => {
+              const index = response.index || 0;
+              this.currIndex = index >= 0 ? index : 0;
+              return words;
+            })
+          );
         })
       ).subscribe({
         next: (words: VocabularyWord[]) => {
@@ -171,6 +180,9 @@ export class ListenWriteComponent {
 
   playNext(): void {
     this.currIndex = (this.currIndex + 1) % this.words.length;
+    this.sugarDictService.updateListenIndex(this.currentUser()?.id || -1, this.moduleId, 'word', this.currIndex).subscribe({
+      next: (response: any) => {}
+    });
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
     this.hasError = false;
@@ -181,6 +193,9 @@ export class ListenWriteComponent {
 
   playPrev(): void {
     this.currIndex = (this.currIndex - 1 + this.words.length) % this.words.length;
+    this.sugarDictService.updateListenIndex(this.currentUser()?.id || -1, this.moduleId, 'word', this.currIndex).subscribe({
+      next: (response: any) => {}
+    });
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
     this.hasError = false;

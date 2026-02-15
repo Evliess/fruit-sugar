@@ -144,4 +144,12 @@ export class SugarDictService {
         return this.http.get<String>(`${this.apiUrl}` + "/user-statistic/user-id/" + userId);
     }
 
+    getListenIndex(userId: number, moduleId: string, type: string): Observable<String> {
+        return this.http.get<String>(`${this.apiUrl}` + "/user/listen/progress/" + userId + "/" + moduleId + "/" + type);
+    }
+
+    updateListenIndex(userId: number, moduleId: string, type: string, index: number): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/user/listen/progress", { userId: userId, moduleId: moduleId, type: type, currIndex: index });
+    }
+
 }
