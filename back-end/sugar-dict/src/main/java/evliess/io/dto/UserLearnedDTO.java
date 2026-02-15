@@ -14,4 +14,9 @@ public class UserLearnedDTO {
   private Long wordId;
   @Schema(description = "sentence id", example = "1", requiredMode = Schema.RequiredMode.AUTO)
   private Long sentenceId;
+  @Schema(description = "the type of listen progress", example = "word/sentence/custom_word/custom_sentence", requiredMode = Schema.RequiredMode.AUTO)
+  private String type;
+  @Schema(description = "the index of listen progress", example = "0", requiredMode = Schema.RequiredMode.AUTO)
+  private Integer currIndex;
+
 }

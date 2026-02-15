@@ -83,11 +83,11 @@ public class WordSvc {
       wordObj.put("definition", word.getDefinition());
       wordObj.put("audioUSUrl", word.getAudioUSUrl());
       wordObj.put("audioUKUrl", word.getAudioUKUrl());
+      wordObj.put("phoneticUK", word.getPhoneticUK());
+      wordObj.put("phoneticUS", word.getPhoneticUS());
+      wordObj.put("sentences", word.getSentences());
       if (!isSimple) {
-        wordObj.put("phoneticUS", word.getPhoneticUS());
-        wordObj.put("phoneticUK", word.getPhoneticUK());
         wordObj.put("phrases", word.getPhrases());
-        wordObj.put("sentences", word.getSentences());
         wordObj.put("moduleId", word.getModuleId());
         wordObj.put("isKnown", knownWords.contains(word.getId()));
       }

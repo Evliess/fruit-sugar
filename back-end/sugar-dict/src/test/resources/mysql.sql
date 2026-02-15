@@ -143,4 +143,13 @@ CREATE TABLE `user_learned_sentences` (
   INDEX `idx_user_learned_sentences` (`user_id`, `module_id`)
 ) ENGINE=InnoDB;
 
+CREATE TABLE `user_listen_progress` (
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `module_id` BIGINT UNSIGNED NOT NULL ,
+  `type` VARCHAR(100) NOT NULL COMMENT 'word/sentence/custom_word/custom_sentence',
+  `curr_index` BIGINT UNSIGNED NOT NULL ,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB;
+
 SET FOREIGN_KEY_CHECKS = 1;
