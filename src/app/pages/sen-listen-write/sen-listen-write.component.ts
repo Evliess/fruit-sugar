@@ -12,7 +12,8 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
-import { ActivatedRoute } from '@angular/router';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MechanicalTypingDirective } from '../../mechanical-typing.directive';
 import { SugarDictService } from '../../services/sugar-dict';
 import { AuthService } from '../../services/auth';
@@ -21,9 +22,15 @@ import { map } from 'rxjs';
 interface Sentence {
   id: number;
   word: string;
-  definitions: string;// 词性
-  usAudio: string; // 美式
-  ukAudio: string; // 英式
+  definitions: string;
+  usAudio: string;
+  ukAudio: string;
+}
+
+interface SentenceParts {
+  before: string;
+  word: string;
+  after: string;
 }
 
 @Component({
@@ -42,7 +49,8 @@ interface Sentence {
     NzDividerModule,
     MechanicalTypingDirective,
     NzDropDownModule,
-    NzTagModule
+    NzTagModule,
+    NzProgressModule
   ],
   templateUrl: './sen-listen-write.component.html',
   styleUrl: './sen-listen-write.component.css'
@@ -65,6 +73,10 @@ export class SenListenWriteComponent {
   currWord: Sentence = undefined as any;
   private audio = new Audio();
   moduleId: string = '';
+  hasError: boolean = false;
+  sentenceParts: SentenceParts | null = null;
+
+  private router = inject(Router);
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -87,6 +99,7 @@ export class SenListenWriteComponent {
         next: (words: Sentence[]) => {
           this.words = words;
           this.currWord = this.words[this.currIndex];
+          this.getSentenceWithGap();
           if (this.soundTypeUK) {
             this.playAudio(this.currWord.ukAudio);
           } else {
@@ -97,6 +110,32 @@ export class SenListenWriteComponent {
       });
     });
 
+  }
+  goHome(): void {
+    this.router.navigate(['/home']);
+  }
+
+  getShortDefinition(word: Sentence): string {
+    const definitions = word.definitions || '';
+    return definitions.split('；')[0];
+  }
+
+  getSentenceWithGap(): void {
+    if (!this.currWord || !this.currWord.word) {
+      this.sentenceParts = null;
+      return;
+    }
+    const sentence = this.currWord.word;
+    this.sentenceParts = {
+      before: '',
+      word: sentence,
+      after: ''
+    };
+  }
+
+  onInputClick(): void {
+    this.hasError = false;
+    this.inputStatus = 'minimal-input';
   }
   private safeJsonParse(data: any, fallback: any): any {
     if (typeof data !== 'string') return data || fallback;
@@ -119,6 +158,9 @@ export class SenListenWriteComponent {
     this.currIndex = (this.currIndex + 1) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
+    this.hasError = false;
+    this.inputStatus = 'minimal-input';
+    this.getSentenceWithGap();
     if (this.soundTypeUK) {
       this.playAudio(this.currWord.ukAudio);
     } else {
@@ -130,6 +172,9 @@ export class SenListenWriteComponent {
     this.currIndex = (this.currIndex - 1 + this.words.length) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
+    this.hasError = false;
+    this.inputStatus = 'minimal-input';
+    this.getSentenceWithGap();
     if (this.soundTypeUK) {
       this.playAudio(this.currWord.ukAudio);
     } else {
@@ -142,30 +187,39 @@ export class SenListenWriteComponent {
     const correctAnswer = this.currWord.word.toLowerCase();
     if (trimmedInput === correctAnswer) {
       this.inputStatus = 'minimal-input minimal-input-success';
+      this.hasError = false;
       this.playNext();
     } else {
-      this.inputStatus = 'minimal-input';
+      this.inputStatus = 'minimal-input minimal-input-error';
+      this.hasError = true;
       this.sugarDictService.markSentenceAsMistake(this.currentUser()?.id || -1, this.currWord.id, this.moduleId).subscribe({
         next: (response: any) => {
           console.log("Succeed to mark a sentence as mistake");
         }
       });
+      setTimeout(() => {
+        this.playNext();
+      }, 1500);
     }
   }
 
     // 模拟点击事件
     handleAction(action: string): void {
-      if("play" == action) {
-      this.togglePlay();
-      if (this.soundTypeUK) {
-        this.playAudio(this.currWord.ukAudio);
-      } else {
-        this.playAudio(this.currWord.usAudio);
+      if ("play" == action) {
+        this.togglePlay();
+        if (this.soundTypeUK) {
+          this.playAudio(this.currWord.ukAudio);
+        } else {
+          this.playAudio(this.currWord.usAudio);
+        }
       }
-    };
-    if ("prev" == action) { this.playPrev(); };
-    if ("next" == action) { this.playNext(); }
-  }
+      if ("prev" == action) {
+        this.playPrev();
+      }
+      if ("next" == action) {
+        this.playNext();
+      }
+    }
 
   togglePlay(): void {
     this.isPlay = !this.isPlay;
