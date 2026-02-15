@@ -1,150 +1,128 @@
 <div class="container">
   <div class="list-container">
     @if(isCustom) {
-    <div class="word-row">
-      <div class="row-main">
-        <div class="word-info">
-          <input nz-input [(ngModel)]="userWord" />
-        </div>
-        <div class="action-group">
-          <button nz-button nzType="primary" nz-tooltip nzLoading="isLoading" nzTooltipTitle="添加" (click)="addCustom(userWord)">
-            <span nz-icon nzType="plus"></span> 添加
-          </button>
-        </div>
-      </div>
+    <div class="custom-input-section">
+      <input nz-input [(ngModel)]="userWord" placeholder="输入句子，点击添加按钮，即可完成录入！" />
+      <button nz-button nzType="primary" (click)="addCustom(userWord)" [nzLoading]="isLoading" nz-tooltip
+        nzTooltipTitle="添加">
+        <span nz-icon nzType="plus"></span> 添加
+      </button>
     </div>
     }
-    @for (item of sentences.slice(0, 10); track item.id) {
-    <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound(item, 'us')">
 
-      <!-- 上半部分：主要信息 + 操作按钮 -->
-      <div class="row-main">
+    <div nz-row [nzGutter]="[16, 16]">
+      @for (item of firstSentences; track item.id) {
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="8">
+        <nz-card 
+          [class.is-known]="item.isKnown" 
+          [nzHoverable]="true"
+          appHoverSound 
+          (soundClick)="handleSound(item, 'us')">
+          
+          <div class="card-content">
+            <div class="word-title-group">
+              <span class="word-text">{{ item.sentence_en }}</span>
+              @if (item.isKnown) {
+              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+              }
+            </div>
 
-        <!-- 左侧：单词信息 -->
-        <div class="word-info">
-          <div class="word-title-group">
-            <span class="word-text">{{ item.sentence_en }}</span>
-            @if (item.isKnown) {
-            <!-- <nz-tag [nzColor]="'success'">已掌握</nz-tag> -->
-            }
+            <div class="phonetic-group">
+              <span class="phonetic">🇺🇸 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
+                  [hoverTime]="500" (hoverTimeout)="handleSound(item, 'us')"></nz-icon></span>
+              <span class="phonetic">🇬🇧 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
+                  [hoverTime]="500" (hoverTimeout)="handleSound(item, 'uk')"></nz-icon></span>
+            </div>
+
+            <div class="definition">{{ item.sentence_zh }}</div>
           </div>
-          <div class="phonetic-group">
-            <span class="phonetic">🇺🇸 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
-                [hoverTime]="500" (hoverTimeout)="handleSound(item, 'us')"></nz-icon></span>
-            <span class="phonetic">🇬🇧 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
-                [hoverTime]="500" (hoverTimeout)="handleSound(item, 'uk')"></nz-icon></span>
-          </div>
-          <div class="definition">{{ item.sentence_zh }}</div>
-        </div>
 
-        <!-- 右侧：按钮组 -->
-        <div class="action-group">
-          <!-- 认识 -->
-          @if(!isCustom) {
+          <div class="card-footer">
+            @if(!isCustom) {
             <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
               (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
               <span nz-icon nzType="check"></span> 认识
             </button>
 
-            <!-- 不认识 -->
             <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
               nzTooltipTitle="标记为不认识">
               <span nz-icon nzType="close"></span> 不认识
             </button>
-          }
+            }
 
+            <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
+              <span nz-icon nzType="edit"></span> 练一练
+            </button>
 
-
-          <!-- 显示全部/收起 -->
-
-          <!-- <button nz-button nzType="default" (click)="toggleDetails(item)">
-            <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
-            {{ item.showDetails ? '收起' : '详情' }}
-          </button> -->
-
-          <!-- 练一练 -->
-          <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
-            <span nz-icon nzType="edit"></span> 练一练
-          </button>
-          @if(isCustom) {
-          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomSentence(item)"
-            nz-tooltip nzTooltipTitle="删除">
-            <span nz-icon nzType="delete"></span> 删除
-          </button>
-          }
-        </div>
-      </div>
-    </div>
-    }
-    @defer (on timer(50ms)) {
-    @for (item of sentences.slice(10); track item.id) {
-    <!-- 单个单词行 -->
-    <div class="word-row" [class.is-known]="item.isKnown" appHoverSound (soundClick)="handleSound(item, 'us')">
-
-      <!-- 上半部分：主要信息 + 操作按钮 -->
-      <div class="row-main">
-
-        <!-- 左侧：单词信息 -->
-        <div class="word-info">
-          <div class="word-title-group">
-            <span class="word-text">{{ item.sentence_en }}</span>
-            @if (item.isKnown) {
-            <!-- <nz-tag [nzColor]="'success'">已掌握</nz-tag> -->
+            @if(isCustom) {
+            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomSentence(item)"
+              nz-tooltip nzTooltipTitle="删除">
+              <span nz-icon nzType="delete"></span> 删除
+            </button>
             }
           </div>
-          <div class="phonetic-group">
-            <span class="phonetic">🇺🇸 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
-                [hoverTime]="500" (hoverTimeout)="handleSound(item, 'us')"></nz-icon></span>
-            <span class="phonetic">🇬🇧 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
-                [hoverTime]="500" (hoverTimeout)="handleSound(item, 'uk')"></nz-icon></span>
-          </div>
-          <div class="definition">{{ item.sentence_zh }}</div>
-        </div>
-
-        <!-- 右侧：按钮组 -->
-        <div class="action-group">
-
-          <!-- 认识 -->
-          @if(!isCustom) {
-          <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-            (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
-            <span nz-icon nzType="check"></span> 认识
-          </button>
-
-          <!-- 不认识 -->
-          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
-            nzTooltipTitle="标记为不认识">
-            <span nz-icon nzType="close"></span> 不认识
-          </button>
-        }
-
-
-
-          <!-- 显示全部/收起 -->
-
-          <!-- <button nz-button nzType="default" (click)="toggleDetails(item)">
-            <span nz-icon [nzType]="item.showDetails ? 'up' : 'down'"></span>
-            {{ item.showDetails ? '收起' : '详情' }}
-          </button> -->
-
-          <!-- 练一练 -->
-          <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
-            <span nz-icon nzType="edit"></span> 练一练
-          </button>
-          @if(isCustom) {
-          <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomSentence(item)"
-            nz-tooltip nzTooltipTitle="删除">
-            <span nz-icon nzType="delete"></span> 删除
-          </button>
-          }
-        </div>
+        </nz-card>
       </div>
+      }
+
+      @defer (on timer(20ms)) {
+      @for (item of remainingSentences; track item.id) {
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="8">
+        <nz-card 
+          [class.is-known]="item.isKnown" 
+          [nzHoverable]="true"
+          appHoverSound 
+          (soundClick)="handleSound(item, 'us')">
+          
+          <div class="card-content">
+            <div class="word-title-group">
+              <span class="word-text">{{ item.sentence_en }}</span>
+              @if (item.isKnown) {
+              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
+              }
+            </div>
+
+            <div class="phonetic-group">
+              <span class="phonetic">🇺🇸 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
+                  [hoverTime]="500" (hoverTimeout)="handleSound(item, 'us')"></nz-icon></span>
+              <span class="phonetic">🇬🇧 <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound
+                  [hoverTime]="500" (hoverTimeout)="handleSound(item, 'uk')"></nz-icon></span>
+            </div>
+
+            <div class="definition">{{ item.sentence_zh }}</div>
+          </div>
+
+          <div class="card-footer">
+            @if(!isCustom) {
+            <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+              (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+              <span nz-icon nzType="check"></span> 认识
+            </button>
+
+            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
+              nzTooltipTitle="标记为不认识">
+              <span nz-icon nzType="close"></span> 不认识
+            </button>
+            }
+
+            <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
+              <span nz-icon nzType="edit"></span> 练一练
+            </button>
+
+            @if(isCustom) {
+            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomSentence(item)"
+              nz-tooltip nzTooltipTitle="删除">
+              <span nz-icon nzType="delete"></span> 删除
+            </button>
+            }
+          </div>
+        </nz-card>
+      </div>
+      }
+      }
     </div>
-    }}
   </div>
 
-  <!-- 练一练 弹窗 (保持不变) -->
   <nz-modal [(nzVisible)]="isPracticeVisible" [nzTitle]="'口语练习'" (nzOnCancel)="handlePracticeCancel()"
     (nzOnOk)="handlePracticeOk()">
     <ng-container *nzModalContent>

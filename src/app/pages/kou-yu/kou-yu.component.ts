@@ -64,7 +64,13 @@ export class KouYuComponent {
   currentUser = this.authService.currentUser;
   private audio = new Audio();
   sentences: Sentence[] = [];
+  firstSentences: Sentence[] = [];
+  remainingSentences: Sentence[] = [];
   constructor(private message: NzMessageService) { }
+
+  get sentencesList(): Sentence[] {
+    return [...this.firstSentences, ...this.remainingSentences];
+  }
 
 
   ngOnInit(): void {
@@ -108,7 +114,17 @@ export class KouYuComponent {
       map((response: any) => this.mapSentenceData(response?.sentences || [], 'custom'))
     ).subscribe({
       next: (processedData: Sentence[]) => {
+        const firstBatch = processedData.slice(0, 10);
+        const remainingBatch = processedData.slice(10);
+        
+        this.firstSentences = firstBatch;
         this.sentences = processedData;
+        this.remainingSentences = [];
+        
+        setTimeout(() => {
+          this.remainingSentences = remainingBatch;
+        }, 20);
+        
         console.log('获取自定义例句成功:', this.sentences);
       },
       error: (err) => {
@@ -126,7 +142,16 @@ export class KouYuComponent {
       map((response: any) => this.mapSentenceData(response?.sentences || [], 'built-in'))
     ).subscribe({
       next: (processedData: Sentence[]) => {
+        const firstBatch = processedData.slice(0, 10);
+        const remainingBatch = processedData.slice(10);
+        
+        this.firstSentences = firstBatch;
         this.sentences = processedData;
+        this.remainingSentences = [];
+        
+        setTimeout(() => {
+          this.remainingSentences = remainingBatch;
+        }, 20);
       },
       error: (err) => {
         console.error('获取例句失败:', err);
