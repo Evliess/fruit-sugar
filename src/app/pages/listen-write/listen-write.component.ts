@@ -19,8 +19,6 @@ import { SugarDictService } from '../../services/sugar-dict';
 import { AuthService } from '../../services/auth';
 import { map } from 'rxjs';
 
-
-
 interface VocabularyWord {
   id: number;
   word: string;
@@ -202,10 +200,13 @@ export class ListenWriteComponent {
       this.inputStatus = 'minimal-input minimal-input-error';
       this.hasError = true;
       this.sugarDictService.markWordAsMistake(this.currentUser()?.id || -1, this.currWord.id, this.moduleId).subscribe({
-      next: (response: any) => {
-        console.log("Succeed to mark a word as mistake");
-      }
-    });
+        next: (response: any) => {
+          console.log("Succeed to mark a word as mistake");
+        }
+      });
+      setTimeout(() => {
+        this.playNext();
+      }, 1500);
     }
   }
 

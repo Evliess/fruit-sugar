@@ -23,12 +23,13 @@
                 <nz-switch *nzSpaceItem nz-button [(ngModel)]="soundTypeUK" nzCheckedChildren="英式"
                     nzUnCheckedChildren="美式" nzSize="default" />
                 <a nz-dropdown *nzSpaceItem nzTrigger="click" [nzDropdownMenu]="menu" class="dropdown-link">
-                    词汇列表 <nz-icon nzType="down" />
+                    <nz-tag nzColor="#0071e3">全部 <nz-icon nzType="down" /></nz-tag>
                 </a>
                 <nz-dropdown-menu #menu="nzDropdownMenu">
                     <ul nz-menu class="word-list">
                         @for(item of words; track $index) {
-                        <li nz-menu-item (click)="currIndex=$index; currWord=item; getSentenceWithGap(); playAudio(item)"
+                        <li nz-menu-item
+                            (click)="currIndex=$index; currWord=item; getSentenceWithGap(); playAudio(item)"
                             [nzSelected]="currIndex==$index">
                             {{item.word}}; {{getShortDefinition(item)}}
                         </li>
@@ -39,33 +40,34 @@
         </div>
 
         <main class="main-content">
+            @if(isEyeOpen) {
             <div class="sentence-stage">
                 <p class="en-sentence">
                     @if (sentenceParts) {
-                        {{sentenceParts.before}}
-                        @if (hasError) {
-                            <span class="correct-answer">{{sentenceParts.word}}</span>
-                        } @else {
-                            <span class="single-line-gap"></span>
-                        }
-                        {{sentenceParts.after}}
+                    {{sentenceParts.before}}
+                    @if (hasError) {
+                    <span class="correct-answer">{{sentenceParts.word}}</span>
+                    } @else {
+                    <span class="single-line-gap"></span>
+                    }
+                    {{sentenceParts.after}}
                     }
                 </p>
             </div>
+            }
+
             @if(currWord) {
             <div class="interactive-stage">
                 <div class="input-container">
                     <input nz-input [(ngModel)]="inputValue" [appMechanicalTyping]="soundEnabled" [class]="inputStatus"
-                        (keydown.enter)="checkAnswer()" (click)="onInputClick(); sound()" class="clean-input" placeholder="" />
+                        (keydown.enter)="checkAnswer()" (click)="onInputClick(); sound()" class="clean-input"
+                        placeholder="" />
                     <div class="input-underline" [class.success]="inputStatus.includes('success')"></div>
                 </div>
-
-
+                @if(isEyeOpen) {
                 <div class="phonetic-row">
                     {{ soundTypeUK ? currWord.ukAudio : currWord.usAudio }}
                 </div>
-
-
 
                 <div class="definition-row">
                     @for (item of currWord.definitions | keyvalue; track item.key; let f = $first) {
@@ -74,7 +76,7 @@
                     <span class="meaning-label">{{ item.value }}</span>
                     }
                     }
-                </div>
+                </div>}
 
                 <button nz-button nzType="text" class="audio-trigger-btn" (click)="sound()">
                     <span nz-icon nzType="sound" nzTheme="outline"></span>
