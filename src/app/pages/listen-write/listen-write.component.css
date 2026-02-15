@@ -1,499 +1,245 @@
-/* ============================================
-   1. 全局布局 (Global Layout)
-   ============================================ */
-:host {
-  display: block;
-  /* 页面背景：柔和的灰蓝色调，护眼且专业 */
-  background-color: #f5f7fa; 
-}
-
+/* ==========================================================================
+   1. 基础容器与全局布局
+   ========================================================================== */
 .page-wrapper {
-  min-height: 100vh;
-  padding: 20px 16px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
+  background-color: #ffffff;
+  height: calc(100vh - 66px); 
+  width: 100%;
+  overflow: hidden; /* 彻底消除滚动条 */
 }
 
 .container {
+  max-width: 1200px;
   width: 100%;
-  max-width: 1000px; /* 限制最大宽，防止在大屏上视线过于分散 */
+  margin: 0 auto;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  min-height: 85vh; /* 保证垂直方向有足够的空间分布 */
+  padding: 10px 30px;
   position: relative;
+  box-sizing: border-box;
 }
 
-/* ============================================
-   2. 顶部工具栏 (Top Bar)
-   ============================================ */
+/* ==========================================================================
+   2. 左上角预览块
+   ========================================================================== */
+.prev-word-preview {
+  position: absolute;
+  top: 15px;
+  left: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  z-index: 999;
+  padding: 8px;
+  transition: opacity 0.2s ease;
+}
+
+.back-arrow {
+  font-size: 16px;
+  color: #8c8c8c;
+  margin-top: 4px;
+}
+
+.preview-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.prev-word-text {
+  font-size: 20px;
+  color: #ff7875;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.prev-phonetic {
+  font-size: 12px;
+  color: #bfbfbf;
+  margin: 0px;
+}
+
+.prev-def {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+/* ==========================================================================
+   3. 顶部工具栏
+   ========================================================================== */
 .top-bar {
-  margin-bottom: 16px;
-  flex-shrink: 0; /* 防止被压缩 */
-}
-
-.top-bar button {
-  font-weight: 500;
-  color: #595959;
-  border-color: transparent; /* 默认无边框，更有空气感 */
-}
-
-.top-bar button:hover {
-  color: #1890ff;
-  background-color: rgba(24, 144, 255, 0.05);
-}
-
-/* ============================================
-   3. 卡片区域 (Card Section) - 核心呼吸感设计
-   ============================================ */
-.card-section {
-  display: flex;
-  justify-content: center; /* 桌面端靠左，符合草图 */
-  padding-left: 0px; /* 视觉平衡 */
-  flex-grow: 1; /* 让卡片区域占据剩余空间 */
-  align-items: center; /* 垂直居中 */
-}
-
-.flash-card {
-  width: 100%;
-  max-width: 600px; /* 适度加宽以容纳例句 */
-  border-radius: 20px; /* 更现代的大圆角 */
-  background: #ffffff;
-  /* 高级投影：让卡片悬浮于背景之上 */
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06); 
-  overflow: hidden; /* 关键：确保底部背景色圆角不溢出 */
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  cursor: default;
-}
-
-.flash-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-}
-
-/* 强制覆盖 Ant Design Card Body 的默认内边距 */
-::ng-deep .flash-card .ant-card-body {
-  padding: 0; 
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
-/* --- 3.1 卡片头部 (Header) --- */
-.card-header {
-  padding: 24px 24px 8px 24px; 
   flex-shrink: 0;
-}
-
-.word-row {
+  margin-bottom: 10px;
   display: flex;
-  align-items: baseline;
-  flex-wrap: wrap;
-  gap: 16px;
+  justify-content: flex-end;
+  z-index: 1000;
 }
 
-.vocab-word {
-  font-size: 32px;
-  font-weight: 700;
-  color: #262626;
-  margin: 0;
-  line-height: 1;
-  letter-spacing: -0.5px;
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-}
-
-.phonetic-group {
-  /* display: flex; */
-  display: none;
-  gap: 16px;
-  font-family: 'Lucida Sans Unicode', 'Arial Unicode MS', sans-serif;
+.dropdown-link {
   color: #8c8c8c;
   font-size: 14px;
 }
 
-.phonetic-item .region {
-  font-size: 11px;
-  margin-right: 4px;
-  color: #bfbfbf; /* 极浅灰色，降低干扰 */
-  text-transform: uppercase;
-  font-weight: 600;
-}
-
-/* --- 3.2 卡片中部 (Body/Definitions) --- */
-.card-body {
-  padding: 0 24px 16px 24px;
-  flex-shrink: 0;
-}
-
-.definition-item {
+/* ==========================================================================
+   4. 核心内容区域
+   ========================================================================== */
+.main-content {
+  flex: 1;
   display: flex;
+  flex-direction: column;
+  justify-content: center; /* 保持内容垂直居中 */
   align-items: center;
-  margin-bottom: 0px;
-  font-size: 12px;
-  line-height: 1.1;
+  text-align: center;
+  min-height: 0;
 }
 
-.pos-tag {
-  font-family: 'Menlo', 'Monaco', monospace;
-  font-weight: 700;
-  font-style: italic;
-  border: none;
-  background: transparent; /* 移除背景，只留文字颜色，更干净 */
-  padding: 0;
-  margin-right: 12px;
+.sentence-stage {
+  margin-bottom: 15px;
+  max-width: 850px;
+}
+
+.en-sentence {
   font-size: 16px;
+  color: #4a5568;
+  line-height: 1.4;
+}
+
+.single-line-gap {
+  display: inline-block;
+  min-width: 60px;
+  border-bottom: 2px solid #4a5568;
+  margin: 0 8px;
+  vertical-align: baseline;
+}
+
+.correct-answer {
+  color: #52c41a;
+  font-weight: 600;
+}
+
+.input-container {
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+  margin-bottom: 8px;
+}
+
+/* 强制修改 Ant Design 输入框样式 */
+::ng-deep .clean-input.ant-input {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  text-align: center !important;
+  font-size: 36px !important;
+  padding: 8px 0 !important;
+  color: #2d3748 !important;
+}
+
+::ng-deep .minimal-input-error.ant-input {
+  color: #ff4d4f !important;
+}
+
+.input-underline {
+  height: 2px;
+  background-color: #e2e8f0;
+  width: 100%;
+}
+
+.input-underline.success {
+  background-color: #52c41a !important;
+}
+
+.phonetic-row {
+  margin-top: 5px;
+  color: #718096;
+  font-size: 14px;
+}
+
+.definition-row {
+  margin-top: 5px;
+  font-size: 15px;
+  color: #4a5568;
+}
+
+/* 喇叭按钮：设置 margin-bottom 为 14px 确保与下方 nav-hint-row 间距固定 */
+.audio-trigger-btn {
+  margin-top: 10px;
+  margin-bottom: 14px !important; 
+  font-size: 28px;
+  color: #cbd5e0;
+  height: auto;
+  line-height: 1;
+  padding: 0;
+}
+
+/* ==========================================================================
+   5. 底部区域
+   ========================================================================== */
+.bottom-area {
+  flex-shrink: 0;
+  padding-bottom: 10px;
+}
+
+.nav-hint-row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 8px; /* 这个间距是 hint 和 进度条之间的 */
+}
+
+.next-hint {
+  color: #bfbfbf !important;
+  font-size: 12px;
+  height: auto;
+  padding: 0;
+}
+
+.progress-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.progress-count {
   text-align: right;
-}
-
-/* 使用 nz-tag 的颜色控制文字颜色 (如果使用了 nzColor) */
-::ng-deep .pos-tag.ant-tag-blue { color: #1890ff; background: transparent; border: none; }
-::ng-deep .pos-tag.ant-tag-green { color: #52c41a; background: transparent; border: none; }
-
-.meaning {
-  color: #434343;
-  font-weight: 500;
-}
-
-/* --- 3.3 卡片底部 (Footer/Details) --- */
-.card-footer-content {
-  background-color: #fafafa; /* 浅灰背景，区分层级 */
-  border-top: 1px solid #f0f0f0;
-  padding: 24px 32px;
-  display: none;
-}
-
-.section-block {
-  margin-bottom: 0;
-}
-
-.section-title {
   font-size: 12px;
   color: #bfbfbf;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  margin-top: 2px;
 }
 
-/* 词组样式 */
-.phrase-item {
-  margin-bottom: 8px;
-  display: flex;
-  flex-direction: column; /* 默认垂直排列 */
-}
-/* 在中等屏幕以上，词组可以一行显示 */
-@media (min-width: 576px) {
-    .phrase-item {
-        flex-direction: row;
-        align-items: baseline;
-        gap: 8px;
-    }
-}
-
-.phrase-item .en {
-  color: #262626;
-  font-weight: 500;
-  font-family: 'Segoe UI', sans-serif;
-}
-
-.phrase-item .cn {
-  color: #8c8c8c;
-  font-size: 13px;
-}
-
-/* 分割线 */
-.inner-divider {
-  margin: 12px 0;
-  border-top-color: #e8e8e8;
-}
-
-/* 例句样式 */
-.sentence-list {
-    display: flex;
-    flex-direction: column;
-}
-
-.sentence-item .en {
-  color: #262626;
-  font-size: 15px;
-  margin-bottom: 4px;
-  line-height: 1.5;
-}
-
-/* 高亮例句中的关键词 */
-.sentence-item .en b {
-  color: #1890ff; 
-  background: rgba(24, 144, 255, 0.1);
-  padding: 0 4px;
-  border-radius: 4px;
-  font-weight: 600;
-}
-
-.sentence-item .cn {
-  color: #8c8c8c;
-  font-size: 13px;
-}
-
-/* ============================================
-   4. 输入区域 (Input Section)
-   ============================================ */
-.input-section {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-.input-wrapper {
-  width: 100%;
-  max-width: 480px;
-  text-align: center;
-}
-
-.input-label {
-  display: block;
-  margin-bottom: 12px;
-  font-size: 13px;
-  letter-spacing: 1px;
-  color: #bfbfbf;
-  text-transform: uppercase;
-}
-
-/* 极简下划线 Input */
-.minimal-input {
-  border: none !important;
-  border-bottom: 2px solid #1890ff !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
-  text-align: center;
-  font-size: 20px;
-  color: #262626;
-  padding: 12px 0;
-  transition: border-color 0.3s ease;
-}
-
-.minimal-input-success {
-  border-bottom-color: #52c41a !important;
-}
-
-.minimal-input::placeholder {
-  color: #d9d9d9;
-  font-size: 18px;
-}
-
-/* ============================================
-   5. 底部导航 (Bottom Navigation)
-   ============================================ */
-.bottom-nav {
-  margin-top: auto;
-  display: flex;
-  justify-content: center;
-  padding-bottom: 20px;
-}
-
-.bottom-nav button[nz-button] {
-  border-color: #d9d9d9;
-  color: #595959;
-  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
-}
-
-.bottom-nav button[nz-button]:hover {
-  color: #1890ff;
-  border-color: #1890ff;
-}
-
-/* 播放按钮 (CTA) */
-.play-btn {
-  width: 64px !important;
-  height: 64px !important;
-  border: none !important;
-  background: linear-gradient(135deg, #36cfc9 0%, #1890ff 100%) !important; /* 渐变背景更现代 */
-  color: #fff !important;
-  box-shadow: 0 10px 20px rgba(24, 144, 255, 0.3) !important;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* 弹性动画 */
-}
-
-.play-btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 15px 30px rgba(24, 144, 255, 0.4) !important;
-}
-
-.play-btn:active {
-  transform: scale(0.95);
-}
-
-.word-list {
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-/* ============================================
-   6. 移动端适配 (Mobile < 768px)
-   ============================================ */
+/* ==========================================================================
+   6. 手机端优化
+   ========================================================================== */
 @media (max-width: 768px) {
-  .page-wrapper {
-    padding: 20px 16px;
+  .container {
+    padding: 10px 15px;
   }
 
   .top-bar {
-    display: flex;
-    justify-content: center !important; /* 顶部居中 */
-    margin-bottom: 8px;
-  }
-
-  .card-section {
-    justify-content: center; /* 卡片居中 */
-    padding-left: 0;
-    margin-bottom: 0px;
-  }
-  
-  .flash-card {
-    max-width: 100%; 
-    min-height: auto; /* 允许高度自适应 */
-  }
-
-  .card-header, .card-body, .card-footer-content {
-    padding-left: 24px;
-    padding-right: 24px;
-  }
-
-  .vocab-word {
-    font-size: 36px;
-  }
-  
-  .input-section {
+    justify-content: center;
     margin-bottom: 40px;
   }
 
-  .minimal-input {
+  ::ng-deep .top-bar .ant-space {
+    transform: scale(0.85);
+  }
+
+  .prev-word-preview {
+    top: 50px;
+    left: 15px;
+    transform: scale(0.8);
+  }
+
+  .main-content {
+    margin-top: 10px;
+    /* 手机端如果空间极小，允许内容微调，但保持喇叭间距 */
+  }
+
+  .en-sentence {
     font-size: 18px;
   }
 
-  .bottom-nav button[nz-button] {
-    height: 40px;
-    font-size: 14px;
-    padding: 0 16px;
+  ::ng-deep .clean-input.ant-input {
+    font-size: 28px !important;
   }
-  
-  .play-btn {
-    width: 56px !important;
-    height: 56px !important;
-  }
-}
-
-
-.floating-eye-btn {
-  position: fixed; /* 固定定位，不随页面滚动 */
-  right: 80px;     /* 距离右侧距离 */
-  top: 380px;    /* 距离底部距离 */
-  width: 56px !important;
-  height: 56px !important;
-  border: none !important;
-  
-  /* 默认样式：白色背景，深色图标 (Material 风格) */
-  background-color: #ffffff !important;
-  color: #595959 !important;
-  
-  /* 强烈的投影，营造悬浮感 */
-  box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 
-              0 3px 6px -4px rgba(0, 0, 0, 0.12), 
-              0 9px 28px 8px rgba(0, 0, 0, 0.05) !important;
-              
-  z-index: 1000; /* 确保层级最高，在所有内容之上 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
-  font-size: 24px; /* 图标大小 */
-}
-
-/* 悬停效果 */
-.floating-eye-btn:hover {
-  transform: translateY(-3px); /* 轻微上浮 */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important;
-  color: #1890ff !important; /* 悬停变蓝 */
-}
-
-/* 点击/激活效果 (闭眼状态) */
-.floating-eye-btn.active {
-  background-color: #262626 !important; /* 变为深色背景，暗示“遮挡/黑暗”模式 */
-  color: #0071e3 !important; 
-}
-
-/* 点击瞬间的反馈 */
-.floating-eye-btn:active {
-  transform: scale(0.95);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
-}
-
-.home-tag {
-  cursor: pointer;
-}
-
-/* ============================================
-   响应式调整 (Mobile)
-   ============================================ */
-@media (max-width: 768px) {
-  .floating-eye-btn {
-    /* 手机端位置调整 */
-    right: 20px;
-    bottom: 90px; /* 提高高度，避免遮挡底部的“上一个/下一个”按钮 */
-    
-    /* 手机端稍微缩小一点，避免太突兀 */
-    width: 48px !important;
-    height: 48px !important;
-    font-size: 20px;
-  }
-}
-
-.mask-card {
-  align-items: center;
-  justify-content: center;
-  background: #fcfcfc; /* 比纯白稍灰一点，区分状态 */
-  border: 2px dashed #d9d9d9; /* 虚线边框表示“空”或“待填充” */
-  box-shadow: none; /* 移除强烈投影，使其看起来“扁平” */
-  cursor: pointer; /* 提示可点击 */
-  min-height: 121px; /* 保持与正常卡片一致的高度，防止抖动 */
-}
-
-.mask-card:hover {
-  border-color: #0071e3;
-  background: #f0f9ff;
-}
-
-.mask-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  opacity: 0.6;
-  transition: opacity 0.3s;
-}
-
-.mask-card:hover .mask-content {
-  opacity: 1;
-}
-
-.mask-icon {
-  font-size: 48px;
-  color: #bfbfbf;
-  margin-bottom: 16px;
-}
-
-.mask-text {
-  font-size: 16px;
-  color: #8c8c8c;
-  margin-bottom: 24px;
-  letter-spacing: 1px;
 }

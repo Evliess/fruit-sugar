@@ -10,6 +10,7 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
+import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -28,6 +29,13 @@ interface VocabularyWord {
   ukAudio: string; // 英式
   audioUSUrl: string; // 美式音频URL
   audioUKUrl: string; // 英式音频URL
+  sentences: string;
+}
+
+interface SentenceParts {
+  before: string;
+  word: string;
+  after: string;
 }
 
 @Component({
@@ -42,6 +50,7 @@ interface VocabularyWord {
     NzGridModule,
     NzTypographyModule,
     NzSpaceModule,
+    NzProgressModule,
     NzSwitchModule,
     NzDividerModule,
     MechanicalTypingDirective,
@@ -69,6 +78,8 @@ export class ListenWriteComponent {
   currIndex: number = 0;
   currWord: VocabularyWord = undefined as any;
   private audio = new Audio();
+  hasError: boolean = false;
+  sentenceParts: SentenceParts | null = null;
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -78,10 +89,6 @@ export class ListenWriteComponent {
         map((response: any) => {
           const rawWords = response.words || [];
           return rawWords.map((wordData: any) => {
-            const parsedPhrases = this.safeJsonParse(wordData.phrases, []);
-            const formattedPhrases = parsedPhrases.map((p: any) =>
-              `${p.text}; ${p.textTranslation}`
-            );
             return {
               id: wordData.id,
               word: wordData.text,
@@ -90,6 +97,7 @@ export class ListenWriteComponent {
               audioUSUrl: wordData.audioUSUrl,
               audioUKUrl: wordData.audioUKUrl,
               definitions: this.safeJsonParse(wordData.definition, {}),
+              sentences: this.safeJsonParse(wordData.sentences, {})[0].text,
             } as VocabularyWord;
           });
         })
@@ -97,6 +105,7 @@ export class ListenWriteComponent {
         next: (words: VocabularyWord[]) => {
           this.words = words;
           this.currWord = this.words[this.currIndex];
+          this.getSentenceWithGap();
           this.playAudio(this.currWord);
         },
         error: (err) => console.error('请求失败:', err)
@@ -123,6 +132,27 @@ export class ListenWriteComponent {
     return '';
   }
 
+  getSentenceWithGap(): void {
+    if (!this.currWord || !this.currWord.sentences) {
+      this.sentenceParts = null;
+      return;
+    }
+    const sentence = this.currWord.sentences;
+    const word = this.currWord.word;
+    const wordIndex = sentence.toLowerCase().indexOf(word.toLowerCase());
+    
+    if (wordIndex === -1) {
+      this.sentenceParts = null;
+      return;
+    }
+    
+    this.sentenceParts = {
+      before: sentence.substring(0, wordIndex),
+      word: sentence.substring(wordIndex, wordIndex + word.length),
+      after: sentence.substring(wordIndex + word.length)
+    };
+  }
+
   sound(): void{
     this.playAudio(this.currWord);
   }
@@ -136,13 +166,18 @@ export class ListenWriteComponent {
     const apiUrl = this.sugarDictService.apiUrl;
     this.audio.src = this.soundTypeUK ? apiUrl + "/audio/words/" + word.audioUKUrl : apiUrl + "/audio/words/" + word.audioUSUrl;
     this.audio.load();
-    this.audio.play().catch(e => console.warn('Playback failed:', word));
+    setTimeout(() => {
+      this.audio.play().catch(e => {console.warn('Playback failed:', word)});
+    }, 20);
   }
 
   playNext(): void {
     this.currIndex = (this.currIndex + 1) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
+    this.hasError = false;
+    this.inputStatus = 'minimal-input';
+    this.getSentenceWithGap();
     this.playAudio(this.currWord);
   }
 
@@ -150,6 +185,9 @@ export class ListenWriteComponent {
     this.currIndex = (this.currIndex - 1 + this.words.length) % this.words.length;
     this.currWord = this.words[this.currIndex];
     this.inputValue = '';
+    this.hasError = false;
+    this.inputStatus = 'minimal-input';
+    this.getSentenceWithGap();
     this.playAudio(this.currWord);
   }
 
@@ -158,9 +196,11 @@ export class ListenWriteComponent {
     const correctAnswer = this.currWord.word.toLowerCase();
     if (trimmedInput === correctAnswer) {
       this.inputStatus = 'minimal-input minimal-input-success';
+      this.hasError = false;
       this.playNext();
     } else {
-      this.inputStatus = 'minimal-input';
+      this.inputStatus = 'minimal-input minimal-input-error';
+      this.hasError = true;
       this.sugarDictService.markWordAsMistake(this.currentUser()?.id || -1, this.currWord.id, this.moduleId).subscribe({
       next: (response: any) => {
         console.log("Succeed to mark a word as mistake");
@@ -185,6 +225,11 @@ export class ListenWriteComponent {
 
   toggleEye(): void {
     this.isEyeOpen = !this.isEyeOpen;
+  }
+
+  onInputClick(): void {
+    this.hasError = false;
+    this.inputStatus = 'minimal-input';
   }
 
 }
