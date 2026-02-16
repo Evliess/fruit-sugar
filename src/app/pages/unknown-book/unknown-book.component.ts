@@ -23,16 +23,16 @@ import { map } from 'rxjs';
 interface VocabularyWord {
   id: number;
   word: string;
-  usPhonetic: string; // 美式
-  ukPhonetic: string; // 英式
-  definition: string; // 中文释义
-  phrases: string[];  // 常用词组
-  sentences: { text: string; textTranslation: string }[]; // 例句
-  showDetails: boolean; // 是否显示详情 (不认识时为 true)
-  isKnown: boolean;     // 是否标记为认识
-  type?: string;    // 单词类型（可选）
-  audioUSUrl?: string; // 美式发音 URL
-  audioUKUrl?: string; // 英式发音 URL
+  usPhonetic: string;
+  ukPhonetic: string;
+  definition: Record<string, string>;
+  phrases: string[];
+  sentences: { text: string; textTranslation: string }[];
+  showDetails: boolean;
+  isKnown: boolean;
+  type?: string;
+  audioUSUrl?: string;
+  audioUKUrl?: string;
 }
 
 @Component({
