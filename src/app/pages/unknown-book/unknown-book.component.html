@@ -12,16 +12,13 @@
       </button>
     </div>
     }
-    
+
     <div nz-row [nzGutter]="[16, 16]">
       @for (item of words; track item.id) {
       <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="8">
-        <nz-card 
-          [class.is-known]="item.isKnown" 
-          [nzHoverable]="true"
-          appHoverSound 
+        <nz-card [class.is-known]="item.isKnown" [nzHoverable]="true" appHoverSound
           (soundClick)="handleSound('US', item)">
-          
+
           <!-- 卡片内容区域 -->
           <div class="card-content">
             <!-- 单词标题 -->
@@ -57,10 +54,8 @@
             </div>
             }
 
-            @if (item.type == 'sentence') {
-            @if (item.sentences.length > 0) {
-            <div class="definition">{{ item.sentences[0].text }}</div>
-            }
+            @if (item.type == 'sentence' && item.definition) {
+            <div class="definition">{{ item.definition["textTranslation"] || '' }}</div>
             }
 
             <!-- 详情区域 -->

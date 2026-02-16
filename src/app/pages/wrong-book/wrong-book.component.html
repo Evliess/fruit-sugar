@@ -57,10 +57,8 @@
             </div>
             }
 
-            @if (item.type == 'sentence') {
-            @if (item.sentences.length > 0) {
-            <div class="definition">{{ item.sentences[0].text }}</div>
-            }
+            @if (item.type == 'sentence' && item.definition) {
+              <div class="definition">{{ item.definition["textTranslation"] || '' }}</div>
             }
 
             <!-- 详情区域 -->

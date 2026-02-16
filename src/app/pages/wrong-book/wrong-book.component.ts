@@ -98,6 +98,7 @@ export class WrongBookComponent {
     ).subscribe({
       next: (words: VocabularyWord[]) => {
         this.words = words;
+        console.log(this.words);
         this.wordsCount = words.length;
         this.notification.create(
           'info',
