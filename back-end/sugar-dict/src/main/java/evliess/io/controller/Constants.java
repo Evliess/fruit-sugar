@@ -80,5 +80,6 @@ public class Constants {
   public static final String UNKNOWN_TYPE_SENTENCE = "sentence";
   public static final String CUSTOM_WORD_CONTENT_MODULE_NAME = "custom_words";
   public static final String CUSTOM_SENTENCE_CONTENT_MODULE_NAME = "custom_sentences";
-
+  public static final String HEAD_AUTH = "Authorization";
+  public static final String BEARER = "Bearer ";
 }

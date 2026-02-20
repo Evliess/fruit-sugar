@@ -20,7 +20,6 @@ public class SecurityConfig {
     private static final String[] AUTH_WHITELIST = {
             "/v3/api-docs/**",
             "/swagger-ui/**",
-            "/swagger-ui.html",
             "/swagger-resources/**",
             "/webjars/**",
             "/public/**"
@@ -39,8 +38,7 @@ public class SecurityConfig {
                         request -> request
                                 .requestMatchers(AUTH_WHITELIST).permitAll()
                                 .requestMatchers("/private/**").authenticated())
-//                .addFilterBefore(new CustomFilter(authManager()), AuthorizationFilter.class)
-
+          .addFilterBefore(new CustomFilter(authManager(), AUTH_WHITELIST), AuthorizationFilter.class)
                 .build();
     }
 
