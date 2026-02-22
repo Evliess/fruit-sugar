@@ -3,6 +3,7 @@ audio.dir: ${AUDIO_DIR}
 dyou.app.key: ${YOUD_KEY}
 dyou.app.secret: ${YOUD_SECRET}
 dp.app.secret: ${DP_SECRET}
+ucode: ${U_CODE}
 
 spring:
   lifecycle:
