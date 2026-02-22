@@ -156,7 +156,7 @@ export class SenListenWriteComponent {
   }
 
   playAudio(audioUrl: string): void {
-    const apiUrl = this.sugarDictService.apiUrl;
+    const apiUrl = this.sugarDictService.openApiUrl;
     this.audio.src = apiUrl + "/audio/" + audioUrl;
     this.audio.load();
     this.audio.play().catch(e => console.warn('Playback failed:', e));

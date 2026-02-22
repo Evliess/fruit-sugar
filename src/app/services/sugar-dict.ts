@@ -8,8 +8,23 @@ export class SugarDictService {
     private http = inject(HttpClient);
 
     public apiUrl = environment.apiUrl;
+    public openApiUrl = environment.openApiUrl;
+
+    userLogin(code: string): Observable<String> {
+        return this.http.post<String>(`${this.openApiUrl}` + "/user/login", { code: code });
+    }
+    adminLogin(name: string, code: string): Observable<String> {
+        return this.http.post<String>(`${this.openApiUrl}` + "/user/admin-login", { name: name, code: code });
+    }
+    createUser(name: string, days: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/user/create-or-update", { name: name, days: days });
+    }
+    revokeUser(code: string): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/user/revoke-token", { code: code });
+    }
 
     getSentenceContentModules(userId: number): Observable<String> {
+        const authUser = sessionStorage.getItem('auth_user');
         return this.http.get<String>(`${this.apiUrl}` + "/sentences/content-modules/" + userId);
     }
 
@@ -62,18 +77,7 @@ export class SugarDictService {
         return name.split("(")[1].slice(0, -1);
     }
 
-    userLogin(code: string): Observable<String> {
-        return this.http.post<String>(`${this.apiUrl}` + "/user/login", { code: code });
-    }
-    adminLogin(name: string, code: string): Observable<String> {
-        return this.http.post<String>(`${this.apiUrl}` + "/user/admin-login", { name: name, code: code });
-    }
-    createUser(name: string, days: string): Observable<String> {
-        return this.http.post<String>(`${this.apiUrl}` + "/user/create-or-update", { name: name, days: days });
-    }
-    revokeUser(code: string): Observable<String> {
-        return this.http.post<String>(`${this.apiUrl}` + "/user/revoke-token", { code: code });
-    }
+    
 
     markWordAsKnown(userId: number, wordId: number, moduleId: string): Observable<String> {
         return this.http.post<String>(`${this.apiUrl}` + "/word/mark-as-known", { userId: userId, wordId: wordId, moduleId: moduleId });

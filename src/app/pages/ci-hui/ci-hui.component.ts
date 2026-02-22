@@ -227,7 +227,7 @@ export class CiHuiComponent {
   }
 
   handleSound(phonetic: string, item: VocabularyWord): void {
-    const apiUrl = this.sugarDictService.apiUrl;
+    const apiUrl = this.sugarDictService.openApiUrl;
     if(item.type == "custom") {
       if(phonetic == "US") {
         this.audio.src = apiUrl + "/audio/custom/" + item.audioUSUrl;

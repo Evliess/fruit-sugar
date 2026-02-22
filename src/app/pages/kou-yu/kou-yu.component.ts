@@ -246,7 +246,7 @@ export class KouYuComponent {
   }
 
   handleSound(item: Sentence, voice: string): void {
-    const apiUrl = this.sugarDictService.apiUrl;
+    const apiUrl = this.sugarDictService.openApiUrl;
     if(item.type === 'custom') {
       if(voice === 'us') {
         this.audio.src =apiUrl + "/audio/custom/" + item.audioUSUrl;

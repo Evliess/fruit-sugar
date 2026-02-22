@@ -170,7 +170,7 @@ export class ListenWriteComponent {
 
 
   playAudio(word: VocabularyWord): void {
-    const apiUrl = this.sugarDictService.apiUrl;
+    const apiUrl = this.sugarDictService.openApiUrl;
     this.audio.src = this.soundTypeUK ? apiUrl + "/audio/words/" + word.audioUKUrl : apiUrl + "/audio/words/" + word.audioUSUrl;
     this.audio.load();
     setTimeout(() => {

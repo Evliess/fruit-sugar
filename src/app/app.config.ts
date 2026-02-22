@@ -17,7 +17,8 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './services/auth.interceptor';
 import { AuthService } from './services/auth';
 
 registerLocaleData(en);
@@ -36,6 +37,9 @@ export const appConfig: ApplicationConfig = {
     const authService = new AuthService();
     authService.loadSavedSession();
   }),
-  provideHttpClient()
+  { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  provideHttpClient(
+    withInterceptorsFromDi()
+  )
   ]
 };
