@@ -53,7 +53,6 @@ public class SentenceSvc {
       jsonObject.put(Constants.RESULT, Constants.OK);
       jsonObject.put("sentences", sentenceArr);
       jsonObject.put("count", sentenceArr.size());
-      log.info("Retrieved {} sentences for module ID: {}", sentenceArr.size(), moduleId);
       return ResponseEntity.ok(jsonObject.toString());
     } catch (Exception e) {
       jsonObject.put(Constants.RESULT, Constants.ERROR);

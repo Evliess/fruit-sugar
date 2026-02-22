@@ -20,7 +20,6 @@ public class CustomFilter extends OncePerRequestFilter {
   private final AuthenticationManager authenticationManager;
   private final List<String> whitelistPatterns;
 
-
   public CustomFilter(AuthenticationManager authenticationManager, String[] whitelistPatterns) {
     this.authenticationManager = authenticationManager;
     this.whitelistPatterns = Arrays.asList(whitelistPatterns);

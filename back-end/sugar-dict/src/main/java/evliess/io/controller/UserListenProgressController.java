@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/public/v1")
+@RequestMapping("/private/v1")
 @Tag(name = "Users Listen-Write Progress Operations", description = "Users Listen-Write Progress Operations")
 public class UserListenProgressController {
   private final UserListenProgressSvc userListenProgressSvc;

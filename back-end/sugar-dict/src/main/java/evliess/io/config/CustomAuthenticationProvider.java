@@ -1,6 +1,5 @@
 package evliess.io.config;
 
-import evliess.io.util.TokenUtils;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -13,16 +12,17 @@ import java.util.List;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
   @Override
   public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-    if (authentication != null) {
-      String principal = authentication.getPrincipal().toString();
-      if (TokenUtils.isValidToken(principal)) {
-        return new UsernamePasswordAuthenticationToken("", "", List.of());
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
+    return new UsernamePasswordAuthenticationToken("", "", List.of());
+//    if (authentication != null) {
+//      String principal = authentication.getPrincipal().toString();
+//      if (TokenUtils.isValidToken(principal)) {
+//        return new UsernamePasswordAuthenticationToken("", "", List.of());
+//      } else {
+//        return null;
+//      }
+//    } else {
+//      return null;
+//    }
   }
 
   @Override

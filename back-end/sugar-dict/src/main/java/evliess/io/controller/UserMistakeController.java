@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/public/v1")
+@RequestMapping("/private/v1")
 @Tag(name = "Users Mistake Operations", description = "Users Unknown Operations")
 public class UserMistakeController {
   private final UserMistakeSvc userMistakeSvc;

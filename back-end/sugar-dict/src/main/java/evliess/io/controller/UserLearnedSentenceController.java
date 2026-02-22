@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/public/v1")
+@RequestMapping("/private/v1")
 @Tag(name = "Users Learned Sentence Operations", description = "Users Learned Sentence Operations")
 public class UserLearnedSentenceController {
   private final UserLearnedSentenceSvc userLearnedSentenceSvc;
