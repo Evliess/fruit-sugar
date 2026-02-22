@@ -82,4 +82,5 @@ public class Constants {
   public static final String CUSTOM_SENTENCE_CONTENT_MODULE_NAME = "custom_sentences";
   public static final String HEAD_AUTH = "Authorization";
   public static final String BEARER = "Bearer ";
+  public static final String SERVLET_CONTEXT_PATH = "/sugar-dict";
 }

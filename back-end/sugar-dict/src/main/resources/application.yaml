@@ -1,4 +1,5 @@
 server.servlet.context-path: /sugar-dict
+server.forward-headers-strategy: native
 audio.dir: ${AUDIO_DIR}
 dyou.app.key: ${YOUD_KEY}
 dyou.app.secret: ${YOUD_SECRET}
