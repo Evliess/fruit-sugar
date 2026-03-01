@@ -16,27 +16,28 @@
         <nz-card 
           [class.is-known]="item.isKnown" 
           [nzHoverable]="true"
-          appHoverSound 
-          (soundClick)="handleSound('US', item)">
+          >
           
           <!-- 卡片内容区域 -->
           <div class="card-content">
             <!-- 单词标题 -->
-            <div class="word-title-group">
+            <div class="word-title-group"
+            appHoverSound 
+            (soundClick)="handleSound('US', item)">
               <span class="word-text">{{ item.word }}</span>
-              @if (item.isKnown) {
-              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
-              }
+              @if (item.isKnown) {}
             </div>
 
             <!-- 音标 -->
             <div class="phonetic-group">
               <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
                   nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                  (hoverTimeout)="handleSound('US', item)" /></span>
+                  (hoverTimeout)="handleSound('US', item)" 
+                  (soundClick)="handleSound('US', item)" /></span>
               <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
                   nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                  (hoverTimeout)="handleSound('UK', item)" /></span>
+                  (hoverTimeout)="handleSound('UK', item)" 
+                  (soundClick)="handleSound('UK', item)" /></span>
             </div>
 
             <!-- 释义 -->
@@ -47,7 +48,7 @@
             @if (item.showDetails || ciHuiService.learnMode()) {
             <div class="definition-details">
               @for (def of item.definition | keyvalue; track def.key) {
-              <div class="definition-item"><strong>{{ def.key }}:</strong> {{ def.value }}</div>
+              <div class="definition-item"><strong>{{ simpleWordType(def.key) }}:</strong> {{ def.value }}</div>
               }
             </div>
             }
@@ -125,21 +126,23 @@
           <!-- 卡片内容区域 -->
           <div class="card-content">
             <!-- 单词标题 -->
-            <div class="word-title-group">
+            <div class="word-title-group"
+            appHoverSound 
+            (soundClick)="handleSound('US', item)">
               <span class="word-text">{{ item.word }}</span>
-              @if (item.isKnown) {
-              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
-              }
+              @if (item.isKnown) {}
             </div>
 
             <!-- 音标 -->
             <div class="phonetic-group">
               <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
                   nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                  (hoverTimeout)="handleSound('US', item)" /></span>
+                  (hoverTimeout)="handleSound('US', item)" 
+                  (soundClick)="handleSound('US', item)" /></span>
               <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
                   nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                  (hoverTimeout)="handleSound('UK', item)" /></span>
+                  (hoverTimeout)="handleSound('UK', item)" 
+                  (soundClick)="handleSound('UK', item)" /></span>
             </div>
 
             <!-- 释义 -->
@@ -150,7 +153,7 @@
             @if (item.showDetails || ciHuiService.learnMode()) {
             <div class="definition-details">
               @for (def of item.definition | keyvalue; track def.key) {
-              <div class="definition-item"><strong>{{ def.key }}:</strong> {{ def.value }}</div>
+              <div class="definition-item"><strong>{{ simpleWordType(def.key) }}:</strong> {{ def.value }}</div>
               }
             </div>
             }

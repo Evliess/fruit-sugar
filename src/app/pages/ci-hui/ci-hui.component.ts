@@ -240,13 +240,20 @@ export class CiHuiComponent {
       } else {
         this.audio.src = apiUrl + "/audio/words/" + item.audioUKUrl;
       }
-    }  
+    }
     this.audio.load();
     this.audio.play().catch(e => {
       console.warn('Playback failed:', item.word);
       this.sugarDictService.fixBuiltInWordTts(item.word).subscribe({
         next: (response: any) => {
-          this.ngOnInit();
+          // 只更新当前单词的音频URL，避免重新加载整个列表导致滚动
+          if (response && response.data) {
+            const updatedWord = response.data;
+            item.audioUSUrl = updatedWord.audioUSUrl || item.audioUSUrl;
+            item.audioUKUrl = updatedWord.audioUKUrl || item.audioUKUrl;
+            // 重新播放
+            this.handleSound(phonetic, item);
+          }
         },
         error: (err) => console.error('修复失败:', err)
       });
@@ -311,6 +318,23 @@ export class CiHuiComponent {
 
   handlePracticeCancel(): void {
     this.isPracticeVisible = false;
+  }
+
+  //none->n, adjective->adj
+  simpleWordType(type: any): string {
+    if(type.includes("noun")) {
+      return "n";
+    } else if(type.includes("adjective")) {
+      return "adj";
+    } else if(type.includes("verb")) {
+      return "v";
+    } else if(type.includes("adverb")) {
+      return "adv";
+    } else if(type.includes("phrase")) {
+      return "phrase";
+    } else {
+      return type;
+    }
   }
 
 }
