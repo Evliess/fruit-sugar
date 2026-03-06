@@ -44,11 +44,9 @@ export class MainLayoutComponent {
   // initialValue 设为当前路由，防止页面刚刷新时信号为空
   currentUrl = toSignal(this.currentUrl$, { initialValue: this.router.url });
 
-  // 3. 创建 Computed Signal (计算属性) 来决定是否显示按钮
-  // 只要 currentUrl 发生变化，这个值会自动更新
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
-    if (url && (url.includes('/words?isCustom=false') || url.includes('/unknown-book')
+    if (url && ((url.includes('/words') && url.includes('isCustom=false')) || url.includes('/unknown-book')
       || url.includes('/wrong-book') || url.includes('user-summary')
       || url.includes('/kou-yu')
     )) {
@@ -66,8 +64,17 @@ export class MainLayoutComponent {
 
   constructor() {
     effect(() => {
+      const url = this.currentUrl();
       if (this.isRequiredToCloseLeftMenuPage()) {
         this.isCollapsed = true;
+      }
+
+      if (url.includes('/listen')) {
+        this.learnModel = 'listen';
+      } else if (url.includes('/words/learn')) {
+        this.learnModel = 'learn';
+      } else if (url.includes('/words')) {
+        this.learnModel = 'list';
       }
     });
   }
@@ -146,9 +153,16 @@ export class MainLayoutComponent {
   }
 
   setLearnModel(model: string) {
+    const url = this.currentUrl();
+    const tree = this.router.parseUrl(url);
+    const queryParams = tree.queryParams;
+
+    if (model === 'learn') {
+      this.router.navigate(['/words/learn'], { queryParams });
+    } else if (model === 'list') {
+      this.router.navigate(['/words'], { queryParams });
+    }
     this.learnModel = model;
-    if (model == 'learn') this.ciHuiService.setLearnMode(true);
-    if (model == 'list') this.ciHuiService.setLearnMode(false);
   }
 
   gotoUserSummary() {
