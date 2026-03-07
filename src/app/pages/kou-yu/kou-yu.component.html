@@ -37,7 +37,7 @@
           <div class="card-content">
             <div class="sentences-list">
               @for (item of group.sentences; track item.id; let i = $index) {
-              @if(item.t2 && (i === 0 || (i > 0 && group.sentences[i-1].t2 !== item.t2))) {
+              @if(item.t2 && item.t2 !== 'NULL' && (i === 0 || (i > 0 && group.sentences[i-1].t2 !== item.t2))) {
               <div class="t2-divider">{{ item.t2 }}</div>
               }
               <div class="sentence-row" [class.is-known]="item.isKnown">
