@@ -6,18 +6,18 @@
       <h2 class="section-title">学习管理</h2>
       <div nz-row [nzGutter]="[24, 24]">
         <!-- 错题本卡片 -->
-        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
-          <div class="nav-card wrong-book-card" (click)="navigateToWrongBook()">
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="12">
+          <div class="base-card nav-card wrong-book-card" (click)="navigateToWrongBook()">
             <div class="nav-card-content">
               <div class="nav-card-icon">
                 <nz-icon nzType="file-exclamation" nzTheme="outline"></nz-icon>
               </div>
               <div class="nav-card-text">
                 <h3 class="nav-card-title">错题本</h3>
-                <p class="nav-card-desc">查看和复习你的错题记录</p>
+                <p class="nav-card-desc">错题记录</p>
               </div>
               <div class="nav-card-stats" *ngIf="wrongBookCount > 0">
-                <span class="nav-card-count">{{wrongBookCount}} 个错题</span>
+                <span class="nav-card-count">{{wrongBookCount}}</span>
               </div>
             </div>
             <div class="nav-card-arrow">
@@ -27,18 +27,18 @@
         </div>
 
         <!-- 生词本卡片 -->
-        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
-          <div class="nav-card unknown-book-card" (click)="navigateToUnknownBook()">
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="12">
+          <div class="base-card nav-card unknown-book-card" (click)="navigateToUnknownBook()">
             <div class="nav-card-content">
               <div class="nav-card-icon">
                 <nz-icon nzType="book" nzTheme="outline"></nz-icon>
               </div>
               <div class="nav-card-text">
                 <h3 class="nav-card-title">生词本</h3>
-                <p class="nav-card-desc">管理你的生词学习进度</p>
+                <p class="nav-card-desc">学习进度</p>
               </div>
               <div class="nav-card-stats" *ngIf="unknownBookCount > 0">
-                <span class="nav-card-count">{{unknownBookCount}} 个生词</span>
+                <span class="nav-card-count">{{unknownBookCount}}</span>
               </div>
             </div>
             <div class="nav-card-arrow">
@@ -55,7 +55,7 @@
 
         <!-- 词汇统计卡片 -->
         <div nz-col [nzXs]="24" [nzMd]="12">
-          <nz-card nzTitle="词汇掌握情况" [nzExtra]="totalWordsTemplate">
+          <nz-card class="base-card stats-card" nzTitle="词汇掌握情况" [nzExtra]="totalWordsTemplate">
             <!-- echarts 指令，自动处理 resize -->
             <div echarts [options]="wordsChartOption" class="chart-container"></div>
           </nz-card>
@@ -67,7 +67,7 @@
 
         <!-- 句子统计卡片 -->
         <div nz-col [nzXs]="24" [nzMd]="12">
-          <nz-card nzTitle="句子掌握情况" [nzExtra]="totalSentencesTemplate">
+          <nz-card class="base-card stats-card" nzTitle="句子掌握情况" [nzExtra]="totalSentencesTemplate">
             <div echarts [options]="sentencesChartOption" class="chart-container"></div>
           </nz-card>
           <ng-template #totalSentencesTemplate>
