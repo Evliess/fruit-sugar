@@ -97,6 +97,10 @@
             </ul>
           </nz-dropdown-menu> -->
           @if(isShowCIHUIMenu()){
+          <div (click)="setLearnModel('list1')" [class]="learnModel=='list1'?'header-item selected':'header-item'">
+            <span nz-icon nzType="unordered-list"></span>
+            <span class="username">列表模式1</span>
+          </div>
           <div (click)="setLearnModel('learn')" [class]="learnModel=='learn'?'header-item selected':'header-item'">
             <span nz-icon nzType="eye"></span>
             <span class="username">学习模式</span>

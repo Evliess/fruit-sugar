@@ -46,9 +46,9 @@ export class MainLayoutComponent {
 
   isShowTopMenu = computed(() => {
     const url = this.currentUrl();
-    if (url && ((url.includes('/words') && url.includes('isCustom=false')) || url.includes('/unknown-book')
+    if (url && ((url.includes('/words') && !url.includes('isCustom=true')) || url.includes('/unknown-book')
       || url.includes('/wrong-book') || url.includes('user-summary')
-      || url.includes('/kou-yu')
+      || url.includes('/kou-yu') || url.includes('/listen') || url.includes('/sen-listen')
     )) {
       return true;
     }
@@ -71,6 +71,8 @@ export class MainLayoutComponent {
 
       if (url.includes('/listen')) {
         this.learnModel = 'listen';
+      } else if (url.includes('/words/list1')) {
+        this.learnModel = 'list1';
       } else if (url.includes('/words/learn')) {
         this.learnModel = 'learn';
       } else if (url.includes('/words')) {
@@ -81,7 +83,7 @@ export class MainLayoutComponent {
 
   isShowCIHUIMenu = computed(() => {
     const url = this.currentUrl();
-    if (url.includes('/words')) {
+    if (url.includes('/words') || url.includes('/listen')) {
       return true;
     } else {
       return false;
@@ -90,7 +92,7 @@ export class MainLayoutComponent {
 
   isShowSentenceMenu = computed(() => {
     const url = this.currentUrl();
-    if (url.includes('/kou-yu')) {
+    if (url.includes('/kou-yu') || url.includes('/sen-listen')) {
       return true;
     } else {
       return false;
@@ -161,6 +163,8 @@ export class MainLayoutComponent {
       this.router.navigate(['/words/learn'], { queryParams });
     } else if (model === 'list') {
       this.router.navigate(['/words'], { queryParams });
+    } else if (model === 'list1') {
+      this.router.navigate(['/words/list1'], { queryParams });
     }
     this.learnModel = model;
   }

@@ -58,6 +58,91 @@ nz-card.is-known ::ng-deep .ant-card-body {
   min-height: 120px;
 }
 
+.list1-card-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.list1-main {
+  flex: 0 0 auto;
+  max-width: 220px;
+}
+
+.list1-side {
+  flex: 1;
+}
+
+.list1-side-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.list1-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  justify-content: center;
+  min-height: 60px;
+}
+
+
+
+.list1-block-sentence {
+  min-width: 200px;
+  max-width: 420px;
+}
+
+.list1-footer-row {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+.list1-left-column {
+  flex: 1;
+  min-width: 0; /* 防止内容溢出 */
+}
+
+.list1-right-column {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.word-and-pos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.pos-definition {
+  font-size: 14px;
+  color: #595959;
+}
+
+.pos-definition .definition-item {
+  margin: 0;
+}
+
+.sentence-below-phonetic {
+  margin-top: 8px;
+}
+
+.word-and-pos .word-title-group {
+  margin-bottom: 0;
+}
+
+.pos-definition strong {
+  color: #1890ff;
+}
+
 .word-title-group {
   display: flex;
   align-items: center;
@@ -136,10 +221,10 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 .sentence-item {
   margin-bottom: 8px;
-  padding: 8px;
-  background: #fafafa;
-  border-radius: 4px;
-  border-left: 2px solid #d9d9d9;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border-left: none;
 }
 
 .sentence-item .en {
@@ -161,9 +246,9 @@ nz-card.is-known ::ng-deep .ant-card-body {
 .card-footer {
   display: flex;
   gap: 8px;
-  padding-top: 12px;
-  border-top: 1px solid #f0f0f0;
-  margin-top: 12px;
+  padding-top: 0;
+  border-top: none;
+  margin-top: 0;
   flex-wrap: wrap;
 }
 
@@ -196,11 +281,19 @@ nz-card.is-known ::ng-deep .ant-card-body {
   }
 
   .card-footer {
-    flex-direction: column;
+    flex-direction: row;
   }
 
   .card-footer button {
-    width: 100%;
+    width: auto;
+  }
+
+  .list1-card-row {
+    flex-direction: column;
+  }
+
+  .list1-side-row {
+    flex-direction: column;
   }
 }
 
@@ -220,6 +313,24 @@ nz-card.is-known ::ng-deep .ant-card-body {
 @media (min-width: 992px) {
   .word-text {
     font-size: 24px;
+  }
+  
+  .list1-side-row {
+    flex-wrap: nowrap;
+  }
+  
+  .list1-block {
+    flex: 1;
+    min-width: 0; /* 防止内容溢出 */
+  }
+  
+  .list1-block-sentence {
+    flex: 2; /* 给例句更多空间 */
+  }
+  
+  .list1-footer-row {
+    flex: 0 0 auto; /* 按钮区域不伸缩 */
+    justify-content: flex-end;
   }
 }
 
@@ -241,4 +352,15 @@ nz-card.is-known ::ng-deep .ant-card-body {
 .sound-icon:hover {
   color: #1890ff;
   transform: scale(1.1);
+}
+
+/* 列表模式1中标签的简约样式 */
+.list1-block .ant-tag {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #595959;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
 }
