@@ -36,7 +36,7 @@
 
   .apple-card {
     height: 360px; /* 移动端稍微调小高度 */
-    border-radius: 20px; /* 移动端圆角稍微调小 */
+    border-radius: 12px; /* 统一卡片圆角 */
     margin-bottom: 6px; /* 卡片本身的下边距 */
   }
 

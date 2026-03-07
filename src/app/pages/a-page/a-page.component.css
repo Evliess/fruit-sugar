@@ -19,7 +19,7 @@
   max-width: 400px; /* 电脑端上限 */
   padding: 32px 24px;
   background: #fff;
-  border-radius: 8px; /* 稍微圆润一点更符合现代移动端审美 */
+  border-radius: 12px; /* 统一卡片圆角 */
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); /* 柔和的阴影 */
   box-sizing: border-box; /* 确保 padding 不会撑破宽度 */
 }

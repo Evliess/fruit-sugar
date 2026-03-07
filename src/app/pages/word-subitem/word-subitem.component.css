@@ -3,7 +3,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 40px 20px;
-  background-color: #f5f5f7; /* Apple 官网经典灰白底色 */
+  background-color: #f8f9fa; /* 更柔和的学习背景色 */
   min-height: 100vh;
   /* Apple 默认字体栈 */
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -36,7 +36,7 @@
 
   .apple-card {
     height: 360px; /* 移动端稍微调小高度 */
-    border-radius: 20px; /* 移动端圆角稍微调小 */
+    border-radius: 12px; /* 统一卡片圆角 */
     margin-bottom: 6px; /* 卡片本身的下边距 */
   }
 
@@ -61,7 +61,7 @@
  }
 
  .card-subtitle {
-    color: #7f8c8d;
+    color: #555555;
     font-size: 0.95rem;
  }
  .card-description {
