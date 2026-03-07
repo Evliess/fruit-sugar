@@ -352,6 +352,51 @@ nz-card.is-known ::ng-deep .ant-card-body {
   max-height: 33.6px; /* 12px * 1.4 * 2 */
 }
 
+/* 展开状态 */
+.sentence-text.expanded,
+.sentence-translation.expanded {
+  -webkit-line-clamp: unset;
+  line-clamp: unset;
+  max-height: none;
+  overflow: visible;
+}
+
+/* 移动端交互指示器 */
+.expand-indicator {
+  margin-left: 4px;
+  color: #8c8c8c;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+/* 移动端点击反馈 */
+@media (max-width: 768px) {
+  .sentence-en,
+  .sentence-zh {
+    cursor: pointer;
+  }
+  
+  .sentence-text,
+  .sentence-translation {
+    transition: color 0.2s;
+  }
+  
+  .sentence-en:active .sentence-text,
+  .sentence-zh:active .sentence-translation {
+    color: #1890ff;
+  }
+}
+
+/* 桌面端tooltip悬停提示 */
+@media (min-width: 769px) {
+  .sentence-text:hover,
+  .sentence-translation:hover {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
+  }
+}
+
 /* 普通列表模式中的例句样式 */
 .sentence-item .en {
   font-weight: 500;
@@ -467,21 +512,23 @@ nz-card.is-known ::ng-deep .ant-card-body {
     line-clamp: 3;
   }
 
-  /* 移动端增加例句和搭配的行数限制 */
+  /* 手机端显示完整内容，不需要省略号 */
   .sentence-text,
   .collocation-text,
   .sentence-item .en {
-    -webkit-line-clamp: 4;
-    line-clamp: 4;
-    max-height: 72.8px; /* 13px * 1.4 * 4 */
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    max-height: none;
+    overflow: visible;
   }
 
   .sentence-translation,
   .collocation-translation,
   .sentence-item .zh {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    max-height: 50.4px; /* 12px * 1.4 * 3 */
+    -webkit-line-clamp: unset;
+    line-clamp: unset;
+    max-height: none;
+    overflow: visible;
   }
 }
 

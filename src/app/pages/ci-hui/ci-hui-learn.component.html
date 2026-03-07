@@ -72,12 +72,32 @@
                   @if (item.sentences.length > 0) {
                   @let sent = item.sentences[0];
                   <div class="sentence-item">
-                    <div class="sentence-en">
+                    <div class="sentence-en" 
+                         [nz-tooltip]="!isMobile && isExpanded(item) ? null : sent.text"
+                         nzTooltipPlacement="top"
+                         (click)="toggleExpand(item, $event)">
                       <span class="sentence-label">例句：</span>
-                      <span class="sentence-text">{{ sent.text }}</span>
+                      <span class="sentence-text" [class.expanded]="isExpanded(item)">
+                        {{ sent.text }}
+                      </span>
+                      @if (isMobile && !isPhone) {
+                      <span class="expand-indicator">
+                        <nz-icon [nzType]="isExpanded(item) ? 'up' : 'down'"></nz-icon>
+                      </span>
+                      }
                     </div>
-                    <div class="sentence-zh">
-                      <span class="sentence-translation">{{ sent.textTranslation }}</span>
+                    <div class="sentence-zh" 
+                         [nz-tooltip]="!isMobile && isExpanded(item) ? null : sent.textTranslation"
+                         nzTooltipPlacement="top"
+                         (click)="toggleExpand(item, $event)">
+                      <span class="sentence-translation" [class.expanded]="isExpanded(item)">
+                        {{ sent.textTranslation }}
+                      </span>
+                      @if (isMobile && !isPhone) {
+                      <span class="expand-indicator">
+                        <nz-icon [nzType]="isExpanded(item) ? 'up' : 'down'"></nz-icon>
+                      </span>
+                      }
                     </div>
                   </div>
                   }
@@ -173,12 +193,32 @@
                   @if (item.sentences.length > 0) {
                   @let sent = item.sentences[0];
                   <div class="sentence-item">
-                    <div class="sentence-en">
+                    <div class="sentence-en" 
+                         [nz-tooltip]="!isMobile && isExpanded(item) ? null : sent.text"
+                         nzTooltipPlacement="top"
+                         (click)="toggleExpand(item, $event)">
                       <span class="sentence-label">例句：</span>
-                      <span class="sentence-text">{{ sent.text }}</span>
+                      <span class="sentence-text" [class.expanded]="isExpanded(item)">
+                        {{ sent.text }}
+                      </span>
+                      @if (isMobile && !isPhone) {
+                      <span class="expand-indicator">
+                        <nz-icon [nzType]="isExpanded(item) ? 'up' : 'down'"></nz-icon>
+                      </span>
+                      }
                     </div>
-                    <div class="sentence-zh">
-                      <span class="sentence-translation">{{ sent.textTranslation }}</span>
+                    <div class="sentence-zh" 
+                         [nz-tooltip]="!isMobile && isExpanded(item) ? null : sent.textTranslation"
+                         nzTooltipPlacement="top"
+                         (click)="toggleExpand(item, $event)">
+                      <span class="sentence-translation" [class.expanded]="isExpanded(item)">
+                        {{ sent.textTranslation }}
+                      </span>
+                      @if (isMobile && !isPhone) {
+                      <span class="expand-indicator">
+                        <nz-icon [nzType]="isExpanded(item) ? 'up' : 'down'"></nz-icon>
+                      </span>
+                      }
                     </div>
                   </div>
                   }

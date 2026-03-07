@@ -3,6 +3,7 @@
 /* 防止水平滚动条 */
 html, body {
   overflow-x: hidden;
+  overflow-y: auto;
   max-width: 100%;
 }
 
@@ -13,11 +14,12 @@ html, body {
   background-color: #f0f2f5;
   min-height: 100vh;
   overflow-x: hidden;
+  overflow-y: visible;
 }
 
 .list-container {
   padding: 0;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 /* 单词换行 */
@@ -319,4 +321,9 @@ html, body {
   .word-text {
     font-size: 24px;
   }
+}
+
+/* 防止双滚动条 */
+nz-card, .ant-card, .ant-card-body {
+  overflow-y: visible !important;
 }

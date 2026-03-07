@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -55,8 +55,12 @@ interface VocabularyWord {
   templateUrl: './ci-hui-learn.component.html',
   styleUrls: ['./ci-hui.component.css']
 })
-export class CiHuiLearnComponent {
+export class CiHuiLearnComponent implements OnDestroy {
   isPracticeVisible = false;
+  expandedStates = new Map<number, boolean>();
+  isMobile = window.innerWidth <= 768;
+  isPhone = window.innerWidth < 576;
+  private resizeListener!: () => void;
   practiceWord: VocabularyWord | null = null;
   practiceInput = '';
   userWord = '';
@@ -81,7 +85,13 @@ export class CiHuiLearnComponent {
 
   ngOnInit(): void {
     this.ciHuiService.setLearnMode(true);
-
+    
+    this.resizeListener = () => {
+      this.isMobile = window.innerWidth <= 768;
+      this.isPhone = window.innerWidth < 576;
+    };
+    window.addEventListener('resize', this.resizeListener);
+    
     this.route.queryParams.subscribe(params => {
       this.isCustom = params['isCustom'] === 'true';
       const userId = this.currentUser()?.id || 0;
@@ -298,6 +308,26 @@ export class CiHuiLearnComponent {
       return 'phrase';
     } else {
       return type;
+    }
+  }
+
+  toggleExpand(item: VocabularyWord, event: Event): void {
+    event.stopPropagation();
+    const current = this.expandedStates.get(item.id) || false;
+    this.expandedStates.set(item.id, !current);
+  }
+
+  isExpanded(item: VocabularyWord): boolean {
+    return this.expandedStates.get(item.id) || false;
+  }
+
+  isTruncated(element: HTMLElement): boolean {
+    return element.scrollHeight > element.clientHeight;
+  }
+
+  ngOnDestroy(): void {
+    if (this.resizeListener) {
+      window.removeEventListener('resize', this.resizeListener);
     }
   }
 }
