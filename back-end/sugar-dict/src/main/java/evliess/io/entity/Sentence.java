@@ -27,6 +27,9 @@ public class Sentence {
   @Column(name = "audio_uk_url")
   private String audioUKUrl;
 
+  @Column(name = "title")
+  private String title;
+
   @Column(name = "module_id")
   private Long moduleId;
 }

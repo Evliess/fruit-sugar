@@ -29,6 +29,15 @@ interface Sentence {
   audioUKUrl: string;
   isKnown: boolean;
   type: string;
+  title: string;
+  t2?: string;
+}
+
+interface SentenceGroup {
+  t1Value: string;
+  t1Label: string;
+  anchorId: string;
+  sentences: Sentence[];
 }
 
 @Component({
@@ -66,7 +75,75 @@ export class KouYuComponent {
   sentences: Sentence[] = [];
   firstSentences: Sentence[] = [];
   remainingSentences: Sentence[] = [];
+  sentenceGroups: SentenceGroup[] = [];
+  t1Tabs: { value: string; label: string; anchorId: string }[] = [];
+  activeTab: string = '';
   constructor(private message: NzMessageService) { }
+
+  private safeJsonParse(data: any, fallback: any): any {
+    if (typeof data !== 'string') return data || fallback;
+    try {
+      return JSON.parse(data);
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  private parseTitle(title: string): { t0?: string; t1?: string; t2?: string } {
+    const parsed = this.safeJsonParse(title, {});
+    return {
+      t0: parsed.t0,
+      t1: parsed.t1,
+      t2: parsed.t2
+    };
+  }
+
+  private groupSentencesByT1(sentences: Sentence[]): SentenceGroup[] {
+    const groupsMap = new Map<string, Sentence[]>();
+    
+    for (const sentence of sentences) {
+      const { t1 } = this.parseTitle(sentence.title);
+      const t1Value = t1 || '未分类';
+      const t1Label = t1 || '未分类';
+      
+      if (!groupsMap.has(t1Value)) {
+        groupsMap.set(t1Value, []);
+      }
+      groupsMap.get(t1Value)?.push(sentence);
+    }
+    
+    const groups: SentenceGroup[] = [];
+    for (const [t1Value, sentences] of groupsMap) {
+      const anchorId = `group-${t1Value.replace(/\s+/g, '-').toLowerCase()}`;
+      groups.push({
+        t1Value,
+        t1Label: t1Value,
+        anchorId,
+        sentences
+      });
+    }
+    
+    return groups.sort((a, b) => a.t1Label.localeCompare(b.t1Label));
+  }
+
+  private updateT1Tabs(groups: SentenceGroup[]): void {
+    this.t1Tabs = groups.map(group => ({
+      value: group.t1Value,
+      label: group.t1Label,
+      anchorId: group.anchorId
+    }));
+    if (this.t1Tabs.length > 0 && !this.activeTab) {
+      this.activeTab = this.t1Tabs[0].value;
+    }
+  }
+
+  scrollToGroup(anchorId: string, value: string): void {
+    this.activeTab = value;
+    const element = document.getElementById(anchorId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 
   get sentencesList(): Sentence[] {
     return [...this.firstSentences, ...this.remainingSentences];
@@ -94,16 +171,21 @@ export class KouYuComponent {
    * Map raw sentence data to Sentence interface
    */
   private mapSentenceData(rawData: any[], type: string): Sentence[] {
-    return rawData.map((item: any) => ({
-      id: item.id,
-      sentence_en: item.text,
-      sentence_zh: item.textTranslation,
-      audioUSUrl: item.audioUSUrl,
-      audioUKUrl: item.audioUKUrl,
-      showDetails: false,
-      isKnown: item.isKnown || false,
-      type: type
-    } as Sentence));
+    return rawData.map((item: any) => {
+      const { t2 } = this.parseTitle(item.title || '');
+      return {
+        id: item.id,
+        sentence_en: item.text,
+        sentence_zh: item.textTranslation,
+        audioUSUrl: item.audioUSUrl,
+        audioUKUrl: item.audioUKUrl,
+        showDetails: false,
+        isKnown: item.isKnown || false,
+        type: type,
+        title: item.title || '',
+        t2: t2 || undefined
+      } as Sentence;
+    });
   }
 
   /**
@@ -124,6 +206,9 @@ export class KouYuComponent {
         setTimeout(() => {
           this.remainingSentences = remainingBatch;
         }, 20);
+        
+        this.sentenceGroups = this.groupSentencesByT1(processedData);
+        this.updateT1Tabs(this.sentenceGroups);
         
         console.log('获取自定义例句成功:', this.sentences);
       },
@@ -147,11 +232,15 @@ export class KouYuComponent {
         
         this.firstSentences = firstBatch;
         this.sentences = processedData;
+        console.log('获取例句成功:', this.sentences);
         this.remainingSentences = [];
         
         setTimeout(() => {
           this.remainingSentences = remainingBatch;
         }, 20);
+        
+        this.sentenceGroups = this.groupSentencesByT1(processedData);
+        this.updateT1Tabs(this.sentenceGroups);
       },
       error: (err) => {
         console.error('获取例句失败:', err);

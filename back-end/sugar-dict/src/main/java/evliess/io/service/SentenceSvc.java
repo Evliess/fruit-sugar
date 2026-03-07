@@ -71,6 +71,7 @@ public class SentenceSvc {
       sentenceObj.put("textTranslation", sentence.getTextTranslation());
       sentenceObj.put("audioUSUrl", sentence.getAudioUSUrl());
       sentenceObj.put("audioUKUrl", sentence.getAudioUKUrl());
+      sentenceObj.put("title", sentence.getTitle() == null ? "" : sentence.getTitle());
       sentenceObj.put("moduleId", sentence.getModuleId());
       sentenceObj.put("isKnown", knownSentences.contains(sentence.getId()));
       sentenceArr.add(sentenceObj);
