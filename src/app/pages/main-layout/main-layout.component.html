@@ -25,7 +25,7 @@
           <li nz-menu-item (click)="gotoWordSubitem('words', false, word?.name, word?.description)">
             <a routerLinkActive="active"
               ariaCurrentWhenActive="page">{{getChineseContentModuleName(word?.description)}}</a>
-          }
+            }
           <li nz-menu-item (click)="gotoWord(true, 'custom')" nzSelected="{{category==='custom'}}"><a
               routerLinkActive="active" ariaCurrentWhenActive="page">自定义</a></li>
         </ul>
@@ -47,13 +47,14 @@
             ><a routerLinkActive="active"
               ariaCurrentWhenActive="page">{{sentence.description}}</a></li>
           } -->
-          <li nz-menu-item (click)="gotoKouYu(false)"><a routerLinkActive="active"
-              ariaCurrentWhenActive="page">热门场景</a>
+          <li nz-menu-item (click)="gotoKouYu(false)"><a routerLinkActive="active" ariaCurrentWhenActive="page">热门场景</a>
           </li>
           <!-- <li nz-menu-item (click)="gotoKouYu(true, 'custom_sentences')"><a routerLinkActive="active"
               ariaCurrentWhenActive="page">自定义</a>
           </li> -->
         </ul>
+      </li>
+      <li nz-submenu nzTitle="AI助教" nzIcon="reddit">
       </li>
       <li nz-submenu nzTitle="用户中心" nzIcon="user">
         <ul>
@@ -61,8 +62,6 @@
           <li nz-menu-item (click)="gotoWrongBook()" nzSelected="{{category=='wrong-book'}}">错题本</li>
           <li nz-menu-item (click)="gotoUnknownBook()" nzSelected="{{category=='unknown-book'}}">生词本</li>
         </ul>
-      </li>
-      <li nz-submenu nzTitle="AI助教" nzIcon="reddit">
       </li>
     </ul>
   </nz-sider>
@@ -115,7 +114,7 @@
           </div>
           }
           @if(isShowSentenceMenu()) {
-            <div (click)="gotoSentenceListen()" [class]="learnModel=='listen'?'header-item selected':'header-item'">
+          <div (click)="gotoSentenceListen()" [class]="learnModel=='listen'?'header-item selected':'header-item'">
             <span nz-icon nzType="muted"></span>
             <span class="username">听写模式</span>
           </div>

@@ -1,4 +1,4 @@
-import { Component, inject, TemplateRef, ViewChild } from '@angular/core';
+import { Component, inject, TemplateRef, ViewChild, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
@@ -19,6 +19,7 @@ import { HoverSoundDirective } from '../../hover-sound.directive';
 import { AuthService } from '../../services/auth';
 import { SugarDictService } from '../../services/sugar-dict';
 import { map } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 // 定义单词数据结构
 interface VocabularyWord {
@@ -55,7 +56,7 @@ interface VocabularyWord {
   templateUrl: './wrong-book.component.html',
   styleUrl: './wrong-book.component.css'
 })
-export class WrongBookComponent {
+export class WrongBookComponent implements OnDestroy {
   isPracticeVisible = false;
   practiceWord: VocabularyWord | null = null;
   practiceInput = '';
@@ -69,6 +70,10 @@ export class WrongBookComponent {
   route = inject(ActivatedRoute);
   words: VocabularyWord[] = [];
   wordsCount = 0;
+  showHint = false;
+  private subscription: Subscription | null = null;
+  private notificationRef: any = null;
+  private hintTimer: any = null;
   constructor(private message: NzMessageService, private notification: NzNotificationService) { }
   ngOnInit(): void {
     this.sugarDictService.getUserMistake(this.currentUser()?.id || 0).pipe(
@@ -98,14 +103,16 @@ export class WrongBookComponent {
     ).subscribe({
       next: (words: VocabularyWord[]) => {
         this.words = words;
-        console.log(this.words);
         this.wordsCount = words.length;
-        this.notification.create(
-          'info',
-          '提示：',
-          '根据艾宾浩斯记忆法，建议你先复习这些单词，它们的记忆间隔较短',
-          { nzPlacement: "top" }
-        );
+        
+        // 显示提示3秒后自动消失
+        this.showHint = true;
+        if (this.hintTimer) {
+          clearTimeout(this.hintTimer);
+        }
+        this.hintTimer = setTimeout(() => {
+          this.showHint = false;
+        }, 3000);
       },
       error: (err) => console.error('请求失败:', err)
     });
@@ -204,5 +211,16 @@ export class WrongBookComponent {
     this.audio.play().catch(e => {
       console.warn('Playback failed:', item.word);
     });
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+      this.subscription = null;
+    }
+    if (this.hintTimer) {
+      clearTimeout(this.hintTimer);
+      this.hintTimer = null;
+    }
   }
 }
