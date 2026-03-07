@@ -1,0 +1,322 @@
+/* 列表模式1专用样式 */
+
+/* 防止水平滚动条 */
+html, body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.list-container {
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* 单词换行 */
+.word-text {
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* 卡片行布局 */
+.list1-card-row {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.list1-left-column {
+  flex: 1;
+  min-width: 0; /* 防止内容溢出 */
+}
+
+.list1-right-column {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+/* 单词与词性布局 */
+.word-and-pos {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.pos-definition {
+  font-size: 14px;
+  color: #595959;
+}
+
+.pos-definition .definition-item {
+  margin: 0;
+}
+
+.pos-definition strong {
+  color: #1890ff;
+}
+
+.word-and-pos .word-title-group {
+  margin-bottom: 0;
+}
+
+/* 例句位置 */
+.sentence-below-phonetic {
+  margin-top: 8px;
+}
+
+/* 底部按钮区域 */
+.list1-footer-row {
+  margin-top: 0;
+  border-top: none;
+  padding-top: 0;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+}
+
+/* 响应式适配 */
+/* 手机端 (xs: <576px) */
+@media (max-width: 575.98px) {
+  .list1-card-row {
+    flex-direction: column;
+  }
+
+  .list1-right-column {
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .word-and-pos {
+    flex-wrap: wrap;
+  }
+
+  /* 移动端增加例句行数限制 */
+  .sentence-item .en {
+    -webkit-line-clamp: 4;
+    line-clamp: 4;
+    max-height: 72.8px; /* 13px * 1.4 * 4 */
+  }
+}
+
+/* 平板端 (sm: ≥576px, md: ≥768px) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  /* 平板端特定样式 */
+}
+
+/* 桌面端 (lg: ≥992px) */
+@media (min-width: 992px) {
+  .list1-side-row {
+    flex-wrap: nowrap;
+  }
+  
+  .list1-block {
+    flex: 1;
+    min-width: 0; /* 防止内容溢出 */
+  }
+  
+  .list1-block-sentence {
+    flex: 2; /* 给例句更多空间 */
+  }
+  
+  .list1-footer-row {
+    flex: 0 0 auto; /* 按钮区域不伸缩 */
+    justify-content: flex-end;
+  }
+
+  /* 桌面端减少例句行数限制 */
+  .sentence-item .en {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    max-height: 36.4px; /* 13px * 1.4 * 2 */
+  }
+}
+
+/* 列表模式1中标签的简约样式 */
+.list1-block .ant-tag {
+  background: transparent;
+  border: none;
+  padding: 0;
+  color: #595959;
+  font-size: 14px;
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* 共享样式 */
+.word-title-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.word-text {
+  font-size: 24px;
+  font-weight: 700;
+  color: #262626;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.phonetic-group {
+  font-size: 13px;
+  color: #8c8c8c;
+  margin-bottom: 12px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.phonetic {
+  margin-right: 0;
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 1;
+  min-width: 0;
+  font-size: 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sound-icon {
+  margin-left: 2px;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.sound-icon:hover {
+  color: #1890ff;
+  transform: scale(1.1);
+}
+
+.definition-item {
+  font-size: 14px;
+  color: #595959;
+  line-height: 1.8;
+  margin-bottom: 4px;
+  height: auto;
+  min-height: 0;
+  display: block;
+  overflow: visible;
+  -webkit-line-clamp: none;
+  line-clamp: none;
+  -webkit-box-orient: horizontal;
+}
+
+.sentence-item {
+  margin-bottom: 8px;
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  border-left: none;
+}
+
+.sentence-item .en {
+  font-weight: 500;
+  margin-bottom: 2px;
+  font-size: 13px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  overflow: hidden;
+  line-height: 1.4;
+  max-height: 54.6px; /* 13px * 1.4 * 3 */
+}
+
+.card-footer {
+  display: flex;
+  gap: 8px;
+  padding-top: 0;
+  border-top: none;
+  margin-top: 0;
+  flex-wrap: wrap;
+}
+
+.card-footer button {
+  flex: 1;
+  min-width: 80px;
+  font-size: 13px;
+}
+
+/* 响应式适配 */
+/* 手机端 (xs: <576px) */
+@media (max-width: 575.98px) {
+  .container {
+    padding: 12px;
+  }
+
+  .word-text {
+    font-size: 20px;
+  }
+
+  .card-footer {
+    flex-direction: row;
+  }
+
+  .card-footer button {
+    width: auto;
+  }
+
+  .phonetic-group {
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 8px 4px;
+  }
+
+  .phonetic {
+    white-space: normal;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .word-and-pos {
+    flex-wrap: wrap;
+  }
+}
+
+/* 平板端 (sm: ≥576px, md: ≥768px) */
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .word-text {
+    font-size: 22px;
+  }
+
+  .card-footer button {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .phonetic-group {
+    white-space: normal;
+    flex-wrap: wrap;
+    gap: 8px 4px;
+  }
+
+  .phonetic {
+    white-space: normal;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+}
+
+/* 桌面端 (lg: ≥992px) */
+@media (min-width: 992px) {
+  .word-text {
+    font-size: 24px;
+  }
+}

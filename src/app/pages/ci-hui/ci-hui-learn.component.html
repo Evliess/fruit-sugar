@@ -16,6 +16,7 @@
         <nz-card 
           [class.is-known]="item.isKnown" 
           [nzHoverable]="true"
+          class="vocabulary-card"
           >
 
           <div class="card-content">
@@ -38,7 +39,8 @@
             </div>
 
             <div class="definition-details">
-              @for (def of item.definition | keyvalue; track def.key) {
+              @if ((item.definition | keyvalue).length > 0) {
+              @let def = (item.definition | keyvalue)[0];
               <div class="definition-item"><strong>{{ simpleWordType(def.key) }}:</strong> {{ def.value }}</div>
               }
             </div>
@@ -47,21 +49,36 @@
               <nz-divider></nz-divider>
 
               <div class="detail-block">
-                <span class="detail-label">常用词组：</span>
-                <div class="detail-content">
-                  @for (phrase of item.phrases; track $index) {
-                  <nz-tag>{{ phrase }}</nz-tag>
+                <div class="detail-content collocation-list">
+                  @if (item.phrases.length > 0) {
+                  @let phrase = item.phrases[0];
+                  <div class="collocation-item">
+                    <div class="collocation-en">
+                      <span class="collocation-label">搭配：</span>
+                      <span class="collocation-text">{{ phrase.split(';')[0]?.trim() }}{{ phrase.includes(';') ? ';' : '' }}</span>
+                    </div>
+                    @if (phrase.split(';')[1]) {
+                    <div class="collocation-zh">
+                      <span class="collocation-translation">{{ phrase.split(';')[1]?.trim() }}</span>
+                    </div>
+                    }
+                  </div>
                   }
                 </div>
               </div>
 
               <div class="detail-block mt-2">
-                <span class="detail-label">双语例句：</span>
                 <div class="detail-content sentence-list">
-                  @for (sent of item.sentences; track $index) {
+                  @if (item.sentences.length > 0) {
+                  @let sent = item.sentences[0];
                   <div class="sentence-item">
-                    <p class="en">{{ sent.text }}</p>
-                    <p class="zh">{{ sent.textTranslation }}</p>
+                    <div class="sentence-en">
+                      <span class="sentence-label">例句：</span>
+                      <span class="sentence-text">{{ sent.text }}</span>
+                    </div>
+                    <div class="sentence-zh">
+                      <span class="sentence-translation">{{ sent.textTranslation }}</span>
+                    </div>
                   </div>
                   }
                 </div>
@@ -99,6 +116,7 @@
         <nz-card 
           [class.is-known]="item.isKnown" 
           [nzHoverable]="true"
+          class="vocabulary-card"
           appHoverSound 
           (soundClick)="handleSound('US', item)">
 
@@ -122,7 +140,8 @@
             </div>
 
             <div class="definition-details">
-              @for (def of item.definition | keyvalue; track def.key) {
+              @if ((item.definition | keyvalue).length > 0) {
+              @let def = (item.definition | keyvalue)[0];
               <div class="definition-item"><strong>{{ simpleWordType(def.key) }}:</strong> {{ def.value }}</div>
               }
             </div>
@@ -131,21 +150,36 @@
               <nz-divider></nz-divider>
 
               <div class="detail-block">
-                <span class="detail-label">常用词组：</span>
-                <div class="detail-content">
-                  @for (phrase of item.phrases; track $index) {
-                  <nz-tag>{{ phrase }}</nz-tag>
+                <div class="detail-content collocation-list">
+                  @if (item.phrases.length > 0) {
+                  @let phrase = item.phrases[0];
+                  <div class="collocation-item">
+                    <div class="collocation-en">
+                      <span class="collocation-label">搭配：</span>
+                      <span class="collocation-text">{{ phrase.split(';')[0]?.trim() }}{{ phrase.includes(';') ? ';' : '' }}</span>
+                    </div>
+                    @if (phrase.split(';')[1]) {
+                    <div class="collocation-zh">
+                      <span class="collocation-translation">{{ phrase.split(';')[1]?.trim() }}</span>
+                    </div>
+                    }
+                  </div>
                   }
                 </div>
               </div>
 
               <div class="detail-block mt-2">
-                <span class="detail-label">双语例句：</span>
                 <div class="detail-content sentence-list">
-                  @for (sent of item.sentences; track $index) {
+                  @if (item.sentences.length > 0) {
+                  @let sent = item.sentences[0];
                   <div class="sentence-item">
-                    <p class="en">{{ sent.text }}</p>
-                    <p class="zh">{{ sent.textTranslation }}</p>
+                    <div class="sentence-en">
+                      <span class="sentence-label">例句：</span>
+                      <span class="sentence-text">{{ sent.text }}</span>
+                    </div>
+                    <div class="sentence-zh">
+                      <span class="sentence-translation">{{ sent.textTranslation }}</span>
+                    </div>
                   </div>
                   }
                 </div>

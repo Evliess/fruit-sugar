@@ -52,7 +52,7 @@ interface VocabularyWord {
     NzToolTipModule
   ],
   templateUrl: './ci-hui-list1.component.html',
-  styleUrls: ['./ci-hui.component.css']
+  styleUrls: ['./ci-hui-list1.component.css']
 })
 export class CiHuiList1Component {
   isPracticeVisible = false;

@@ -47,7 +47,8 @@
 
             @if (item.showDetails || ciHuiService.learnMode()) {
             <div class="definition-details">
-              @for (def of item.definition | keyvalue; track def.key) {
+              @if ((item.definition | keyvalue).length > 0) {
+              @let def = (item.definition | keyvalue)[0];
               <div class="definition-item"><strong>{{ simpleWordType(def.key) }}:</strong> {{ def.value }}</div>
               }
             </div>
@@ -70,7 +71,8 @@
               <div class="detail-block mt-2">
                 <span class="detail-label">双语例句：</span>
                 <div class="detail-content sentence-list">
-                  @for (sent of item.sentences; track $index) {
+                  @if (item.sentences.length > 0) {
+                  @let sent = item.sentences[0];
                   <div class="sentence-item">
                     <p class="en">{{ sent.text }}</p>
                     <p class="zh">{{ sent.textTranslation }}</p>
@@ -152,7 +154,8 @@
 
             @if (item.showDetails || ciHuiService.learnMode()) {
             <div class="definition-details">
-              @for (def of item.definition | keyvalue; track def.key) {
+              @if ((item.definition | keyvalue).length > 0) {
+              @let def = (item.definition | keyvalue)[0];
               <div class="definition-item"><strong>{{ simpleWordType(def.key) }}:</strong> {{ def.value }}</div>
               }
             </div>
@@ -175,7 +178,8 @@
               <div class="detail-block mt-2">
                 <span class="detail-label">双语例句：</span>
                 <div class="detail-content sentence-list">
-                  @for (sent of item.sentences; track $index) {
+                  @if (item.sentences.length > 0) {
+                  @let sent = item.sentences[0];
                   <div class="sentence-item">
                     <p class="en">{{ sent.text }}</p>
                     <p class="zh">{{ sent.textTranslation }}</p>
