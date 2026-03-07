@@ -23,7 +23,6 @@
             <div class="word-title-group">
               <span class="word-text">{{ item.sentence_en }}</span>
               @if (item.isKnown) {
-              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
               }
             </div>
 
@@ -49,10 +48,6 @@
               <span nz-icon nzType="close"></span> 不认识
             </button>
             }
-
-            <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
-              <span nz-icon nzType="edit"></span> 练一练
-            </button>
 
             @if(isCustom) {
             <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomSentence(item)"
@@ -78,7 +73,6 @@
             <div class="word-title-group">
               <span class="word-text">{{ item.sentence_en }}</span>
               @if (item.isKnown) {
-              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
               }
             </div>
 
@@ -104,10 +98,6 @@
               <span nz-icon nzType="close"></span> 不认识
             </button>
             }
-
-            <button nz-button nzType="primary" (click)="$event.stopPropagation();openPractice(item)">
-              <span nz-icon nzType="edit"></span> 练一练
-            </button>
 
             @if(isCustom) {
             <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomSentence(item)"
