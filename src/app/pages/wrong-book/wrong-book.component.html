@@ -3,6 +3,19 @@
     <h1>词汇打卡</h1>
   </div> -->
 
+  <!-- 艾宾浩斯记忆法提示 -->
+  @if (showHint) {
+  <div class="hint-notification">
+    <div class="hint-content">
+      <nz-icon class="hint-icon" nzType="info-circle" nzTheme="outline"></nz-icon>
+      <div class="hint-text">
+        <div class="hint-title">提示：</div>
+        <div class="hint-message">根据艾宾浩斯记忆法，建议你先复习这些单词，它们的记忆间隔较短</div>
+      </div>
+    </div>
+  </div>
+  }
+
   <div class="list-container">
     @if(isCustom) {
     <div class="custom-input-section">

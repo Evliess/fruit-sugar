@@ -108,6 +108,11 @@ export class MainLayoutComponent {
     }
   });
 
+  isUserCenterActive = computed(() => {
+    const url = this.currentUrl();
+    return url.includes('/user-summary') || url.includes('/unknown-book') || url.includes('/wrong-book');
+  });
+
   ngOnInit(): void {
     this.sugarDictService.getSentenceContentModules(this.currentUser()?.id || -1).subscribe({
       next: (response: any) => {

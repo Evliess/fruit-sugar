@@ -1,31 +1,82 @@
 <!-- statistics.component.html -->
 <div class="container">
   <div class="stats-container">
-    <div nz-row [nzGutter]="[16, 16]">
+    <!-- 导航卡片区域 -->
+    <div class="nav-cards-section">
+      <h2 class="section-title">学习管理</h2>
+      <div nz-row [nzGutter]="[24, 24]">
+        <!-- 错题本卡片 -->
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+          <div class="nav-card wrong-book-card" (click)="navigateToWrongBook()">
+            <div class="nav-card-content">
+              <div class="nav-card-icon">
+                <nz-icon nzType="file-exclamation" nzTheme="outline"></nz-icon>
+              </div>
+              <div class="nav-card-text">
+                <h3 class="nav-card-title">错题本</h3>
+                <p class="nav-card-desc">查看和复习你的错题记录</p>
+              </div>
+              <div class="nav-card-stats" *ngIf="wrongBookCount > 0">
+                <span class="nav-card-count">{{wrongBookCount}} 个错题</span>
+              </div>
+            </div>
+            <div class="nav-card-arrow">
+              <nz-icon nzType="right" nzTheme="outline"></nz-icon>
+            </div>
+          </div>
+        </div>
 
-      <!-- 词汇统计卡片 -->
-      <div nz-col [nzXs]="24" [nzMd]="12">
-        <nz-card nzTitle="词汇掌握情况" [nzExtra]="totalWordsTemplate">
-          <!-- echarts 指令，自动处理 resize -->
-          <div echarts [options]="wordsChartOption" class="chart-container"></div>
-        </nz-card>
-        <ng-template #totalWordsTemplate>
-          <span class="total-tag">Total: {{ statsData.words.mastered + statsData.words.error + statsData.words.unknown +
-            statsData.words.custom }}</span>
-        </ng-template>
+        <!-- 生词本卡片 -->
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="6">
+          <div class="nav-card unknown-book-card" (click)="navigateToUnknownBook()">
+            <div class="nav-card-content">
+              <div class="nav-card-icon">
+                <nz-icon nzType="book" nzTheme="outline"></nz-icon>
+              </div>
+              <div class="nav-card-text">
+                <h3 class="nav-card-title">生词本</h3>
+                <p class="nav-card-desc">管理你的生词学习进度</p>
+              </div>
+              <div class="nav-card-stats" *ngIf="unknownBookCount > 0">
+                <span class="nav-card-count">{{unknownBookCount}} 个生词</span>
+              </div>
+            </div>
+            <div class="nav-card-arrow">
+              <nz-icon nzType="right" nzTheme="outline"></nz-icon>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <!-- 句子统计卡片 -->
-      <div nz-col [nzXs]="24" [nzMd]="12">
-        <nz-card nzTitle="句子掌握情况" [nzExtra]="totalSentencesTemplate">
-          <div echarts [options]="sentencesChartOption" class="chart-container"></div>
-        </nz-card>
-        <ng-template #totalSentencesTemplate>
-          <span class="total-tag">Total: {{ statsData.sentences.mastered + statsData.sentences.error +
-            statsData.sentences.unknown + statsData.sentences.custom }}</span>
-        </ng-template>
+    <!-- 统计图表区域 -->
+    <div class="charts-section">
+      <div nz-row [nzGutter]="[16, 16]">
+
+        <!-- 词汇统计卡片 -->
+        <div nz-col [nzXs]="24" [nzMd]="12">
+          <nz-card nzTitle="词汇掌握情况" [nzExtra]="totalWordsTemplate">
+            <!-- echarts 指令，自动处理 resize -->
+            <div echarts [options]="wordsChartOption" class="chart-container"></div>
+          </nz-card>
+          <ng-template #totalWordsTemplate>
+            <span class="total-tag">Total: {{ statsData.words.mastered + statsData.words.error + statsData.words.unknown +
+              statsData.words.custom }}</span>
+          </ng-template>
+        </div>
+
+        <!-- 句子统计卡片 -->
+        <div nz-col [nzXs]="24" [nzMd]="12">
+          <nz-card nzTitle="句子掌握情况" [nzExtra]="totalSentencesTemplate">
+            <div echarts [options]="sentencesChartOption" class="chart-container"></div>
+          </nz-card>
+          <ng-template #totalSentencesTemplate>
+            <span class="total-tag">Total: {{ statsData.sentences.mastered + statsData.sentences.error +
+              statsData.sentences.unknown + statsData.sentences.custom }}</span>
+          </ng-template>
+        </div>
+
       </div>
-
     </div>
   </div>
 </div>

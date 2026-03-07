@@ -35,3 +35,176 @@
     height: 300px;
   }
 }
+
+/* 导航卡片样式 - 遵循IBM/苹果设计原则 */
+.nav-cards-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #262626;
+  margin-bottom: 20px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.nav-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100%;
+  min-height: 120px;
+}
+
+.nav-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  border-color: #e6f7ff;
+}
+
+.nav-card.wrong-book-card:hover {
+  border-color: #ffccc7;
+  background: linear-gradient(135deg, #fff2f0 0%, #fff 100%);
+}
+
+.nav-card.unknown-book-card:hover {
+  border-color: #d6e4ff;
+  background: linear-gradient(135deg, #f0f5ff 0%, #fff 100%);
+}
+
+.nav-card-content {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  gap: 16px;
+}
+
+.nav-card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.nav-card.wrong-book-card .nav-card-icon {
+  background: linear-gradient(135deg, #ff7875 0%, #ff4d4f 100%);
+  color: white;
+}
+
+.nav-card.unknown-book-card .nav-card-icon {
+  background: linear-gradient(135deg, #597ef7 0%, #1890ff 100%);
+  color: white;
+}
+
+.nav-card-icon nz-icon {
+  font-size: 24px;
+}
+
+.nav-card-text {
+  flex: 1;
+}
+
+.nav-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #262626;
+  margin: 0 0 6px 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.nav-card-desc {
+  font-size: 14px;
+  color: #8c8c8c;
+  margin: 0;
+  line-height: 1.5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.nav-card-stats {
+  margin-top: 8px;
+}
+
+.nav-card-count {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1890ff;
+  background: #e6f7ff;
+  padding: 4px 10px;
+  border-radius: 12px;
+  display: inline-block;
+}
+
+.nav-card-arrow {
+  color: #bfbfbf;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+
+.nav-card:hover .nav-card-arrow {
+  color: #1890ff;
+  transform: translateX(4px);
+}
+
+.charts-section {
+  margin-top: 32px;
+}
+
+/* 响应式适配 */
+@media (max-width: 575.98px) {
+  .nav-cards-section {
+    margin-bottom: 24px;
+  }
+  
+  .section-title {
+    font-size: 18px;
+    margin-bottom: 16px;
+  }
+  
+  .nav-card {
+    padding: 16px;
+    min-height: 100px;
+  }
+  
+  .nav-card-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .nav-card-icon nz-icon {
+    font-size: 20px;
+  }
+  
+  .nav-card-title {
+    font-size: 16px;
+  }
+  
+  .nav-card-desc {
+    font-size: 13px;
+  }
+  
+  .nav-card-count {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .nav-card {
+    padding: 18px;
+  }
+  
+  .nav-card-title {
+    font-size: 17px;
+  }
+}

@@ -1,8 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzStatisticModule } from 'ng-zorro-antd/statistic';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NgxEchartsModule, NGX_ECHARTS_CONFIG } from 'ngx-echarts';
 import { EChartsOption } from 'echarts';
 
@@ -24,7 +26,7 @@ interface Section {
 
 @Component({
   selector: 'app-user-summary',
-  imports: [CommonModule, NzGridModule, NzCardModule, NzStatisticModule, NgxEchartsModule],
+  imports: [CommonModule, NzGridModule, NzCardModule, NzStatisticModule, NzIconModule, NgxEchartsModule],
   providers: [
     {
       provide: NGX_ECHARTS_CONFIG,
@@ -39,7 +41,11 @@ interface Section {
 export class UserSummaryComponent {
   private sugarDictService = inject(SugarDictService)
   private authService = inject(AuthService);
+  private router = inject(Router);
   currentUser = this.authService.currentUser;
+
+  wrongBookCount = 0;
+  unknownBookCount = 0;
 
   statsData = {
     words: {
@@ -127,6 +133,15 @@ export class UserSummaryComponent {
       ]
     };
   }
+
+  navigateToWrongBook(): void {
+    this.router.navigate(['/wrong-book']);
+  }
+
+  navigateToUnknownBook(): void {
+    this.router.navigate(['/unknown-book']);
+  }
+
   ngOnInit(): void {
     this.sugarDictService.getUserStatistic(this.currentUser()?.id || -1).subscribe({
       next: (response: any) => {
@@ -151,6 +166,11 @@ export class UserSummaryComponent {
         this.statsData.sentences.error = mistakeSentences;
         this.statsData.sentences.unknown = unknownSentences;
         this.statsData.sentences.custom = customSentences;
+        
+        // 设置导航卡片计数
+        this.wrongBookCount = mistakeWords + mistakeSentences;
+        this.unknownBookCount = unknownWords + unknownSentences;
+        
         //init charts
         this.initCharts();
       },
