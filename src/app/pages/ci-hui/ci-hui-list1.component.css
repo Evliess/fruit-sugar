@@ -22,6 +22,21 @@ html, body {
   overflow: hidden;
 }
 
+/* 自定义输入区域 */
+.custom-input-section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.custom-input-section input[nz-input] {
+  flex: 1;
+}
+
 /* 单词换行 */
 .word-text {
   word-break: break-word;
@@ -55,8 +70,9 @@ html, body {
 }
 
 .pos-definition {
-  font-size: 13px;
-  color: #3a3a3a;
+  font-size: 14px;
+  color: #262626;
+  line-height: 1.5;
 }
 
 .pos-definition .definition-item {
@@ -64,7 +80,15 @@ html, body {
 }
 
 .pos-definition strong {
-  color: #1890ff;
+  color: #595959;
+  font-size: 13px;
+  font-weight: 500;
+  margin-right: 6px;
+}
+
+.definition-text {
+  color: #262626;
+  font-size: 14px;
 }
 
 .word-and-pos .word-title-group {
@@ -321,6 +345,277 @@ html, body {
 @media (min-width: 992px) {
   .word-text {
     font-size: 24px;
+  }
+}
+
+/* 表格风格布局 */
+.table-style-list {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  margin-bottom: 24px;
+}
+
+/* 表头行 */
+.table-header-row {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e8e8e8;
+  font-weight: 600;
+  font-size: 13px;
+  color: #595959;
+  height: 40px;
+  align-items: center;
+}
+
+.table-header-cell {
+  padding: 0 16px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.word-header {
+  flex: 2; /* 词汇部分更宽 */
+}
+
+.pos-header {
+  flex: 1; /* 词性部分中等宽度 */
+}
+
+.collocation-header {
+  flex: 1.5; /* 搭配部分中等宽度 */
+}
+
+.action-header {
+  flex: 1; /* 操作部分固定宽度 */
+  justify-content: center;
+}
+
+/* 数据行 */
+.table-data-row {
+  display: flex;
+  min-height: 72px;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+  padding: 12px 0;
+}
+
+.table-data-row:hover {
+  background-color: #fafafa;
+}
+
+.table-data-row.is-known {
+  background-color: #fafff0;
+}
+
+.table-data-row.is-known:hover {
+  background-color: #f0ffd0;
+}
+
+/* 表格单元格 */
+.table-cell {
+  padding: 0 16px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0; /* 防止内容溢出 */
+}
+
+.word-cell {
+  flex: 2;
+}
+
+.pos-cell {
+  flex: 1;
+}
+
+.collocation-cell {
+  flex: 1.5;
+}
+
+.action-cell {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 搭配项样式 */
+.collocation-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.collocation-en {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.collocation-label {
+  font-weight: 600;
+  color: #1890ff;
+  font-size: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.collocation-text {
+  font-size: 13px;
+  color: #333333;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.collocation-zh {
+  font-size: 12px;
+  color: #555555;
+  line-height: 1.4;
+  padding-left: 16px; /* 缩进与标签对齐 */
+}
+
+.collocation-translation {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  line-height: 1.4;
+  max-height: 33.6px; /* 12px * 1.4 * 2 */
+  color: #555555;
+}
+
+.collocation-empty {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+/* 操作按钮样式 */
+.action-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+}
+
+.action-buttons button {
+  flex-shrink: 0;
+  min-width: 80px;
+}
+
+/* 响应式设计 - 平板和手机端 */
+@media (max-width: 991.98px) {
+  .table-header-row {
+    font-size: 12px;
+    height: 36px;
+  }
+  
+  .table-data-row {
+    min-height: auto;
+    flex-wrap: wrap;
+    padding: 12px 0;
+  }
+  
+  .table-cell {
+    padding: 0 12px;
+  }
+  
+  .word-cell {
+    flex: 1 1 100%;
+    order: 1;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .pos-cell {
+    flex: 1;
+    order: 2;
+    border-right: 1px solid #f0f0f0;
+  }
+  
+  .collocation-cell {
+    flex: 1;
+    order: 3;
+    border-right: 1px solid #f0f0f0;
+  }
+  
+  .action-cell {
+    flex: 1;
+    order: 4;
+  }
+  
+  .action-buttons {
+    flex-direction: row;
+    gap: 8px;
+  }
+  
+  .action-buttons button {
+    width: auto;
+    flex: 0 0 auto;
+  }
+}
+
+/* 手机端 (xs: <576px) */
+@media (max-width: 575.98px) {
+  .table-header-row {
+    display: none; /* 在小屏幕上隐藏表头 */
+  }
+  
+  .table-data-row {
+    flex-direction: column;
+    min-height: auto;
+    padding: 16px;
+    border-bottom: 2px solid #f0f0f0;
+  }
+  
+  .table-cell {
+    width: 100%;
+    padding: 8px 0;
+    border: none;
+  }
+  
+  .word-cell {
+    order: 1;
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 12px;
+  }
+  
+  .pos-cell {
+    order: 2;
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .collocation-cell {
+    order: 3;
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+  }
+  
+  .action-cell {
+    order: 4;
+  }
+  
+  .action-buttons {
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  
+  .action-buttons button {
+    flex: 0 0 auto;
+    min-width: 80px;
   }
 }
 

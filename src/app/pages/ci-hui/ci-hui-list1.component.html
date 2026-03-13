@@ -10,153 +10,171 @@
     </div>
     }
 
-    <div nz-row [nzGutter]="[16, 16]">
+    <!-- 表格风格列表 -->
+    <div class="table-style-list">
+      <!-- 表头 -->
+      <div class="table-header-row">
+        <div class="table-header-cell word-header">词汇</div>
+        <div class="table-header-cell pos-header">词性</div>
+        <div class="table-header-cell collocation-header">搭配</div>
+        <div class="table-header-cell action-header">操作</div>
+      </div>
+
+      <!-- 数据行 -->
       @for (item of firstWords; track item.id) {
-      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="24" [nzXl]="24" [nzXXl]="24">
-        <nz-card 
-          [class.is-known]="item.isKnown" 
-          [nzHoverable]="true">
-
-          <div class="card-content list1-card-row">
-            <div class="list1-left-column">
-              <div class="word-and-pos">
-                <div class="word-title-group"
-                  appHoverSound 
-                  (soundClick)="handleSound('US', item)">
-                  <span class="word-text">{{ item.word }}</span>
-                </div>
-                
-                <div class="pos-definition">
-                  @for (def of item.definition | keyvalue; track def.key; let f = $first) {
-                  @if(f) {
-                  <span class="definition-item">
-                    <strong>{{ simpleWordType(def.key) }}:</strong> {{ (def.value + '').split('；')[0] }}
-                  </span>
-                  }
-                  }
-                </div>
-              </div>
-
-              <div class="phonetic-group">
-                <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
-                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                    (hoverTimeout)="handleSound('US', item)" 
-                    (soundClick)="handleSound('US', item)" /></span>
-                <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
-                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                    (hoverTimeout)="handleSound('UK', item)" 
-                    (soundClick)="handleSound('UK', item)" /></span>
-              </div>
-
-              <div class="sentence-below-phonetic">
-                @if(item.sentences?.length > 0) {
-                <div class="sentence-item">
-                  <p class="en">{{ item.sentences[0]?.text }}</p>
-                </div>
-                }
-              </div>
-            </div>
-
-            <div class="list1-right-column">
-              <div class="card-footer list1-footer-row">
-                @if(!isCustom) {
-                <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-                  (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
-                  <span nz-icon nzType="check"></span> 认识
-                </button>
-
-                <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
-                  nzTooltipTitle="标记为不认识">
-                  <span nz-icon nzType="close"></span> 不认识
-                </button>
-                }
-
-                @if(isCustom) {
-                <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
-                  nzTooltipTitle="删除">
-                  <span nz-icon nzType="delete"></span> 删除
-                </button>
-                }
-              </div>
-            </div>
+      <div class="table-data-row" [class.is-known]="item.isKnown">
+        <!-- 词汇列 -->
+        <div class="table-cell word-cell">
+          <div class="word-title-group" appHoverSound (soundClick)="handleSound('US', item)">
+            <span class="word-text">{{ item.word }}</span>
           </div>
-        </nz-card>
+          <div class="phonetic-group">
+            <span class="phonetic">
+              <strong>🇺🇸 </strong>{{ item.usPhonetic }}
+              <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('US', item)" (soundClick)="handleSound('US', item)" />
+            </span>
+            <span class="phonetic">
+              <strong>🇬🇧 </strong>{{ item.ukPhonetic }}
+              <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('UK', item)" (soundClick)="handleSound('UK', item)" />
+            </span>
+          </div>
+        </div>
+
+        <!-- 词性列 -->
+        <div class="table-cell pos-cell">
+          <div class="pos-definition">
+            @for (def of item.definition | keyvalue; track def.key; let f = $first) {
+            @if(f) {
+            <span class="definition-item">
+              <strong>{{ simpleWordType(def.key) }}</strong>
+              <span class="definition-text">{{ (def.value + '').split('；')[0] }}</span>
+            </span>
+            }
+            }
+          </div>
+        </div>
+
+        <!-- 搭配列 -->
+        <div class="table-cell collocation-cell">
+          @if (item.phrases?.length > 0) {
+          @let phrase = item.phrases[0];
+          <div class="collocation-item">
+            <div class="collocation-en">
+              <span class="collocation-text">{{ phrase.split(';')[0]?.trim() }}{{ phrase.includes(';') ? ';' : '' }}</span>
+            </div>
+            @if (phrase.split(';')[1]) {
+            <div class="collocation-zh">
+              <span class="collocation-translation">{{ phrase.split(';')[1]?.trim() }}</span>
+            </div>
+            }
+          </div>
+          } @else {
+          <span class="collocation-empty">暂无搭配</span>
+          }
+        </div>
+
+        <!-- 操作列 -->
+        <div class="table-cell action-cell">
+          <div class="action-buttons">
+            @if(!isCustom) {
+            <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+              (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+              <span nz-icon nzType="check"></span> 认识
+            </button>
+            <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip
+              nzTooltipTitle="标记为不认识">
+              <span nz-icon nzType="close"></span> 不认识
+            </button>
+            }
+            @if(isCustom) {
+            <button nz-button nzType="default" nzDanger (click)="deleteCustomBook(item)" nz-tooltip
+              nzTooltipTitle="删除">
+              <span nz-icon nzType="delete"></span> 删除
+            </button>
+            }
+          </div>
+        </div>
       </div>
       }
 
       @defer (on timer(20ms)) {
       @for (item of remainingWords; track item.id) {
-      <div nz-col [nzXs]="24" [nzSm]="24" [nzMd]="24" [nzLg]="24" [nzXl]="24" [nzXXl]="24">
-        <nz-card 
-          [class.is-known]="item.isKnown" 
-          [nzHoverable]="true"
-          appHoverSound 
-          (soundClick)="handleSound('US', item)">
-
-          <div class="card-content list1-card-row">
-            <div class="list1-left-column">
-              <div class="word-and-pos">
-                <div class="word-title-group"
-                  appHoverSound 
-                  (soundClick)="handleSound('US', item)">
-                  <span class="word-text">{{ item.word }}</span>
-                </div>
-                
-                <div class="pos-definition">
-                  @for (def of item.definition | keyvalue; track def.key; let f = $first) {
-                  @if(f) {
-                  <span class="definition-item">
-                    <strong>{{ simpleWordType(def.key) }}:</strong> {{ (def.value + '').split('；')[0] }}
-                  </span>
-                  }
-                  }
-                </div>
-              </div>
-
-              <div class="phonetic-group">
-                <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
-                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                    (hoverTimeout)="handleSound('US', item)" 
-                    (soundClick)="handleSound('US', item)" /></span>
-                <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
-                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                    (hoverTimeout)="handleSound('UK', item)" 
-                    (soundClick)="handleSound('UK', item)" /></span>
-              </div>
-
-              <div class="sentence-below-phonetic">
-                @if(item.sentences?.length > 0) {
-                <div class="sentence-item">
-                  <p class="en">{{ item.sentences[0]?.text }}</p>
-                </div>
-                }
-              </div>
-            </div>
-
-            <div class="list1-right-column">
-              <div class="card-footer list1-footer-row">
-                @if(!isCustom) {
-                <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-                  (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
-                  <span nz-icon nzType="check"></span> 认识
-                </button>
-
-                <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
-                  nzTooltipTitle="标记为不认识">
-                  <span nz-icon nzType="close"></span> 不认识
-                </button>
-                }
-
-                @if(isCustom) {
-                <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
-                  nzTooltipTitle="删除">
-                  <span nz-icon nzType="delete"></span> 删除
-                </button>
-                }
-              </div>
-            </div>
+      <div class="table-data-row" [class.is-known]="item.isKnown">
+        <!-- 词汇列 -->
+        <div class="table-cell word-cell">
+          <div class="word-title-group" appHoverSound (soundClick)="handleSound('US', item)">
+            <span class="word-text">{{ item.word }}</span>
           </div>
-        </nz-card>
+          <div class="phonetic-group">
+            <span class="phonetic">
+              <strong>🇺🇸 </strong>{{ item.usPhonetic }}
+              <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('US', item)" (soundClick)="handleSound('US', item)" />
+            </span>
+            <span class="phonetic">
+              <strong>🇬🇧 </strong>{{ item.ukPhonetic }}
+              <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                (hoverTimeout)="handleSound('UK', item)" (soundClick)="handleSound('UK', item)" />
+            </span>
+          </div>
+        </div>
+
+        <!-- 词性列 -->
+        <div class="table-cell pos-cell">
+          <div class="pos-definition">
+            @for (def of item.definition | keyvalue; track def.key; let f = $first) {
+            @if(f) {
+            <span class="definition-item">
+              <strong>{{ simpleWordType(def.key) }}</strong>
+              <span class="definition-text">{{ (def.value + '').split('；')[0] }}</span>
+            </span>
+            }
+            }
+          </div>
+        </div>
+
+        <!-- 搭配列 -->
+        <div class="table-cell collocation-cell">
+          @if (item.phrases?.length > 0) {
+          @let phrase = item.phrases[0];
+          <div class="collocation-item">
+            <div class="collocation-en">
+              <span class="collocation-text">{{ phrase.split(';')[0]?.trim() }}{{ phrase.includes(';') ? ';' : '' }}</span>
+            </div>
+            @if (phrase.split(';')[1]) {
+            <div class="collocation-zh">
+              <span class="collocation-translation">{{ phrase.split(';')[1]?.trim() }}</span>
+            </div>
+            }
+          </div>
+          } @else {
+          <span class="collocation-empty">暂无搭配</span>
+          }
+        </div>
+
+        <!-- 操作列 -->
+        <div class="table-cell action-cell">
+          <div class="action-buttons">
+            @if(!isCustom) {
+            <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
+              (click)="markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+              <span nz-icon nzType="check"></span> 认识
+            </button>
+            <button nz-button nzType="default" nzDanger (click)="markAsUnknown(item)" nz-tooltip
+              nzTooltipTitle="标记为不认识">
+              <span nz-icon nzType="close"></span> 不认识
+            </button>
+            }
+            @if(isCustom) {
+            <button nz-button nzType="default" nzDanger (click)="deleteCustomBook(item)" nz-tooltip
+              nzTooltipTitle="删除">
+              <span nz-icon nzType="delete"></span> 删除
+            </button>
+            }
+          </div>
+        </div>
       </div>
       }
       }
@@ -173,4 +191,3 @@
     </ng-container>
   </nz-modal>
 </div>
-

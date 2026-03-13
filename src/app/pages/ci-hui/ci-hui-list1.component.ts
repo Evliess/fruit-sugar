@@ -286,13 +286,13 @@ export class CiHuiList1Component {
 
   simpleWordType(type: any): string {
     if (type.includes('noun')) {
-      return 'n';
+      return 'n.';
     } else if (type.includes('adjective')) {
-      return 'adj';
+      return 'adj.';
     } else if (type.includes('verb')) {
-      return 'v';
+      return 'v.';
     } else if (type.includes('adverb')) {
-      return 'adv';
+      return 'adv.';
     } else if (type.includes('phrase')) {
       return 'phrase';
     } else {

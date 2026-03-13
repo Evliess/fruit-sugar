@@ -66,9 +66,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
 }
 
 .list1-card-row {
-  display: flex;
-  align-items: center;
-  gap: 24px;
+  align-items: flex-start;
 }
 
 .list1-main {
@@ -114,12 +112,18 @@ nz-card.is-known ::ng-deep .ant-card-body {
 }
 
 .list1-left-column {
-  flex: 1;
   min-width: 0; /* 防止内容溢出 */
 }
 
+.list1-pos-column {
+  min-width: 0;
+}
+
+.list1-collocation-column {
+  min-width: 0;
+}
+
 .list1-right-column {
-  flex: 0 0 auto;
   display: flex;
   align-items: center;
 }
@@ -138,6 +142,11 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 .pos-definition .definition-item {
   margin: 0;
+}
+
+.definition-text {
+  margin-left: 4px;
+  color: #595959;
 }
 
 .sentence-below-phonetic {
@@ -301,6 +310,11 @@ nz-card.is-known ::ng-deep .ant-card-body {
   line-height: 1.4;
   max-height: 33.6px; /* 12px * 1.4 * 2 */
   color: #555555;
+}
+
+.collocation-empty {
+  font-size: 12px;
+  color: #8c8c8c;
 }
 
 .sentence-item {
@@ -479,8 +493,10 @@ nz-card.is-known ::ng-deep .ant-card-body {
     width: auto;
   }
 
-  .list1-card-row {
-    flex-direction: column;
+  .list1-pos-column,
+  .list1-collocation-column,
+  .list1-right-column {
+    width: 100%;
   }
 
   .list1-side-row {
