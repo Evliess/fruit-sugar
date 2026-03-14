@@ -48,7 +48,7 @@
             <div class="definition-details">
               @if ((item.definition | keyvalue).length > 0) {
               @let def = (item.definition | keyvalue)[0];
-              <div class="definition-item"><strong>{{ simpleWordType(def.key) }}:</strong> {{ def.value }}</div>
+              <div class="definition-item"><strong>{{ simpleWordType(def.key) }}</strong> {{ def.value }}</div>
               }
             </div>
 
@@ -278,4 +278,3 @@
     </ng-container>
   </nz-modal>
 </div>
-

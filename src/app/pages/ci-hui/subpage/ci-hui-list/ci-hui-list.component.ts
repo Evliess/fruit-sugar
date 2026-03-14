@@ -12,13 +12,13 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
-import { NzToolTipModule } from 'ng-zorro-antd/tooltip'; // 增加 Tooltip 提升体验
-import { CiHuiService } from './ci-hui.service';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { CiHuiService } from '../../ci-hui.service';
 import { ActivatedRoute } from '@angular/router';
-import { SugarDictService } from '../../services/sugar-dict';
-import { AuthService } from '../../services/auth';
+import { SugarDictService } from '../../../../services/sugar-dict';
+import { AuthService } from '../../../../services/auth';
 import { map } from 'rxjs';
-import { HoverSoundDirective } from '../../hover-sound.directive';
+import { HoverSoundDirective } from '../../../../hover-sound.directive';
 
 // 定义单词数据结构
 interface VocabularyWord {
@@ -38,7 +38,7 @@ interface VocabularyWord {
 
 
 @Component({
-  selector: 'app-ci-hui',
+  selector: 'app-ci-hui-list',
   standalone: true,
   imports: [
     CommonModule,
@@ -54,10 +54,10 @@ interface VocabularyWord {
     HoverSoundDirective,
     NzToolTipModule
   ],
-  templateUrl: './ci-hui.component.html',
-  styleUrls: ['./ci-hui.component.css']
+  templateUrl: './ci-hui-list.component.html',
+  styleUrls: ['./ci-hui-list.component.css']
 })
-export class CiHuiComponent {
+export class CiHuiListComponent {
   isPracticeVisible = false;
   practiceWord: VocabularyWord | null = null;
   practiceInput = '';
@@ -277,7 +277,7 @@ export class CiHuiComponent {
     item.showDetails = !item.showDetails;
   }
 
-  // 点击“认识”
+  // 点击"认识"
   markAsKnown(item: VocabularyWord): void {
     item.isKnown = true;
     item.showDetails = false; // 收起详情
@@ -288,7 +288,7 @@ export class CiHuiComponent {
     });
   }
 
-  // 点击“不认识”
+  // 点击"不认识"
   markAsUnknown(item: VocabularyWord): void {
     item.showDetails = true;
     item.isKnown = false;
@@ -299,7 +299,7 @@ export class CiHuiComponent {
     });
   }
 
-  // 点击“练一练”
+  // 点击"练一练"
   openPractice(item: VocabularyWord): void {
     this.practiceWord = item;
     this.practiceInput = ''; // 清空输入框
@@ -341,5 +341,4 @@ export class CiHuiComponent {
   isMultiWord(word: string): boolean {
     return word.includes(' ') || word.includes('-');
   }
-
 }

@@ -15,10 +15,10 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 
-import { CiHuiService } from './ci-hui.service';
-import { SugarDictService } from '../../services/sugar-dict';
-import { AuthService } from '../../services/auth';
-import { HoverSoundDirective } from '../../hover-sound.directive';
+import { CiHuiService } from '../../ci-hui.service';
+import { SugarDictService } from '../../../../services/sugar-dict';
+import { AuthService } from '../../../../services/auth';
+import { HoverSoundDirective } from '../../../../hover-sound.directive';
 
 interface VocabularyWord {
   id: number;
@@ -53,7 +53,7 @@ interface VocabularyWord {
     NzToolTipModule
   ],
   templateUrl: './ci-hui-learn.component.html',
-  styleUrls: ['./ci-hui.component.css']
+  styleUrls: ['./ci-hui-learn.component.css']
 })
 export class CiHuiLearnComponent implements OnDestroy {
   isPracticeVisible = false;
@@ -335,4 +335,3 @@ export class CiHuiLearnComponent implements OnDestroy {
     }
   }
 }
-
