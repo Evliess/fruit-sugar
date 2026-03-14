@@ -18,6 +18,6 @@ public class Result<T> {
   }
 
   public static <T> Result<T> error(String message, int code) {
-    return new Result<>(null, message, code, false);
+    return new Result<>(null, message, 500, false);
   }
 }

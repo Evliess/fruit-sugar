@@ -32,7 +32,7 @@ public class SmartController {
     description = "Analyze a word or phrase using AI to get detailed information including pronunciation, collocations, and example sentences"
   )
   @PostMapping("/word/smart")
-  public ResponseEntity<String> getSmartWord(
+  public ResponseEntity<Result<String>> getSmartWord(
     @Parameter(description = "Request body containing content and userId", required = true)
     @RequestBody SmartRequestDto request) {
     return handleSmartRequest(request, smartService::getSmartWord, "word");
@@ -43,25 +43,25 @@ public class SmartController {
     description = "Analyze a sentence using AI to get translation, alternative expressions, and language notes"
   )
   @PostMapping("/sentence/smart")
-  public ResponseEntity<String> getSmartSentence(
+  public ResponseEntity<Result<String>> getSmartSentence(
     @Parameter(description = "Request body containing content and userId", required = true)
     @RequestBody SmartRequestDto request) {
     return handleSmartRequest(request, smartService::getSmartSentence, "sentence");
   }
 
-  private ResponseEntity<String> handleSmartRequest(
+  private ResponseEntity<Result<String>> handleSmartRequest(
     SmartRequestDto request,
-    Function<SmartRequestDto, String> serviceMethod,
+    Function<SmartRequestDto, Result<String>> serviceMethod,
     String requestType) {
     try {
-      String response = serviceMethod.apply(request);
+      Result<String> response = serviceMethod.apply(request);
       return ResponseEntity.ok(response);
     } catch (IllegalArgumentException e) {
-      return ResponseEntity.badRequest().body(e.getMessage());
+      return ResponseEntity.badRequest().body(Result.error(e.getMessage(), 400));
     } catch (RuntimeException e) {
       logger.error("Error getting AI response for {}", requestType, e);
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-        .body(e.getMessage());
+        .body(Result.error(e.getMessage(), 500));
     }
   }
 }
