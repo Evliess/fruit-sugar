@@ -14,10 +14,10 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 
-import { CiHuiService } from './ci-hui.service';
-import { SugarDictService } from '../../services/sugar-dict';
-import { AuthService } from '../../services/auth';
-import { HoverSoundDirective } from '../../hover-sound.directive';
+import { CiHuiService } from '../../ci-hui.service';
+import { SugarDictService } from '../../../../services/sugar-dict';
+import { AuthService } from '../../../../services/auth';
+import { HoverSoundDirective } from '../../../../hover-sound.directive';
 
 interface VocabularyWord {
   id: number;
@@ -300,4 +300,3 @@ export class CiHuiList1Component {
     }
   }
 }
-
