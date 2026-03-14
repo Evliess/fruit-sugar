@@ -37,8 +37,8 @@ export class AiSentenceComponent {
     this.isLoading = true;
     
     this.sugarDictService.getSmartSentence(this.userInput, this.currentUser()?.id || -1).subscribe({
-      next: (response: any) => {
-        this.aiResponse = response;
+      next: (resp: any) => {
+        this.aiResponse = resp.data;
         this.isLoading = false;
       },
       error: (err: any) => {

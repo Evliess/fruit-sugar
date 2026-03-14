@@ -36,7 +36,6 @@ export class AiWordComponent {
     this.isLoading = true;
     this.sugarDictService.getSmartWord(this.userInput, this.currentUser()?.id || -1).subscribe({
       next: (resp: any) => {
-        console.log('AI回复:', resp.data);
         this.aiResponse = resp.data;
         this.isLoading = false;
       },
