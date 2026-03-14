@@ -58,6 +58,7 @@ jobs:
           source: "tmp/browser.zip,tmp/sugar-dict-1.0-SNAPSHOT.jar"
           target: "/home/${{ secrets.SERVER_USERNAME }}/release"
           strip_components: 1  # 自动去除源路径中的 'tmp/' 前缀
+          debug: true 
 
       # 6. SSH 连接服务器并执行 sudo 命令
       - name: Execute SSH Commands
