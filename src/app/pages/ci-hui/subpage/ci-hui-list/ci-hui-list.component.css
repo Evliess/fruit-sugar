@@ -120,22 +120,32 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 .definition-details {
   margin-top: 0px;
+  height: 46.8px; /* 固定2行高度：13px * 1.8 * 2 */
+  overflow: hidden;
 }
 
 .definition-item {
   font-size: 13px;
   color: #3a3a3a;
   line-height: 1.8;
-  margin-bottom: 4px;
+  margin-bottom: 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
 }
 
 /* 句子块样式 */
 .sentence-block {
   margin-top: 8px;
+  height: 36.4px; /* 固定2行高度：13px * 1.4 * 2 */
+  overflow: hidden;
 }
 
 .sentence-content {
   padding-left: 0;
+  height: 100%;
 }
 
 .sentence-text {
@@ -144,10 +154,9 @@ nz-card.is-known ::ng-deep .ant-card-body {
   line-height: 1.4;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
   overflow: hidden;
-  max-height: 54.6px; /* 13px * 1.4 * 3 = 3个行高 */
   word-break: break-word;
 }
 
@@ -351,12 +360,11 @@ nz-card.is-known ::ng-deep .ant-card-body {
     min-width: 0;
   }
 
-  /* 手机端显示完整内容，不需要省略号 */
+  /* 手机端保持2个行高 */
   .sentence-text {
-    -webkit-line-clamp: unset;
-    line-clamp: unset;
-    max-height: none;
-    overflow: visible;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    max-height: 36.4px; /* 13px * 1.4 * 2 */
   }
 }
 
@@ -391,11 +399,11 @@ nz-card.is-known ::ng-deep .ant-card-body {
     font-size: 24px;
   }
 
-  /* 桌面端保持3个行高 */
+  /* 桌面端保持2个行高 */
   .sentence-text {
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    max-height: 54.6px; /* 13px * 1.4 * 3 */
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    max-height: 36.4px; /* 13px * 1.4 * 2 */
   }
 }
 

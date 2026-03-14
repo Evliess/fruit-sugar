@@ -51,7 +51,11 @@
               <div class="sentence-content">
                 @if (item.sentences.length > 0) {
                 @let sent = item.sentences[0];
-                <div class="sentence-text">{{ sent.text }}</div>
+                <div class="sentence-text" 
+                     [nz-tooltip]="sent.text"
+                     nzTooltipPlacement="top">
+                  {{ sent.text }}
+                </div>
                 }
               </div>
             </div>
@@ -122,7 +126,11 @@
               <div class="sentence-content">
                 @if (item.sentences.length > 0) {
                 @let sent = item.sentences[0];
-                <div class="sentence-text">{{ sent.text }}</div>
+                <div class="sentence-text" 
+                     [nz-tooltip]="sent.text"
+                     nzTooltipPlacement="top">
+                  {{ sent.text }}
+                </div>
                 }
               </div>
             </div>
