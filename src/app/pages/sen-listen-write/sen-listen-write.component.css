@@ -105,6 +105,14 @@
   max-width: 850px;
 }
 
+.interactive-stage {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .en-sentence {
   font-size: 16px;
   color: #4a5568;
@@ -126,7 +134,7 @@
 
 .input-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
   position: relative;
   margin-bottom: 8px;
 }
@@ -137,7 +145,7 @@
   box-shadow: none !important;
   background: transparent !important;
   text-align: center !important;
-  font-size: 36px !important;
+  font-size: 20px !important;
   padding: 8px 0 !important;
   color: #2d3748 !important;
 }
@@ -168,14 +176,30 @@
   color: #4a5568;
 }
 
-/* 喇叭按钮：设置 margin-bottom 为 14px 确保与下方 nav-hint-row 间距固定 */
+/* 喇叭按钮：设置 margin-bottom 为 10px 确保与下方 action-buttons-row 间距一致 */
 .audio-trigger-btn {
   margin-top: 10px;
-  margin-bottom: 14px !important; 
+  margin-bottom: 10px !important; 
   font-size: 28px;
   color: #cbd5e0;
   height: auto;
   line-height: 1;
+  padding: 0;
+}
+
+/* 操作按钮行：与喇叭按钮间距保持一致 */
+.action-buttons-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.action-btn {
+  color: #bfbfbf !important;
+  font-size: 12px;
+  height: auto;
   padding: 0;
 }
 

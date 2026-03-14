@@ -69,6 +69,18 @@
                 <button nz-button nzType="text" class="audio-trigger-btn" (click)="handleAction('play')">
                     <span nz-icon nzType="sound" nzTheme="outline"></span>
                 </button>
+
+                <div class="action-buttons-row">
+                    <button nz-button nzType="text" (click)="playPrev()" class="action-btn">
+                        <span nz-icon nzType="left"></span> 上一个
+                    </button>
+                    <button nz-button nzType="text" (click)="playNext()" class="action-btn">
+                        下一个 <span nz-icon nzType="right"></span>
+                    </button>
+                    <button nz-button nzType="text" (click)="checkAnswer()" class="action-btn">
+                        确认
+                    </button>
+                </div>
             </div>
             }
         </main>
