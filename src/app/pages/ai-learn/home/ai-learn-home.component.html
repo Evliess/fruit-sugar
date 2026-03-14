@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="ai-learn-container">
+    <div class="nav-cards-section">
+      <h2 class="section-title">AI助教</h2>
+      <div nz-row [nzGutter]="[24, 24]">
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="12">
+          <div class="base-card nav-card ai-word-card" (click)="navigateToAiWord()">
+            <div class="nav-card-content">
+              <div class="nav-card-icon">
+                <nz-icon nzType="robot" nzTheme="outline"></nz-icon>
+              </div>
+              <div class="nav-card-text">
+                <h3 class="nav-card-title">AI词汇</h3>
+                <p class="nav-card-desc">智能词汇学习助手</p>
+              </div>
+            </div>
+            <div class="nav-card-arrow">
+              <nz-icon nzType="right" nzTheme="outline"></nz-icon>
+            </div>
+          </div>
+        </div>
+
+        <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="12">
+          <div class="base-card nav-card ai-sentence-card" (click)="navigateToAiSentence()">
+            <div class="nav-card-content">
+              <div class="nav-card-icon">
+                <nz-icon nzType="message" nzTheme="outline"></nz-icon>
+              </div>
+              <div class="nav-card-text">
+                <h3 class="nav-card-title">AI句子</h3>
+                <p class="nav-card-desc">智能句子学习助手</p>
+              </div>
+            </div>
+            <div class="nav-card-arrow">
+              <nz-icon nzType="right" nzTheme="outline"></nz-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

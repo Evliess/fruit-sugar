@@ -54,7 +54,11 @@
           </li> -->
         </ul>
       </li>
-      <li nz-submenu nzTitle="AI助教" nzIcon="reddit">
+      <li nz-submenu nzTitle="AI助教" nzIcon="reddit" (nzOpenChange)="onAiLearnOpenChange($event)">
+        <ul>
+          <li nz-menu-item (click)="gotoAiWord()"><a routerLinkActive="active" ariaCurrentWhenActive="page">AI词汇</a></li>
+          <li nz-menu-item (click)="gotoAiSentence()"><a routerLinkActive="active" ariaCurrentWhenActive="page">AI句子</a></li>
+        </ul>
       </li>
       <li nz-menu-item (click)="gotoUserSummary()" nzIcon="user" [nzSelected]="isUserCenterActive()">
         <span><nz-icon nzType="user" nzTheme="outline" /> 用户中心</span>

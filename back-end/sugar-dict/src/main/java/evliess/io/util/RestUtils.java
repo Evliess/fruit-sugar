@@ -60,12 +60,44 @@ public class RestUtils {
     return resp;
   }
 
+  public static String dpskSmartChat(String content, String token) throws JsonProcessingException {
+    String uuid = UUID.randomUUID().toString();
+    logger.info("DP is answering smart request: {}", uuid);
+    String resp = postSmartChat(content, token, Constants.DPSK_MODEL, Constants.DPSK_CHAT_URL, uuid);
+    if (resp == null) {
+      logger.error("Failed to chat with DP for smart request");
+    } else {
+      logger.info("DP smart response: {} - {}", uuid, resp);
+    }
+    return resp;
+  }
+
   private static String postSentenceChat(String sentence, String token, String model, String url, String uuid) throws JsonProcessingException {
     RestTemplate restTemplate = buildRestTemplate();
     HttpHeaders headers = new HttpHeaders();
     headers.add("Content-Type", "application/json");
     headers.add("Authorization", "Bearer " + token);
     HttpEntity<String> request = getStringHttpEntitySentence(uuid, model, headers, sentence);
+    try {
+      ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
+      if (response.getStatusCode() == HttpStatus.OK) {
+        String respBody = response.getBody();
+        return convertOpenAIJsonResponse(respBody);
+      } else {
+        return null;
+      }
+    } catch (Exception e) {
+      logger.error("{}:{}", uuid, e.getMessage(), e);
+      return null;
+    }
+  }
+
+  private static String postSmartChat(String content, String token, String model, String url, String uuid) throws JsonProcessingException {
+    RestTemplate restTemplate = buildRestTemplate();
+    HttpHeaders headers = new HttpHeaders();
+    headers.add("Content-Type", "application/json");
+    headers.add("Authorization", "Bearer " + token);
+    HttpEntity<String> request = getStringHttpEntitySmart(uuid, model, headers, content);
     try {
       ResponseEntity<String> response = restTemplate.postForEntity(url, request, String.class);
       if (response.getStatusCode() == HttpStatus.OK) {
@@ -119,6 +151,11 @@ public class RestUtils {
     return buildChatHttpEntity(headers, model, Constants.SENTENCE_SYS_PROMPT, sentence);
   }
 
+  private static HttpEntity<String> getStringHttpEntitySmart(String uuid, String model, HttpHeaders headers, String content)
+    throws JsonProcessingException {
+    return buildSmartChatHttpEntity(headers, model, Constants.SMART_SYS_PROMPT, content);
+  }
+
   private static HttpEntity<String> getStringHttpEntity(String uuid, String model, HttpHeaders headers, String word)
     throws JsonProcessingException {
     return buildChatHttpEntity(headers, model, Constants.WORD_SYS_PROMPT, word);
@@ -135,6 +172,19 @@ public class RestUtils {
     body.put("stream", false);
     body.put("temperature", TEMPERATURE);
     body.put("response_format", Map.of("type", "json_object"));
+    return new HttpEntity<>(new ObjectMapper().writeValueAsString(body), headers);
+  }
+
+  private static HttpEntity<String> buildSmartChatHttpEntity(HttpHeaders headers, String model, String systemPrompt, String userContent)
+    throws JsonProcessingException {
+    Map<String, Object> body = new HashMap<>();
+    List<Map<String, String>> messages = new ArrayList<>();
+    messages.add(Map.of("role", "system", "content", systemPrompt));
+    messages.add(Map.of("role", "user", "content", userContent));
+    body.put("messages", messages);
+    body.put("model", model);
+    body.put("stream", false);
+    body.put("temperature", TEMPERATURE);
     return new HttpEntity<>(new ObjectMapper().writeValueAsString(body), headers);
   }
 

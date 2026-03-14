@@ -156,4 +156,12 @@ export class SugarDictService {
         return this.http.post<String>(`${this.apiUrl}` + "/user/listen/progress", { userId: userId, moduleId: moduleId, type: type, currIndex: index });
     }
 
+    getSmartWord(content: string, userId: number): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/ai/word/smart", { content: content, userId: userId });
+    }
+
+    getSmartSentence(content: string, userId: number): Observable<String> {
+        return this.http.post<String>(`${this.apiUrl}` + "/ai/sentence/smart", { content: content, userId: userId });
+    }
+
 }

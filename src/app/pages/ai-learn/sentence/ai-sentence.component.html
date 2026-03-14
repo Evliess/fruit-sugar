@@ -1,0 +1,59 @@
+<div class="ai-sentence-container">
+  <div class="header-section">
+    <h1 class="page-title">AI句子学习助手</h1>
+    <p class="page-subtitle">输入句子，获取AI智能解析和翻译</p>
+  </div>
+
+  <div class="chat-section">
+    <nz-card class="chat-card">
+      <div class="chat-messages">
+        <div *ngIf="!aiResponse" class="empty-state">
+          <nz-icon nzType="message" nzTheme="outline" class="empty-icon"></nz-icon>
+          <p class="empty-text">开始输入句子，AI将为您提供详细解析和翻译</p>
+        </div>
+        <div *ngIf="aiResponse" class="ai-response">
+          <div class="response-header">
+            <nz-icon nzType="message" nzTheme="outline"></nz-icon>
+            <span class="response-label">AI回复</span>
+          </div>
+          <div class="response-content markdown-body" [innerHTML]="renderMarkdown(aiResponse)"></div>
+        </div>
+      </div>
+
+      <div class="input-section">
+        <div class="input-wrapper">
+          <textarea 
+            nz-input 
+            [(ngModel)]="userInput" 
+            placeholder="请输入句子..." 
+            [nzAutosize]="{ minRows: 3, maxRows: 6 }"
+            aria-label="输入句子"
+          ></textarea>
+        </div>
+        <div class="button-wrapper">
+          <button 
+            nz-button 
+            [nzType]="'primary'" 
+            [nzSize]="'large'" 
+            (click)="sendToAI()"
+            [disabled]="isLoading || !userInput.trim()"
+            class="send-button"
+          >
+            <nz-icon nzType="send" *ngIf="!isLoading"></nz-icon>
+            <nz-icon nzType="loading" *ngIf="isLoading"></nz-icon>
+            <span class="button-text">{{ isLoading ? '思考中...' : '发送' }}</span>
+          </button>
+          <button 
+            nz-button 
+            [nzType]="'default'" 
+            (click)="clearInput()"
+            class="clear-button"
+          >
+            <nz-icon nzType="clear"></nz-icon>
+            清空
+          </button>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+</div>

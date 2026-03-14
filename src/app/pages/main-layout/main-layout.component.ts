@@ -205,5 +205,26 @@ export class MainLayoutComponent {
     this.category = "wrong-book";
   }
 
+  gotoAiLearn() {
+    this.router.navigate(['/ai-learn']);
+    this.category = "ai-learn";
+  }
+
+  gotoAiWord() {
+    this.router.navigate(['/ai-learn/ai-word']);
+    this.category = "ai-learn";
+  }
+
+  gotoAiSentence() {
+    this.router.navigate(['/ai-learn/sentence']);
+    this.category = "ai-learn";
+  }
+
+  onAiLearnOpenChange(isOpen: boolean): void {
+    if (isOpen) {
+      this.gotoAiLearn();
+    }
+  }
+
 
 }

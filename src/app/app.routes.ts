@@ -22,6 +22,7 @@ export const routes: Routes = [
       { path: 'wrong-book', loadChildren: () => import('./pages/wrong-book/wrong-book.routes').then(m => m.WRONG_BOOK_ROUTES) },
       { path: 'word-subitem', loadChildren: () => import('./pages/word-subitem/word-subitem.routes').then(m => m.WORD_SUBITEM_ROUTES) },
       { path: 'sentence-item', loadChildren: () => import('./pages/sentence-item/sentence-item.routes').then(m => m.SENTENCE_ITEM_ROUTES) },
+      { path: 'ai-learn', loadChildren: () => import('./pages/ai-learn/ai-learn.routes').then(m => m.AI_LEARN_ROUTES) },
     ]
 
   },
