@@ -322,21 +322,24 @@ export class CiHuiComponent {
     this.isPracticeVisible = false;
   }
 
-  //none->n, adjective->adj
   simpleWordType(type: any): string {
     if(type.includes("noun")) {
-      return "n";
+      return "n.";
     } else if(type.includes("adjective")) {
-      return "adj";
+      return "adj.";
     } else if(type.includes("verb")) {
-      return "v";
+      return "v.";
     } else if(type.includes("adverb")) {
-      return "adv";
+      return "adv.";
     } else if(type.includes("phrase")) {
       return "phrase";
     } else {
       return type;
     }
+  }
+
+  isMultiWord(word: string): boolean {
+    return word.includes(' ') || word.includes('-');
   }
 
 }

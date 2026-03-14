@@ -28,14 +28,21 @@
             </div>
 
             <div class="phonetic-group">
-              <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
-                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                  (hoverTimeout)="handleSound('US', item)" 
-                  (soundClick)="handleSound('US', item)" /></span>
-              <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
-                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                  (hoverTimeout)="handleSound('UK', item)" 
-                  (soundClick)="handleSound('UK', item)" /></span>
+              @if (isMultiWord(item.word)) {
+                <span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                    (hoverTimeout)="handleSound('US', item)" 
+                    (soundClick)="handleSound('US', item)" /></span>
+              } @else {
+                <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                    (hoverTimeout)="handleSound('US', item)" 
+                    (soundClick)="handleSound('US', item)" /></span>
+                <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
+                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                    (hoverTimeout)="handleSound('UK', item)" 
+                    (soundClick)="handleSound('UK', item)" /></span>
+              }
             </div>
 
             <div class="definition-details">
@@ -149,14 +156,21 @@
             </div>
 
             <div class="phonetic-group">
-              <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
-                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                  (hoverTimeout)="handleSound('US', item)" 
-                  (soundClick)="handleSound('US', item)" /></span>
-              <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
-                  nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                  (hoverTimeout)="handleSound('UK', item)" 
-                  (soundClick)="handleSound('UK', item)" /></span>
+              @if (isMultiWord(item.word)) {
+                <span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                    (hoverTimeout)="handleSound('US', item)" 
+                    (soundClick)="handleSound('US', item)" /></span>
+              } @else {
+                <strong>🇺🇸 </strong><span class="phonetic">{{ item.usPhonetic }} <nz-icon class="sound-icon"
+                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                    (hoverTimeout)="handleSound('US', item)" 
+                    (soundClick)="handleSound('US', item)" /></span>
+                <strong>🇬🇧 </strong><span class="phonetic">{{ item.ukPhonetic }} <nz-icon class="sound-icon"
+                    nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
+                    (hoverTimeout)="handleSound('UK', item)" 
+                    (soundClick)="handleSound('UK', item)" /></span>
+              }
             </div>
 
             <div class="definition-details">
