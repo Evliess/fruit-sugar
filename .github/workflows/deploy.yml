@@ -56,7 +56,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           password: ${{ secrets.SERVER_PASSWORD }}
           source: "tmp/browser.zip,tmp/sugar-dict-1.0-SNAPSHOT.jar"
-          target: "/tmp"
+          target: "/home/${{ secrets.SERVER_USERNAME }}/release"
           strip_components: 1  # 自动去除源路径中的 'tmp/' 前缀
 
       # 6. SSH 连接服务器并执行 sudo 命令
@@ -71,14 +71,13 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           envs: PASSWORD
           script: |
-            echo "==== 部署文件已成功上传到服务器 /tmp 目录 ===="
+            echo "==== 部署文件已成功上传到 release 目录 ===="
             
-            # 使用 echo $PASSWORD | sudo -S 实现自动输入密码
-            echo $PASSWORD | sudo -S ls -la /tmp/browser.zip
-            echo $PASSWORD | sudo -S ls -la /tmp/sugar-dict-1.0-SNAPSHOT.jar
+            # 检查文件是否上传成功
+            echo $PASSWORD | sudo -S ls -la $TARGET_DIR/browser.zip
+            echo $PASSWORD | sudo -S ls -la $TARGET_DIR/sugar-dict-1.0-SNAPSHOT.jar
+
             
-            # TODO: 在下方继续添加你的后续部署命令
-            # 例如解压前端资源：
-            # echo $PASSWORD | sudo -S unzip -o /tmp/browser.zip -d /var/www/html/learn-dict
-            # 例如重启后端服务：
-            # echo $PASSWORD | sudo -S systemctl restart sugar-dict
+            # TODO: 在此处添加你的解压/重启服务命令
+            # 示例：解压前端
+            # echo $PASSWORD | sudo -S unzip -o $TARGET_DIR/browser.zip -d /var/www/html/learn-dict
