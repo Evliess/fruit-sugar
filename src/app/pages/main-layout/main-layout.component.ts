@@ -77,6 +77,10 @@ export class MainLayoutComponent {
         this.learnModel = 'learn';
       } else if (url.includes('/words')) {
         this.learnModel = 'list';
+      } else if (url.includes('/kou-yu?isCustom=false')) {
+        this.learnModel = 'learn';
+      } else if (url.includes('/sen-listen')) {
+        this.learnModel = 'listen';
       }
     });
   }
@@ -145,17 +149,29 @@ export class MainLayoutComponent {
   }
   gotoListen() {
     const url = this.currentUrl();
-    if (url.includes('moduleId=')) {
-      const moduleId = url.split('moduleId=')[1];
+    const tree = this.router.parseUrl(url);
+    const moduleId = tree.queryParams['moduleId'];
+    if (moduleId) {
       this.router.navigate(['/listen'], { queryParams: { moduleId: moduleId } });
     }
   }
 
   gotoSentenceListen() {
     const url = this.currentUrl();
-    if (url.includes('moduleId=')) {
-      const moduleId = url.split('moduleId=')[1];
+    const tree = this.router.parseUrl(url);
+    const moduleId = tree.queryParams['moduleId'];
+    if (moduleId) {
+      this.learnModel = 'listen';
       this.router.navigate(['/sen-listen'], { queryParams: { moduleId: moduleId } });
+    }
+  }
+  gotoSentenceLearn() {
+    const url = this.currentUrl();
+    const tree = this.router.parseUrl(url);
+    const moduleId = tree.queryParams['moduleId'];
+    if (moduleId) {
+      this.learnModel = 'learn';
+      this.router.navigate(['/kou-yu'], { queryParams: { moduleId: moduleId, isCustom: false } });
     }
   }
 

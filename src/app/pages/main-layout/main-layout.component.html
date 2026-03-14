@@ -57,8 +57,8 @@
       <li nz-submenu nzTitle="AI助教" nzIcon="reddit">
       </li>
       <li nz-menu-item (click)="gotoUserSummary()" nzIcon="user" [nzSelected]="isUserCenterActive()">
-         <span>用户中心</span>
-       </li>
+        <span>用户中心</span>
+      </li>
     </ul>
   </nz-sider>
 
@@ -110,6 +110,10 @@
           </div>
           }
           @if(isShowSentenceMenu()) {
+          <div  (click)="gotoSentenceLearn()" [class]="learnModel=='learn'?'header-item selected':'header-item'">
+            <span nz-icon nzType="eye"></span>
+            <span class="username">学习模式</span>
+          </div>
           <div (click)="gotoSentenceListen()" [class]="learnModel=='listen'?'header-item selected':'header-item'">
             <span nz-icon nzType="muted"></span>
             <span class="username">听写模式</span>
