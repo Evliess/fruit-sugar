@@ -2,7 +2,6 @@
 html, body {
   overflow-x: hidden;
   max-width: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 .container {
@@ -42,13 +41,12 @@ html, body {
 /* 卡片样式 */
 nz-card {
   border-radius: 12px;
-  transition: all 0.3s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-  border: 1px solid #e8e8e8;
+  transition: all 0.3s;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 nz-card:hover {
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-2px);
 }
 
@@ -71,7 +69,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 12px;
+  margin-bottom: 0px;
 }
 
 .word-text {
@@ -80,37 +78,35 @@ nz-card.is-known ::ng-deep .ant-card-body {
   color: #1a1a1a;
   word-break: break-word;
   overflow-wrap: break-word;
-  line-height: 1.2;
 }
 
 .known-tag {
   font-size: 12px;
-  padding: 4px 8px;
+  padding: 2px 8px;
 }
 
 .phonetic-group {
   font-size: 12px;
   color: #555555;
-  margin-bottom: 12px;
+  margin-bottom: 0px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 2px;
   flex-wrap: wrap;
 }
 
 .phonetic {
   margin-right: 0;
   background: #f0f0f0;
-  padding: 4px 8px;
+  padding: 2px 6px;
   border-radius: 4px;
   white-space: nowrap;
   flex-shrink: 1;
   min-width: 0;
-  font-size: 11px;
+  font-size: 10px;
   overflow: hidden;
   text-overflow: ellipsis;
-  line-height: 1.3;
 }
 
 .definition {
@@ -123,16 +119,16 @@ nz-card.is-known ::ng-deep .ant-card-body {
 }
 
 .definition-details {
-  margin-top: 8px;
-  height: 44.8px; /* 固定2行高度：14px * 1.6 * 2 */
+  margin-top: 0px;
+  height: 46.8px; /* 固定2行高度：13px * 1.8 * 2 */
   overflow: hidden;
 }
 
 .definition-item {
-  font-size: 14px;
+  font-size: 13px;
   color: #3a3a3a;
-  line-height: 1.6;
-  margin-bottom: 8px;
+  line-height: 1.8;
+  margin-bottom: 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -142,8 +138,8 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 /* 句子块样式 */
 .sentence-block {
-  margin-top: 12px;
-  height: 42px; /* 固定2行高度：14px * 1.5 * 2 */
+  margin-top: 8px;
+  height: 36.4px; /* 固定2行高度：13px * 1.4 * 2 */
   overflow: hidden;
 }
 
@@ -153,9 +149,9 @@ nz-card.is-known ::ng-deep .ant-card-body {
 }
 
 .sentence-text {
-  font-size: 14px;
+  font-size: 13px;
   color: #333333;
-  line-height: 1.5;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -166,19 +162,19 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 /* 卡片详情区域 */
 .card-details {
-  margin-top: 12px;
+  margin-top: 0px;
   animation: fadeIn 0.3s;
 }
 
 .detail-block {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .detail-label {
-  font-weight: 600;
+  font-weight: bold;
   color: #1890ff;
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
   font-size: 14px;
 }
 
@@ -188,17 +184,17 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 /* 搭配列表样式 */
 .collocation-list {
-  margin-top: 8px;
+  margin-top: 4px;
 }
 
 .collocation-item {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .collocation-en {
   font-weight: 500;
-  margin-bottom: 4px;
-  font-size: 14px;
+  margin-bottom: 2px;
+  font-size: 13px;
   color: #333333;
   display: flex;
   align-items: flex-start;
@@ -207,16 +203,15 @@ nz-card.is-known ::ng-deep .ant-card-body {
 }
 
 .collocation-label {
-  font-weight: 600;
+  font-weight: bold;
   color: #1890ff;
-  margin-right: 6px;
+  margin-right: 4px;
   flex-shrink: 0;
 }
 
 .collocation-zh {
   color: #555555;
-  font-size: 13px;
-  margin-top: 2px;
+  font-size: 12px;
 }
 
 .collocation-text {
@@ -228,8 +223,8 @@ nz-card.is-known ::ng-deep .ant-card-body {
   -webkit-line-clamp: 3;
   line-clamp: 3;
   overflow: hidden;
-  line-height: 1.5;
-  max-height: 63px; /* 14px * 1.5 * 3 */
+  line-height: 1.4;
+  max-height: 54.6px; /* 13px * 1.4 * 3 */
 }
 
 .collocation-translation {
@@ -238,18 +233,18 @@ nz-card.is-known ::ng-deep .ant-card-body {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   overflow: hidden;
-  line-height: 1.5;
-  max-height: 39px; /* 13px * 1.5 * 2 */
+  line-height: 1.4;
+  max-height: 33.6px; /* 12px * 1.4 * 2 */
   color: #555555;
 }
 
 .collocation-empty {
-  font-size: 13px;
+  font-size: 12px;
   color: #8c8c8c;
 }
 
 .sentence-item {
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   padding: 0;
   background: transparent;
   border-radius: 0;
@@ -258,8 +253,8 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 .sentence-en {
   font-weight: 500;
-  margin-bottom: 4px;
-  font-size: 14px;
+  margin-bottom: 2px;
+  font-size: 13px;
   display: flex;
   align-items: flex-start;
   flex: 1;
@@ -267,16 +262,15 @@ nz-card.is-known ::ng-deep .ant-card-body {
 }
 
 .sentence-label {
-  font-weight: 600;
+  font-weight: bold;
   color: #1890ff;
-  margin-right: 6px;
+  margin-right: 4px;
   flex-shrink: 0;
 }
 
 .sentence-zh {
-  color: #555555;
-  font-size: 13px;
-  margin-top: 2px;
+  color: #8c8c8c;
+  font-size: 12px;
 }
 
 .sentence-text {
@@ -288,8 +282,8 @@ nz-card.is-known ::ng-deep .ant-card-body {
   -webkit-line-clamp: 3;
   line-clamp: 3;
   overflow: hidden;
-  line-height: 1.5;
-  max-height: 63px; /* 14px * 1.5 * 3 */
+  line-height: 1.4;
+  max-height: 54.6px; /* 13px * 1.4 * 3 */
 }
 
 .sentence-translation {
@@ -298,30 +292,29 @@ nz-card.is-known ::ng-deep .ant-card-body {
   -webkit-line-clamp: 2;
   line-clamp: 2;
   overflow: hidden;
-  line-height: 1.5;
-  max-height: 39px; /* 13px * 1.5 * 2 */
+  line-height: 1.4;
+  max-height: 33.6px; /* 12px * 1.4 * 2 */
   color: #555555;
 }
 
 .mt-2 {
-  margin-top: 16px;
+  margin-top: 12px;
 }
 
 /* 卡片底部按钮区域 */
 .card-footer {
   display: flex;
-  gap: 12px;
-  padding-top: 16px;
-  border-top: 1px solid #f0f0f0;
-  margin-top: 16px;
+  gap: 8px;
+  padding-top: 0;
+  border-top: none;
+  margin-top: 0;
   flex-wrap: wrap;
 }
 
 .card-footer button {
   flex: 1;
-  min-width: 90px;
-  font-size: 14px;
-  padding: 6px 12px;
+  min-width: 80px;
+  font-size: 13px;
 }
 
 /* 动画效果 */
@@ -423,11 +416,10 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 /* 音标图标样式 */
 .sound-icon {
-  margin-left: 4px;
+  margin-left: 2px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s;
   flex-shrink: 0;
-  font-size: 14px;
 }
 
 .sound-icon:hover {
