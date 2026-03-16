@@ -1,0 +1,75 @@
+name: Build and Release
+
+# 手动触发，并要求输入一个版本号
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '发布版本号 (例如: v1.0.0)'
+        required: true
+        default: 'v1.0.0'
+        type: string
+
+# 必须开启写入权限，否则无法创建 Release
+permissions:
+  contents: write
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 环境准备：Node v24.11.0
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24.11.0'
+          cache: 'npm'
+
+      # 环境准备：JDK 21
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+          cache: 'maven'
+
+      # 1. & 2. 创建 tmp 目录并打包前端
+      - name: Build Frontend
+        run: |
+          mkdir -p tmp
+          npm install
+          npm run build
+
+      # 3. 压缩前端产物到 tmp/browser.zip
+      - name: Zip Frontend
+        run: |
+          cd dist/learn-dict/browser
+          zip -r ../../../tmp/browser.zip .
+          cd ../../../
+
+      # 4. 后端打包，并将 jar 包复制为 tmp/app.jar
+      - name: Build Backend
+        working-directory: ./back-end/sugar-dict
+        run: |
+          mvn clean package -DskipTests
+          # 将打包好的 jar 复制并重命名为 app.jar
+          cp target/sugar-dict-1.0-SNAPSHOT.jar ../../tmp/app.jar
+
+      # 5. 创建 GitHub Release 并上传这两个文件
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          # 使用 输入的版本号 + 运行批次号 作为 Tag，防止重复运行导致标签冲突
+          tag_name: ${{ github.event.inputs.version }}-build.${{ github.run_number }}
+          name: Release ${{ github.event.inputs.version }} (Build ${{ github.run_number }})
+          body: |
+            自动构建的发布版本：${{ github.event.inputs.version }}
+            - 包含前端静态资源压缩包 `browser.zip`
+            - 包含后端可执行程序 `app.jar`
+          files: |
+            tmp/browser.zip
+            tmp/app.jar
