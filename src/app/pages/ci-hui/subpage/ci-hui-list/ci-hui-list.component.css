@@ -87,7 +87,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 .phonetic-group {
   font-size: 12px;
-  color: #555555;
+  color: #333333;
   margin-bottom: 0px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
@@ -126,7 +126,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 .definition-item {
   font-size: 13px;
-  color: #3a3a3a;
+  color: #333333;
   line-height: 1.8;
   margin-bottom: 0;
   display: -webkit-box;
@@ -139,6 +139,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
 /* 句子块样式 */
 .sentence-block {
   margin-top: 8px;
+  margin-bottom: 16px;
   height: 36.4px; /* 固定2行高度：13px * 1.4 * 2 */
   overflow: hidden;
 }
@@ -366,6 +367,11 @@ nz-card.is-known ::ng-deep .ant-card-body {
     line-clamp: 2;
     max-height: 36.4px; /* 13px * 1.4 * 2 */
   }
+
+  /* 手机端减少句子块下边距 */
+  .sentence-block {
+    margin-bottom: 12px;
+  }
 }
 
 /* 平板端 (sm: ≥576px, md: ≥768px) - 一行显示2个 */
@@ -440,4 +446,15 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 .vocabulary-card .card-footer {
   margin-top: auto;
+}
+
+/* 可访问性：焦点样式 */
+.sound-icon:focus {
+  outline: 2px solid #1890ff;
+  outline-offset: 2px;
+}
+
+button:focus {
+  outline: 2px solid #1890ff;
+  outline-offset: 2px;
 }
