@@ -3,14 +3,85 @@
   min-height: 100vh;
 }
 
+/* 调整右侧内容区域，避免与固定侧边栏重叠 */
+nz-sider.menu-sidebar + nz-layout,
+.menu-sidebar + nz-layout {
+  margin-left: 256px;
+  width: calc(100% - 256px);
+  transition: margin-left 0.2s, width 0.2s;
+}
+
+/* 侧边栏折叠时，重置右侧内容区域 */
+nz-sider.menu-sidebar.ant-layout-sider-collapsed + nz-layout,
+.menu-sidebar.ant-layout-sider-collapsed + nz-layout {
+  margin-left: 0;
+  width: 100%;
+}
+
 /* ==================
    侧边栏 (Sider) 样式
    ================== */
-.menu-sidebar {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
+nz-sider.menu-sidebar,
+.menu-sidebar,
+.ant-layout-sider.menu-sidebar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  z-index: 1000;
+  width: 256px !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  overflow-x: hidden !important;
+  overflow-y: auto;
   box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+  transition: width 0.2s;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: #f5f8ff;
+}
+
+/* 确保侧边栏内容填充高度 */
+.menu-sidebar .ant-menu {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* 侧边栏内部元素宽度约束 */
+.menu-sidebar > * {
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+/* 侧边栏logo区域宽度约束 */
+.menu-sidebar .sidebar-logo {
+  box-sizing: border-box;
+  max-width: 100%;
+  width: 100%;
+}
+
+/* 菜单项文本溢出处理 */
+.menu-sidebar .ant-menu-item,
+.menu-sidebar .ant-menu-submenu-title {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 子菜单项文本溢出处理 */
+.menu-sidebar .ant-menu-submenu .ant-menu-item {
+  padding-left: 40px !important; /* 确保子菜单项缩进 */
+}
+
+/* 侧边栏折叠时的样式 */
+.menu-sidebar.ant-layout-sider-collapsed {
+  width: 0 !important;
+  overflow: hidden;
 }
 
 .sidebar-logo {
@@ -19,7 +90,6 @@
   padding-left: 24px;
   overflow: hidden;
   line-height: 64px;
-  background: #f5f8ff;
   transition: all 0.3s;
 }
 
