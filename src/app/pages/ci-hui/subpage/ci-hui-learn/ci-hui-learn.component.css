@@ -115,7 +115,8 @@ nz-card.is-known ::ng-deep .ant-card-body {
   color: #3a3a3a;
   line-height: 1.6;
   margin-bottom: 8px;
-  height: 72px;
+  min-height: 72px;
+  height: auto;
   overflow: hidden;
 }
 
@@ -336,9 +337,9 @@ nz-card.is-known ::ng-deep .ant-card-body {
 .card-footer {
   display: flex;
   gap: 12px;
-  padding-top: 16px;
+  padding-top: 12px;
   border-top: 1px solid #f0f0f0;
-  margin-top: 16px;
+  margin-top: 12px;
   flex-wrap: wrap;
 }
 
@@ -419,7 +420,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
   /* 手机端卡片内边距 */
   .card-content {
-    padding: 8px 8px 16px 8px;
+    padding: 12px 12px 20px 12px;
   }
 }
 
@@ -449,7 +450,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
   /* 平板端卡片内边距 */
   .card-content {
-    padding: 10px 12px 16px 12px;
+    padding: 14px 16px 20px 16px;
   }
 }
 
@@ -457,6 +458,11 @@ nz-card.is-known ::ng-deep .ant-card-body {
 @media (min-width: 992px) {
   .word-text {
     font-size: 24px;
+  }
+
+  /* 桌面端卡片内边距 */
+  .card-content {
+    padding: 16px 20px 24px 20px;
   }
 
   /* 桌面端减少例句和搭配的行数限制 */
