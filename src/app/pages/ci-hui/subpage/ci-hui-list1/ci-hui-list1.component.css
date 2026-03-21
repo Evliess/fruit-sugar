@@ -199,7 +199,7 @@ html, body {
 .phonetic-group {
   font-size: 12px;
   color: #555555;
-  margin-bottom: 10px;
+  margin-bottom: 8px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   align-items: center;
@@ -406,6 +406,10 @@ html, body {
   flex: 2; /* 词汇部分更宽 */
 }
 
+.pronunciation-header {
+  flex: 1; /* 发音部分中等宽度 */
+}
+
 .pos-header {
   flex: 1; /* 词性部分中等宽度 */
 }
@@ -422,7 +426,7 @@ html, body {
 /* 数据行 */
 .table-data-row {
   display: flex;
-  min-height: 80px;
+  min-height: 70px;
   align-items: stretch;
   border-bottom: 1px solid #e8e8e8;
   transition: background-color 0.2s;
@@ -446,7 +450,7 @@ html, body {
 
 /* 表格单元格 */
 .table-cell {
-  padding: 12px 20px;
+  padding: 10px 20px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -456,6 +460,10 @@ html, body {
 
 .word-cell {
   flex: 2;
+}
+
+.pronunciation-cell {
+  flex: 1;
 }
 
 .pos-cell {
@@ -560,32 +568,38 @@ html, body {
   }
   
   .table-cell {
-    padding: 12px 16px;
+    padding: 10px 16px;
   }
   
   .word-cell {
     flex: 1 1 100%;
     order: 1;
-    margin-bottom: 12px;
-    padding-bottom: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #f0f0f0;
   }
-  
-  .pos-cell {
+
+  .pronunciation-cell {
     flex: 1;
     order: 2;
     border-right: 1px solid #f0f0f0;
   }
-  
-  .collocation-cell {
+
+  .pos-cell {
     flex: 1;
     order: 3;
     border-right: 1px solid #f0f0f0;
   }
   
-  .action-cell {
+  .collocation-cell {
     flex: 1;
     order: 4;
+    border-right: 1px solid #f0f0f0;
+  }
+  
+  .action-cell {
+    flex: 1;
+    order: 5;
   }
   
   .action-buttons {
@@ -618,7 +632,7 @@ html, body {
   
   .table-cell {
     width: 100%;
-    padding: 12px 20px;
+    padding: 10px 20px;
     border: none;
   }
   
@@ -626,27 +640,35 @@ html, body {
     order: 1;
     border-bottom: none;
     margin-bottom: 0;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
   }
-  
-  .pos-cell {
+
+  .pronunciation-cell {
     order: 2;
     border-right: none;
     border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 12px;
-    margin-bottom: 12px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
   }
-  
-  .collocation-cell {
+
+  .pos-cell {
     order: 3;
     border-right: none;
     border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 12px;
-    margin-bottom: 12px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .collocation-cell {
+    order: 4;
+    border-right: none;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
   }
   
   .action-cell {
-    order: 4;
+    order: 5;
   }
   
   .action-buttons {

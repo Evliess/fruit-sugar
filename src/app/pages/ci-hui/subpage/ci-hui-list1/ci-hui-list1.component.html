@@ -15,6 +15,7 @@
       <!-- 表头 -->
       <div class="table-header-row">
         <div class="table-header-cell word-header">词汇</div>
+        <div class="table-header-cell pronunciation-header">发音</div>
         <div class="table-header-cell pos-header">词性</div>
         <div class="table-header-cell collocation-header">搭配</div>
         <div class="table-header-cell action-header">操作</div>
@@ -28,16 +29,15 @@
           <div class="word-title-group" appHoverSound (soundClick)="handleSound('US', item)">
             <span class="word-text">{{ item.word }}</span>
           </div>
+        </div>
+
+        <!-- 发音列 -->
+        <div class="table-cell pronunciation-cell">
           <div class="phonetic-group">
             <span class="phonetic">
               <strong>🇺🇸 </strong>{{ item.usPhonetic }}
               <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
                 (hoverTimeout)="handleSound('US', item)" (soundClick)="handleSound('US', item)" />
-            </span>
-            <span class="phonetic">
-              <strong>🇬🇧 </strong>{{ item.ukPhonetic }}
-              <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('UK', item)" (soundClick)="handleSound('UK', item)" />
             </span>
           </div>
         </div>
@@ -107,16 +107,15 @@
           <div class="word-title-group" appHoverSound (soundClick)="handleSound('US', item)">
             <span class="word-text">{{ item.word }}</span>
           </div>
+        </div>
+
+        <!-- 发音列 -->
+        <div class="table-cell pronunciation-cell">
           <div class="phonetic-group">
             <span class="phonetic">
               <strong>🇺🇸 </strong>{{ item.usPhonetic }}
               <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
                 (hoverTimeout)="handleSound('US', item)" (soundClick)="handleSound('US', item)" />
-            </span>
-            <span class="phonetic">
-              <strong>🇬🇧 </strong>{{ item.ukPhonetic }}
-              <nz-icon class="sound-icon" nzType="muted" nzTheme="outline" appHoverSound [hoverTime]="100"
-                (hoverTimeout)="handleSound('UK', item)" (soundClick)="handleSound('UK', item)" />
             </span>
           </div>
         </div>
