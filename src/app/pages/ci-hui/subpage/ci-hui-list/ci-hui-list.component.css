@@ -88,7 +88,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
 .phonetic-group {
   font-size: 12px;
   color: #333333;
-  margin-bottom: 0px;
+  margin-bottom: 8px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   align-items: center;
