@@ -365,23 +365,41 @@ html, body {
   margin-bottom: 32px;
 }
 
-/* 表头行 */
+/* 表头行 - 现代专业风格 */
 .table-header-row {
   display: flex;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e8e8e8;
+  background: #f0f2f5;
+  border-bottom: 1px solid #d1d9e0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   font-weight: 600;
   font-size: 13px;
-  color: #595959;
-  height: 40px;
+  color: #262626;
+  height: 44px;
   align-items: center;
+  border-radius: 4px 4px 0 0;
+  position: relative;
 }
 
 .table-header-cell {
-  padding: 0 20px;
+  padding: 0 22px;
   flex: 1;
   display: flex;
   align-items: center;
+  height: 100%;
+  position: relative;
+}
+
+.table-header-cell:not(.action-header)::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  top: 12px;
+  bottom: 12px;
+  width: 1px;
+  background: linear-gradient(to bottom,
+    rgba(208, 215, 222, 0.4) 0%,
+    rgba(208, 215, 222, 0.8) 50%,
+    rgba(208, 215, 222, 0.4) 100%);
 }
 
 .word-header {
@@ -409,7 +427,7 @@ html, body {
   border-bottom: 1px solid #e8e8e8;
   transition: background-color 0.2s;
   padding: 0;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
 }
 
 .table-data-row:hover {
@@ -525,7 +543,14 @@ html, body {
 @media (max-width: 991.98px) {
   .table-header-row {
     font-size: 12px;
-    height: 36px;
+    height: 38px;
+    border-bottom: 1px solid #d1d9e0;
+    background: #f0f2f5;
+  }
+
+  .table-header-cell:not(.action-header)::after {
+    top: 10px;
+    bottom: 10px;
   }
   
   .table-data-row {

@@ -40,3 +40,7 @@
 .ant-divider-horizontal {
     margin: 6px 0;
 }
+
+.ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+    border-right: 0px solid #d2d2d7;
+}
