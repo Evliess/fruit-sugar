@@ -48,8 +48,8 @@
             @for (def of item.definition | keyvalue; track def.key; let f = $first) {
             @if(f) {
             <span class="definition-item">
-              <strong>{{ simpleWordType(def.key) }}</strong>
-              <span class="definition-text">{{ (def.value + '').split('；')[0] }}</span>
+              <span nz-tooltip [nzTooltipTitle]="simpleWordType(def.key)" class="pos-text"><strong>{{ simpleWordType(def.key) }}</strong></span>
+              <span nz-tooltip [nzTooltipTitle]="(def.value + '').split('；')[0]" class="definition-text">{{ (def.value + '').split('；')[0] }}</span>
             </span>
             }
             }
@@ -126,8 +126,8 @@
             @for (def of item.definition | keyvalue; track def.key; let f = $first) {
             @if(f) {
             <span class="definition-item">
-              <strong>{{ simpleWordType(def.key) }}</strong>
-              <span class="definition-text">{{ (def.value + '').split('；')[0] }}</span>
+              <span nz-tooltip [nzTooltipTitle]="simpleWordType(def.key)" class="pos-text"><strong>{{ simpleWordType(def.key) }}</strong></span>
+              <span nz-tooltip [nzTooltipTitle]="(def.value + '').split('；')[0]" class="definition-text">{{ (def.value + '').split('；')[0] }}</span>
             </span>
             }
             }

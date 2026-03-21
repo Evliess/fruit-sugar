@@ -88,9 +88,24 @@ html, body {
   background-color: #fff;
 }
 
+.pos-text {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
+}
+
 .definition-text {
   color: #262626;
   font-size: 14px;
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
 }
 
 .word-and-pos .word-title-group {
@@ -320,6 +335,21 @@ html, body {
   .word-and-pos {
     flex-wrap: wrap;
   }
+
+  /* 手机端禁用词性截断 */
+  .pos-text {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+  }
+
+  /* 手机端禁用定义文本截断 */
+  .definition-text {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    display: inline;
+  }
 }
 
 /* 平板端 (sm: ≥576px, md: ≥768px) */
@@ -353,6 +383,14 @@ html, body {
 @media (min-width: 992px) {
   .word-text {
     font-size: 24px;
+  }
+
+  /* 桌面端词性和定义文本悬停提示 */
+  .pos-text:hover,
+  .definition-text:hover {
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 2px;
   }
 }
 
