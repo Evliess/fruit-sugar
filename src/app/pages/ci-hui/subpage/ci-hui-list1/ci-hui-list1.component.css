@@ -10,7 +10,7 @@ html, body {
 .container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 16px; /* 减少容器内边距 */
   background-color: #f8f9fa;
   min-height: 100vh;
   overflow-x: hidden;
@@ -26,10 +26,10 @@ html, body {
 .custom-input-section {
   background: #fff;
   border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 24px;
+  padding: 16px; /* 减少内边距 */
+  margin-bottom: 16px; /* 减少下边距 */
   display: flex;
-  gap: 12px;
+  gap: 8px; /* 减少元素间距 */
   align-items: center;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
@@ -48,7 +48,7 @@ html, body {
 .list1-card-row {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 20px; /* 减少卡片行元素间距 */
 }
 
 .list1-left-column {
@@ -66,8 +66,8 @@ html, body {
 .word-and-pos {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 8px;
+  gap: 8px; /* 减少元素间距 */
+  margin-bottom: 6px; /* 减少下边距 */
 }
 
 .pos-definition {
@@ -114,7 +114,7 @@ html, body {
 
 /* 例句位置 */
 .sentence-below-phonetic {
-  margin-top: 8px;
+  margin-top: 6px; /* 减少句子与音标间距 */
 }
 
 /* 底部按钮区域 */
@@ -136,7 +136,7 @@ html, body {
   .list1-right-column {
     width: 100%;
     justify-content: center;
-    margin-top: 12px;
+    margin-top: 10px; /* 减少右侧列顶部边距 */
   }
 
   .word-and-pos {
@@ -199,8 +199,8 @@ html, body {
 .word-title-group {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  gap: 6px; /* 减少元素间距 */
+  margin-bottom: 8px; /* 减少下边距 */
 }
 
 .word-text {
@@ -213,12 +213,12 @@ html, body {
 
 .phonetic-group {
   font-size: 12px;
-  color: #555555;
-  margin-bottom: 8px;
+  color: #262626; /* 提高对比度满足WCAG AA标准 */
+  margin-bottom: 8px; /* 音标与定义间距 */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 6px; /* 音标元素间距 */
   flex-wrap: wrap;
 }
 
@@ -249,7 +249,7 @@ html, body {
 
 .definition-item {
   font-size: 13px;
-  color: #3a3a3a;
+  color: #262626; /* 提高对比度满足WCAG AA标准 */
   line-height: 1.8;
   margin-bottom: 4px;
   height: auto;
@@ -273,7 +273,7 @@ html, body {
   font-weight: 500;
   margin-bottom: 2px;
   font-size: 13px;
-  color: #333333;
+  color: #262626; /* 提高对比度满足WCAG AA标准 */
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
@@ -285,10 +285,10 @@ html, body {
 
 .card-footer {
   display: flex;
-  gap: 8px;
-  padding-top: 0;
-  border-top: none;
-  margin-top: 0;
+  gap: 6px; /* 减少按钮间距 */
+  padding-top: 12px; /* 添加按钮区域顶部内边距 */
+  border-top: 1px solid #f0f0f0; /* 添加分割线增强视觉分离 */
+  margin-top: 12px; /* 添加按钮区域与内容间距 */
   flex-wrap: wrap;
 }
 
@@ -302,7 +302,7 @@ html, body {
 /* 手机端 (xs: <576px) */
 @media (max-width: 575.98px) {
   .container {
-    padding: 16px;
+    padding: 14px; /* 手机端减少容器内边距 */
   }
 
   .word-text {
@@ -320,7 +320,7 @@ html, body {
   .phonetic-group {
     white-space: normal;
     flex-wrap: wrap;
-    gap: 8px 4px;
+    gap: 6px 3px; /* 减少音标元素间距 */
   }
 
   .phonetic {
@@ -366,7 +366,7 @@ html, body {
   .phonetic-group {
     white-space: normal;
     flex-wrap: wrap;
-    gap: 8px 4px;
+    gap: 6px 3px; /* 减少音标元素间距 */
   }
 
   .phonetic {
@@ -400,7 +400,7 @@ html, body {
   border-radius: 4px;
   /* overflow: hidden; */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  margin-bottom: 32px;
+  margin-bottom: 24px; /* 减少表格下边距 */
 }
 
 /* 表头行 - 现代专业风格 */
@@ -412,14 +412,14 @@ html, body {
   font-weight: 600;
   font-size: 13px;
   color: #262626;
-  height: 44px;
+  height: 40px; /* 减少表头高度 */
   align-items: center;
   border-radius: 4px 4px 0 0;
   position: relative;
 }
 
 .table-header-cell {
-  padding: 0 22px;
+  padding: 0 18px; /* 减少表头单元格内边距 */
   flex: 1;
   display: flex;
   align-items: center;
@@ -464,7 +464,7 @@ html, body {
 /* 数据行 */
 .table-data-row {
   display: flex;
-  min-height: 70px;
+  min-height: 60px; /* 减少数据行高度 */
   align-items: stretch;
   border-bottom: 1px solid #e8e8e8;
   transition: background-color 0.2s;
@@ -488,7 +488,7 @@ html, body {
 
 /* 表格单元格 */
 .table-cell {
-  padding: 10px 20px;
+  padding: 8px 16px; /* 减少单元格内边距 */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -523,7 +523,7 @@ html, body {
 .collocation-item {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px; /* 减少搭配项间距 */
 }
 
 .collocation-en {
@@ -542,14 +542,14 @@ html, body {
 
 .collocation-text {
   font-size: 13px;
-  color: #333333;
+  color: #262626; /* 提高对比度满足WCAG AA标准 */
   line-height: 1.4;
   word-break: break-word;
 }
 
 .collocation-zh {
   font-size: 12px;
-  color: #555555;
+  color: #4a4a4a; /* 提高对比度满足WCAG AA标准 */
   line-height: 1.4;
   padding-left: 16px; /* 缩进与标签对齐 */
 }
@@ -562,7 +562,7 @@ html, body {
   overflow: hidden;
   line-height: 1.4;
   max-height: 33.6px; /* 12px * 1.4 * 2 */
-  color: #555555;
+  color: #4a4a4a; /* 提高对比度满足WCAG AA标准 */
 }
 
 .collocation-empty {
@@ -573,7 +573,7 @@ html, body {
 /* 操作按钮样式 */
 .action-buttons {
   display: flex;
-  gap: 6px;
+  gap: 5px; /* 减少操作按钮间距 */
   flex-wrap: nowrap;
   justify-content: flex-end;
 }
@@ -589,7 +589,7 @@ html, body {
 @media (max-width: 991.98px) {
   .table-header-row {
     font-size: 12px;
-    height: 38px;
+    height: 36px; /* 减少表头高度 */
     border-bottom: 1px solid #d1d9e0;
     background: #f0f2f5;
   }
@@ -606,14 +606,14 @@ html, body {
   }
   
   .table-cell {
-    padding: 10px 16px;
+    padding: 8px 14px; /* 减少单元格内边距 */
   }
   
   .word-cell {
     flex: 1 1 100%;
     order: 1;
-    margin-bottom: 10px;
-    padding-bottom: 10px;
+    margin-bottom: 8px; /* 减少单元格下边距 */
+    padding-bottom: 8px; /* 减少单元格底部内边距 */
     border-bottom: 1px solid #f0f0f0;
   }
 
@@ -642,7 +642,7 @@ html, body {
   
   .action-buttons {
     flex-direction: row;
-    gap: 8px;
+    gap: 6px; /* 减少操作按钮间距 */
   }
   
   .action-buttons button {
@@ -665,12 +665,12 @@ html, body {
     min-height: auto;
     padding: 0;
     border-bottom: 2px solid #f0f0f0;
-    margin-bottom: 8px;
+    margin-bottom: 6px; /* 减少数据行下边距 */
   }
   
   .table-cell {
     width: 100%;
-    padding: 10px 20px;
+    padding: 8px 16px; /* 减少单元格内边距 */
     border: none;
   }
   
@@ -678,31 +678,31 @@ html, body {
     order: 1;
     border-bottom: none;
     margin-bottom: 0;
-    padding-bottom: 10px;
+    padding-bottom: 8px; /* 减少单元格底部内边距 */
   }
 
   .pronunciation-cell {
     order: 2;
     border-right: none;
     border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding-bottom: 8px; /* 减少单元格底部内边距 */
+    margin-bottom: 8px; /* 减少单元格下边距 */
   }
 
   .pos-cell {
     order: 3;
     border-right: none;
     border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding-bottom: 8px; /* 减少单元格底部内边距 */
+    margin-bottom: 8px; /* 减少单元格下边距 */
   }
   
   .collocation-cell {
     order: 4;
     border-right: none;
     border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding-bottom: 8px; /* 减少单元格底部内边距 */
+    margin-bottom: 8px; /* 减少单元格下边距 */
   }
   
   .action-cell {
