@@ -55,11 +55,6 @@
   line-height: 1.2;
 }
 
-.prev-phonetic {
-  font-size: 12px;
-  color: #bfbfbf;
-  margin: 0px;
-}
 
 .prev-def {
   font-size: 12px;
@@ -119,13 +114,6 @@
   line-height: 1.4;
 }
 
-.single-line-gap {
-  display: inline-block;
-  min-width: 60px;
-  border-bottom: 2px solid #4a5568;
-  margin: 0 8px;
-  vertical-align: baseline;
-}
 
 .correct-answer {
   color: #52c41a;
@@ -164,11 +152,6 @@
   background-color: #52c41a !important;
 }
 
-.phonetic-row {
-  margin-top: 5px;
-  color: #718096;
-  font-size: 14px;
-}
 
 .definition-row {
   margin-top: 5px;

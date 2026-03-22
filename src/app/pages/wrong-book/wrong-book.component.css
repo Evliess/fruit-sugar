@@ -292,16 +292,6 @@ nz-card.is-known ::ng-deep .ant-card-body {
   }
 }
 
-@keyframes hintFadeOut {
-  0% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.95);
-  }
-}
 
 /* 响应式适配 */
 @media (max-width: 575.98px) {

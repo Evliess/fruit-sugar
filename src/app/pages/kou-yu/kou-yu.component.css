@@ -42,92 +42,16 @@ nz-card:hover {
   transform: translateY(-2px);
 }
 
-nz-card.is-known {
-  border: 2px solid #52c41a;
-  background-color: #fafff0;
-}
 
-nz-card.is-known ::ng-deep .ant-card-body {
-  background-color: #fafff0;
-}
 
-.card-content {
-  min-height: 180px;
-  flex: 1;
-}
 
-.word-title-group {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
 
-.word-text {
-  font-size: 24px;
-  font-weight: 700;
-  color: #1a1a1a;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  line-clamp: 3;
-  overflow: hidden;
-  line-height: 1.3;
-  max-height: 93.6px; /* 24px * 1.3 * 3 */
-}
 
-.phonetic-group {
-  font-size: 13px;
-  color: #555555;
-  margin-bottom: 12px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  white-space: nowrap;
-}
 
-.phonetic {
-  margin-right: 0;
-  background: #f0f0f0;
-  padding: 2px 6px;
-  border-radius: 4px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
 
-.definition {
-  font-size: 15px;
-  color: #3a3a3a;
-  line-height: 1.6;
-  margin-bottom: 8px;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  line-clamp: 2;
-  overflow: hidden;
-  max-height: 48px; /* 15px * 1.6 * 2 */
-}
 
-.card-footer {
-  display: flex;
-  gap: 8px;
-  padding-top: 12px;
-  border-top: 1px solid #f0f0f0;
-  margin-top: 12px;
-  flex-wrap: wrap;
-}
 
-.card-footer button {
-  flex: 1;
-  min-width: 80px;
-  font-size: 13px;
-}
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-5px); }
-  to { opacity: 1; transform: translateY(0); }
-}
 
 @media (max-width: 575.98px) {
   .container {
@@ -139,43 +63,14 @@ nz-card.is-known ::ng-deep .ant-card-body {
     align-items: stretch;
   }
 
-  .word-text {
-    font-size: 20px;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    max-height: 78px; /* 20px * 1.3 * 3 */
-  }
 
-  .card-footer {
-    flex-direction: column;
-  }
-
-  .card-footer button {
-    width: 100%;
-  }
 }
 
 @media (min-width: 576px) and (max-width: 991.98px) {
-  .word-text {
-    font-size: 22px;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    max-height: 86px; /* 22px * 1.3 * 3 */
-  }
 
-  .card-footer button {
-    font-size: 12px;
-    padding: 4px 8px;
-  }
 }
 
 @media (min-width: 992px) {
-  .word-text {
-    font-size: 24px;
-    -webkit-line-clamp: 3;
-    line-clamp: 3;
-    max-height: 93.6px; /* 24px * 1.3 * 3 */
-  }
 }
 
 @media (min-width: 1200px) {
@@ -184,17 +79,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
   }
 }
 
-.sound-icon {
-  margin-left: 2px;
-  cursor: pointer;
-  transition: all 0.2s;
-  flex-shrink: 0;
-}
 
-.sound-icon:hover {
-  color: #1890ff;
-  transform: scale(1.1);
-}
 
 /* 选项卡样式 - IBM/苹果设计原则分段控件 */
 .tabs-container {

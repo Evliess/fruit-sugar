@@ -34,11 +34,6 @@
     margin-bottom: 16px;
   }
 
-  .apple-card {
-    height: 360px; /* 移动端稍微调小高度 */
-    border-radius: 12px; /* 统一卡片圆角 */
-    margin-bottom: 6px; /* 卡片本身的下边距 */
-  }
 
   /* 
     强制修正 Ant Design Grid 的间距 
@@ -64,13 +59,6 @@
     color: #555555;
     font-size: 0.95rem;
  }
- .card-description {
-    color: rgb(32, 33, 36);
-    font-size: 12px;
-    line-height: 1.5;
-    letter-spacing: 0;
-    font-weight: 400;
- }
 
  /* 底部 Footer (Knowledge / Ongoing) */
 .card-footer {
@@ -81,23 +69,8 @@
   align-items: center;
 }
 
-.card-footer .footer-title {
-  font-weight: 700;
-  font-size: 14px;
-  color: #202124;
-}
 
-.card-footer .footer-status {
-  font-size: 12px;
-  color: #202124;
-}
 
 /* --- 移动端微调 --- */
 @media (max-width: 768px) {
-  .status-badge {
-    top: 16px;  /* 移动端稍微靠上一点 */
-    right: 16px;
-    padding: 4px 12px; /* 稍微缩小一点尺寸 */
-    font-size: 12px;
-  }
 }
