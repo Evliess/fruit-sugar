@@ -155,13 +155,6 @@ nz-card.is-known ::ng-deep .ant-card-body {
   margin-bottom: 16px;
 }
 
-.detail-label {
-  font-weight: 600;
-  color: #1890ff;
-  display: block;
-  margin-bottom: 8px;
-  font-size: 14px;
-}
 
 .detail-content {
   padding-left: 8px;
@@ -224,10 +217,6 @@ nz-card.is-known ::ng-deep .ant-card-body {
   color: #555555;
 }
 
-.collocation-empty {
-  font-size: 13px;
-  color: #8c8c8c;
-}
 
 .sentence-item {
   margin-bottom: 16px;
