@@ -4,50 +4,6 @@
 }
 
 /* ==================
-   侧边栏 (Sider) 样式 - 已移至 main-layout.component.css
-   ================== */
-/* .menu-sidebar {
-  position: relative;
-  z-index: 10;
-  min-height: 100vh;
-  box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
-} */
-
-/* .sidebar-logo {
-  position: relative;
-  height: 64px;
-  padding-left: 24px;
-  overflow: hidden;
-  line-height: 64px;
-  background: #f5f8ff;
-  transition: all 0.3s;
-}
-
-.sidebar-logo a {
-  display: flex;
-  align-items: center;
-}
-
-.sidebar-logo img {
-  display: inline-block;
-  height: 32px;
-  width: 32px;
-  vertical-align: middle;
-}
-
-.sidebar-logo h1 {
-  display: inline-block;
-  margin: 0 0 0 12px;
-  color: #000;
-  font-weight: 600;
-  font-size: 18px;
-  font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
-  vertical-align: middle;
-  /* 防止收起时文字换行导致的闪烁 */
-  white-space: nowrap;
-} */
-
-/* ==================
    顶部导航 (Header) 样式
    ================== */
 nz-header {
