@@ -8,7 +8,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const authUser = sessionStorage.getItem('auth_user');
+    const authUser = localStorage.getItem('auth_user');
     if (authUser) {
       try {
         const user = JSON.parse(authUser);

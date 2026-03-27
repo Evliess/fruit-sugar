@@ -16,7 +16,7 @@ export class AuthService {
   isUser = computed(() => this.userSignal()?.role === 'user');
   
   private getUserFromStorage(): any {
-    const data = sessionStorage.getItem('auth_user');
+    const data = localStorage.getItem('auth_user');
     if (!data) return null;
     try {
       return JSON.parse(data);
@@ -27,27 +27,27 @@ export class AuthService {
 
   setSession(user: User) {
     this.userSignal.set(user);
-    sessionStorage.setItem('auth_user', JSON.stringify(user));
+    localStorage.setItem('auth_user', JSON.stringify(user));
   }
 
   loadSavedSession() {
-    const savedUser = sessionStorage.getItem('auth_user');
+    const savedUser = localStorage.getItem('auth_user');
     if (savedUser) {
       try {
         this.userSignal.set(JSON.parse(savedUser));
       } catch (e) {
-        sessionStorage.removeItem('auth_user');
+        localStorage.removeItem('auth_user');
       }
     }
   }
 
   logout() {
     this.userSignal.set(null);
-    sessionStorage.removeItem('auth_user');
+    localStorage.removeItem('auth_user');
   }
 
   initializeAuth() {
-    const savedUser = sessionStorage.getItem('auth_user');
+    const savedUser = localStorage.getItem('auth_user');
     if (savedUser) {
       this.userSignal.set(JSON.parse(savedUser));
     }

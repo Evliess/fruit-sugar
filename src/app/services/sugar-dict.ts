@@ -24,7 +24,7 @@ export class SugarDictService {
     }
 
     getSentenceContentModules(userId: number): Observable<String> {
-        const authUser = sessionStorage.getItem('auth_user');
+        const authUser = localStorage.getItem('auth_user');
         return this.http.get<String>(`${this.apiUrl}` + "/sentences/content-modules/" + userId);
     }
 
