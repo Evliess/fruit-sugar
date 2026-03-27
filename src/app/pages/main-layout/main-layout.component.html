@@ -136,6 +136,13 @@
             <span nz-icon nzType="book"></span>
             <span class="username">生词本</span>
           </div>
+          <!-- 错题听写模式选项 -->
+          @if(currentUrl().includes('/wrong-book')) {
+          <div (click)="gotoWrongBookListen()" [class]="learnModel=='wrong-listen'?'header-item selected':'header-item'">
+            <span nz-icon nzType="muted"></span>
+            <span class="username">错题听写</span>
+          </div>
+          }
           }
         </div>
         }

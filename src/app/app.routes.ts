@@ -20,6 +20,7 @@ export const routes: Routes = [
       { path: 'kou-yu', loadChildren: () => import('./pages/kou-yu/kou-yu.routes').then(m => m.KOU_YU_ROUTES) },
       { path: 'unknown-book', loadChildren: () => import('./pages/unknown-book/unknown-book.routes').then(m => m.UNKNOWN_BOOK_ROUTES) },
       { path: 'wrong-book', loadChildren: () => import('./pages/wrong-book/wrong-book.routes').then(m => m.WRONG_BOOK_ROUTES) },
+      { path: 'wrong-book-listen', loadChildren: () => import('./pages/wrong-book-listen/wrong-book-listen.routes').then(m => m.WRONG_BOOK_LISTEN_ROUTES) },
       { path: 'word-subitem', loadChildren: () => import('./pages/word-subitem/word-subitem.routes').then(m => m.WORD_SUBITEM_ROUTES) },
       { path: 'sentence-item', loadChildren: () => import('./pages/sentence-item/sentence-item.routes').then(m => m.SENTENCE_ITEM_ROUTES) },
       { path: 'ai-learn', loadChildren: () => import('./pages/ai-learn/ai-learn.routes').then(m => m.AI_LEARN_ROUTES) },
