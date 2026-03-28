@@ -186,7 +186,7 @@ export class WrongBookListenComponent implements OnInit {
 
   getShortDefinition(item: MistakeItem): string {
     if (item.type === 'sentence') {
-      return item.textTranslation || item.definitions || '';
+      return this.getSentenceTranslation(item);
     }
     const definitions = item.definition || {};
     for (const type in definitions) {
@@ -194,6 +194,30 @@ export class WrongBookListenComponent implements OnInit {
         return (definitions[type] + '').split('；')[0];
       }
     }
+    return '';
+  }
+
+  getSentenceTranslation(item: MistakeItem): string {
+    if (item.type !== 'sentence') return '';
+
+    // 首先尝试直接获取 textTranslation
+    if (item.textTranslation) return item.textTranslation;
+    if (item.definitions) return item.definitions;
+
+    // 尝试从 definition 对象中获取
+    if (item.definition && typeof item.definition === 'object') {
+      // 检查是否有 textTranslation 字段
+      if (item.definition['textTranslation']) {
+        return item.definition['textTranslation'];
+      }
+      // 获取第一个值作为翻译
+      for (const key in item.definition) {
+        if (item.definition.hasOwnProperty(key)) {
+          return item.definition[key];
+        }
+      }
+    }
+
     return '';
   }
 
@@ -252,7 +276,7 @@ export class WrongBookListenComponent implements OnInit {
     if (audioUrl) {
       this.audio.load();
       setTimeout(() => {
-        this.audio.play().catch(e => console.warn('Playback failed:', this.currItem.word));
+        this.audio.play().catch(_e => console.warn('Playback failed:', this.currItem.word));
       }, 20);
     }
   }
@@ -290,7 +314,9 @@ export class WrongBookListenComponent implements OnInit {
     if (trimmedInput === correctAnswer) {
       this.inputStatus = 'minimal-input minimal-input-success';
       this.hasError = false;
-      this.playNext();
+      setTimeout(() => {
+        this.playNext();
+      }, 1000);
     } else {
       this.inputStatus = 'minimal-input minimal-input-error';
       this.hasError = true;
@@ -298,7 +324,7 @@ export class WrongBookListenComponent implements OnInit {
       // 标记为错题（已在错题本中，无需重复标记）
       setTimeout(() => {
         this.playNext();
-      }, 1500);
+      }, 1000);
     }
   }
 
@@ -333,7 +359,7 @@ export class WrongBookListenComponent implements OnInit {
     if (typeof data !== 'string') return data || fallback;
     try {
       return JSON.parse(data);
-    } catch (e) {
+    } catch (_e) {
       return fallback;
     }
   }

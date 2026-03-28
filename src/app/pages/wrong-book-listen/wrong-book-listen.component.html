@@ -17,7 +17,7 @@
         <div nz-row nzJustify="end" class="top-bar">
             <nz-space [nzSize]="12">
                 <nz-tag nzColor="#0071e3" class="home-tag" (click)="goHome()">首页</nz-tag>
-                <nz-tag nzColor="#52c41a" class="back-tag" (click)="goBackToWrongBook()">返回错题本</nz-tag>
+                <!-- <nz-tag nzColor="#52c41a" class="back-tag" (click)="goBackToWrongBook()">返回错题本</nz-tag> -->
 
                 <nz-select *nzSpaceItem [(ngModel)]="mode" (ngModelChange)="onModeChange()" [nzSize]="'default'" style="width: 100px;">
                     <nz-option nzValue="all" nzLabel="全部"></nz-option>
@@ -83,7 +83,7 @@
                     </div>
                 }
 
-                @if(currItem.type === 'sentence' || (currItem.type === 'word' && isEyeOpen)) {
+                @if((currItem.type === 'sentence' && !isEyeOpen) || (currItem.type === 'word' && isEyeOpen)) {
                     <div class="definition-row">
                         @if (currItem.type === 'word') {
                             @for (item of currItem.definition | keyvalue; track item.key; let f = $first) {
@@ -93,7 +93,13 @@
                             }
                             }
                         } @else {
-                            {{ currItem.textTranslation || currItem.definitions || '' }}
+                            {{ getSentenceTranslation(currItem) }}
+                            <!-- 调试信息 -->
+                            @if (!getSentenceTranslation(currItem)) {
+                            <span style="color: red; font-size: 12px;">
+                                (无翻译数据)
+                            </span>
+                            }
                         }
                     </div>
                 }
