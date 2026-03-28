@@ -74,19 +74,18 @@
 
       <div class="input-section">
         <div class="input-wrapper">
-          <textarea 
-            nz-input 
-            [(ngModel)]="userInput" 
-            placeholder="请输入句子..." 
-            [nzAutosize]="{ minRows: 3, maxRows: 6 }"
+          <input
+            nz-input
+            [(ngModel)]="userInput"
+            placeholder="请输入句子..."
+            [nzSize]="'large'"
+            (keyup.enter)="sendToAI()"
             aria-label="输入句子"
-          ></textarea>
-        </div>
-        <div class="button-wrapper">
-          <button 
-            nz-button 
-            [nzType]="'primary'" 
-            [nzSize]="'large'" 
+          >
+          <button
+            nz-button
+            [nzType]="'primary'"
+            [nzSize]="'large'"
             (click)="sendToAI()"
             [disabled]="isLoading || !userInput.trim()"
             class="send-button"
@@ -95,16 +94,16 @@
             <nz-icon nzType="loading" *ngIf="isLoading"></nz-icon>
             <span class="button-text">{{ isLoading ? '思考中...' : '发送' }}</span>
           </button>
-          <button 
-            nz-button 
-            [nzType]="'default'" 
-            (click)="clearInput()"
-            class="clear-button"
-          >
-            <nz-icon nzType="clear"></nz-icon>
-            清空
-          </button>
         </div>
+        <button
+          nz-button
+          [nzType]="'default'"
+          (click)="clearInput()"
+          class="clear-button"
+        >
+          <nz-icon nzType="clear"></nz-icon>
+          清空
+        </button>
       </div>
     </nz-card>
   </div>

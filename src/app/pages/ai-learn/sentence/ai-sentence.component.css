@@ -234,26 +234,27 @@
 }
 
 .input-wrapper {
+  display: flex;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
-.button-wrapper {
-  display: flex;
-  gap: 12px;
+.input-wrapper nz-input {
+  flex: 1;
 }
 
 .send-button {
-  flex: 1;
-  min-width: 120px;
+  min-width: 100px;
+}
+
+.clear-button {
+  width: 100%;
 }
 
 .button-text {
   margin-left: 4px;
 }
 
-.clear-button {
-  min-width: 100px;
-}
 
 /* 聊天头部 */
 .chat-header {
@@ -454,7 +455,7 @@
     font-size: 11px;
   }
 
-  .button-wrapper {
+  .input-wrapper {
     flex-direction: column;
     gap: 8px;
   }
