@@ -81,6 +81,8 @@ export class MainLayoutComponent {
         this.learnModel = 'learn';
       } else if (url.includes('/sen-listen')) {
         this.learnModel = 'listen';
+      } else if (url.includes('/wrong-book-listen')) {
+        this.learnModel = 'wrong-listen';
       }
     });
   }
@@ -224,6 +226,11 @@ export class MainLayoutComponent {
     if (isOpen) {
       this.gotoAiLearn();
     }
+  }
+
+  gotoWrongBookListen(): void {
+    this.learnModel = 'wrong-listen';
+    this.router.navigate(['/wrong-book-listen']);
   }
 
 

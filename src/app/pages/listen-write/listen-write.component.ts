@@ -210,7 +210,9 @@ export class ListenWriteComponent {
     if (trimmedInput === correctAnswer) {
       this.inputStatus = 'minimal-input minimal-input-success';
       this.hasError = false;
-      this.playNext();
+      setTimeout(() => {
+        this.playNext();
+      }, 1000);
     } else {
       this.inputStatus = 'minimal-input minimal-input-error';
       this.hasError = true;
@@ -221,7 +223,7 @@ export class ListenWriteComponent {
       });
       setTimeout(() => {
         this.playNext();
-      }, 1500);
+      }, 1000);
     }
   }
 

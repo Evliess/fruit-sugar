@@ -1,0 +1,147 @@
+<div class="page-wrapper">
+    <div class="container">
+
+        @if (currIndex > 0) {
+        <div class="prev-word-preview" (click)="handleAction('prev')">
+            <span nz-icon nzType="arrow-left" nzTheme="outline" class="back-arrow"></span>
+            <div class="preview-content">
+                <div class="prev-word-text">{{ filteredItems[currIndex - 1].word }}</div>
+                @if (filteredItems[currIndex - 1].type === 'word') {
+                <div class="prev-phonetic">/{{ soundTypeUK ? filteredItems[currIndex - 1].ukPhonetic : filteredItems[currIndex - 1].usPhonetic }}/</div>
+                }
+                <div class="prev-def">{{ getShortDefinition(filteredItems[currIndex - 1]) }}</div>
+            </div>
+        </div>
+        }
+
+        <div nz-row nzJustify="end" class="top-bar">
+            <nz-space [nzSize]="12">
+                <nz-tag nzColor="#0071e3" class="home-tag" (click)="goHome()">首页</nz-tag>
+                <!-- <nz-tag nzColor="#52c41a" class="back-tag" (click)="goBackToWrongBook()">返回错题本</nz-tag> -->
+
+                <nz-select *nzSpaceItem [(ngModel)]="mode" (ngModelChange)="onModeChange()" [nzSize]="'default'" style="width: 100px;">
+                    <nz-option nzValue="all" nzLabel="全部"></nz-option>
+                    <nz-option nzValue="word" nzLabel="单词"></nz-option>
+                    <nz-option nzValue="sentence" nzLabel="句子"></nz-option>
+                </nz-select>
+
+                <nz-switch *nzSpaceItem [(ngModel)]="isEyeOpen" nzCheckedChildren="听写开" nzUnCheckedChildren="听写关"
+                    nzSize="default" />
+                <nz-switch *nzSpaceItem [(ngModel)]="soundEnabled" nzCheckedChildren="音效开" nzUnCheckedChildren="音效关"
+                    nzSize="default" />
+                <nz-switch *nzSpaceItem nz-button [(ngModel)]="soundTypeUK" nzCheckedChildren="英式"
+                    nzUnCheckedChildren="美式" nzSize="default" />
+
+                <a nz-dropdown *nzSpaceItem nzTrigger="click" [nzDropdownMenu]="menu" class="dropdown-link">
+                    <nz-tag nzColor="#0071e3">全部 <nz-icon nzType="down" /></nz-tag>
+                </a>
+                <nz-dropdown-menu #menu="nzDropdownMenu">
+                    <ul nz-menu class="word-list">
+                        @for(item of filteredItems; track $index) {
+                        <li nz-menu-item
+                            (click)="currIndex=$index; currItem=item; getSentenceWithGap(); playAudio()"
+                            [nzSelected]="currIndex==$index">
+                            {{item.word}}; {{getShortDefinition(item)}}
+                        </li>
+                        }
+                    </ul>
+                </nz-dropdown-menu>
+            </nz-space>
+        </div>
+
+        <main class="main-content">
+            @if(isEyeOpen) {
+            <div class="sentence-stage">
+                <p class="en-sentence">
+                    @if (sentenceParts) {
+                    {{sentenceParts.before}}
+                    @if (hasError) {
+                    <span class="correct-answer">{{sentenceParts.word}}</span>
+                    } @else {
+                    @if (currItem.type === 'word') {
+                    <span class="single-line-gap"></span>
+                    }
+                    }
+                    {{sentenceParts.after}}
+                    }
+                </p>
+            </div>
+            }
+
+            @if(currItem) {
+            <div class="interactive-stage">
+                <div class="input-container">
+                    <input nz-input [(ngModel)]="inputValue" [appMechanicalTyping]="soundEnabled" [class]="inputStatus"
+                        (keydown.enter)="checkAnswer()" (click)="onInputClick(); playAudio()" class="clean-input"
+                        placeholder="" />
+                    <div class="input-underline" [class.success]="inputStatus.includes('success')"></div>
+                </div>
+
+                @if(isEyeOpen && currItem.type === 'word') {
+                    <div class="phonetic-row">
+                        {{ soundTypeUK ? currItem.ukPhonetic : currItem.usPhonetic }}
+                    </div>
+                }
+
+                @if((currItem.type === 'sentence' && !isEyeOpen) || (currItem.type === 'word' && isEyeOpen)) {
+                    <div class="definition-row">
+                        @if (currItem.type === 'word') {
+                            @for (item of currItem.definition | keyvalue; track item.key; let f = $first) {
+                            @if(f) {
+                            <span class="pos-label">{{ item.key }}.</span>
+                            <span class="meaning-label">{{ item.value }}</span>
+                            }
+                            }
+                        } @else {
+                            {{ getSentenceTranslation(currItem) }}
+                            <!-- 调试信息 -->
+                            @if (!getSentenceTranslation(currItem)) {
+                            <span style="color: red; font-size: 12px;">
+                                (无翻译数据)
+                            </span>
+                            }
+                        }
+                    </div>
+                }
+
+                <button nz-button nzType="text" class="audio-trigger-btn" (click)="playAudio()">
+                    <span nz-icon nzType="sound" nzTheme="outline"></span>
+                </button>
+
+                <div class="action-buttons-row">
+                    <button nz-button nzType="text" (click)="playPrev()" class="action-btn">
+                        <span nz-icon nzType="left"></span> 上一个
+                    </button>
+                    <button nz-button nzType="text" (click)="playNext()" class="action-btn">
+                        下一个 <span nz-icon nzType="right"></span>
+                    </button>
+                    <button nz-button nzType="text" (click)="checkAnswer()" class="action-btn">
+                        确认
+                    </button>
+                </div>
+            </div>
+            }
+        </main>
+
+        @if(filteredItems.length > 0) {
+        <footer class="bottom-area">
+            <div class="nav-hint-row">
+                <button nz-button nzType="text" (click)="handleAction('next')" class="next-hint">
+                    <span nz-icon nzType="arrow-right"></span>
+                    @if (currItem && currItem.type === 'sentence') {
+                        下一个句子
+                    } @else {
+                        下一个单词
+                    }
+                </button>
+            </div>
+
+            <div class="progress-container">
+                <nz-progress [nzPercent]="((currIndex + 1) / filteredItems.length) * 100" [nzShowInfo]="false"
+                    [nzStrokeWidth]="3" nzStrokeColor="#ff7a45"></nz-progress>
+                <div class="progress-count">{{currIndex + 1}}/{{filteredItems.length}}</div>
+            </div>
+        </footer>
+        }
+    </div>
+</div>

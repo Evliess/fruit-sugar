@@ -234,25 +234,170 @@
 }
 
 .input-wrapper {
+  display: flex;
+  gap: 12px;
   margin-bottom: 12px;
 }
 
-.button-wrapper {
-  display: flex;
-  gap: 12px;
+.input-wrapper nz-input {
+  flex: 1;
 }
 
 .send-button {
-  flex: 1;
-  min-width: 120px;
+  min-width: 100px;
+}
+
+.clear-button {
+  width: 100%;
 }
 
 .button-text {
   margin-left: 4px;
 }
 
-.clear-button {
-  min-width: 100px;
+
+/* 聊天头部 */
+.chat-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  border-bottom: 1px solid #f0f0f0;
+  background-color: #ffffff;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.chat-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.chat-title .title-text {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.clear-history-btn {
+  font-size: 13px;
+}
+
+/* 消息列表 */
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.message-item {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 用户消息 */
+.user-message {
+  align-self: flex-end;
+  max-width: 80%;
+}
+
+.user-message .message-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  justify-content: flex-end;
+}
+
+.user-message .message-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+  order: 1;
+}
+
+.user-message .message-time {
+  font-size: 12px;
+  color: #8c8c8c;
+  order: 2;
+}
+
+.user-message .user-icon {
+  font-size: 14px;
+  color: #52c41a;
+  order: 3;
+}
+
+.user-message .message-content {
+  background-color: #1890ff;
+  color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-bottom-right-radius: 4px;
+  font-size: 14px;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+/* AI消息 */
+.ai-message {
+  align-self: flex-start;
+  max-width: 80%;
+}
+
+.ai-message .message-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ai-message .message-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #262626;
+}
+
+.ai-message .message-time {
+  font-size: 12px;
+  color: #8c8c8c;
+}
+
+.ai-message .ai-icon {
+  font-size: 14px;
+  color: #722ed1;
+}
+
+.ai-message .message-content {
+  background-color: #ffffff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
+  border-left: 4px solid #722ed1;
+  color: #262626;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* 加载状态 */
+.ai-message.loading .message-content {
+  background-color: #fafafa;
+  border-left: 4px solid #bfbfbf;
+  color: #8c8c8c;
+}
+
+.loading-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.loading-text {
+  font-size: 13px;
+  color: #8c8c8c;
 }
 
 @media (max-width: 575.98px) {
@@ -266,6 +411,10 @@
 
   .page-subtitle {
     font-size: 13px;
+  }
+
+  .chat-header {
+    padding: 12px 16px;
   }
 
   .chat-messages {
@@ -282,7 +431,31 @@
     font-size: 13px;
   }
 
-  .button-wrapper {
+  .user-message,
+  .ai-message {
+    max-width: 90%;
+  }
+
+  .user-message .message-content,
+  .ai-message .message-content {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .message-header {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .message-label {
+    font-size: 13px;
+  }
+
+  .message-time {
+    font-size: 11px;
+  }
+
+  .input-wrapper {
     flex-direction: column;
     gap: 8px;
   }
@@ -305,8 +478,17 @@
     font-size: 26px;
   }
 
+  .chat-header {
+    padding: 14px 20px;
+  }
+
   .chat-messages {
     min-height: 280px;
     max-height: 450px;
+  }
+
+  .user-message,
+  .ai-message {
+    max-width: 85%;
   }
 }

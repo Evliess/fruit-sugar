@@ -142,6 +142,10 @@
   color: #ff4d4f !important;
 }
 
+::ng-deep .minimal-input-success.ant-input {
+  color: #52c41a !important;
+}
+
 .input-underline {
   height: 2px;
   background-color: #e2e8f0;

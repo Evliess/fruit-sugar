@@ -3,7 +3,7 @@
    ========================================================================== */
 .page-wrapper {
   background-color: #ffffff;
-  height: calc(100vh - 66px); 
+  height: calc(100vh - 66px);
   width: 100%;
   overflow: hidden; /* 彻底消除滚动条 */
 }
@@ -77,6 +77,11 @@
   z-index: 1000;
 }
 
+.home-tag, .back-tag {
+  cursor: pointer;
+  user-select: none;
+}
+
 .dropdown-link {
   color: #8c8c8c;
   font-size: 14px;
@@ -134,7 +139,7 @@
 
 .input-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 800px;
   position: relative;
   margin-bottom: 8px;
 }
@@ -183,7 +188,7 @@
 /* 喇叭按钮：设置 margin-bottom 为 14px 确保与下方 action-buttons-row 间距一致 */
 .audio-trigger-btn {
   margin-top: 10px;
-  margin-bottom: 10px !important; 
+  margin-bottom: 10px !important;
   font-size: 28px;
   color: #cbd5e0;
   height: auto;
@@ -275,4 +280,11 @@
   ::ng-deep .clean-input.ant-input {
     font-size: 28px !important;
   }
+}
+
+/* ==========================================================================
+   7. 模式选择器样式
+   ========================================================================== */
+::ng-deep .mode-select .ant-select-selector {
+  border-color: #d9d9d9 !important;
 }
