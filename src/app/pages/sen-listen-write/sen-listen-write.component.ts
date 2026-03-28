@@ -196,10 +196,23 @@ export class SenListenWriteComponent {
     }
   }
 
+  private normalizeText(text: string): string {
+    if (!text) return '';
+    // 转为小写
+    let normalized = text.toLowerCase();
+    // 移除标点符号：保留字母、数字、空格和基本标点（如连字符）
+    normalized = normalized.replace(/[^\w\s-]/g, ' ');
+    // 将多个连续空格替换为单个空格
+    normalized = normalized.replace(/\s+/g, ' ');
+    // 去除首尾空格
+    normalized = normalized.trim();
+    return normalized;
+  }
+
   checkAnswer(): void {
-    const trimmedInput = this.inputValue.trim().toLowerCase();
-    const correctAnswer = this.currWord.word.toLowerCase();
-    if (trimmedInput === correctAnswer) {
+    const normalizedInput = this.normalizeText(this.inputValue);
+    const normalizedCorrectAnswer = this.normalizeText(this.currWord.word);
+    if (normalizedInput === normalizedCorrectAnswer) {
       this.inputStatus = 'minimal-input minimal-input-success';
       this.hasError = false;
       setTimeout(() => {
