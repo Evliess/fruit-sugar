@@ -6,17 +6,69 @@
 
   <div class="chat-section">
     <nz-card class="chat-card">
+      <div class="chat-header">
+        <div class="chat-title">
+          <nz-icon nzType="message" nzTheme="outline"></nz-icon>
+          <span class="title-text">AI句子学习助手</span>
+        </div>
+        <button
+          nz-button
+          nzType="text"
+          nzDanger
+          nzPopconfirm
+          nzPopconfirmTitle="确定要清空所有聊天记录吗？"
+          nzPopconfirmPlacement="bottomRight"
+          (nzOnConfirm)="clearChatHistory()"
+          class="clear-history-btn"
+          [disabled]="chatMessages.length === 0"
+        >
+          <nz-icon nzType="delete"></nz-icon>
+          清空记录
+        </button>
+      </div>
+
       <div class="chat-messages">
-        <div *ngIf="!aiResponse" class="empty-state">
+        <div *ngIf="chatMessages.length === 0" class="empty-state">
           <nz-icon nzType="message" nzTheme="outline" class="empty-icon"></nz-icon>
           <p class="empty-text">开始输入句子，AI将为您提供详细解析和翻译</p>
         </div>
-        <div *ngIf="aiResponse" class="ai-response">
-          <div class="response-header">
-            <nz-icon nzType="message" nzTheme="outline"></nz-icon>
-            <span class="response-label">AI回复</span>
+
+        <div *ngIf="chatMessages.length > 0" class="messages-list">
+          <div *ngFor="let message of chatMessages" class="message-item">
+            <!-- 用户消息 -->
+            <div class="user-message">
+              <div class="message-header">
+                <nz-icon nzType="user" nzTheme="outline" class="user-icon"></nz-icon>
+                <span class="message-label">您</span>
+                <span class="message-time">{{ formatTimestamp(message.timestamp) }}</span>
+              </div>
+              <div class="message-content user-content">
+                {{ message.userInput }}
+              </div>
+            </div>
+
+            <!-- AI回复 -->
+            <div *ngIf="message.aiResponse" class="ai-message">
+              <div class="message-header">
+                <nz-icon nzType="message" nzTheme="outline" class="ai-icon"></nz-icon>
+                <span class="message-label">AI助手</span>
+                <span class="message-time">{{ formatTimestamp(message.timestamp) }}</span>
+              </div>
+              <div class="message-content ai-content markdown-body" [innerHTML]="renderMarkdown(message.aiResponse)"></div>
+            </div>
+
+            <!-- 加载状态 -->
+            <div *ngIf="!message.aiResponse" class="ai-message loading">
+              <div class="message-header">
+                <nz-icon nzType="message" nzTheme="outline" class="ai-icon"></nz-icon>
+                <span class="message-label">AI助手</span>
+              </div>
+              <div class="message-content loading-content">
+                <nz-spin [nzSize]="'small'"></nz-spin>
+                <span class="loading-text">思考中...</span>
+              </div>
+            </div>
           </div>
-          <div class="response-content markdown-body" [innerHTML]="renderMarkdown(aiResponse)"></div>
         </div>
       </div>
 
