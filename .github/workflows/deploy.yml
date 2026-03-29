@@ -79,7 +79,7 @@ jobs:
         env:
           # 从 GitHub Secrets 获取服务器配置
           SERVER_HOST: ${{ secrets.SERVER_HOST }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_USER: ${{ secrets.SERVER_USERNAME }}
           SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
         run: |
           # 1. 安装 sshpass 工具，用于非交互式输入 SSH 密码
