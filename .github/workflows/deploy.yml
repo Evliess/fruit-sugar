@@ -73,3 +73,30 @@ jobs:
           files: |
             tmp/browser.zip
             tmp/app.jar
+
+      # 6. 使用 rsync 将文件同步到远程服务器
+      - name: Sync files to Remote Server
+        env:
+          # 从 GitHub Secrets 获取服务器配置
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SERVER_PASSWORD: ${{ secrets.SERVER_PASSWORD }}
+        run: |
+          # 1. 安装 sshpass 工具，用于非交互式输入 SSH 密码
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+          
+          # 2. 确保远程服务器的 ~/release/ 目录存在 (避免因目录不存在导致报错)
+          sshpass -p "$SERVER_PASSWORD" ssh -o StrictHostKeyChecking=no "$SERVER_USER@$SERVER_HOST"
+
+          # 3. 使用 rsync 同步文件
+          # 参数解释：
+          # -a: 归档模式 (保留权限、时间戳等)
+          # -v: 详细输出模式
+          # -z: 传输过程中压缩数据 (启用压缩)
+          # -P: 等同于 --partial --progress (显示进度条，支持断点续传)
+          # -e: 指定使用的 shell 程序，这里关闭 StrictHostKeyChecking 避免跳出确认提示
+          sshpass -p "$SERVER_PASSWORD" rsync -avzP \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            tmp/browser.zip tmp/app.jar \
+            "$SERVER_USER@$SERVER_HOST:~/release/"
