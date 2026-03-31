@@ -41,8 +41,9 @@ nz-card:hover {
 
 /* 已掌握的卡片样式 */
 nz-card.is-known {
-  border: 2px solid #52c41a;
+  border: 0 solid #52c41a;
   background-color: #fafff0;
+  border-radius: 12px;
 }
 
 nz-card.is-known ::ng-deep .ant-card-body {

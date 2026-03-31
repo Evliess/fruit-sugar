@@ -41,12 +41,12 @@ export class WordSubitemComponent {
   }
 
   gotoWords(moduleId: number) {
-    this.router.navigate(['/words'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
+    this.router.navigate(['/words/learn'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
   }
 
   gotoResetWordsProgress(moduleId: number) {
     this.sugarDictService.resetWordsProgressByChildContentModuleId(moduleId, this.currentUser()?.id || 0).subscribe(() => {
-      this.router.navigate(['/words'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
+      this.router.navigate(['/words/learn'], { queryParams: { isCustom: this.isCustom, moduleId: moduleId } });
     });
   }
 

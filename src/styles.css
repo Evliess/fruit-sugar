@@ -5,6 +5,7 @@
 
 .ant-card-body {
     padding: 16px;
+    border-radius: 12px;
 }
 
 .ant-input-borderless{

@@ -15,8 +15,8 @@
 
     <div nz-row [nzGutter]="[16, 16]">
       @for (item of words; track item.id) {
-      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="8">
-        <nz-card [class.is-known]="item.isKnown" [nzHoverable]="true" appHoverSound
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="12" [nzXl]="8" [nzXXl]="8">
+        <nz-card [class.is-known]="item.isKnown" appHoverSound
           (soundClick)="handleSound('US', item)">
 
           <!-- 卡片内容区域 -->
@@ -24,9 +24,7 @@
             <!-- 单词标题 -->
             <div class="word-title-group">
               <span class="word-text">{{ item.word }}</span>
-              @if (item.isKnown) {
-              <nz-tag [nzColor]="'success'">已掌握</nz-tag>
-              }
+              @if (item.isKnown) {}
             </div>
 
             <!-- 音标 -->

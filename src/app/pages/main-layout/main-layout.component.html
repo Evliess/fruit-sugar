@@ -96,21 +96,21 @@
             </ul>
           </nz-dropdown-menu> -->
           @if(isShowCIHUIMenu()){
-          <div (click)="setLearnModel('list1')" [class]="learnModel=='list1'?'header-item selected':'header-item'">
-            <span nz-icon nzType="unordered-list"></span>
-            <span class="username">列表模式1</span>
-          </div>
           <div (click)="setLearnModel('learn')" [class]="learnModel=='learn'?'header-item selected':'header-item'">
             <span nz-icon nzType="eye"></span>
             <span class="username">学习模式</span>
           </div>
-          <div (click)="setLearnModel('list')" [class]="learnModel=='list'?'header-item selected':'header-item'">
-            <span nz-icon nzType="unordered-list"></span>
-            <span class="username">列表模式</span>
-          </div>
           <div (click)="gotoListen()" [class]="learnModel=='listen'?'header-item selected':'header-item'">
             <span nz-icon nzType="muted"></span>
             <span class="username">听写模式</span>
+          </div>
+          <div (click)="setLearnModel('list')" [class]="learnModel=='list'?'header-item selected':'header-item'">
+            <span nz-icon nzType="tag"></span>
+            <span class="username">卡片模式</span>
+          </div>
+          <div (click)="setLearnModel('list1')" [class]="learnModel=='list1'?'header-item selected':'header-item'">
+            <span nz-icon nzType="unordered-list"></span>
+            <span class="username">列表模式</span>
           </div>
           }
           @if(isShowSentenceMenu()) {

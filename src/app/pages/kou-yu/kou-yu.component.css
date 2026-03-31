@@ -38,8 +38,7 @@ nz-card ::ng-deep .ant-card-body {
 }
 
 nz-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  cursor: pointer;
 }
 
 
@@ -147,12 +146,6 @@ nz-card:hover {
   height: 3px;
   background-color: #1890ff;
   border-radius: 1.5px 1.5px 0 0;
-}
-
-.tab-button:focus-visible {
-  outline: 2px solid #1890ff;
-  outline-offset: 2px;
-  background-color: #f0f7ff;
 }
 
 /* 高对比度模式增强 */
