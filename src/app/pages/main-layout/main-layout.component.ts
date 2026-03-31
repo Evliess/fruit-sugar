@@ -58,7 +58,8 @@ export class MainLayoutComponent {
   isRequiredToCloseLeftMenuPage = computed(() => {
     const url = this.currentUrl();
     return url && (url.includes('/listen')
-      // || url.includes('/words') || url.includes('/kou-yu')
+      || url.includes('/words') 
+      // || url.includes('/kou-yu')
     );
   });
 
