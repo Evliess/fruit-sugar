@@ -243,4 +243,5 @@ nz-card.is-known ::ng-deep .ant-card-body {
 .ant-btn-text:hover {
   background-color: #34C759 !important;
   border-color: #34C759 !important;
+  color: #FFF !important;
 }
