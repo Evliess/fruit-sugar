@@ -31,6 +31,16 @@
                     <nz-card-meta [nzDescription]="content1"></nz-card-meta>
                 </nz-card>
                 }
+                @if(section.name==='AI助教'){
+                    <nz-card  [nzCover]="coverTemplate1" nzBordered="true" (click)="item.id === 'ai-word' ? navigateToAiWord() : navigateToAiSentence()">
+                    <nz-card-meta [nzDescription]="contentAI"></nz-card-meta>
+                </nz-card>
+                }
+                @if(section.name==='学习管理'){
+                    <nz-card  [nzCover]="coverTemplate1" nzBordered="true" (click)="item.id === 'wrong-book' ? navigateToWrongBook() : navigateToUnknownBook()">
+                    <nz-card-meta [nzDescription]="contentLearning"></nz-card-meta>
+                </nz-card>
+                }
                 <ng-template #coverTemplate1>
                     <img alt="example" src="assets/images/card_head_business.png" />
                 </ng-template>
@@ -42,6 +52,26 @@
                     <div class="card-footer">
                         <!-- <span class="footer-title">点击学习</span> -->
                         <!-- <span class="footer-status">重新开始</span> -->
+                        <button nz-button nzType="primary" nzSize="small">点击学习</button>
+                    </div>
+                </ng-template>
+
+                <ng-template #contentAI>
+                    <h2 class="card-title">{{ item.name }}</h2>
+                    <p class="card-subtitle">{{ item.description }}</p>
+                    <p class="card-description"></p>
+                    <div class="card-footer">
+                        <button nz-button nzType="primary" nzSize="small">点击学习</button>
+                    </div>
+                </ng-template>
+
+                <ng-template #contentLearning>
+                    <h2 class="card-title">{{ item.name }}</h2>
+                    <p class="card-subtitle">{{ item.description }}</p>
+                    @if(item.count > 0) {
+                      <p class="card-description">有 {{ item.count }} 条记录</p>
+                    }
+                    <div class="card-footer">
                         <button nz-button nzType="primary" nzSize="small">点击学习</button>
                     </div>
                 </ng-template>

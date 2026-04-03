@@ -646,3 +646,11 @@ html, body {
 nz-card, .ant-card, .ant-card-body {
   overflow-y: visible !important;
 }
+
+/* 非 primary 按钮悬停效果 - 苹果官网绿色 */
+.ant-btn-default:hover,
+.ant-btn-dashed:hover,
+.ant-btn-text:hover {
+  background-color: #34C759 !important;
+  border-color: #34C759 !important;
+}

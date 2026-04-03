@@ -74,3 +74,11 @@
 /* --- 移动端微调 --- */
 @media (max-width: 768px) {
 }
+
+/* 非 primary 按钮悬停效果 - 苹果官网绿色 */
+.ant-btn-default:hover,
+.ant-btn-dashed:hover,
+.ant-btn-text:hover {
+  background-color: #34C759 !important;
+  border-color: #34C759 !important;
+}
