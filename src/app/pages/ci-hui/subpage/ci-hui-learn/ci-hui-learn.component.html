@@ -12,10 +12,9 @@
 
     <div nz-row [nzGutter]="[16, 16]">
       @for (item of firstWords; track item.id) {
-      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="8">
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="12" [nzXl]="8" [nzXXl]="8">
         <nz-card 
           [class.is-known]="item.isKnown" 
-          [nzHoverable]="true"
           class="vocabulary-card"
           >
 
@@ -115,19 +114,19 @@
 
           <div class="card-footer">
             @if(!isCustom) {
+            <button nz-button nzType="default" (click)="$event.stopPropagation();markAsUnknown(item)">
+              <span nz-icon nzType="close"></span> 不认识
+            </button>
             <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-              (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+              (click)="$event.stopPropagation();markAsKnown(item)">
               <span nz-icon nzType="check"></span> 认识
             </button>
 
-            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
-              nzTooltipTitle="标记为不认识">
-              <span nz-icon nzType="close"></span> 不认识
-            </button>
+
             }
 
             @if(isCustom) {
-            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
+            <button nz-button nzType="default" (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
               nzTooltipTitle="删除">
               <span nz-icon nzType="delete"></span> 删除
             </button>
@@ -139,10 +138,9 @@
 
       @defer (on timer(20ms)) {
       @for (item of remainingWords; track item.id) {
-      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="8" [nzXl]="8" [nzXXl]="8">
+      <div nz-col [nzXs]="24" [nzSm]="12" [nzMd]="12" [nzLg]="12" [nzXl]="8" [nzXXl]="8">
         <nz-card 
           [class.is-known]="item.isKnown" 
-          [nzHoverable]="true"
           class="vocabulary-card"
           appHoverSound 
           (soundClick)="handleSound('US', item)">
@@ -243,19 +241,19 @@
 
           <div class="card-footer">
             @if(!isCustom) {
+            <button nz-button nzType="default" (click)="$event.stopPropagation();markAsUnknown(item)">
+              <span nz-icon nzType="close"></span> 不认识
+            </button>
             <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-              (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+              (click)="$event.stopPropagation();markAsKnown(item)">
               <span nz-icon nzType="check"></span> 认识
             </button>
 
-            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
-              nzTooltipTitle="标记为不认识">
-              <span nz-icon nzType="close"></span> 不认识
-            </button>
+
             }
 
             @if(isCustom) {
-            <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
+            <button nz-button nzType="default" (click)="$event.stopPropagation();deleteCustomBook(item)" nz-tooltip
               nzTooltipTitle="删除">
               <span nz-icon nzType="delete"></span> 删除
             </button>

@@ -46,14 +46,14 @@ nz-card {
 }
 
 nz-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  cursor: pointer;
 }
 
 /* 已掌握的卡片样式 */
 nz-card.is-known {
-  border: 2px solid #52c41a;
+  border: 0 solid #52c41a;
   background-color: #fafff0;
+  border-radius: 12px;
 }
 
 nz-card.is-known ::ng-deep .ant-card-body {
@@ -331,7 +331,11 @@ nz-card.is-known ::ng-deep .ant-card-body {
   outline-offset: 2px;
 }
 
-button:focus {
-  outline: 2px solid #1890ff;
-  outline-offset: 2px;
+/* 非 primary 按钮悬停效果 - 苹果官网绿色 */
+.ant-btn-default:hover,
+.ant-btn-dashed:hover,
+.ant-btn-text:hover {
+  background-color: #34C759 !important;
+  border-color: #34C759 !important;
+  color: #FFF !important;
 }

@@ -29,7 +29,7 @@
     <div class="groups-container">
       @for (group of sentenceGroups; track group.t1Value) {
       <div class="group-card" [id]="group.anchorId">
-        <nz-card [nzHoverable]="true" class="unified-group-card">
+        <nz-card  class="unified-group-card">
           <div class="card-header">
             <h3 class="group-title">{{ group.t1Label }}</h3>
           </div>
@@ -63,16 +63,15 @@
                   <div class="action-buttons">
                     @if(!isCustom) {
                     <button nz-button nzType="text" [nzType]="item.isKnown ? 'primary' : 'default'" [nzGhost]="item.isKnown"
-                      (click)="$event.stopPropagation();markAsKnown(item)" nz-tooltip nzTooltipTitle="标记为认识">
+                      (click)="$event.stopPropagation();markAsKnown(item)">
                       <span nz-icon nzType="check"></span> 认识
                     </button>
-                    <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();markAsUnknown(item)" nz-tooltip
-                      nzTooltipTitle="标记为不认识">
+                    <button nz-button nzType="default" (click)="$event.stopPropagation();markAsUnknown(item)">
                       <span nz-icon nzType="close"></span> 不认识
                     </button>
                     }
                     @if(isCustom) {
-                    <button nz-button nzType="default" nzDanger (click)="$event.stopPropagation();deleteCustomSentence(item)"
+                    <button nz-button nzType="default" (click)="$event.stopPropagation();deleteCustomSentence(item)"
                       nz-tooltip nzTooltipTitle="删除">
                       <span nz-icon nzType="delete"></span> 删除
                     </button>

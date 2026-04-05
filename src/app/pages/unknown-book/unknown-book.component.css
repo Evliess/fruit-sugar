@@ -41,8 +41,9 @@ nz-card:hover {
 
 /* 已掌握的卡片样式 */
 nz-card.is-known {
-  border: 2px solid #52c41a;
+  border: 0 solid #52c41a;
   background-color: #fafff0;
+  border-radius: 12px;
 }
 
 nz-card.is-known ::ng-deep .ant-card-body {
@@ -234,4 +235,13 @@ nz-card.is-known ::ng-deep .ant-card-body {
 .sound-icon:hover {
   color: #1890ff;
   transform: scale(1.1);
+}
+
+/* 非 primary 按钮悬停效果 - 苹果官网绿色 */
+.ant-btn-default:hover,
+.ant-btn-dashed:hover,
+.ant-btn-text:hover {
+  background-color: #34C759 !important;
+  border-color: #34C759 !important;
+  color: #FFF !important;
 }

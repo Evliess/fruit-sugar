@@ -50,6 +50,74 @@ nz-form-item {
   border-radius: 4px;
 }
 
+/* Token list styles -通用样式 */
+.tokens-list {
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #f0f0f0;
+}
+
+.tokens-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000d9;
+  margin-bottom: 16px;
+}
+
+.tokens-ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.token-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  margin-bottom: 12px;
+  background-color: #fafafa;
+  border-radius: 6px;
+  border: 1px solid #f0f0f0;
+  transition: background-color 0.2s;
+}
+
+.token-item:hover {
+  background-color: #f5f5f5;
+}
+
+.token-content {
+  flex: 1;
+  min-width: 0; /* Allow text truncation */
+  margin-right: 12px;
+}
+
+.token-text {
+  display: block;
+  font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+  font-size: 14px;
+  color: #1890ff;
+  word-break: break-all;
+  margin-bottom: 4px;
+  font-weight: 500;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.token-meta {
+  display: block;
+  font-size: 12px;
+  color: #00000073;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.copy-button {
+  margin-left: auto;
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-width: 60px;
+}
+
 /* --- 手机端专属优化 (Media Query) --- */
 @media screen and (max-width: 576px) {
   .login-container {
@@ -67,4 +135,29 @@ nz-form-item {
   .title {
     font-size: 20px;
   }
+
+  /* Mobile overrides for token list */
+  .token-text {
+    white-space: normal;
+    word-break: break-word;
+    font-size: 13px;
+  }
+
+  .token-meta {
+    font-size: 11px;
+  }
+
+  .token-item {
+    align-items: center;
+  }
+
+  .token-content {
+    margin-right: 8px;
+  }
+
+  .copy-button {
+    margin-left: auto;
+    min-width: 60px;
+  }
+
 }

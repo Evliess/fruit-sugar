@@ -38,8 +38,7 @@ nz-card ::ng-deep .ant-card-body {
 }
 
 nz-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-2px);
+  cursor: pointer;
 }
 
 
@@ -147,12 +146,6 @@ nz-card:hover {
   height: 3px;
   background-color: #1890ff;
   border-radius: 1.5px 1.5px 0 0;
-}
-
-.tab-button:focus-visible {
-  outline: 2px solid #1890ff;
-  outline-offset: 2px;
-  background-color: #f0f7ff;
 }
 
 /* 高对比度模式增强 */
@@ -467,3 +460,12 @@ nz-card:hover {
 /* 次要文本: #555555 on #fff = 7.1:1 */
 /* 按钮背景: #1890ff on #fff = 4.5:1 (满足 AA) */
 /* 激活状态: #fff on #1890ff = 4.5:1 (满足 AA) */
+
+/* 非 primary 按钮悬停效果 - 苹果官网绿色 */
+.ant-btn-default:hover,
+.ant-btn-dashed:hover,
+.ant-btn-text:hover {
+  background-color: #34C759 !important;
+  border-color: #34C759 !important;
+  color: #FFF !important;
+}
