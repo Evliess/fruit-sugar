@@ -16,6 +16,7 @@ export class APageComponent {
   name: string = '';
   days: string = '';
   token: string = '';
+  generatedTokens: Array<{token: string, name: string, days: string, timestamp: Date}> = [];
 
   private sugarDictService = inject(SugarDictService);
 
@@ -26,12 +27,16 @@ export class APageComponent {
       this.sugarDictService.createUser(this.name, this.days).subscribe({
         next: (response: any) => {
           if (response && response.result === 'ok') {
-            this.notification.create(
-              'success',
-              this.name,
-              `口令： ${response.token}`,
-              { nzDuration: 0 }
-            );
+            // Add token to generatedTokens list
+            this.generatedTokens.unshift({
+              token: response.token,
+              name: this.name,
+              days: this.days,
+              timestamp: new Date()
+            });
+            // Optionally clear inputs
+            // this.name = '';
+            // this.days = '';
           } else {
             alert('Failed to create/update user. Please try again.');
           }
@@ -95,6 +100,25 @@ export class APageComponent {
         this.days = $event.target.value;
       }
     }
+  }
+
+  copyToken(token: string) {
+    navigator.clipboard.writeText(token).then(() => {
+      // No notification needed per requirement
+    }).catch(err => {
+      console.error('Failed to copy token: ', err);
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = token;
+      document.body.appendChild(textArea);
+      textArea.select();
+      try {
+        document.execCommand('copy');
+      } catch (e) {
+        console.error('Fallback copy failed: ', e);
+      }
+      document.body.removeChild(textArea);
+    });
   }
 
 }

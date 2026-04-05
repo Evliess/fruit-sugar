@@ -22,6 +22,26 @@
           <button (click)="generate()" nz-button class="login-button" [nzType]="'primary'" [nzSize]="'default'">
             生成
           </button>
+
+          <!-- Generated tokens list -->
+          @if (generatedTokens.length > 0) {
+            <div class="tokens-list">
+              <h3 class="tokens-title">已生成的口令</h3>
+              <ul class="tokens-ul">
+                @for (item of generatedTokens; track item.token) {
+                  <li class="token-item">
+                    <div class="token-content">
+                      <span class="token-text">{{ item.token }}</span>
+                      <span class="token-meta">用户: {{ item.name }}, 有效期: {{ item.days }}天</span>
+                    </div>
+                    <button nz-button [nzSize]="'small'" (click)="copyToken(item.token)" class="copy-button">
+                      复制
+                    </button>
+                  </li>
+                }
+              </ul>
+            </div>
+          }
         </div>
       </nz-tab>
       <nz-tab nzTitle="撤销口令">
