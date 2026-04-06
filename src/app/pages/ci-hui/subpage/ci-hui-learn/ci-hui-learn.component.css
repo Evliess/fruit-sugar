@@ -348,7 +348,7 @@ nz-card.is-known ::ng-deep .ant-card-body {
 /* 手机端 (xs: <576px) - 一行显示1个 */
 @media (max-width: 575.98px) {
   .container {
-    padding: 12px;
+    padding: 20px;
   }
 
   .custom-input-section {
@@ -414,6 +414,9 @@ nz-card.is-known ::ng-deep .ant-card-body {
 
 /* 平板端 (sm: ≥576px, md: ≥768px) - 一行显示2个 */
 @media (min-width: 576px) and (max-width: 991.98px) {
+  .container {
+    padding: 20px;
+  }
   .word-text {
     font-size: 22px;
   }

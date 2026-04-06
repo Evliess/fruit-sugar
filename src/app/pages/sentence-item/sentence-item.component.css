@@ -40,8 +40,8 @@
     实现你要求的 "6px margin" 效果 
   */
   nz-col {
-    padding-left: 6px !important;
-    padding-right: 6px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
     padding-bottom: 12px; /* 卡片之间的垂直间距 */
   }
 }
