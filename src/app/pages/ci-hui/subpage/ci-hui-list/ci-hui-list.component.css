@@ -30,7 +30,7 @@ html, body {
 
 /* 卡片容器 */
 .list-container {
-  padding: 0;
+  padding: 12px 20px;
 }
 
 /* 让卡片高度独立，不互相影响 */

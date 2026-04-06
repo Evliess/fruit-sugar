@@ -83,7 +83,7 @@ nz-card:hover {
 /* 选项卡样式 - IBM/苹果设计原则分段控件 */
 .tabs-container {
   margin-bottom: 32px;
-  padding: 0;
+  padding: 0 20px;
 }
 
 .tabs-scroll {
@@ -164,6 +164,7 @@ nz-card:hover {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  padding: 0 20px;
 }
 
 .group-card {
