@@ -45,3 +45,13 @@
 .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
     border-right: 0px solid #d2d2d7;
 }
+
+.ant-btn-dashed {
+    border-style: solid;
+}
+
+.ant-layout-sider-children {
+    height: 100%;
+    margin-top: 64.1px;
+    padding-top: 0.1px;
+}

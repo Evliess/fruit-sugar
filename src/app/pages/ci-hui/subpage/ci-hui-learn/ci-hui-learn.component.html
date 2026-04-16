@@ -3,7 +3,7 @@
     @if(isCustom) {
     <div class="custom-input-section">
       <input nz-input [(ngModel)]="userWord" placeholder="输入单词，点击添加按钮，即可完成录入！" />
-      <button nz-button nzType="primary" (click)="customWord(userWord)" [nzLoading]="isLoading" nz-tooltip
+      <button nz-button nzType="dashed" (click)="customWord(userWord)" [nzLoading]="isLoading" nz-tooltip
         nzTooltipTitle="添加">
         <span nz-icon nzType="plus"></span> 添加
       </button>
@@ -61,7 +61,7 @@
                   <div class="collocation-item">
                     <div class="collocation-en">
                       <span class="collocation-label">搭配：</span>
-                      <span class="collocation-text">{{ phrase.split(';')[0]?.trim() }}{{ phrase.includes(';') ? ';' : '' }}</span>
+                      <span class="collocation-text">{{ phrase.split(';')[0]?.trim() }}</span>
                     </div>
                     @if (phrase.split(';')[1]) {
                     <div class="collocation-zh">
@@ -188,7 +188,7 @@
                   <div class="collocation-item">
                     <div class="collocation-en">
                       <span class="collocation-label">搭配：</span>
-                      <span class="collocation-text">{{ phrase.split(';')[0]?.trim() }}{{ phrase.includes(';') ? ';' : '' }}</span>
+                      <span class="collocation-text">{{ phrase.split(';')[0]?.trim() }}</span>
                     </div>
                     @if (phrase.split(';')[1]) {
                     <div class="collocation-zh">

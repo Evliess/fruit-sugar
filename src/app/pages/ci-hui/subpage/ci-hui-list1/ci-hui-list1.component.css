@@ -120,12 +120,12 @@ html, body {
   display: flex;
   align-items: center;
   gap: 6px; /* 减少元素间距 */
-  margin-bottom: 8px; /* 减少下边距 */
+  margin-bottom: 0; /* 移除下边距，实现垂直居中 */
 }
 
 .word-text {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 20px;
+  font-weight: 500;
   color: #1a1a1a;
   word-break: break-word;
   overflow-wrap: break-word;
@@ -302,7 +302,7 @@ html, body {
 /* 桌面端 (lg: ≥992px) */
 @media (min-width: 992px) {
   .word-text {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   /* 桌面端词性和定义文本悬停提示 */
@@ -408,7 +408,7 @@ html, body {
 
 /* 表格单元格 */
 .table-cell {
-  padding: 8px 16px; /* 减少单元格内边距 */
+  padding: 12px 16px 8px 16px; /* 减少单元格内边距 */
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -418,6 +418,9 @@ html, body {
 
 .word-cell {
   flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .pronunciation-cell {

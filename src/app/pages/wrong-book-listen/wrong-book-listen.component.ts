@@ -329,7 +329,7 @@ export class WrongBookListenComponent implements OnInit {
       this.hasError = false;
       setTimeout(() => {
         this.playNext();
-      }, 1000);
+      }, 2000);
     } else {
       this.inputStatus = 'minimal-input minimal-input-error';
       this.hasError = true;

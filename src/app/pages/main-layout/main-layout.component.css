@@ -125,8 +125,11 @@ nz-header {
   background: #fff;
   padding: 0;
   width: 100%;
-  z-index: 2;
+  z-index: 1001;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .app-header {
@@ -201,7 +204,7 @@ nz-header {
    内容区域 (Content)
    ================== */
 nz-content {
-  margin: 0;
+  margin: 64px 0 0 0;
 }
 
 .inner-content {
