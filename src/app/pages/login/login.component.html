@@ -1,33 +1,80 @@
 <div class="login-container">
   <div class="login-content">
-
-    <!-- 标题区域 -->
-    <div class="login-header">
-      <!-- <img src="" alt="Logo" class="logo" /> -->
-      <h2 class="title">欢迎登录</h2>
-    </div>
-
-    <!-- 表单区域 -->
-    <div nz-form class="login-form">
-      <!-- 用户名 -->
-      <nz-form-item>
-        <nz-input-group nzPrefixIcon="user" nzSize="large">
-          <input type="text" nz-input placeholder="请输入口令" (change)="inputToken($event)"/>
-        </nz-input-group>
-      </nz-form-item>
-
-
-      <!-- 记住我 / 忘记密码 (可选) -->
-      <div class="login-options">
-        <!-- <label nz-checkbox formControlName="remember">记住我</label> -->
-        <!-- <a class="forgot-password">忘记密码?</a> -->
+    <!-- 左侧品牌区域 -->
+    <div class="brand-section">
+      <!-- Logo -->
+      <div class="logo">
+        <svg width="72" height="72" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- 10个相同的矩形条，每36度一个 -->
+          <!-- 0度 (12点钟方向) -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981"/>
+          <!-- 36度 -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(36 36 36)"/>
+          <!-- 72度 -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(72 36 36)"/>
+          <!-- 108度 -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(108 36 36)"/>
+          <!-- 144度 -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(144 36 36)"/>
+          <!-- 180度 (6点钟方向) -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(180 36 36)"/>
+          <!-- 216度 -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(216 36 36)"/>
+          <!-- 252度 -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(252 36 36)"/>
+          <!-- 288度 -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(288 36 36)"/>
+          <!-- 324度 -->
+          <rect x="32" y="6" width="8" height="20" rx="1" fill="#10B981" transform="rotate(324 36 36)"/>
+          <!-- 中心白色圆孔 -->
+          <circle cx="36" cy="36" r="8" fill="#ffffff"/>
+        </svg>
       </div>
 
-      <!-- 登录按钮 -->
-      <button (click)="login()" nz-button class="login-button" [nzType]="'primary'" [nzSize]="'default'">
-        登 录
-      </button>
+      <!-- 主标题 -->
+      <div class="main-title">
+        <div class="title-line">LIVING</div>
+        <div class="title-line">ENGLISH</div>
+        <div class="title-line">ATLAS</div>
+      </div>
 
+      <!-- 装饰性渐变圆球 -->
+      <div class="gradient-orb"></div>
+    </div>
+
+    <!-- 右侧登录区域 -->
+    <div class="login-section">
+      <!-- 副标题 -->
+      <div class="subtitle-section">
+        <h2 class="subtitle-cn">海外真实生活英语库</h2>
+        <p class="subtitle-en">BUILT FOR REAL CONVERSATIONS,<br>NOT EXAMS.</p>
+      </div>
+
+      <!-- 表单区域 -->
+      <div class="form-section">
+        <!-- 输入框 -->
+        <div class="input-wrapper">
+          <textarea
+            class="activation-input"
+            placeholder="请在此处输入激活码"
+            [(ngModel)]="token"
+            (keyup.enter)="login()"
+            rows="1"
+          ></textarea>
+        </div>
+
+        <!-- 激活按钮 -->
+        <button
+          class="activate-button"
+          (click)="login()"
+          [disabled]="!token"
+        >
+          立即激活
+        </button>
+      </div>
     </div>
   </div>
+
+  <!-- 底部装饰线 -->
+  <div class="bottom-line"></div>
 </div>

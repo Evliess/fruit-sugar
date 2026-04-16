@@ -1,7 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { NzFormModule } from 'ng-zorro-antd/form';
-import { NzInputModule } from 'ng-zorro-antd/input';
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth';
 import { SugarDictService } from '../../services/sugar-dict';
 import { Router } from '@angular/router';
@@ -9,7 +7,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
-  imports: [NzFormModule, NzInputModule, NzButtonModule],
+  imports: [FormsModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -20,7 +18,11 @@ export class LoginComponent {
   token: string = '';
 
   login() {
-    this.sugarDictService.userLogin(this.token).subscribe({
+    if (!this.token.trim()) {
+      return;
+    }
+
+    this.sugarDictService.userLogin(this.token.trim()).subscribe({
       next: (response: any) => {
         if (response && response.result === 'ok') {
           this.authService.setSession({ id: response.id, code: response.token, name: response.user, role: 'user' });
@@ -35,10 +37,6 @@ export class LoginComponent {
         alert('Login failed. Please check your token and try again.');
       }
     });
-  }
-
-  inputToken($event: any) {
-    this.token = $event.target.value;
   }
 
 }
