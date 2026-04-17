@@ -144,6 +144,37 @@
           </div>
           }
           }
+          @if(isShowWordSubitemMenu()) {
+          <div class="header-item" nz-dropdown [nzDropdownMenu]="wordSubitemMenu">
+            <span nz-icon nzType="read"></span>
+            <span class="username">场景词汇</span>
+          </div>
+          <nz-dropdown-menu #wordSubitemMenu="nzDropdownMenu">
+            <ul nz-menu>
+              @for(cat of wordSubitemCategories; track cat.parentName) {
+              <li nz-menu-item (click)="gotoWordSubitemCategory(cat.parentName, cat.parentDescription)">{{ cat.name }}</li>
+              }
+            </ul>
+          </nz-dropdown-menu>
+          }
+          @if(isShowSentenceItemMenu()) {
+          <div class="header-item">
+            <span nz-icon nzType="fire"></span>
+            <span class="username">热门场景</span>
+          </div>
+          }
+          @if(isShowAiLearnMenu()) {
+          <div class="header-item" nz-dropdown [nzDropdownMenu]="aiLearnMenu">
+            <span nz-icon nzType="robot"></span>
+            <span class="username">AI助教</span>
+          </div>
+          <nz-dropdown-menu #aiLearnMenu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item (click)="gotoAiWord()">AI词汇</li>
+              <li nz-menu-item (click)="gotoAiSentence()">AI句子</li>
+            </ul>
+          </nz-dropdown-menu>
+          }
         </div>
         }
       </div>

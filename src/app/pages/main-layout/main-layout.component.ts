@@ -49,6 +49,7 @@ export class MainLayoutComponent {
     if (url && ((url.includes('/words') && !url.includes('isCustom=true')) || url.includes('/unknown-book')
       || url.includes('/wrong-book') || url.includes('user-summary')
       || url.includes('/kou-yu') || url.includes('/listen') || url.includes('/sen-listen')
+      || url.includes('/word-subitem') || url.includes('/sentence-item') || url.includes('/ai-learn')
     )) {
       return true;
     }
@@ -118,6 +119,32 @@ export class MainLayoutComponent {
   isUserCenterActive = computed(() => {
     const url = this.currentUrl();
     return url.includes('/user-summary') || url.includes('/unknown-book') || url.includes('/wrong-book');
+  });
+
+  isShowWordSubitemMenu = computed(() => {
+    const url = this.currentUrl();
+    return url.includes('/word-subitem');
+  });
+
+  // word-subitem 分类列表
+  wordSubitemCategories = [
+    { name: '学习与学校', parentName: 'school', parentDescription: '学习与学校 (Campus Life & Study)' },
+    { name: '食物', parentName: 'food', parentDescription: '食物 (Food)' },
+    { name: '住宅', parentName: 'housing', parentDescription: '住宅 (Housing)' },
+    { name: '购物', parentName: 'shopping', parentDescription: '购物 (Shopping)' },
+    { name: '休闲娱乐', parentName: 'leisure', parentDescription: '休闲娱乐 (Recreation & Leisure)' },
+    { name: '城市与交通', parentName: 'city', parentDescription: '城市与交通 (City & Transportation)' },
+    { name: '健康', parentName: 'health', parentDescription: '健康 (Health)' }
+  ];
+
+  isShowSentenceItemMenu = computed(() => {
+    const url = this.currentUrl();
+    return url.includes('/sentence-item');
+  });
+
+  isShowAiLearnMenu = computed(() => {
+    const url = this.currentUrl();
+    return url.includes('/ai-learn');
   });
 
   ngOnInit(): void {
@@ -232,6 +259,11 @@ export class MainLayoutComponent {
   gotoWrongBookListen(): void {
     this.learnModel = 'wrong-listen';
     this.router.navigate(['/wrong-book-listen']);
+  }
+
+  gotoWordSubitemCategory(parentName: string, parentDescription: string): void {
+    this.router.navigate(['/word-subitem'],
+      { queryParams: { type: 'words', isCustom: false, parentName: parentName, parentDescription: parentDescription } });
   }
 
 
