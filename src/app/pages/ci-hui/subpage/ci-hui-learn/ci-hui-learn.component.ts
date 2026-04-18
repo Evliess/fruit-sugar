@@ -204,7 +204,6 @@ export class CiHuiLearnComponent implements OnDestroy {
     this.isLoading = true;
     this.sugarDictService.customWord(this.currentUser()?.id || -1, word).subscribe({
       next: () => {
-        this.message.success('自定义单词成功！');
         this.userWord = '';
         this.isLoading = false;
         this.ngOnInit();
@@ -251,7 +250,6 @@ export class CiHuiLearnComponent implements OnDestroy {
   deleteCustomBook(item: VocabularyWord): void {
     this.sugarDictService.deleteCustomBook(this.currentUser()?.id || -1, item.id, 'word').subscribe({
       next: () => {
-        this.message.success('删除成功！');
         this.ngOnInit();
       },
       error: (err) => console.error('请求失败:', err)

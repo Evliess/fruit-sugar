@@ -7,16 +7,6 @@
   <nz-sider class="menu-sidebar" nzCollapsible nzWidth="256px" nzBreakpoint="lg" [nzCollapsedWidth]="0"
     [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
 
-    <!-- Logo 区域 -->
-    <div class="sidebar-logo">
-      <a href="/home">
-        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
-
-        <!-- 收起时隐藏文字 -->
-        <h1 *ngIf="!isCollapsed">首页</h1>
-      </a>
-    </div>
-
     <!-- 左侧菜单 -->
     <ul nz-menu nzTheme="light" nzMode="inline">
       <li nz-submenu nzTitle="场景词汇" nzIcon="read">
@@ -70,10 +60,15 @@
     <!-- 顶部导航 Header -->
     <nz-header>
       <div class="app-header">
-        <!-- 左侧：收缩/展开按钮 -->
-        <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
-          <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
-        </span>
+        <!-- 左侧：Logo + 收缩按钮 -->
+        <div class="header-left">
+          <a href="/home" class="header-logo">
+            <img src="/assets/images/learn-dict-logo.svg" alt="logo">
+          </a>
+          <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
+            <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
+          </span>
+        </div>
 
         <!-- 右侧：功能区 -->
         @if(isShowTopMenu()){
@@ -143,6 +138,37 @@
             <span class="username">错题听写</span>
           </div>
           }
+          }
+          @if(isShowWordSubitemMenu()) {
+          <div class="header-item" nz-dropdown [nzDropdownMenu]="wordSubitemMenu">
+            <span nz-icon nzType="read"></span>
+            <span class="username">场景词汇</span>
+          </div>
+          <nz-dropdown-menu #wordSubitemMenu="nzDropdownMenu">
+            <ul nz-menu>
+              @for(cat of wordSubitemCategories; track cat.parentName) {
+              <li nz-menu-item (click)="gotoWordSubitemCategory(cat.parentName, cat.parentDescription)">{{ cat.name }}</li>
+              }
+            </ul>
+          </nz-dropdown-menu>
+          }
+          @if(isShowSentenceItemMenu()) {
+          <div class="header-item">
+            <span nz-icon nzType="fire"></span>
+            <span class="username">热门场景</span>
+          </div>
+          }
+          @if(isShowAiLearnMenu()) {
+          <div class="header-item" nz-dropdown [nzDropdownMenu]="aiLearnMenu">
+            <span nz-icon nzType="robot"></span>
+            <span class="username">AI助教</span>
+          </div>
+          <nz-dropdown-menu #aiLearnMenu="nzDropdownMenu">
+            <ul nz-menu>
+              <li nz-menu-item (click)="gotoAiWord()">AI词汇</li>
+              <li nz-menu-item (click)="gotoAiSentence()">AI句子</li>
+            </ul>
+          </nz-dropdown-menu>
           }
         </div>
         }

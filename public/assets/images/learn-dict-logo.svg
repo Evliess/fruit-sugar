@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="100%" height="100%">
+  <defs>
+    <style>
+      .brown-color { fill: #564743; stroke: #564743; }
+      .star-path { fill: #564743; stroke: none; }
+      /* 这里的粗细在 600 宽度下显得更有质感 */
+      .line-top { stroke-width: 2; stroke-linecap: round; }
+      .line-bot { stroke-width: 1.5; stroke-linecap: round; }
+      .text-main { 
+        font-family: 'Georgia', serif; 
+        font-size: 82px; 
+        font-weight: bold; 
+        letter-spacing: 6px; 
+        fill: #564743; 
+        text-anchor: middle; 
+      }
+      .text-sub { 
+        font-family: 'Arial', sans-serif; 
+        font-size: 18px; 
+        font-weight: 300; 
+        letter-spacing: 8px; 
+        fill: #564743; 
+        text-anchor: middle; 
+      }
+    </style>
+    <path id="sparkle" d="M 0,-18 Q 0,-2 18,0 Q 0,2 0,18 Q 0,2 -18,0 Q 0,-2 0,-18 Z" />
+  </defs>
+
+  <g class="star-path" transform="translate(300, 75)">
+    <use href="#sparkle" transform="scale(1)" />
+    <use href="#sparkle" transform="translate(-25, 40) scale(0.6)" />
+    <use href="#sparkle" transform="translate(40, 30) scale(0.8)" />
+    <use href="#sparkle" transform="translate(-25, -40) scale(0.2)" />
+    <use href="#sparkle" transform="translate(35, -35) scale(0.15)" />
+  </g>
+
+  <g class="brown-color line-top">
+    <line x1="50" y1="135" x2="220" y2="135" />
+    <line x1="380" y1="135" x2="550" y2="135" />
+  </g>
+
+  <text x="300" y="220" class="text-main">imlearn.top</text>
+
+  <g class="brown-color line-bot">
+    <line x1="50" y1="265" x2="140" y2="265" />
+    <line x1="460" y1="265" x2="550" y2="265" />
+  </g>
+
+  <text x="300" y="270" class="text-sub">Living English Atlas</text>
+</svg>

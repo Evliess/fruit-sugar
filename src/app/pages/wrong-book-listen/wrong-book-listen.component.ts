@@ -68,6 +68,7 @@ export class WrongBookListenComponent implements OnInit {
   inputValue: string = '';
   inputStatus: string = 'minimal-input';
   isEyeOpen: boolean = false;
+  isShowAnswer: boolean = false;
   isPlay: boolean = true;
   soundEnabled: boolean = true;
   soundTypeUK: boolean = true;
@@ -329,15 +330,16 @@ export class WrongBookListenComponent implements OnInit {
       this.hasError = false;
       setTimeout(() => {
         this.playNext();
-      }, 1000);
+      }, 2000);
     } else {
       this.inputStatus = 'minimal-input minimal-input-error';
       this.hasError = true;
+      this.isShowAnswer = true;
 
       // 标记为错题（已在错题本中，无需重复标记）
       setTimeout(() => {
-        this.playNext();
-      }, 1000);
+        this.playNext(); this.isShowAnswer = false;
+      }, 2000);
     }
   }
 

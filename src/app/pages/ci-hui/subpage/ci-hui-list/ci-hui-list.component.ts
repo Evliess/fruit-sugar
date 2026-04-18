@@ -215,7 +215,6 @@ export class CiHuiListComponent {
     this.isLoading = true;
     this.sugarDictService.customWord(this.currentUser()?.id || -1, word).subscribe({
       next: (response: any) => {
-        this.message.success('自定义单词成功！');
         this.userWord = ''; // 清空输入框
         this.isLoading = false;
         // 刷新单词列表
@@ -265,7 +264,6 @@ export class CiHuiListComponent {
   deleteCustomBook(item: VocabularyWord): void {
     this.sugarDictService.deleteCustomBook(this.currentUser()?.id || -1, item.id, "word").subscribe({
       next: (response: any) => {
-        this.message.success('删除成功！');
         this.ngOnInit();
       },
       error: (err) => console.error('请求失败:', err)

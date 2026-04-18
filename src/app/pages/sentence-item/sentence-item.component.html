@@ -23,9 +23,9 @@
                     <p class="card-subtitle">{{ getEnglishContentModuleName(subModule.description) }}</p>
                     <nz-progress [nzPercent]="getPercent(subModule.learnedCount, subModule.sentencesCount)" [nzStrokeColor]="{ '0%': '#108ee9', '100%': '#87d068' }"
                     nz-tooltip nzTooltipTitle="{{ subModule.learnedCount }} / {{ subModule.sentencesCount }} 已掌握"    
-                    nzStatus="active" nzSize="small"></nz-progress>
+                    nzSize="small"></nz-progress>
                     <div class="card-footer">
-                        <button nz-button nzType="primary" nzSize="small" (click)="gotoKouYu(false, subModule.id)">重新开始</button>
+                        <button nz-button nzType="dashed" nzSize="small" (click)="gotoKouYu(false, subModule.id)">重新开始</button>
                         <button nz-button nzType="dashed" nzSize="small" (click)="resetSentencesProgressByModuleId(subModule.id)">继续学习</button>
                     </div>
                 </ng-template>

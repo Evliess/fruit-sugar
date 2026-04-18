@@ -1,9 +1,5 @@
 <div class="ai-sentence-container">
-  <div class="header-section">
-    <h1 class="page-title">AI句子学习助手</h1>
-    <p class="page-subtitle">输入句子，获取AI智能解析和翻译</p>
-  </div>
-
+ 
   <div class="chat-section">
     <nz-card class="chat-card">
       <div class="chat-header">
@@ -95,15 +91,6 @@
             <span class="button-text">{{ isLoading ? '思考中...' : '发送' }}</span>
           </button>
         </div>
-        <button
-          nz-button
-          [nzType]="'default'"
-          (click)="clearInput()"
-          class="clear-button"
-        >
-          <nz-icon nzType="clear"></nz-icon>
-          清空
-        </button>
       </div>
     </nz-card>
   </div>

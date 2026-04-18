@@ -59,6 +59,7 @@ export class SenListenWriteComponent {
   inputValue: string = '';
   inputStatus: string = 'minimal-input';
   isEyeOpen: boolean = false;
+  isShowAnswer: boolean = false;
   isPlay: boolean = true;
   soundEnabled: boolean = true;
   soundTypeUK: boolean = true;
@@ -217,8 +218,9 @@ export class SenListenWriteComponent {
       this.hasError = false;
       setTimeout(() => {
         this.playNext();
-      }, 1000);
+      }, 2000);
     } else {
+      this.isShowAnswer = true;
       this.inputStatus = 'minimal-input minimal-input-error';
       this.hasError = true;
       this.sugarDictService.markSentenceAsMistake(this.currentUser()?.id || -1, this.currWord.id, this.moduleId).subscribe({
@@ -227,8 +229,8 @@ export class SenListenWriteComponent {
         }
       });
       setTimeout(() => {
-        this.playNext();
-      }, 1000);
+        this.playNext(); this.isShowAnswer = false;
+      }, 2000);
     }
   }
 
