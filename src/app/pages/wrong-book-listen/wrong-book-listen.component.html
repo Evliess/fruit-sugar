@@ -50,7 +50,7 @@
         </div>
 
         <main class="main-content">
-            @if(isEyeOpen) {
+            @if(isEyeOpen || isShowAnswer) {
             <div class="sentence-stage">
                 <p class="en-sentence">
                     @if (sentenceParts) {
@@ -116,7 +116,7 @@
                         下一个 <span nz-icon nzType="right"></span>
                     </button>
                     <button nz-button nzType="text" (click)="checkAnswer()" class="action-btn">
-                        确认
+                        确  认<span nz-icon nzType="enter"></span>
                     </button>
                 </div>
             </div>
