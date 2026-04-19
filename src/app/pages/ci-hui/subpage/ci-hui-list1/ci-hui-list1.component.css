@@ -314,7 +314,7 @@ html, body {
   }
 }
 
-/* 表格风格布局 */
+/* Grid风格布局 */
 .table-style-list {
   background: #fff;
   border-radius: 4px;
@@ -325,14 +325,15 @@ html, body {
 
 /* 表头行 - 现代专业风格 */
 .table-header-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr;
   background: #f0f2f5;
   border-bottom: 1px solid #d1d9e0;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   font-weight: 600;
   font-size: 13px;
   color: #262626;
-  height: 40px; /* 减少表头高度 */
+  height: 40px;
   align-items: center;
   border-radius: 4px 4px 0 0;
   position: relative;
@@ -340,7 +341,6 @@ html, body {
 
 .table-header-cell {
   padding: 0 18px; /* 减少表头单元格内边距 */
-  flex: 1;
   display: flex;
   align-items: center;
   height: 100%;
@@ -360,36 +360,20 @@ html, body {
     rgba(208, 215, 222, 0.4) 100%);
 }
 
-.word-header {
-  flex: 2; /* 词汇部分更宽 */
-}
-
-.pronunciation-header {
-  flex: 1; /* 发音部分中等宽度 */
-}
-
-.pos-header {
-  flex: 1; /* 词性部分中等宽度 */
-}
-
-.collocation-header {
-  flex: 1.5; /* 搭配部分中等宽度 */
-}
-
 .action-header {
-  flex: 1; /* 操作部分固定宽度 */
   justify-content: center;
 }
 
 /* 数据行 */
 .table-data-row {
-  display: flex;
-  min-height: 60px; /* 减少数据行高度 */
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr 1fr;
+  min-height: 60px;
   align-items: stretch;
   border-bottom: 1px solid #e8e8e8;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
   padding: 0;
-  margin-bottom: 0px;
+  margin-bottom: 0;
 }
 
 .table-data-row:hover {
@@ -408,35 +392,20 @@ html, body {
 
 /* 表格单元格 */
 .table-cell {
-  padding: 12px 16px 8px 16px; /* 减少单元格内边距 */
-  height: 100%;
+  padding: 12px 16px 8px 16px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 0; /* 防止内容溢出 */
+  min-width: 0;
 }
 
 .word-cell {
-  flex: 2;
   display: flex;
-  align-items: center;
   justify-content: flex-start;
-}
-
-.pronunciation-cell {
-  flex: 1;
-}
-
-.pos-cell {
-  flex: 1;
-}
-
-.collocation-cell {
-  flex: 1.5;
+  text-align: left;
 }
 
 .action-cell {
-  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -507,66 +476,44 @@ html, body {
   font-size: 12px;
 }
 
-/* 响应式设计 - 平板和手机端 */
-@media (max-width: 991.98px) {
+/* 响应式设计 - 平板端 (576px - 991.98px) */
+@media (min-width: 576px) and (max-width: 991.98px) {
   .table-header-row {
     font-size: 12px;
-    height: 36px; /* 减少表头高度 */
-    border-bottom: 1px solid #d1d9e0;
-    background: #f0f2f5;
+    height: 36px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .word-header {
+    grid-column: 1 / -1;
   }
 
   .table-header-cell:not(.action-header)::after {
     top: 10px;
     bottom: 10px;
   }
-  
+
   .table-data-row {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     min-height: auto;
-    flex-wrap: wrap;
-    padding: 0;
   }
-  
-  .table-cell {
-    padding: 8px 14px; /* 减少单元格内边距 */
-  }
-  
+
   .word-cell {
-    flex: 1 1 100%;
-    order: 1;
-    margin-bottom: 8px; /* 减少单元格下边距 */
-    padding-bottom: 8px; /* 减少单元格底部内边距 */
+    grid-column: 1 / -1;
+    padding-bottom: 8px;
     border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 8px;
   }
 
-  .pronunciation-cell {
-    flex: 1;
-    order: 2;
-    border-right: 1px solid #f0f0f0;
+  .table-cell {
+    padding: 8px 14px;
   }
 
-  .pos-cell {
-    flex: 1;
-    order: 3;
-    border-right: 1px solid #f0f0f0;
-  }
-  
-  .collocation-cell {
-    flex: 1;
-    order: 4;
-    border-right: 1px solid #f0f0f0;
-  }
-  
-  .action-cell {
-    flex: 1;
-    order: 5;
-  }
-  
   .action-buttons {
     flex-direction: row;
-    gap: 6px; /* 减少操作按钮间距 */
+    gap: 6px;
   }
-  
+
   .action-buttons button {
     width: auto;
     flex: 0 0 auto;
@@ -576,67 +523,88 @@ html, body {
   }
 }
 
-/* 手机端 (xs: <576px) */
+/* 手机端 (xs: <576px) - Card模式 */
 @media (max-width: 575.98px) {
+  .table-style-list {
+    background: transparent;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
   .table-header-row {
-    display: none; /* 在小屏幕上隐藏表头 */
+    display: none;
   }
-  
+
   .table-data-row {
-    flex-direction: column;
+    grid-template-columns: 1fr;
     min-height: auto;
-    padding: 0;
-    border-bottom: 2px solid #f0f0f0;
-    margin-bottom: 6px; /* 减少数据行下边距 */
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    padding: 16px;
+    margin-bottom: 12px;
+    border-bottom: none;
   }
-  
+
+  .table-data-row:hover {
+    background-color: #fafafa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .table-data-row.is-known {
+    border-left: 4px solid #52c41a;
+  }
+
+  .table-data-row.is-known:hover {
+    background-color: #f6ffed;
+  }
+
   .table-cell {
     width: 100%;
-    padding: 8px 16px; /* 减少单元格内边距 */
+    padding: 6px 0;
     border: none;
   }
-  
+
+  .table-cell::before {
+    content: attr(data-label);
+    display: block;
+    font-weight: 600;
+    font-size: 11px;
+    color: #8c8c8c;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+
+  .word-cell::before {
+    display: none;
+  }
+
   .word-cell {
-    order: 1;
-    border-bottom: none;
-    margin-bottom: 0;
-    padding-bottom: 8px; /* 减少单元格底部内边距 */
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 4px;
   }
 
   .pronunciation-cell {
-    order: 2;
-    border-right: none;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 8px; /* 减少单元格底部内边距 */
-    margin-bottom: 8px; /* 减少单元格下边距 */
+    padding-top: 8px;
   }
 
-  .pos-cell {
-    order: 3;
-    border-right: none;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 8px; /* 减少单元格底部内边距 */
-    margin-bottom: 8px; /* 减少单元格下边距 */
+  .action-cell::before {
+    display: none;
   }
-  
-  .collocation-cell {
-    order: 4;
-    border-right: none;
-    border-bottom: 1px solid #f0f0f0;
-    padding-bottom: 8px; /* 减少单元格底部内边距 */
-    margin-bottom: 8px; /* 减少单元格下边距 */
-  }
-  
+
   .action-cell {
-    order: 5;
+    padding-top: 12px;
+    border-top: 1px solid #f0f0f0;
+    margin-top: 4px;
   }
-  
+
   .action-buttons {
     flex-direction: row;
     justify-content: flex-end;
     width: 100%;
   }
-  
+
   .action-buttons button {
     flex: 0 0 auto;
     min-width: 70px;

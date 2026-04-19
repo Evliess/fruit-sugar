@@ -25,14 +25,14 @@
       @for (item of firstWords; track item.id) {
       <div class="table-data-row" [class.is-known]="item.isKnown">
         <!-- 词汇列 -->
-        <div class="table-cell word-cell">
+        <div class="table-cell word-cell" data-label="词汇">
           <div class="word-title-group" appHoverSound (soundClick)="handleSound('US', item)">
             <span class="word-text">{{ item.word }}</span>
           </div>
         </div>
 
         <!-- 发音列 -->
-        <div class="table-cell pronunciation-cell">
+        <div class="table-cell pronunciation-cell" data-label="发音">
           <div class="phonetic-group">
             <span class="phonetic">
               <strong>🇺🇸 </strong>{{ item.usPhonetic }}
@@ -43,7 +43,7 @@
         </div>
 
         <!-- 词性列 -->
-        <div class="table-cell pos-cell">
+        <div class="table-cell pos-cell" data-label="词性">
           <div class="pos-definition">
             @for (def of item.definition | keyvalue; track def.key; let f = $first) {
             @if(f) {
@@ -57,7 +57,7 @@
         </div>
 
         <!-- 搭配列 -->
-        <div class="table-cell collocation-cell">
+        <div class="table-cell collocation-cell" data-label="搭配">
           @if (item.phrases?.length > 0) {
           @let phrase = item.phrases[0];
           <div class="collocation-item">
@@ -76,7 +76,7 @@
         </div>
 
         <!-- 操作列 -->
-        <div class="table-cell action-cell">
+        <div class="table-cell action-cell" data-label="操作">
           <div class="action-buttons">
             @if(!isCustom) {
             <button nz-button nzType="default" (click)="markAsUnknown(item)">
@@ -103,14 +103,14 @@
       @for (item of remainingWords; track item.id) {
       <div class="table-data-row" [class.is-known]="item.isKnown">
         <!-- 词汇列 -->
-        <div class="table-cell word-cell">
+        <div class="table-cell word-cell" data-label="词汇">
           <div class="word-title-group" appHoverSound (soundClick)="handleSound('US', item)">
             <span class="word-text">{{ item.word }}</span>
           </div>
         </div>
 
         <!-- 发音列 -->
-        <div class="table-cell pronunciation-cell">
+        <div class="table-cell pronunciation-cell" data-label="发音">
           <div class="phonetic-group">
             <span class="phonetic">
               <strong>🇺🇸 </strong>{{ item.usPhonetic }}
@@ -121,7 +121,7 @@
         </div>
 
         <!-- 词性列 -->
-        <div class="table-cell pos-cell">
+        <div class="table-cell pos-cell" data-label="词性">
           <div class="pos-definition">
             @for (def of item.definition | keyvalue; track def.key; let f = $first) {
             @if(f) {
@@ -135,7 +135,7 @@
         </div>
 
         <!-- 搭配列 -->
-        <div class="table-cell collocation-cell">
+        <div class="table-cell collocation-cell" data-label="搭配">
           @if (item.phrases?.length > 0) {
           @let phrase = item.phrases[0];
           <div class="collocation-item">
@@ -154,7 +154,7 @@
         </div>
 
         <!-- 操作列 -->
-        <div class="table-cell action-cell">
+        <div class="table-cell action-cell" data-label="操作">
           <div class="action-buttons">
             @if(!isCustom) {
             <button nz-button nzType="default"  (click)="markAsUnknown(item)">
