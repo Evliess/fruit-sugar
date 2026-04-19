@@ -401,8 +401,8 @@ html, body {
 
 .word-cell {
   display: flex;
-  align-items: center;
   justify-content: flex-start;
+  text-align: left;
 }
 
 .action-cell {
