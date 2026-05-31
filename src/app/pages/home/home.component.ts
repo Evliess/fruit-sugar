@@ -37,6 +37,8 @@ export class HomeComponent {
       next: ({ contentModules, userStats }: any) => {
         this.sentenceCases = contentModules.sentenceCases;
         this.wordCases = contentModules.wordCases;
+        console.log(this.wordCases);
+        console.log(this.sentenceCases);
 
         // 设置导航卡片计数
         const mistakeWords = userStats.mistakeWords || 0;
@@ -52,10 +54,6 @@ export class HomeComponent {
           name: '场景词汇',
           items: this.wordCases
         });
-        // this.sections.push({
-        //   name: '去听写',
-        //   items: this.wordCases
-        // });
         this.sections.push({
           name: '口语表达',
           items: this.sentenceCases

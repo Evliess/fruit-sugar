@@ -17,32 +17,201 @@
           -->
             <nz-col [nzXs]="24" [nzMd]="12" [nzLg]="6">
                 @if(section.name==='场景词汇'){
-                    <nz-card  [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
+                @switch(item.name) {
+                @case ('school') {
+                <nz-card [nzCover]="coverTemplateSchool" nzBordered="true"
+                    (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
                     <nz-card-meta [nzDescription]="content1"></nz-card-meta>
                 </nz-card>
                 }
-                @if(section.name==='去听写'){
-                    <nz-card  [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoWordSubitem('listen', item.id, item.name, item.description)">
+                @case ('food') {
+                <nz-card [nzCover]="coverTemplateFood" nzBordered="true"
+                    (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
                     <nz-card-meta [nzDescription]="content1"></nz-card-meta>
                 </nz-card>
+                }
+                @case ('housing') {
+                <nz-card [nzCover]="coverTemplateHousing" nzBordered="true"
+                    (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('shopping') {
+                <nz-card [nzCover]="coverTemplateShopping" nzBordered="true"
+                    (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('leisure') {
+                <nz-card [nzCover]="coverTemplateEntertainment" nzBordered="true"
+                    (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('city') {
+                <nz-card [nzCover]="coverTemplateCity" nzBordered="true"
+                    (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('health') {
+                <nz-card [nzCover]="coverTemplateHealth" nzBordered="true"
+                    (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @default {
+                <nz-card [nzCover]="coverTemplate1" nzBordered="true"
+                    (click)="gotoWordSubitem('words', item.id, item.name, item.description)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                }
                 }
                 @if(section.name==='口语表达'){
-                    <nz-card  [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                @switch(item.name) {
+                @case ('restaurant') {
+                <nz-card [nzCover]="coverTemplateRestaurant" nzBordered="true" (click)="gotoKouYu(false,item.id)">
                     <nz-card-meta [nzDescription]="content1"></nz-card-meta>
                 </nz-card>
                 }
+                @case ('airport') {
+                <nz-card [nzCover]="coverTemplateAirport" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('hotel') {
+                <nz-card [nzCover]="coverTemplateHotel" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('bank_card') {
+                <nz-card [nzCover]="coverTemplateBankCard" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('class_discussion') {
+                <nz-card [nzCover]="coverTemplateClassDiscussion" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('shop') {
+                <nz-card [nzCover]="coverTemplateShop" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('hair_cut') {
+                <nz-card [nzCover]="coverTemplateHairCut" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('hospital') {
+                <nz-card [nzCover]="coverTemplateHospital" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @case ('transport') {
+                <nz-card [nzCover]="coverTemplateTransport" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                @default {
+                <nz-card [nzCover]="coverTemplate1" nzBordered="true" (click)="gotoKouYu(false,item.id)">
+                    <nz-card-meta [nzDescription]="content1"></nz-card-meta>
+                </nz-card>
+                }
+                }
+                }
                 @if(section.name==='AI助教'){
-                    <nz-card  [nzCover]="coverTemplate1" nzBordered="true" (click)="item.id === 'ai-word' ? navigateToAiWord() : navigateToAiSentence()">
+                @if(item.id === 'ai-word') {
+                <nz-card [nzCover]="coverTemplateAiWord" nzBordered="true"
+                    (click)="navigateToAiWord()">
                     <nz-card-meta [nzDescription]="contentAI"></nz-card-meta>
                 </nz-card>
                 }
+                @if(item.id === 'ai-sentence') {
+                <nz-card [nzCover]="coverTemplateAiSentence" nzBordered="true"
+                    (click)="navigateToAiSentence()">
+                    <nz-card-meta [nzDescription]="contentAI"></nz-card-meta>
+                </nz-card>
+                }
+                }
                 @if(section.name==='学习管理'){
-                    <nz-card  [nzCover]="coverTemplate1" nzBordered="true" (click)="item.id === 'wrong-book' ? navigateToWrongBook() : navigateToUnknownBook()">
+                @if(item.id === 'wrong-book') {
+                <nz-card [nzCover]="coverTemplateWrongBook" nzBordered="true"
+                    (click)="navigateToWrongBook()">
                     <nz-card-meta [nzDescription]="contentLearning"></nz-card-meta>
                 </nz-card>
                 }
+                @if(item.id === 'unknown-book') {
+                <nz-card [nzCover]="coverTemplateUnknownBook" nzBordered="true"
+                    (click)="navigateToUnknownBook()">
+                    <nz-card-meta [nzDescription]="contentLearning"></nz-card-meta>
+                </nz-card>
+                }
+                }
                 <ng-template #coverTemplate1>
                     <img alt="example" src="assets/images/card_head_business.png" />
+                </ng-template>
+                <ng-template #coverTemplateSchool>
+                    <img alt="example" src="assets/images/cihui_xuexiyuxuexiao.png" />
+                </ng-template>
+                <ng-template #coverTemplateFood>
+                    <img alt="example" src="assets/images/cihui_shiwu.png" />
+                </ng-template>
+                <ng-template #coverTemplateHousing>
+                    <img alt="example" src="assets/images/cihui_zhuzhai.png" />
+                </ng-template>
+                <ng-template #coverTemplateShopping>
+                    <img alt="example" src="assets/images/cihui_gouwu.png" />
+                </ng-template>
+                <ng-template #coverTemplateEntertainment>
+                    <img alt="example" src="assets/images/cihui_xiuxianyule.jpg" />
+                </ng-template>
+                <ng-template #coverTemplateCity>
+                    <img alt="example" src="assets/images/cihui_chengshiyujiaotong.png" />
+                </ng-template>
+                <ng-template #coverTemplateHealth>
+                    <img alt="example" src="assets/images/cihui_jiankang.png" />
+                </ng-template>
+                <ng-template #coverTemplateRestaurant>
+                    <img alt="example" src="assets/images/kouyu_canting.png" />
+                </ng-template>
+                <ng-template #coverTemplateAirport>
+                    <img alt="example" src="assets/images/kouyu_jichang.png" />
+                </ng-template>
+                <ng-template #coverTemplateHotel>
+                    <img alt="example" src="assets/images/kouyu_jiudian.png" />
+                </ng-template>
+                <ng-template #coverTemplateBankCard>
+                    <img alt="example" src="assets/images/kouyu_banyinhangka.png" />
+                </ng-template>
+                <ng-template #coverTemplateClassDiscussion>
+                    <img alt="example" src="assets/images/kouyu_ketangtaolun.png" />
+                </ng-template>
+                <ng-template #coverTemplateShop>
+                    <img alt="example" src="assets/images/kouyu_gouwu.png" />
+                </ng-template>
+                <ng-template #coverTemplateHairCut>
+                    <img alt="example" src="assets/images/kouyu_jiantoufa.png" />
+                </ng-template>
+                <ng-template #coverTemplateHospital>
+                    <img alt="example" src="assets/images/kouyu_kanyisheng.png" />
+                </ng-template>
+                <ng-template #coverTemplateTransport>
+                    <img alt="example" src="assets/images/card_head_xxx.png" />
+                </ng-template>
+                <ng-template #coverTemplateAiWord>
+                    <img alt="example" src="assets/images/AI_cihui.png" />
+                </ng-template>
+                <ng-template #coverTemplateAiSentence>
+                    <img alt="example" src="assets/images/AI_juzi.png" />
+                </ng-template>
+                <ng-template #coverTemplateWrongBook>
+                    <img alt="example" src="assets/images/cuotiben.png" />
+                </ng-template>
+                <ng-template #coverTemplateUnknownBook>
+                    <img alt="example" src="assets/images/shengciben.png" />
                 </ng-template>
 
                 <ng-template #content1>
@@ -69,7 +238,7 @@
                     <h2 class="card-title">{{ item.name }}</h2>
                     <p class="card-subtitle">{{ item.description }}</p>
                     @if(item.count > 0) {
-                      <p class="card-description">有 {{ item.count }} 条记录</p>
+                    <p class="card-description">有 {{ item.count }} 条记录</p>
                     }
                     <div class="card-footer">
                         <button nz-button nzType="dashed" nzSize="small">点击学习</button>
