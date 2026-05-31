@@ -192,7 +192,7 @@ export class WrongBookComponent implements OnDestroy {
 
 
   handleSound(phonetic: string, item: VocabularyWord): void {
-    const apiUrl = this.sugarDictService.apiUrl;
+    const apiUrl = this.sugarDictService.openApiUrl;
     if (item.type == "word") {
       if (phonetic == "US") {
         this.audio.src = apiUrl + "/audio/words/" + item.audioUSUrl;
