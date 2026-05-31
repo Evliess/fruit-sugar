@@ -96,7 +96,7 @@ jobs:
           # -z: 传输过程中压缩数据 (启用压缩)
           # -P: 等同于 --partial --progress (显示进度条，支持断点续传)
           # -e: 指定使用的 shell 程序，这里关闭 StrictHostKeyChecking 避免跳出确认提示
-          sshpass -p "$SERVER_PASSWORD" rsync -avzP \
+          sshpass -p "$SERVER_PASSWORD" rsync -avP \
             -e "ssh -o StrictHostKeyChecking=no" \
             tmp/browser.zip tmp/app.jar \
             "$SERVER_USER@$SERVER_HOST:~/release/"
