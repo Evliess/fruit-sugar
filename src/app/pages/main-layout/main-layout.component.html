@@ -30,19 +30,8 @@
           }
         </ul>
       </li> -->
-      <li nz-submenu nzTitle="口语表达" nzIcon="muted">
-        <ul>
-          <!-- @for(sentence of sentenceCases; track sentence.id) { -->
-          <!-- <li nz-menu-item (click)="gotoKouYu(false, sentence.id)"
-            ><a routerLinkActive="active"
-              ariaCurrentWhenActive="page">{{sentence.description}}</a></li>
-          } -->
-          <li nz-menu-item (click)="gotoKouYu(false)"><a routerLinkActive="active" ariaCurrentWhenActive="page">热门场景</a>
-          </li>
-          <!-- <li nz-menu-item (click)="gotoKouYu(true, 'custom_sentences')"><a routerLinkActive="active"
-              ariaCurrentWhenActive="page">自定义</a>
-          </li> -->
-        </ul>
+      <li nz-menu-item (click)="gotoKouYu(false)" nzIcon="muted">
+        <span><nz-icon nzType="muted" nzTheme="outline" /> 口语表达</span>
       </li>
       <li nz-submenu nzTitle="AI助教" nzIcon="reddit" (nzOpenChange)="onAiLearnOpenChange($event)">
         <ul>
@@ -60,11 +49,11 @@
     <!-- 顶部导航 Header -->
     <nz-header>
       <div class="app-header">
-        <!-- 左侧：Logo + 收缩按钮 -->
+        <!-- 左侧：收缩按钮 -->
         <div class="header-left">
-          <a href="/home" class="header-logo">
-            <img src="/assets/images/learn-dict-logo.svg" alt="logo">
-            <span class="header-title">首页</span>
+          <a href="/home" class="header-item">
+            <span nz-icon nzType="home" nzTheme="outline"></span>
+            <span class="username">首页</span>
           </a>
           <span class="header-trigger" (click)="isCollapsed = !isCollapsed">
             <span nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"></span>
@@ -171,6 +160,9 @@
             </ul>
           </nz-dropdown-menu>
           }
+          <a href="/home" class="header-logo">
+            <img src="/assets/images/learn-dict-logo.svg" alt="logo">
+          </a>
         </div>
         }
       </div>

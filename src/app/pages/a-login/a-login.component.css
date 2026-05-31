@@ -4,10 +4,10 @@
   align-items: center;
   min-height: 100vh;
   background-color: #f0f2f5;
-  background-image: url('https://gw.alipayobjects.com/zos/rmsportal/TVYTbAXWheQpRcWDaDMu.svg');
+  background-image: radial-gradient(circle at center, rgb(15,177,153) 0%, rgb(81,193,201) 45%, rgb(150,211,247) 85%, transparent 100%);
   background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: contain;
+  background-position: center;
+  background-size: cover;
 }
 
 /* 内容卡片：核心响应式适配 */
