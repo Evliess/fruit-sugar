@@ -165,7 +165,7 @@ nz-header {
 .header-trigger {
   font-size: 20px;
   line-height: 64px;
-  padding: 0 24px 0 16px;
+  padding: 0 24px 0 148px;
   cursor: pointer;
   transition: color 0.3s;
 }
